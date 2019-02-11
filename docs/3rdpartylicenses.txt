@@ -403,16 +403,6 @@ MIT
 
 @designr/core
 
-@designr/editor
-
-ngx-markdown
-MIT
-
-@designr/plugins
-
-@angular/animations
-MIT
-
 angular-in-memory-web-api
 MIT
 The MIT License
@@ -437,6 +427,20 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
+
+@designr/data
+
+@designr/editor
+
+ngx-markdown
+MIT
+
+@designr/plugins
+
+@designr/ui
+
+@angular/animations
+MIT
 
 @angular/service-worker
 MIT

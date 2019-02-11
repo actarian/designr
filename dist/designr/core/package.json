@@ -3,8 +3,7 @@
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "~7.2.4",
-    "@angular/core": "~7.2.4",
-    "intersection-observer": "~0.5.1"
+    "@angular/core": "~7.2.4"
   },
   "main": "bundles/designr-core.umd.js",
   "module": "fesm5/designr-core.js",

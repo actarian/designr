@@ -1,0 +1,22 @@
+{
+  "name": "@designr/ui",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "~7.2.4",
+    "@angular/core": "~7.2.4",
+    "intersection-observer": "~0.5.1"
+  },
+  "main": "bundles/designr-ui.umd.js",
+  "module": "fesm5/designr-ui.js",
+  "es2015": "fesm2015/designr-ui.js",
+  "esm5": "esm5/designr-ui.js",
+  "esm2015": "esm2015/designr-ui.js",
+  "fesm5": "fesm5/designr-ui.js",
+  "fesm2015": "fesm2015/designr-ui.js",
+  "typings": "designr-ui.d.ts",
+  "metadata": "designr-ui.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

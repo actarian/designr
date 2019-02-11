@@ -1,9 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@designr/core';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { DataModule } from '@designr/data';
 import { environment } from '../environments/environment';
 import { label } from './data/label';
-import { MemoryService, MEMORY_DATA } from './data/memory.service';
 import { menu } from './data/menu';
 import { page } from './data/page';
 import { slug } from './data/slug';
@@ -17,15 +15,12 @@ export const DATA: { [key: string]: any[] } = {
 
 @NgModule({
 	imports: [
-		HttpClientModule,
-		HttpClientInMemoryWebApiModule.forRoot(
-			MemoryService, environment.memoryApi
-		),
+		DataModule.forRoot({
+			datas: DATA,
+			memory: environment.memory
+		}),
 	],
-	providers: [{
-		provide: MEMORY_DATA, useValue: DATA
-	}],
-	exports: [HttpClientInMemoryWebApiModule]
+	exports: [DataModule]
 })
 
 export class AppDatas { }

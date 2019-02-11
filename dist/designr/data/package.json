@@ -1,0 +1,23 @@
+{
+  "name": "@designr/data",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "~7.2.4",
+    "@angular/core": "~7.2.4",
+    "@designr/core": "~0.0.1",
+    "angular-in-memory-web-api": "~0.8.0"
+  },
+  "main": "bundles/designr-data.umd.js",
+  "module": "fesm5/designr-data.js",
+  "es2015": "fesm2015/designr-data.js",
+  "esm5": "esm5/designr-data.js",
+  "esm2015": "esm2015/designr-data.js",
+  "fesm5": "fesm5/designr-data.js",
+  "fesm2015": "fesm2015/designr-data.js",
+  "typings": "designr-data.d.ts",
+  "metadata": "designr-data.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

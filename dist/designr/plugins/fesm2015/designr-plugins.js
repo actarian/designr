@@ -3,7 +3,7 @@ export { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NavigationEnd, Router } from '@angular/router';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 export { CommonModule } from '@angular/common';
-import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, Input, NgZone, EventEmitter, Output, ViewEncapsulation, ElementRef } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, Input, EventEmitter, Output, NgZone, ViewEncapsulation, ElementRef } from '@angular/core';
 export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
 import { LocalStorageService, OnceService, RouteService, CoreModule, DisposableComponent, Logger } from '@designr/core';
 import { from, of, Observable } from 'rxjs';

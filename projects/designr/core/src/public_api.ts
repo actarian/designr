@@ -63,10 +63,4 @@ export { TranslatePipe } from './lib/translate/translate.pipe';
 export { SafeStylePipe } from './lib/trust/safe-style.pipe';
 export { SafeUrlPipe } from './lib/trust/safe-url.pipe';
 export { TrustPipe } from './lib/trust/trust.pipe';
-export { ClickOutsideDirective } from './lib/ui/click-outside/click-outside.directive';
-export { FancyboxDirective } from './lib/ui/fancybox/fancybox.directive';
-export { LazyImagesDirective } from './lib/ui/lazy-images/lazy-images.directive';
-export { ModalContainerComponent } from './lib/ui/modal/modal-container.component';
-export { ModalViewComponent } from './lib/ui/modal/modal-view.component';
-export { ModalService } from './lib/ui/modal/modal.service';
 

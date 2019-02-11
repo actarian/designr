@@ -14,7 +14,7 @@ export const environment = {
 	preboot: {
 		appRoot: 'app-component'
 	},
-	memoryApi: {
+	memory: {
 		apiBase: 'api/',
 		passThruUnknownUrl: true,
 		dataEncapsulation: false,

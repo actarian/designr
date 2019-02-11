@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { EditorModule } from '@designr/editor';
 import { PluginsModule } from '@designr/plugins';
+import { UIModule } from '@designr/ui';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppDatas } from './app.datas';
@@ -18,11 +19,12 @@ import { HeaderComponent } from './sections/header/header.component';
 	imports: [
 		BrowserModule.withServerTransition(environment.transition),
 		BrowserTransferStateModule,
-		AppDatas,
 		AppRouting,
+		AppDatas,
 		AppPages,
-		PluginsModule,
 		EditorModule,
+		PluginsModule,
+		UIModule,
 	],
 	providers: [],
 	declarations: [

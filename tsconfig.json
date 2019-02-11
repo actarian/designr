@@ -16,6 +16,10 @@
 		"paths": {
 			"@designr/core": ["dist/designr/core"],
 			"@designr/core/*": ["dist/designr/core/*"],
+			"@designr/data": ["dist/designr/data"],
+			"@designr/data/*": ["dist/designr/data/*"],
+			"@designr/ui": ["dist/designr/ui"],
+			"@designr/ui/*": ["dist/designr/ui/*"],
 			"@designr/editor": ["dist/designr/editor"],
 			"@designr/editor/*": ["dist/designr/editor/*"],
 			"@designr/plugins": ["dist/designr/plugins"],

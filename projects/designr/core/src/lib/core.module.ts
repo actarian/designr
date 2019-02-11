@@ -47,12 +47,6 @@ import { TranslatePipe } from './translate/translate.pipe';
 import { SafeStylePipe } from './trust/safe-style.pipe';
 import { SafeUrlPipe } from './trust/safe-url.pipe';
 import { TrustPipe } from './trust/trust.pipe';
-import { ClickOutsideDirective } from './ui/click-outside/click-outside.directive';
-import { FancyboxDirective } from './ui/fancybox/fancybox.directive';
-import { LazyImagesDirective } from './ui/lazy-images/lazy-images.directive';
-import { ModalContainerComponent } from './ui/modal/modal-container.component';
-import { ModalViewComponent } from './ui/modal/modal-view.component';
-import { ModalService } from './ui/modal/modal.service';
 
 @NgModule({
 	imports: [
@@ -64,25 +58,20 @@ import { ModalService } from './ui/modal/modal.service';
 	],
 	declarations: [
 		AssetPipe,
-		ClickOutsideDirective,
 		ControlComponent,
 		CoreModuleComponent,
 		CustomAsyncPipe,
 		DefaultContentDirective,
 		DisposableComponent,
 		ExistsValidator,
-		FancyboxDirective,
 		HighlightPipe,
 		ImagePipe,
 		JsonFormatterComponent,
 		LabelAsyncPipe,
 		LabelDirective,
 		LabelPipe,
-		LazyImagesDirective,
 		LoggerComponent,
 		MatchValidator,
-		ModalContainerComponent,
-		ModalViewComponent,
 		PageComponent,
 		PageNotFoundComponent,
 		PageOutletComponent,
@@ -99,24 +88,19 @@ import { ModalService } from './ui/modal/modal.service';
 	],
 	exports: [
 		AssetPipe,
-		ClickOutsideDirective,
 		ControlComponent,
 		CoreModuleComponent,
 		CustomAsyncPipe,
 		DefaultContentDirective,
 		ExistsValidator,
-		FancyboxDirective,
 		HighlightPipe,
 		ImagePipe,
 		JsonFormatterComponent,
 		LabelAsyncPipe,
 		LabelDirective,
 		LabelPipe,
-		LazyImagesDirective,
 		LoggerComponent,
 		MatchValidator,
-		ModalContainerComponent,
-		ModalViewComponent,
 		PageComponent,
 		PublicPipe,
 		RoutePipe,
@@ -149,7 +133,6 @@ import { ModalService } from './ui/modal/modal.service';
 		Logger,
 		MatchValidator,
 		MenuService,
-		ModalService,
 		OnceService,
 		PageGuard, StaticGuard,
 		PageService,
