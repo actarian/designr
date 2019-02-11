@@ -1,0 +1,22 @@
+{
+  "name": "@designr/core",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "~7.2.4",
+    "@angular/core": "~7.2.4",
+    "intersection-observer": "~0.5.1"
+  },
+  "main": "bundles/designr-core.umd.js",
+  "module": "fesm5/designr-core.js",
+  "es2015": "fesm2015/designr-core.js",
+  "esm5": "esm5/designr-core.js",
+  "esm2015": "esm2015/designr-core.js",
+  "fesm5": "fesm5/designr-core.js",
+  "fesm2015": "fesm2015/designr-core.js",
+  "typings": "designr-core.d.ts",
+  "metadata": "designr-core.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

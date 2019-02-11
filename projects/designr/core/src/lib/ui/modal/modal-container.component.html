@@ -1,0 +1,23 @@
+<div class="modal" [ngClass]="{ active: modalCount > 0 }">
+	<div class="modal-bg" (click)="doClose()"></div>
+	<div class="modal-page" [ngClass]="className">
+		<div class="modal-header">
+			<button type="button" class="modal-prev" (click)="doPrev()" title="Indietro" *ngIf="modalCount > 1">
+				<svg class="ico">
+					<use xlink:href="#ico-prev"></use>
+				</svg>
+				indietro
+			</button>
+			<button type="button" class="modal-close" (click)="doClose()" title="Chiudi finestra">
+				<svg class="ico">
+					<use xlink:href="#ico-close"></use>
+				</svg>
+			</button>
+		</div>
+		<div class="modal-content">
+			<ng-container *ngFor="let modal of (modalService.modals$ | async); let last = last;">
+				<core-modal-view-component [modal]="modal" [hidden]="!last"></core-modal-view-component>
+			</ng-container>
+		</div>
+	</div>
+</div>

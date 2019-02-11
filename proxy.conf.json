@@ -1,0 +1,38 @@
+{
+	"/www": {
+		"changeOrigin": true,
+		"logLevel": "debug",
+		"pathRewrite": {
+			"^/www": ""
+		},
+		"secure": true,
+		"target": "https://www.site.com"
+	},
+	"/wslabs": {
+		"changeOrigin": true,
+		"logLevel": "debug",
+		"pathRewrite": {
+			"^/www": ""
+		},
+		"secure": true,
+		"target": "https://site.wslabs.it"
+	},
+	"/api": {
+		"changeOrigin": true,
+		"logLevel": "debug",
+		"pathRewrite": {
+			"^/api": "/api"
+		},
+		"secure": true,
+		"target": "https://site.wslabs.it"
+	},
+	"/media": {
+		"changeOrigin": true,
+		"logLevel": "debug",
+		"pathRewrite": {
+			"^/media": "/media"
+		},
+		"secure": true,
+		"target": "https://site.wslabs.it"
+	}
+}

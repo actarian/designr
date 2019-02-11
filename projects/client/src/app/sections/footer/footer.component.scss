@@ -1,0 +1,19 @@
+@import "../../../scss/variables";
+
+.footer {
+	background: white;
+	border-top: 1px solid #ccc;
+	padding-bottom: 30px;
+}
+
+.row {
+	align-items: center;
+}
+
+.badge {
+	background: rgb(15, 111, 254);
+	color: white;
+	padding: 4px 8px;
+	font-size: 13px;
+	border-radius: 3px;
+}

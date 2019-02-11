@@ -1,0 +1,92 @@
+// @import "~scss/variables";
+
+:host {
+
+	form {
+		margin: 0;
+	}
+
+	label {
+		display: block;
+		width: 100%;
+		color: #55555a;
+		font-weight: 700;
+		font-size: 12px;
+	}
+
+}
+
+.page--editor {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 320px;
+	height: 100vh;
+	padding: 15px;
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+
+	background: #fafafa;
+	color: #55555a;
+
+	.h1 {
+		color: #55555a;
+	}
+
+	@media (max-width: 1024px) {
+		display: none;
+	}
+}
+
+.id {
+	display: inline-block;
+	padding: 4px 6px;
+	background: #0875c2;
+	color: #ffffff;
+	border-radius: 3px;
+	font-size: 12px;
+	line-height: 1;
+	margin-right: 4px;
+}
+
+.status {
+	display: inline-block;
+	padding: 4px 6px;
+	background: #ffffff;
+	color: black;
+	border-radius: 3px;
+	font-size: 12px;
+	line-height: 1;
+	margin-right: 4px;
+
+	&.active {
+		background: green;
+		color: white;
+	}
+}
+
+.component {
+	display: inline-block;
+	font-size: 14px;
+	font-style: italic;
+}
+
+::-webkit-scrollbar {
+	width: 0;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: transparent;
+}

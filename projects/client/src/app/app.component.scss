@@ -1,0 +1,42 @@
+/*
+.wrapper {
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	grid-template-rows: repeat(6, 1fr);
+	grid-template-areas:
+		"head head head head"
+		"row row row row"
+		"main main main aside"
+		"main main main aside"
+		"main main main aside"
+		"foot foot foot foot";
+	width: 100%;
+	height: 100%;
+}
+
+header-component {
+	position: relative;
+	grid-area: head;
+}
+
+core-logger {
+	position: relative;
+	grid-area: row;
+}
+
+main {
+	position: relative;
+	grid-area: main;
+}
+
+aside {
+	position: relative;
+	grid-area: aside;
+}
+
+footer-component {
+	position: relative;
+	grid-area: footer;
+}
+*/

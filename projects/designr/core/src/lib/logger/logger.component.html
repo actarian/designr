@@ -1,0 +1,19 @@
+<div class="error-http" *ngIf="logger.httpError">
+	<span>error</span>&nbsp;
+	<span class="status">{{logger.httpError.status}}</span>&nbsp;
+	<span class="url">{{logger.httpError.url}}</span>&nbsp;
+	<span class="message">{{logger.httpError.body?.error}}</span>
+</div>
+<!--
+<div *ngIf="logger.logs.length">
+	<ul class="list-group ">
+		<li class="list-group-item">
+			<button type="button" class="btn btn-outline-primary btn-sm float-right" (click)="logger.clear()" title="Clear Logs">{{ 'app.clear' | translate }}</button>
+		</li>
+		<li class="list-group-item" *ngFor='let log of logger.logs'>
+			<span>{{log}}</span>
+		</li>
+	</ul>
+	<br>
+</div>
+-->

@@ -1,0 +1,86 @@
+<ng-container [ngSwitch]="control.schema">
+	<ng-container *ngSwitchCase="'checkbox'">
+		<b>Checkbox</b><br>
+	</ng-container>
+	<ng-container *ngSwitchCase="'email'">
+		<b>Email</b><br>
+	</ng-container>
+	<ng-container *ngSwitchCase="'number'">
+		<b>Number</b><br>
+	</ng-container>
+	<ng-container *ngSwitchCase="'password'">
+		<b>Password</b><br>
+	</ng-container>
+</ng-container>
+<div class="form-group" [formGroup]="form">
+	<div [ngSwitch]="control.schema">
+		<div *ngSwitchCase="'checkbox'" class="form-group">
+			<!-- CHECKBOX -->
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" class="form-check-input" [id]="control.key" [formControlName]="control.key">
+					<span>{{ control.label | translate }}</span>
+				</label>
+			</div>
+		</div>
+		<div *ngSwitchCase="'email'">
+			<!-- EMAIL -->
+			<label [attr.for]="control.key">{{ control.label | translate }}</label>
+			<input placeholder="{{ control.placeholder | translate }}" class="form-control" [id]="control.key" [formControlName]="control.key" [type]="control.type">
+		</div>
+		<div *ngSwitchCase="'number'">
+			<!-- NUMBER -->
+			<label [attr.for]="control.key">{{ control.label | translate }}</label>
+			<input placeholder="{{ control.placeholder | translate }}" class="form-control" [id]="control.key" [type]="control.type" [attr.step]="control.step" (input)="onInput($event)" (focus)="onFocus($event)" (blur)="onBlur($event)" [value]="getFormattedValue()">
+		</div>
+		<div *ngSwitchCase="'password'">
+			<!-- PASSWORD -->
+			<label [attr.for]="control.key">{{ control.label | translate }}</label>
+			<div class="input-group">
+				<input placeholder="{{ control.placeholder | translate }}" class="form-control" [id]="control.key" [formControlName]="control.key" [type]="control.type" #password>
+				<div class="input-group-append" *ngIf="control.type === 'password'">
+					<div class="input-group-text">
+						<input type="checkbox" [attr.aria-label]="control.label | translate" (input)="password.type = reveal.checked ? 'text' : control.type" #password>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngSwitchCase="'radio'" class="form-group">
+			<!-- RADIO -->
+			<div class="radio">
+				<label>
+					<input type="radio" class="form-radio-input" [id]="control.key" [formControlName]="control.key">
+					<span>{{ control.label | translate }}</span>
+				</label>
+			</div>
+		</div>
+		<div *ngSwitchCase="'select'">
+			<!-- SELECT -->
+			<label [attr.for]="control.key">{{ control.label | translate }}</label>
+			<select class="form-control" [id]="control.key" [formControlName]="control.key">
+				<option *ngFor="let opt of control.options" [value]="opt.key">{{opt.value}}</option>
+			</select>
+		</div>
+		<div *ngSwitchCase="'markdown'">
+			<!-- MARKDOWN -->
+			<label [attr.for]="control.key">{{ control.label | translate }}</label>
+			<textarea placeholder="{{ control.placeholder | translate }}" class="form-control" [id]="control.key" [formControlName]="control.key" rows="4"></textarea>
+		</div>
+		<div *ngSwitchCase="'text'">
+			<!-- TEXT -->
+			<label [attr.for]="control.key">{{ control.label | translate }}</label>
+			<input placeholder="{{ control.placeholder | translate }}" class="form-control" [id]="control.key" [formControlName]="control.key" [type]="control.type">
+		</div>
+	</div>
+	<div *ngIf="controlRef.invalid && (controlRef.dirty || controlRef.touched)" class="alert alert-danger">
+		<div *ngIf="controlRef.errors.required">{{ 'errors.required' | translate }}</div>
+		<div *ngIf="controlRef.errors.requiredTrue">{{ 'errors.required' | translate }}</div>
+		<div *ngIf="controlRef.errors.min">{{ 'errors.min' | translate : { value: control.min } }}</div>
+		<div *ngIf="controlRef.errors.max">{{ 'errors.max' | translate : { value: control.max } }}</div>
+		<div *ngIf="controlRef.errors.email">{{ 'errors.email' | translate }}</div>
+		<div *ngIf="controlRef.errors.minLength">{{ 'errors.minLength' | translate : { value: control.minLength } }}</div>
+		<div *ngIf="controlRef.errors.maxLength">{{ 'errors.maxLength' | translate : { value: control.maxLength } }}</div>
+		<!-- <div *ngIf="controlRef.errors.pattern">{{ 'errors.pattern' | translate }}</div> -->
+		<div *ngIf="controlRef.errors.match">{{ 'errors.match' | translate }}</div>
+	</div>
+</div>

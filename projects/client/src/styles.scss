@@ -1,0 +1,107 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600');
+
+@import 'scss/mixins';
+
+* {
+	box-sizing: border-box;
+}
+
+a {
+	display: inline-block;
+
+	&,
+	&:active,
+	&:hover,
+	&:visited {
+		color: inherit;
+	}
+}
+
+html,
+body {
+	width: 100%;
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: 'Source Sans Pro', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	font-size: 16px;
+	line-height: 1.2;
+	overflow-x: hidden;
+}
+
+.wrapper {
+	padding-top: 0;
+}
+
+section {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	min-height: 200px;
+}
+
+section+section {
+	border-bottom: 1px solid #eee;
+}
+
+.background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-width: 100%;
+	min-height: 100%;
+	overflow: hidden;
+
+	&>img,
+	&>video {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		min-width: 100%;
+		min-height: 100%;
+		transform: translateX(-50%) translateY(-50%);
+	}
+}
+
+.section--hero {
+	background: #ccc;
+	color: white;
+
+	.container {
+		@include aspect(6, 4);
+		align-items: center;
+	}
+}
+
+.container {
+	position: relative;
+	width: 100%;
+	max-width: 1040px;
+	margin: 0 auto;
+	padding: 15px;
+}
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	margin: 0 -15px;
+
+	&>* {
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+}
+
+.nav {
+	display: flex;
+	list-style: none;
+	margin: 0;
+}

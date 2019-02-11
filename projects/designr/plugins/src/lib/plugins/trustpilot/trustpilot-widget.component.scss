@@ -1,0 +1,13 @@
+:host {
+	width: 100%;
+}
+
+.trustpilot-widget {
+	margin: 15px auto !important;
+}
+
+.trustpilot-comments {
+	@media print {
+		display: none !important;
+	}
+}

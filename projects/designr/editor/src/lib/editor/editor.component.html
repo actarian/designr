@@ -1,0 +1,38 @@
+<ng-container>
+	<div class="page--editor" [@openClose]="editing ? 'open' : 'closed'" (clickOutside)="editing = false">
+		<ng-container *ngIf="editing && page">
+			<form class="form" name="group" [formGroup]="group" (ngSubmit)="group.valid && onSubmit(group.value)" #form="ngForm" role="form" novalidate autocomplete="off">
+				<div class="info">
+					<span class="id">{{page.id}}</span>
+					<span class="status" [ngClass]="{ active: page.active }">{{page.active ? 'active' : 'inactive'}}</span>
+					<span class="component">{{componentName}}</span>
+				</div>
+				<hr>
+				<h2 class="h1" [innerHTML]="page.title"></h2>
+				<!--
+				<p [innerHTML]="page.description"></p>
+				-->
+				<hr>
+				<!--
+				<div class="fieldset">
+					<div class="form-group">
+						<label>Label</label>
+						<input placeholder="placeholder" type="text" class="form-control" required [(ngModel)]="model.title" name="title" #title="ngModel" autocomplete="title">
+						<div *ngIf="title.invalid && (form.submitted || title.dirty || title.touched)" class="alert alert-danger">
+							<div *ngIf="title.errors.required">{{ 'errors.required' | translate }}</div>
+						</div>
+					</div>
+				</div>
+				-->
+				<div *ngFor="let control of controls">
+					<core-control [control]="control" [form]="group"></core-control>
+				</div>
+				<!-- <control-editable formControlName="email"></control-editable> -->
+				<div class="action-bar">
+					<button type="text" class="btn btn--dimmed" [disabled]="submitted || !group.valid" (click)="onReset()" title="Annulla"><span>Annulla</span></button>
+					<button type="submit" class="btn btn-primary" [disabled]="submitted || !group.valid" [ngClass]="{ 'btn--busy': busy }" title="Salva"><span>Salva</span></button>
+				</div>
+			</form>
+		</ng-container>
+	</div>
+</ng-container>

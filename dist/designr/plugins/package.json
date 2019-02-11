@@ -1,0 +1,22 @@
+{
+  "name": "@designr/plugins",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "~7.2.4",
+    "@angular/core": "~7.2.4",
+    "mapbox-gl": "~0.52.0"
+  },
+  "main": "bundles/designr-plugins.umd.js",
+  "module": "fesm5/designr-plugins.js",
+  "es2015": "fesm2015/designr-plugins.js",
+  "esm5": "esm5/designr-plugins.js",
+  "esm2015": "esm2015/designr-plugins.js",
+  "fesm5": "fesm5/designr-plugins.js",
+  "fesm2015": "fesm2015/designr-plugins.js",
+  "typings": "designr-plugins.d.ts",
+  "metadata": "designr-plugins.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

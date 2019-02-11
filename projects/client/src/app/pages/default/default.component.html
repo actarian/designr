@@ -1,0 +1,56 @@
+<section class="section section--hero">
+	<div class="background">
+		<img srcset="{{page.images | image : 'Default' : 'width=991&height=520&rmode=crop'}} 991w,
+				{{page.images | image : 'Default' : 'width=1199&height=524&rmode=crop'}} 1199w,
+				{{page.images | image : 'Default' : 'width=1600&height=665&rmode=crop'}} 1520w,
+				{{page.images | image : 'Default' : 'width=1920&height=654&rmode=crop'}} 1800w" sizes="
+			(max-width: 991px) 991px,
+			(max-width: 1199px) 1199px,
+			(max-width: 1520px) 1520px,
+			1800px" src="{{page.images | image : 'Default' : 'width=1920&height=654&rmode=crop'}}" alt="{{page.images?.length ? page.images[0].title : ''}}">
+	</div>
+	<div class="container">
+		<div class="group group--headline">
+			<h1 [innerHTML]="page.title"></h1>
+			<h2 [innerHTML]="page.abstract"></h2>
+		</div>
+	</div>
+</section>
+<section class="section section--content">
+	<div class="container">
+		<div class="group group--content">
+			<p [innerHTML]="page.description"></p>
+		</div>
+	</div>
+</section>
+<ng-container *ngFor="let feature of page.features">
+	<section class="section section--feature">
+		<div class="container">
+			<div class="group group--headline">
+				<h3 [innerHTML]="feature.title"></h3>
+				<h4 [innerHTML]="feature.abstract"></h4>
+			</div>
+			<div class="group group--content">
+				<p [innerHTML]="feature.description"></p>
+			</div>
+			<div class="group group--cta">
+				<a [routerLink]="feature.slug | slugAsync">{{feature.title}}</a>
+			</div>
+		</div>
+	</section>
+</ng-container>
+<section class="section section--debug">
+	<div class="container">
+		<div class="group group--cta">
+			<button type="button" (click)="debug.active = !debug.active" #debug>Page</button>
+		</div>
+		<ng-container *ngIf="debug.active">
+			<div class="group group--meta">
+				<ul>
+					<li *ngFor="let item of page.meta | keyvalue"><b>{{item.key}}</b>&nbsp;<span>{{item.value}}</span></li>
+				</ul>
+			</div>
+			<json-formatter [json]="page"></json-formatter>
+		</ng-container>
+	</div>
+</section>

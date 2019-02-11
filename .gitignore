@@ -1,3 +1,9 @@
+#Typescript
+*._ts
+
+#Mac
+.DS_Store
+
 # Logs
 logs
 *.log

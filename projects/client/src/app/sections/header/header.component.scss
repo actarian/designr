@@ -1,0 +1,36 @@
+@import "../../../scss/variables";
+
+.header {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	padding: 10px 0;
+	color: white;
+}
+
+.brand {
+	font-size: 19px;
+	font-weight: 600;
+}
+
+.container {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.row {
+	align-items: center;
+}
+
+.nav--header {
+	margin-left: -15px;
+	margin-right: -15px;
+}
+
+.nav__item {
+	margin-left: 15px;
+	margin-right: 15px;
+}

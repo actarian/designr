@@ -1,0 +1,40 @@
+label {
+	color: #55555a;
+	font-weight: 700;
+	font-size: 12px;
+}
+
+.form-control {
+	border-radius: 0;
+	background: #ffffff;
+	color: #55555a;
+	border: 1px solid rgba(#55555a, 0.1);
+	font-size: 16px;
+	border-left: 2px solid rgba(#55555a, 0.2);
+
+	display: block;
+	width: 100%;
+	padding: 8px;
+	box-sizing: border-box;
+	margin-bottom: 10px;
+
+	&:hover {
+		border-left-color: rgba(#55555a, 0.8);
+	}
+
+	&:active,
+	&:focus {
+		background: rgba(black, 0.15);
+		border-left-color: rgba(#55555a, 0.8);
+		outline: none;
+		box-shadow: none;
+	}
+}
+
+textarea {
+	&.form-control {
+		resize: none;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+}
