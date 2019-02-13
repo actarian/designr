@@ -22,14 +22,14 @@ export function getRequest() {
 		ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production && environment.useServiceWorker }),
 		// PrebootModule.withConfig(environment.preboot),
 	],
-	bootstrap: [AppComponent],
 	providers: [
 		// We need this for our Http calls since they'll be using an ORIGIN_URL provided in main.server
 		// (Also remember the Server requires Absolute URLs)
 		{ provide: ORIGIN_URL, useFactory: (getOriginUrl) },
 		// The server provides these in main.server
 		{ provide: REQUEST, useFactory: (getRequest) }
-	]
+	],
+	bootstrap: [AppComponent]
 })
 
 export class AppModuleBrowser { }

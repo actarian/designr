@@ -59,3 +59,4 @@ export { TranslatePipe } from './lib/translate/translate.pipe';
 export { SafeStylePipe } from './lib/trust/safe-style.pipe';
 export { SafeUrlPipe } from './lib/trust/safe-url.pipe';
 export { TrustPipe } from './lib/trust/trust.pipe';
+

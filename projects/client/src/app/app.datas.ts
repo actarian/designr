@@ -17,7 +17,7 @@ export const DATA: { [key: string]: any[] } = {
 	imports: [
 		DataModule.forRoot({
 			datas: DATA,
-			memory: environment.memory
+			memory: environment.memory,
 		}),
 	],
 	exports: [DataModule]

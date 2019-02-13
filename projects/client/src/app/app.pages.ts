@@ -4,9 +4,18 @@ import { DefaultComponent } from './pages/default/default.component';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
-const PAGES: Pages = {
-	'HomeComponent': HomeComponent,
+export const pages = [
+	ContactComponent,
+	DefaultComponent,
+	HomeComponent,
+	NotFoundComponent,
+];
+
+export const PAGES: Pages = {
 	'ContactComponent': ContactComponent,
+	'DefaultComponent': DefaultComponent,
+	'HomeComponent': HomeComponent,
+	'NotFoundComponent': NotFoundComponent,
 };
 
 @NgModule({

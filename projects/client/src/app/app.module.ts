@@ -1,48 +1,53 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Type } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
-import { EditorModule } from '@designr/editor';
-import { PluginsModule } from '@designr/plugins';
-import { UIModule } from '@designr/ui';
+import { DisposableComponent } from '@designr/core';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppDatas } from './app.datas';
-import { AppPages } from './app.pages';
+import { AppEditor } from './app.editor';
+import { AppPages, pages } from './app.pages';
+import { AppPlugins } from './app.plugins';
 import { AppRouting } from './app.routing';
-import { ContactComponent } from './pages/contact/contact.component';
-import { DefaultComponent } from './pages/default/default.component';
-import { HomeComponent } from './pages/home/home.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { AppUI } from './app.ui';
+import { ContentComponent } from './sections/content/content.component';
+import { DebugComponent } from './sections/debug/debug.component';
+import { FeatureComponent } from './sections/feature/feature.component';
 import { FooterComponent } from './sections/footer/footer.component';
 import { HeaderComponent } from './sections/header/header.component';
+import { HeroComponent } from './sections/hero/hero.component';
+
+const sections: Type<DisposableComponent>[] = [
+	ContentComponent,
+	DebugComponent,
+	FeatureComponent,
+	FooterComponent,
+	HeaderComponent,
+	HeroComponent,
+];
 
 @NgModule({
 	imports: [
 		BrowserModule.withServerTransition(environment.transition),
 		BrowserTransferStateModule,
-		AppRouting,
+		FormsModule,
+		ReactiveFormsModule,
+		AppRouting, // first
 		AppDatas,
 		AppPages,
-		EditorModule,
-		PluginsModule,
-		UIModule,
+		AppEditor,
+		AppPlugins,
+		AppUI,
 	],
 	providers: [],
 	declarations: [
 		AppComponent,
-		HeaderComponent,
-		FooterComponent,
-		DefaultComponent,
-		NotFoundComponent,
-		HomeComponent,
-		ContactComponent,
+		...sections,
+		...pages,
 	],
 	entryComponents: [
-		DefaultComponent,
-		NotFoundComponent,
-		HomeComponent,
-		ContactComponent,
-	],
-	bootstrap: [AppComponent]
+		...pages,
+	]
 })
 
 export class AppModule { }
