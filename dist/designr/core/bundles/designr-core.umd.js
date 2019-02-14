@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/forms'), require('@angular/common/http'), require('@angular/router'), require('util'), require('@angular/common'), require('rxjs'), require('rxjs/operators'), require('@angular/platform-browser'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('@designr/core', ['exports', '@angular/forms', '@angular/common/http', '@angular/router', 'util', '@angular/common', 'rxjs', 'rxjs/operators', '@angular/platform-browser', '@angular/core'], factory) :
-    (factory((global.designr = global.designr || {}, global.designr.core = {}),global.ng.forms,global.ng.common.http,global.ng.router,global.util,global.ng.common,global.rxjs,global.rxjs.operators,global.ng.platformBrowser,global.ng.core));
-}(this, (function (exports,forms,http,i4,util,i1,rxjs,operators,i1$1,i0) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/forms'), require('@angular/common/http'), require('@angular/router'), require('util'), require('@angular/common'), require('@angular/platform-browser'), require('@angular/core'), require('rxjs'), require('rxjs/operators')) :
+    typeof define === 'function' && define.amd ? define('@designr/core', ['exports', '@angular/forms', '@angular/common/http', '@angular/router', 'util', '@angular/common', '@angular/platform-browser', '@angular/core', 'rxjs', 'rxjs/operators'], factory) :
+    (factory((global.designr = global.designr || {}, global.designr.core = {}),global.ng.forms,global.ng.common.http,global.ng.router,global.util,global.ng.common,global.ng.platformBrowser,global.ng.core,global.rxjs,global.rxjs.operators));
+}(this, (function (exports,forms,http,i4,util,i1,i1$1,i0,rxjs,operators) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -914,7 +914,7 @@
      */
     var CoreModuleComponent = /** @class */ (function () {
         function CoreModuleComponent() {
-            this.version = '0.0.1';
+            this.version = '0.0.2';
         }
         /**
          * @return {?}
@@ -962,6 +962,35 @@
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    }
+    function __read(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m)
+            return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
+                ar.push(r.value);
+        }
+        catch (error) {
+            e = { error: error };
+        }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"]))
+                    m.call(i);
+            }
+            finally {
+                if (e)
+                    throw e.error;
+            }
+        }
+        return ar;
+    }
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
     }
 
     /**
@@ -1679,7 +1708,7 @@
      */
     // @dynamic
     var RouteService = /** @class */ (function () {
-        function RouteService(platformId, configService, injector, translateService, location, route, router, segment, componentFactoryResolver) {
+        function RouteService(platformId, configService, injector, translateService, location, route, router, segment) {
             this.platformId = platformId;
             this.configService = configService;
             this.injector = injector;
@@ -1688,7 +1717,6 @@
             this.route = route;
             this.router = router;
             this.segment = segment;
-            this.componentFactoryResolver = componentFactoryResolver;
             this._language = new rxjs.BehaviorSubject({});
             this.language = this._language.asObservable();
             this._languages = new rxjs.BehaviorSubject([]);
@@ -1970,42 +1998,6 @@
                 }));
             };
         /**
-         * @return {?}
-         */
-        RouteService.prototype._unused_getPageComponentFactory = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return this.router.events.pipe(operators.filter(function (event) { return event instanceof i4.ActivationEnd; }), 
-                /*
-                tap((event) => {
-                    // console.log('ActivationEnd', event);
-                }),
-                */
-                operators.map(function () { return _this.route; }), operators.distinctUntilChanged(), operators.map(function (route) { return route.firstChild; }), operators.tap(function (route) {
-                    _this.params = route.params.pipe(operators.concatMap(function (x) {
-                        return rxjs.of(_this.toData(x));
-                    }));
-                    _this.queryParams = route.queryParams.pipe(
-                    // tap(x => console.log('queryParams', x)),
-                    operators.concatMap(function (x) {
-                        return rxjs.of(_this.toData(x));
-                    }));
-                    // console.log('params', this.route.params);
-                }), operators.switchMap(function (route) { return route.data; }), operators.map(function (data) {
-                    if (data.pageResolver) {
-                        _this.page = data.pageResolver.page;
-                        /** @type {?} */
-                        var factory = _this.componentFactoryResolver.resolveComponentFactory(data.pageResolver.component);
-                        return factory;
-                    }
-                    else {
-                        return null;
-                    }
-                }));
-            };
-        /**
          * @param {?} lang
          * @param {?=} silent
          * @return {?}
@@ -2171,11 +2163,10 @@
                 { type: i1.Location },
                 { type: i4.ActivatedRoute },
                 { type: i4.Router },
-                { type: SegmentPipe },
-                { type: i0.ComponentFactoryResolver }
+                { type: SegmentPipe }
             ];
         };
-        /** @nocollapse */ RouteService.ngInjectableDef = i0.defineInjectable({ factory: function RouteService_Factory() { return new RouteService(i0.inject(i0.PLATFORM_ID), i0.inject(ConfigService), i0.inject(i0.INJECTOR), i0.inject(TranslateService), i0.inject(i1.Location), i0.inject(i4.ActivatedRoute), i0.inject(i4.Router), i0.inject(SegmentPipe), i0.inject(i0.ComponentFactoryResolver)); }, token: RouteService, providedIn: "root" });
+        /** @nocollapse */ RouteService.ngInjectableDef = i0.defineInjectable({ factory: function RouteService_Factory() { return new RouteService(i0.inject(i0.PLATFORM_ID), i0.inject(ConfigService), i0.inject(i0.INJECTOR), i0.inject(TranslateService), i0.inject(i1.Location), i0.inject(i4.ActivatedRoute), i0.inject(i4.Router), i0.inject(SegmentPipe)); }, token: RouteService, providedIn: "root" });
         return RouteService;
     }());
 
@@ -2513,6 +2504,11 @@
     ImageType[ImageType.Default] = 'Default';
     ImageType[ImageType.Gallery] = 'Gallery';
     ImageType[ImageType.Share] = 'Share';
+    var Image = /** @class */ (function () {
+        function Image() {
+        }
+        return Image;
+    }());
 
     /**
      * @fileoverview added by tsickle
@@ -5727,6 +5723,77 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /** @type {?} */
+    var modules = [
+        i1.CommonModule,
+        http.HttpClientModule,
+        forms.FormsModule,
+        forms.ReactiveFormsModule,
+        CoreRouting,
+    ];
+    /** @type {?} */
+    var services = [
+        AuthService,
+        ConfigService,
+        ControlService,
+        CookieStorageService,
+        EventDispatcherService,
+        FormService,
+        HttpStatusCodeService,
+        LabelService,
+        LocalStorageService,
+        Logger,
+        MenuService,
+        OnceService,
+        PageService,
+        SessionStorageService,
+        StorageService,
+    ];
+    /** @type {?} */
+    var components = [
+        ControlComponent,
+        CoreModuleComponent,
+        DisposableComponent,
+        JsonFormatterComponent,
+        LoggerComponent,
+        PageComponent,
+        PageNotFoundComponent,
+        PageOutletComponent,
+    ];
+    /** @type {?} */
+    var directives = [
+        DefaultContentDirective,
+        LabelDirective,
+        UppercaseDirective,
+    ];
+    /** @type {?} */
+    var pipes = [
+        AssetPipe,
+        CustomAsyncPipe,
+        HighlightPipe,
+        ImagePipe,
+        LabelAsyncPipe,
+        LabelPipe,
+        PublicPipe,
+        RoutePipe,
+        SafeStylePipe,
+        SafeUrlPipe,
+        SegmentPipe,
+        SlugAsyncPipe,
+        SlugPipe,
+        TranslatePipe,
+        TrustPipe,
+    ];
+    /** @type {?} */
+    var validators = [
+        ExistsValidator,
+        MatchValidator,
+    ];
+    /** @type {?} */
+    var guards = [
+        PageGuard,
+        StaticGuard,
+    ];
     var CoreModule = /** @class */ (function () {
         function CoreModule(parentModule) {
             if (parentModule) {
@@ -5751,104 +5818,12 @@
             };
         CoreModule.decorators = [
             { type: i0.NgModule, args: [{
-                        imports: [
-                            i1.CommonModule,
-                            http.HttpClientModule,
-                            forms.FormsModule,
-                            forms.ReactiveFormsModule,
-                            CoreRouting,
-                        ],
-                        declarations: [
-                            AssetPipe,
-                            ControlComponent,
-                            CoreModuleComponent,
-                            CustomAsyncPipe,
-                            DefaultContentDirective,
-                            DisposableComponent,
-                            ExistsValidator,
-                            HighlightPipe,
-                            ImagePipe,
-                            JsonFormatterComponent,
-                            LabelAsyncPipe,
-                            LabelDirective,
-                            LabelPipe,
-                            LoggerComponent,
-                            MatchValidator,
-                            PageComponent,
-                            PageNotFoundComponent,
-                            PageOutletComponent,
-                            PublicPipe,
-                            RoutePipe,
-                            SafeStylePipe,
-                            SafeUrlPipe,
-                            SegmentPipe,
-                            SlugAsyncPipe,
-                            SlugPipe,
-                            TranslatePipe,
-                            TrustPipe,
-                            UppercaseDirective,
-                        ],
-                        exports: [
-                            AssetPipe,
-                            ControlComponent,
-                            CoreModuleComponent,
-                            CustomAsyncPipe,
-                            DefaultContentDirective,
-                            ExistsValidator,
-                            HighlightPipe,
-                            ImagePipe,
-                            JsonFormatterComponent,
-                            LabelAsyncPipe,
-                            LabelDirective,
-                            LabelPipe,
-                            LoggerComponent,
-                            MatchValidator,
-                            PageComponent,
-                            PublicPipe,
-                            RoutePipe,
-                            SafeStylePipe,
-                            SafeUrlPipe,
-                            SegmentPipe,
-                            SlugAsyncPipe,
-                            SlugPipe,
-                            TranslatePipe,
-                            TrustPipe,
-                            UppercaseDirective,
-                        ],
-                        providers: [
-                            { provide: http.HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
-                            AssetPipe,
-                            AuthService,
-                            ConfigService,
-                            ControlService,
-                            CookieStorageService,
-                            CustomAsyncPipe,
-                            EventDispatcherService,
-                            ExistsValidator,
-                            FormService,
-                            HighlightPipe,
-                            HttpStatusCodeService,
-                            ImagePipe,
-                            LabelPipe,
-                            LabelService,
-                            LocalStorageService,
-                            Logger,
-                            MatchValidator,
-                            MenuService,
-                            OnceService,
-                            PageGuard, StaticGuard,
-                            PageService,
-                            PublicPipe,
-                            RoutePipe,
-                            SafeUrlPipe,
-                            SegmentPipe,
-                            SessionStorageService,
-                            SlugAsyncPipe,
-                            SlugPipe,
-                            StorageService,
-                            TranslatePipe,
-                            TrustPipe,
-                        ],
+                        imports: __spread(modules),
+                        providers: __spread([
+                            { provide: http.HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true }
+                        ], services, pipes, validators, guards),
+                        declarations: __spread(components, directives, pipes, validators),
+                        exports: __spread(modules, components, directives, pipes, validators),
                     },] }
         ];
         /** @nocollapse */
@@ -5907,6 +5882,84 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /**
+     * @template T
+     */
+    var DocumentService = /** @class */ (function (_super) {
+        __extends(DocumentService, _super);
+        function DocumentService() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Object.defineProperty(DocumentService.prototype, "collection", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return '/api/document';
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @param {?} slug
+         * @return {?}
+         */
+        DocumentService.prototype.getDetailBySlug = /**
+         * @param {?} slug
+         * @return {?}
+         */
+            function (slug) {
+                if (!slug.trim()) {
+                    // if not search term, return empty identity array.
+                    return rxjs.of();
+                }
+                return this.get({ slug: slug }).pipe(
+                // tap(x => this.logger.log(`found identities matching "${slug}"`)),
+                operators.switchMap(function (x) { return rxjs.of(x[0]); }));
+            };
+        DocumentService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */ DocumentService.ngInjectableDef = i0.defineInjectable({ factory: function DocumentService_Factory() { return new DocumentService(i0.inject(i0.INJECTOR)); }, token: DocumentService, providedIn: "root" });
+        return DocumentService;
+    }(EntityService));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var Entity = /** @class */ (function () {
+        function Entity() {
+        }
+        return Entity;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var Feature = /** @class */ (function () {
+        function Feature() {
+            this.readmore = false;
+        }
+        return Feature;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var Identity = /** @class */ (function () {
+        function Identity() {
+        }
+        return Identity;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var MenuItem = /** @class */ (function () {
         function MenuItem(options) {
             if (options) {
@@ -5917,6 +5970,16 @@
             }
         }
         return MenuItem;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var Taxonomy = /** @class */ (function () {
+        function Taxonomy() {
+        }
+        return Taxonomy;
     }());
 
     /**
@@ -5968,9 +6031,18 @@
     exports.LoggerComponent = LoggerComponent;
     exports.Document = Document;
     exports.DocumentIndex = DocumentIndex;
+    exports.DocumentService = DocumentService;
+    exports.Entity = Entity;
+    exports.EntityService = EntityService;
     exports.EventDispatcherService = EventDispatcherService;
+    exports.Feature = Feature;
+    exports.Identity = Identity;
+    exports.IdentityService = IdentityService;
+    exports.Image = Image;
+    exports.ImageType = ImageType;
     exports.MenuItem = MenuItem;
     exports.MenuService = MenuService;
+    exports.Taxonomy = Taxonomy;
     exports.OnceService = OnceService;
     exports.Page = Page;
     exports.PageIndex = PageIndex;
@@ -6003,9 +6075,7 @@
     exports.SafeUrlPipe = SafeUrlPipe;
     exports.TrustPipe = TrustPipe;
     exports.ɵb = ApiService;
-    exports.ɵc = EntityService;
-    exports.ɵd = IdentityService;
-    exports.ɵe = LinkService;
+    exports.ɵc = LinkService;
     exports.ɵa = TranslateService;
 
     Object.defineProperty(exports, '__esModule', { value: true });

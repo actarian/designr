@@ -6,12 +6,12 @@ import { ActivatedRoute, ActivationEnd, NavigationStart, Router, RouterModule, N
 import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, DOCUMENT, isPlatformServer, CommonModule } from '@angular/common';
 export { CommonModule } from '@angular/common';
-import { __extends } from 'tslib';
+import { makeStateKey, TransferState, Meta, Title, DomSanitizer } from '@angular/platform-browser';
+import { __extends, __spread } from 'tslib';
+import { Inject, Injectable, PLATFORM_ID, Component, NgModule, ChangeDetectorRef, Pipe, Directive, ElementRef, Input, Renderer2, ViewContainerRef, forwardRef, Attribute, EventEmitter, HostListener, Output, ViewEncapsulation, Injector, InjectionToken, WrappedValue, defineInjectable, inject, INJECTOR, ViewChild, ComponentFactoryResolver, NgZone, Optional, SkipSelf } from '@angular/core';
+export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
 import { tap, concatMap, distinctUntilChanged, filter, map, switchMap, catchError, debounceTime, take, first, takeUntil } from 'rxjs/operators';
-import { makeStateKey, TransferState, Meta, Title, DomSanitizer } from '@angular/platform-browser';
-import { Inject, Injectable, PLATFORM_ID, Component, NgModule, EventEmitter, ChangeDetectorRef, Pipe, Directive, ElementRef, Input, Renderer2, ViewContainerRef, forwardRef, Attribute, HostListener, Output, ViewEncapsulation, Injector, InjectionToken, WrappedValue, defineInjectable, inject, INJECTOR, ViewChild, ComponentFactoryResolver, NgZone, Optional, SkipSelf } from '@angular/core';
-export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -909,7 +909,7 @@ var DefaultContentDirective = /** @class */ (function () {
  */
 var CoreModuleComponent = /** @class */ (function () {
     function CoreModuleComponent() {
-        this.version = '0.0.1';
+        this.version = '0.0.2';
     }
     /**
      * @return {?}
@@ -1644,7 +1644,7 @@ var TranslateService = /** @class */ (function (_super) {
  */
 // @dynamic
 var RouteService = /** @class */ (function () {
-    function RouteService(platformId, configService, injector, translateService, location, route, router, segment, componentFactoryResolver) {
+    function RouteService(platformId, configService, injector, translateService, location, route, router, segment) {
         this.platformId = platformId;
         this.configService = configService;
         this.injector = injector;
@@ -1653,7 +1653,6 @@ var RouteService = /** @class */ (function () {
         this.route = route;
         this.router = router;
         this.segment = segment;
-        this.componentFactoryResolver = componentFactoryResolver;
         this._language = new BehaviorSubject({});
         this.language = this._language.asObservable();
         this._languages = new BehaviorSubject([]);
@@ -1938,42 +1937,6 @@ var RouteService = /** @class */ (function () {
         }));
     };
     /**
-     * @return {?}
-     */
-    RouteService.prototype._unused_getPageComponentFactory = /**
-     * @return {?}
-     */
-    function () {
-        var _this = this;
-        return this.router.events.pipe(filter(function (event) { return event instanceof ActivationEnd; }), 
-        /*
-        tap((event) => {
-            // console.log('ActivationEnd', event);
-        }),
-        */
-        map(function () { return _this.route; }), distinctUntilChanged(), map(function (route) { return route.firstChild; }), tap(function (route) {
-            _this.params = route.params.pipe(concatMap(function (x) {
-                return of(_this.toData(x));
-            }));
-            _this.queryParams = route.queryParams.pipe(
-            // tap(x => console.log('queryParams', x)),
-            concatMap(function (x) {
-                return of(_this.toData(x));
-            }));
-            // console.log('params', this.route.params);
-        }), switchMap(function (route) { return route.data; }), map(function (data) {
-            if (data.pageResolver) {
-                _this.page = data.pageResolver.page;
-                /** @type {?} */
-                var factory = _this.componentFactoryResolver.resolveComponentFactory(data.pageResolver.component);
-                return factory;
-            }
-            else {
-                return null;
-            }
-        }));
-    };
-    /**
      * @param {?} lang
      * @param {?=} silent
      * @return {?}
@@ -2138,10 +2101,9 @@ var RouteService = /** @class */ (function () {
         { type: Location },
         { type: ActivatedRoute },
         { type: Router },
-        { type: SegmentPipe },
-        { type: ComponentFactoryResolver }
+        { type: SegmentPipe }
     ]; };
-    /** @nocollapse */ RouteService.ngInjectableDef = defineInjectable({ factory: function RouteService_Factory() { return new RouteService(inject(PLATFORM_ID), inject(ConfigService), inject(INJECTOR), inject(TranslateService), inject(Location), inject(ActivatedRoute), inject(Router), inject(SegmentPipe), inject(ComponentFactoryResolver)); }, token: RouteService, providedIn: "root" });
+    /** @nocollapse */ RouteService.ngInjectableDef = defineInjectable({ factory: function RouteService_Factory() { return new RouteService(inject(PLATFORM_ID), inject(ConfigService), inject(INJECTOR), inject(TranslateService), inject(Location), inject(ActivatedRoute), inject(Router), inject(SegmentPipe)); }, token: RouteService, providedIn: "root" });
     return RouteService;
 }());
 
@@ -2590,6 +2552,11 @@ var ImageType = {
 ImageType[ImageType.Default] = 'Default';
 ImageType[ImageType.Gallery] = 'Gallery';
 ImageType[ImageType.Share] = 'Share';
+var Image = /** @class */ (function () {
+    function Image() {
+    }
+    return Image;
+}());
 
 /**
  * @fileoverview added by tsickle
@@ -5632,6 +5599,77 @@ var TrustPipe = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+var modules = [
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CoreRouting,
+];
+/** @type {?} */
+var services = [
+    AuthService,
+    ConfigService,
+    ControlService,
+    CookieStorageService,
+    EventDispatcherService,
+    FormService,
+    HttpStatusCodeService,
+    LabelService,
+    LocalStorageService,
+    Logger,
+    MenuService,
+    OnceService,
+    PageService,
+    SessionStorageService,
+    StorageService,
+];
+/** @type {?} */
+var components = [
+    ControlComponent,
+    CoreModuleComponent,
+    DisposableComponent,
+    JsonFormatterComponent,
+    LoggerComponent,
+    PageComponent,
+    PageNotFoundComponent,
+    PageOutletComponent,
+];
+/** @type {?} */
+var directives = [
+    DefaultContentDirective,
+    LabelDirective,
+    UppercaseDirective,
+];
+/** @type {?} */
+var pipes = [
+    AssetPipe,
+    CustomAsyncPipe,
+    HighlightPipe,
+    ImagePipe,
+    LabelAsyncPipe,
+    LabelPipe,
+    PublicPipe,
+    RoutePipe,
+    SafeStylePipe,
+    SafeUrlPipe,
+    SegmentPipe,
+    SlugAsyncPipe,
+    SlugPipe,
+    TranslatePipe,
+    TrustPipe,
+];
+/** @type {?} */
+var validators = [
+    ExistsValidator,
+    MatchValidator,
+];
+/** @type {?} */
+var guards = [
+    PageGuard,
+    StaticGuard,
+];
 var CoreModule = /** @class */ (function () {
     function CoreModule(parentModule) {
         if (parentModule) {
@@ -5656,104 +5694,12 @@ var CoreModule = /** @class */ (function () {
     };
     CoreModule.decorators = [
         { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        HttpClientModule,
-                        FormsModule,
-                        ReactiveFormsModule,
-                        CoreRouting,
-                    ],
-                    declarations: [
-                        AssetPipe,
-                        ControlComponent,
-                        CoreModuleComponent,
-                        CustomAsyncPipe,
-                        DefaultContentDirective,
-                        DisposableComponent,
-                        ExistsValidator,
-                        HighlightPipe,
-                        ImagePipe,
-                        JsonFormatterComponent,
-                        LabelAsyncPipe,
-                        LabelDirective,
-                        LabelPipe,
-                        LoggerComponent,
-                        MatchValidator,
-                        PageComponent,
-                        PageNotFoundComponent,
-                        PageOutletComponent,
-                        PublicPipe,
-                        RoutePipe,
-                        SafeStylePipe,
-                        SafeUrlPipe,
-                        SegmentPipe,
-                        SlugAsyncPipe,
-                        SlugPipe,
-                        TranslatePipe,
-                        TrustPipe,
-                        UppercaseDirective,
-                    ],
-                    exports: [
-                        AssetPipe,
-                        ControlComponent,
-                        CoreModuleComponent,
-                        CustomAsyncPipe,
-                        DefaultContentDirective,
-                        ExistsValidator,
-                        HighlightPipe,
-                        ImagePipe,
-                        JsonFormatterComponent,
-                        LabelAsyncPipe,
-                        LabelDirective,
-                        LabelPipe,
-                        LoggerComponent,
-                        MatchValidator,
-                        PageComponent,
-                        PublicPipe,
-                        RoutePipe,
-                        SafeStylePipe,
-                        SafeUrlPipe,
-                        SegmentPipe,
-                        SlugAsyncPipe,
-                        SlugPipe,
-                        TranslatePipe,
-                        TrustPipe,
-                        UppercaseDirective,
-                    ],
-                    providers: [
-                        { provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
-                        AssetPipe,
-                        AuthService,
-                        ConfigService,
-                        ControlService,
-                        CookieStorageService,
-                        CustomAsyncPipe,
-                        EventDispatcherService,
-                        ExistsValidator,
-                        FormService,
-                        HighlightPipe,
-                        HttpStatusCodeService,
-                        ImagePipe,
-                        LabelPipe,
-                        LabelService,
-                        LocalStorageService,
-                        Logger,
-                        MatchValidator,
-                        MenuService,
-                        OnceService,
-                        PageGuard, StaticGuard,
-                        PageService,
-                        PublicPipe,
-                        RoutePipe,
-                        SafeUrlPipe,
-                        SegmentPipe,
-                        SessionStorageService,
-                        SlugAsyncPipe,
-                        SlugPipe,
-                        StorageService,
-                        TranslatePipe,
-                        TrustPipe,
-                    ],
+                    imports: __spread(modules),
+                    providers: __spread([
+                        { provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true }
+                    ], services, pipes, validators, guards),
+                    declarations: __spread(components, directives, pipes, validators),
+                    exports: __spread(modules, components, directives, pipes, validators),
                 },] }
     ];
     /** @nocollapse */
@@ -5810,6 +5756,85 @@ var DocumentIndex = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @template T
+ */
+var DocumentService = /** @class */ (function (_super) {
+    __extends(DocumentService, _super);
+    function DocumentService() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(DocumentService.prototype, "collection", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return '/api/document';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @param {?} slug
+     * @return {?}
+     */
+    DocumentService.prototype.getDetailBySlug = /**
+     * @param {?} slug
+     * @return {?}
+     */
+    function (slug) {
+        if (!slug.trim()) {
+            // if not search term, return empty identity array.
+            return of();
+        }
+        return this.get({ slug: slug }).pipe(
+        // tap(x => this.logger.log(`found identities matching "${slug}"`)),
+        switchMap(function (x) { return of(x[0]); }));
+    };
+    DocumentService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */ DocumentService.ngInjectableDef = defineInjectable({ factory: function DocumentService_Factory() { return new DocumentService(inject(INJECTOR)); }, token: DocumentService, providedIn: "root" });
+    return DocumentService;
+}(EntityService));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var Entity = /** @class */ (function () {
+    function Entity() {
+    }
+    return Entity;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var Feature = /** @class */ (function () {
+    function Feature() {
+        this.readmore = false;
+    }
+    return Feature;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var Identity = /** @class */ (function () {
+    function Identity() {
+    }
+    return Identity;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var MenuItem = /** @class */ (function () {
     function MenuItem(options) {
         if (options) {
@@ -5826,12 +5851,22 @@ var MenuItem = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+var Taxonomy = /** @class */ (function () {
+    function Taxonomy() {
+    }
+    return Taxonomy;
+}());
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { AuthService, ConfigService, CoreConfig, CORE_CONFIG, DefaultContentDirective, CoreModuleComponent, CoreModule, CoreRouting, CoreService, DisposableComponent, ControlBase, ControlBaseOptions, ControlComponent, ControlService, ExistsValidator, FormService, MatchValidator, UppercaseDirective, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelAsyncPipe, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, EventDispatcherService, MenuItem, MenuService, OnceService, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, AssetPipe, CustomAsyncPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, TranslatePipe, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵb, EntityService as ɵc, IdentityService as ɵd, LinkService as ɵe, TranslateService as ɵa };
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+export { AuthService, ConfigService, CoreConfig, CORE_CONFIG, DefaultContentDirective, CoreModuleComponent, CoreModule, CoreRouting, CoreService, DisposableComponent, ControlBase, ControlBaseOptions, ControlComponent, ControlService, ExistsValidator, FormService, MatchValidator, UppercaseDirective, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelAsyncPipe, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, AssetPipe, CustomAsyncPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, TranslatePipe, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵb, LinkService as ɵc, TranslateService as ɵa };
 
 //# sourceMappingURL=designr-core.js.map

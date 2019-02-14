@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'data-module',
-	template: `<span class="data-module">data {{version}}</span>`,
-	styles: []
+    selector: 'data-module',
+    template: `<span class="data-module">data {{version}}</span>`,
+    styles: []
 })
 export class DataModuleComponent implements OnInit {
 
-	version: string = '0.0.1';
+    version: string = '0.0.2';
 
-	constructor() { }
+    constructor() { }
 
-	ngOnInit() {
-	}
+    ngOnInit() {
+    }
 
 }

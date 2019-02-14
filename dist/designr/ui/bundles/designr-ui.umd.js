@@ -1,8 +1,49 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common/http'), require('@angular/forms'), require('@angular/common'), require('rxjs'), require('rxjs/operators'), require('@angular/core'), require('@designr/core')) :
-    typeof define === 'function' && define.amd ? define('@designr/ui', ['exports', '@angular/common/http', '@angular/forms', '@angular/common', 'rxjs', 'rxjs/operators', '@angular/core', '@designr/core'], factory) :
-    (factory((global.designr = global.designr || {}, global.designr.ui = {}),global.ng.common.http,global.ng.forms,global.ng.common,global.rxjs,global.rxjs.operators,global.ng.core,global.core));
-}(this, (function (exports,http,forms,common,rxjs,operators,i0,core) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('rxjs'), require('rxjs/operators'), require('@angular/core'), require('@designr/core')) :
+    typeof define === 'function' && define.amd ? define('@designr/ui', ['exports', '@angular/common', 'rxjs', 'rxjs/operators', '@angular/core', '@designr/core'], factory) :
+    (factory((global.designr = global.designr || {}, global.designr.ui = {}),global.ng.common,global.rxjs,global.rxjs.operators,global.ng.core,global.core));
+}(this, (function (exports,common,rxjs,operators,i0,core) { 'use strict';
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var UIConfig = /** @class */ (function () {
+        function UIConfig(options) {
+            console.log('UIConfig', options);
+            if (options) {
+                Object.assign(this, options);
+            }
+        }
+        return UIConfig;
+    }());
+    /** @type {?} */
+    var UI_CONFIG = new i0.InjectionToken('ui.config');
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var UIService = /** @class */ (function () {
+        function UIService(options) {
+            console.log('UIService', options);
+            options = options || {};
+            this.options = new UIConfig(options);
+        }
+        UIService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */
+        UIService.ctorParameters = function () {
+            return [
+                { type: UIConfig, decorators: [{ type: i0.Inject, args: [UI_CONFIG,] }] }
+            ];
+        };
+        /** @nocollapse */ UIService.ngInjectableDef = i0.defineInjectable({ factory: function UIService_Factory() { return new UIService(i0.inject(UI_CONFIG)); }, token: UIService, providedIn: "root" });
+        return UIService;
+    }());
 
     /**
      * @fileoverview added by tsickle
@@ -10,7 +51,7 @@
      */
     var UIModuleComponent = /** @class */ (function () {
         function UIModuleComponent() {
-            this.version = '0.0.1';
+            this.version = '0.0.2';
         }
         /**
          * @return {?}
@@ -30,6 +71,64 @@
         UIModuleComponent.ctorParameters = function () { return []; };
         return UIModuleComponent;
     }());
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+    /* global Reflect, Promise */
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b)
+                if (b.hasOwnProperty(p))
+                    d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    function __extends(d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    }
+    function __read(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m)
+            return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
+                ar.push(r.value);
+        }
+        catch (error) {
+            e = { error: error };
+        }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"]))
+                    m.call(i);
+            }
+            finally {
+                if (e)
+                    throw e.error;
+            }
+        }
+        return ar;
+    }
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
+    }
 
     /**
      * @fileoverview added by tsickle
@@ -312,35 +411,6 @@
         };
         return LazyImagesDirective;
     }());
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
-
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
-
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
-    ***************************************************************************** */
-    /* global Reflect, Promise */
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
-                    d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    function __extends(d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    }
 
     /**
      * @fileoverview added by tsickle
@@ -753,39 +823,55 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /** @type {?} */
+    var modules = [
+        core.CoreModule,
+    ];
+    /** @type {?} */
+    var services = [
+        UIService,
+        ModalService,
+    ];
+    /** @type {?} */
+    var components = [
+        UIModuleComponent,
+        ModalContainerComponent,
+        ModalViewComponent,
+    ];
+    /** @type {?} */
+    var directives = [
+        ClickOutsideDirective,
+        FancyboxDirective,
+        LazyImagesDirective,
+    ];
     var UIModule = /** @class */ (function () {
         function UIModule(parentModule) {
             if (parentModule) {
                 throw new Error('UIModule is already loaded. Import it in the AppModule only');
             }
         }
+        /**
+         * @param {?=} config
+         * @return {?}
+         */
+        UIModule.forRoot = /**
+         * @param {?=} config
+         * @return {?}
+         */
+            function (config) {
+                return {
+                    ngModule: UIModule,
+                    providers: [
+                        { provide: UI_CONFIG, useValue: config },
+                    ]
+                };
+            };
         UIModule.decorators = [
             { type: i0.NgModule, args: [{
-                        imports: [
-                            common.CommonModule,
-                            http.HttpClientModule,
-                            forms.FormsModule,
-                            forms.ReactiveFormsModule,
-                        ],
-                        declarations: [
-                            ClickOutsideDirective,
-                            UIModuleComponent,
-                            FancyboxDirective,
-                            LazyImagesDirective,
-                            ModalContainerComponent,
-                            ModalViewComponent,
-                        ],
-                        exports: [
-                            ClickOutsideDirective,
-                            UIModuleComponent,
-                            FancyboxDirective,
-                            LazyImagesDirective,
-                            ModalContainerComponent,
-                            ModalViewComponent,
-                        ],
-                        providers: [
-                            ModalService,
-                        ],
+                        imports: __spread(modules),
+                        providers: __spread(services),
+                        declarations: __spread(components, directives),
+                        exports: __spread(modules, components, directives),
                     },] }
         ];
         /** @nocollapse */
@@ -807,6 +893,9 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
+    exports.UIConfig = UIConfig;
+    exports.UI_CONFIG = UI_CONFIG;
+    exports.UIService = UIService;
     exports.UIModuleComponent = UIModuleComponent;
     exports.UIModule = UIModule;
     exports.ClickOutsideDirective = ClickOutsideDirective;

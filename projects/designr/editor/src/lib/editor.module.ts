@@ -1,18 +1,39 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CoreModule } from '@designr/core';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { EditorConfig, EDITOR_CONFIG } from './config/editor.config';
+import { EditorService } from './config/editor.service';
 import { EditorModuleComponent } from './editor-module.component';
 import { EditorComponent } from './editor/editor.component';
 
+const modules = [
+	MarkdownModule,
+	CoreModule,
+];
+
+const services = [
+	EditorService,
+];
+
+const components = [
+	EditorModuleComponent,
+	EditorComponent,
+];
+
+const directives = [
+];
+
+const pipes = [
+];
+
+const validators = [
+];
+
+const guards = [
+];
+
 @NgModule({
 	imports: [
-		CommonModule,
-		HttpClientModule,
-		FormsModule,
-		ReactiveFormsModule,
 		MarkdownModule.forRoot({
 			markedOptions: {
 				provide: MarkedOptions,
@@ -29,15 +50,16 @@ import { EditorComponent } from './editor/editor.component';
 		}),
 		CoreModule,
 	],
+	providers: [
+		...services,
+	],
 	declarations: [
-		EditorModuleComponent,
-		EditorComponent,
+		...components,
 	],
 	exports: [
-		EditorModuleComponent,
-		EditorComponent,
+		...modules,
+		...components,
 	],
-	providers: [],
 })
 
 export class EditorModule {
@@ -48,6 +70,17 @@ export class EditorModule {
 		if (parentModule) {
 			throw new Error('EditorModule is already loaded. Import it in the AppModule only');
 		}
+	}
+
+	public static forRoot(
+		config?: EditorConfig,
+	): ModuleWithProviders {
+		return {
+			ngModule: EditorModule,
+			providers: [
+				{ provide: EDITOR_CONFIG, useValue: config },
+			]
+		};
 	}
 
 }

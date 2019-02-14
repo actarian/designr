@@ -1,8 +1,7 @@
-import { HttpClientModule } from '@angular/common/http';
 export { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NavigationEnd, Router } from '@angular/router';
-import { __extends } from 'tslib';
-import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { __spread, __extends } from 'tslib';
+import { isPlatformBrowser } from '@angular/common';
 export { CommonModule } from '@angular/common';
 import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, Input, EventEmitter, Output, NgZone, ViewEncapsulation, ElementRef } from '@angular/core';
 export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
@@ -58,7 +57,7 @@ var PluginsService = /** @class */ (function () {
  */
 var PluginsModuleComponent = /** @class */ (function () {
     function PluginsModuleComponent() {
-        this.version = '0.0.1';
+        this.version = '0.0.2';
     }
     /**
      * @return {?}
@@ -1204,40 +1203,55 @@ var TrustPilotWidgetComponent = /** @class */ (function (_super) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+var modules = [
+    CoreModule,
+];
+/** @type {?} */
+var services = [
+    PluginsService,
+    FacebookService,
+    GoogleService,
+    GoogleTagManagerService,
+    MapboxService,
+    PayPalService,
+    TrustPilotService,
+];
+/** @type {?} */
+var components = [
+    PluginsModuleComponent,
+    GoogleTagManagerComponent,
+    PayPalWidgetComponent,
+    TrustPilotWidgetComponent,
+];
 var PluginsModule = /** @class */ (function () {
     function PluginsModule(parentModule) {
         if (parentModule) {
             throw new Error('PluginsModule is already loaded. Import it in the AppModule only');
         }
     }
+    /**
+     * @param {?=} config
+     * @return {?}
+     */
+    PluginsModule.forRoot = /**
+     * @param {?=} config
+     * @return {?}
+     */
+    function (config) {
+        return {
+            ngModule: PluginsModule,
+            providers: [
+                { provide: PLUGINS_CONFIG, useValue: config },
+            ]
+        };
+    };
     PluginsModule.decorators = [
         { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        HttpClientModule,
-                        CoreModule,
-                    ],
-                    declarations: [
-                        PluginsModuleComponent,
-                        GoogleTagManagerComponent,
-                        PayPalWidgetComponent,
-                        TrustPilotWidgetComponent,
-                    ],
-                    exports: [
-                        PluginsModuleComponent,
-                        GoogleTagManagerComponent,
-                        PayPalWidgetComponent,
-                        TrustPilotWidgetComponent,
-                    ],
-                    providers: [
-                        PluginsService,
-                        FacebookService,
-                        GoogleService,
-                        GoogleTagManagerService,
-                        MapboxService,
-                        PayPalService,
-                        TrustPilotService,
-                    ],
+                    imports: __spread(modules),
+                    providers: __spread(services),
+                    declarations: __spread(components),
+                    exports: __spread(modules, components),
                 },] }
     ];
     /** @nocollapse */

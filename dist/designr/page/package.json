@@ -1,0 +1,21 @@
+{
+  "name": "@designr/page",
+  "version": "0.0.2",
+  "peerDependencies": {
+    "@angular/common": "~7.2.4",
+    "@angular/core": "~7.2.4"
+  },
+  "main": "bundles/designr-page.umd.js",
+  "module": "fesm5/designr-page.js",
+  "es2015": "fesm2015/designr-page.js",
+  "esm5": "esm5/designr-page.js",
+  "esm2015": "esm2015/designr-page.js",
+  "fesm5": "fesm5/designr-page.js",
+  "fesm2015": "fesm2015/designr-page.js",
+  "typings": "designr-page.d.ts",
+  "metadata": "designr-page.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

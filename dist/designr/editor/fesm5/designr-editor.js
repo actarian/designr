@@ -1,12 +1,10 @@
-import { HttpClientModule } from '@angular/common/http';
 export { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 export { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { __extends } from 'tslib';
+import { __spread, __extends } from 'tslib';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 export { CommonModule } from '@angular/common';
-import { Component, HostListener, Inject, PLATFORM_ID, ViewEncapsulation, NgModule, Optional, SkipSelf } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject, ViewEncapsulation, PLATFORM_ID, HostListener } from '@angular/core';
 export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
 import { ConfigService, DisposableComponent, FormService, PageResolverService, CoreModule } from '@designr/core';
 import { MarkdownService, MarkdownModule, MarkedOptions } from 'ngx-markdown';
@@ -17,9 +15,48 @@ import { takeUntil } from 'rxjs/operators';
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+var EDITOR_CONFIG = new InjectionToken('editor.config');
+var EditorConfig = /** @class */ (function () {
+    function EditorConfig(options) {
+        console.log('EditorConfig', options);
+        if (options) {
+            this.enabled = options.enabled || false;
+        }
+    }
+    return EditorConfig;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var EditorService = /** @class */ (function () {
+    function EditorService(options) {
+        console.log('EditorService', options);
+        options = options || {};
+        this.options = new EditorConfig(options);
+    }
+    EditorService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */
+    EditorService.ctorParameters = function () { return [
+        { type: EditorConfig, decorators: [{ type: Inject, args: [EDITOR_CONFIG,] }] }
+    ]; };
+    /** @nocollapse */ EditorService.ngInjectableDef = defineInjectable({ factory: function EditorService_Factory() { return new EditorService(inject(EDITOR_CONFIG)); }, token: EditorService, providedIn: "root" });
+    return EditorService;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var EditorModuleComponent = /** @class */ (function () {
     function EditorModuleComponent() {
-        this.version = '0.0.1';
+        this.version = '0.0.2';
     }
     /**
      * @return {?}
@@ -46,9 +83,10 @@ var EditorModuleComponent = /** @class */ (function () {
  */
 var EditorComponent = /** @class */ (function (_super) {
     __extends(EditorComponent, _super);
-    function EditorComponent(platformId, configService, markdownService, formService, pageResolverService) {
+    function EditorComponent(platformId, config, configService, markdownService, formService, pageResolverService) {
         var _this = _super.call(this) || this;
         _this.platformId = platformId;
+        _this.config = config;
         _this.configService = configService;
         _this.markdownService = markdownService;
         _this.formService = formService;
@@ -150,7 +188,7 @@ var EditorComponent = /** @class */ (function (_super) {
      */
     function (e) {
         if (e.key === 'e' && e.ctrlKey) {
-            // this.editing = this.configService.options.editor && !this.editing;
+            this.editing = this.config.enabled && !this.editing;
             this.editing = !this.editing;
             // console.log('AppComponent.document:keydown', e.key, e.ctrlKey, e.altKey, e.code);
         }
@@ -237,6 +275,7 @@ var EditorComponent = /** @class */ (function (_super) {
     /** @nocollapse */
     EditorComponent.ctorParameters = function () { return [
         { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
+        { type: EditorConfig, decorators: [{ type: Inject, args: [EDITOR_CONFIG,] }] },
         { type: ConfigService },
         { type: MarkdownService },
         { type: FormService },
@@ -252,6 +291,20 @@ var EditorComponent = /** @class */ (function (_super) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+var modules = [
+    MarkdownModule,
+    CoreModule,
+];
+/** @type {?} */
+var services = [
+    EditorService,
+];
+/** @type {?} */
+var components = [
+    EditorModuleComponent,
+    EditorComponent,
+];
 var ɵ0 = {
 // gfm: true,
 // tables: true,
@@ -267,13 +320,25 @@ var EditorModule = /** @class */ (function () {
             throw new Error('EditorModule is already loaded. Import it in the AppModule only');
         }
     }
+    /**
+     * @param {?=} config
+     * @return {?}
+     */
+    EditorModule.forRoot = /**
+     * @param {?=} config
+     * @return {?}
+     */
+    function (config) {
+        return {
+            ngModule: EditorModule,
+            providers: [
+                { provide: EDITOR_CONFIG, useValue: config || {} },
+            ]
+        };
+    };
     EditorModule.decorators = [
         { type: NgModule, args: [{
                     imports: [
-                        CommonModule,
-                        HttpClientModule,
-                        FormsModule,
-                        ReactiveFormsModule,
                         MarkdownModule.forRoot({
                             markedOptions: {
                                 provide: MarkedOptions,
@@ -282,15 +347,9 @@ var EditorModule = /** @class */ (function () {
                         }),
                         CoreModule,
                     ],
-                    declarations: [
-                        EditorModuleComponent,
-                        EditorComponent,
-                    ],
-                    exports: [
-                        EditorModuleComponent,
-                        EditorComponent,
-                    ],
-                    providers: [],
+                    providers: __spread(services),
+                    declarations: __spread(components),
+                    exports: __spread(modules, components),
                 },] }
     ];
     /** @nocollapse */
@@ -310,6 +369,6 @@ var EditorModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { EditorModuleComponent, EditorModule, EditorComponent };
+export { EditorConfig, EDITOR_CONFIG, EditorService, EditorModuleComponent, EditorModule, EditorComponent };
 
 //# sourceMappingURL=designr-editor.js.map

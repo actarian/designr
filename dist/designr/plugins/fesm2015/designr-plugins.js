@@ -1,7 +1,6 @@
-import { HttpClientModule } from '@angular/common/http';
 export { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NavigationEnd, Router } from '@angular/router';
-import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 export { CommonModule } from '@angular/common';
 import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, Input, EventEmitter, Output, NgZone, ViewEncapsulation, ElementRef } from '@angular/core';
 export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
@@ -61,7 +60,7 @@ PluginsService.ctorParameters = () => [
  */
 class PluginsModuleComponent {
     constructor() {
-        this.version = '0.0.1';
+        this.version = '0.0.2';
     }
     /**
      * @return {?}
@@ -1065,6 +1064,27 @@ TrustPilotWidgetComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+const modules = [
+    CoreModule,
+];
+/** @type {?} */
+const services = [
+    PluginsService,
+    FacebookService,
+    GoogleService,
+    GoogleTagManagerService,
+    MapboxService,
+    PayPalService,
+    TrustPilotService,
+];
+/** @type {?} */
+const components = [
+    PluginsModuleComponent,
+    GoogleTagManagerComponent,
+    PayPalWidgetComponent,
+    TrustPilotWidgetComponent,
+];
 class PluginsModule {
     /**
      * @param {?} parentModule
@@ -1074,34 +1094,33 @@ class PluginsModule {
             throw new Error('PluginsModule is already loaded. Import it in the AppModule only');
         }
     }
+    /**
+     * @param {?=} config
+     * @return {?}
+     */
+    static forRoot(config) {
+        return {
+            ngModule: PluginsModule,
+            providers: [
+                { provide: PLUGINS_CONFIG, useValue: config },
+            ]
+        };
+    }
 }
 PluginsModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
-                    CommonModule,
-                    HttpClientModule,
-                    CoreModule,
-                ],
-                declarations: [
-                    PluginsModuleComponent,
-                    GoogleTagManagerComponent,
-                    PayPalWidgetComponent,
-                    TrustPilotWidgetComponent,
-                ],
-                exports: [
-                    PluginsModuleComponent,
-                    GoogleTagManagerComponent,
-                    PayPalWidgetComponent,
-                    TrustPilotWidgetComponent,
+                    ...modules
                 ],
                 providers: [
-                    PluginsService,
-                    FacebookService,
-                    GoogleService,
-                    GoogleTagManagerService,
-                    MapboxService,
-                    PayPalService,
-                    TrustPilotService,
+                    ...services
+                ],
+                declarations: [
+                    ...components
+                ],
+                exports: [
+                    ...modules,
+                    ...components,
                 ],
             },] }
 ];

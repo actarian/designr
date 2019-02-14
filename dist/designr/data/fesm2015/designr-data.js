@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
+import { CoreModule } from '@designr/core';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InjectionToken, Component, Inject, Injectable, NgModule, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -25,9 +26,34 @@ class DataConfig {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class DataService {
+    /**
+     * @param {?} options
+     */
+    constructor(options) {
+        console.log('DataService', options);
+        options = options || {};
+        this.options = new DataConfig(options);
+    }
+}
+DataService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+DataService.ctorParameters = () => [
+    { type: DataConfig, decorators: [{ type: Inject, args: [DATA_CONFIG,] }] }
+];
+/** @nocollapse */ DataService.ngInjectableDef = defineInjectable({ factory: function DataService_Factory() { return new DataService(inject(DATA_CONFIG)); }, token: DataService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class DataModuleComponent {
     constructor() {
-        this.version = '0.0.1';
+        this.version = '0.0.2';
     }
     /**
      * @return {?}
@@ -97,6 +123,20 @@ MemoryService.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+const modules = [
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule,
+    CoreModule,
+];
+/** @type {?} */
+const services = [
+    DataService,
+];
+/** @type {?} */
+const components = [
+    DataModuleComponent,
+];
 class DataModule {
     /**
      * @param {?} parentModule
@@ -123,17 +163,18 @@ class DataModule {
 DataModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
-                    HttpClientModule,
-                    HttpClientInMemoryWebApiModule,
+                    ...modules,
                 ],
-                exports: [
-                    DataModuleComponent,
-                    HttpClientInMemoryWebApiModule,
+                providers: [
+                    ...services,
                 ],
                 declarations: [
-                    DataModuleComponent,
+                    ...components,
                 ],
-                providers: [],
+                exports: [
+                    ...modules,
+                    ...components,
+                ],
             },] }
 ];
 /** @nocollapse */
@@ -151,6 +192,6 @@ DataModule.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { DataConfig, DATA_CONFIG, DataModuleComponent, DataModule, MemoryService };
+export { DataConfig, DATA_CONFIG, DataService, DataModuleComponent, DataModule, MemoryService };
 
 //# sourceMappingURL=designr-data.js.map

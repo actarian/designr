@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { ComponentFactory, ComponentFactoryResolver, Injector } from '@angular/core';
+import { ComponentFactory, Injector } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ConfigService } from '../config/config.service';
@@ -16,7 +16,6 @@ export declare class RouteService {
     private route;
     private router;
     private segment;
-    private componentFactoryResolver;
     static startTime: number;
     static endTime: number;
     private urlStrategy;
@@ -29,9 +28,8 @@ export declare class RouteService {
     page: Page;
     params: Observable<Params>;
     queryParams: Observable<Params>;
-    private busy;
     currentMarket: string;
-    constructor(platformId: string, configService: ConfigService, injector: Injector, translateService: TranslateService, location: Location, route: ActivatedRoute, router: Router, segment: SegmentPipe, componentFactoryResolver: ComponentFactoryResolver);
+    constructor(platformId: string, configService: ConfigService, injector: Injector, translateService: TranslateService, location: Location, route: ActivatedRoute, router: Router, segment: SegmentPipe);
     private lang;
     readonly currentLang: string;
     pageParams$: BehaviorSubject<Params>;
@@ -47,7 +45,6 @@ export declare class RouteService {
     toParams(data: any): any;
     toData(params: any): any;
     getParams(): Observable<ComponentFactory<PageComponent>>;
-    _unused_getPageComponentFactory(): Observable<ComponentFactory<PageComponent>>;
     setLanguage(lang: string, silent?: boolean): void;
     private setLanguages;
     private subscribeToRouter;

@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common/http'), require('angular-in-memory-web-api'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('@designr/data', ['exports', '@angular/common/http', 'angular-in-memory-web-api', '@angular/core'], factory) :
-    (factory((global.designr = global.designr || {}, global.designr.data = {}),global.ng.common.http,global.HttpClientInMemoryWebApiModule,global.ng.core));
-}(this, (function (exports,http,angularInMemoryWebApi,i0) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common/http'), require('@designr/core'), require('angular-in-memory-web-api'), require('@angular/core')) :
+    typeof define === 'function' && define.amd ? define('@designr/data', ['exports', '@angular/common/http', '@designr/core', 'angular-in-memory-web-api', '@angular/core'], factory) :
+    (factory((global.designr = global.designr || {}, global.designr.data = {}),global.ng.common.http,global.core,global.HttpClientInMemoryWebApiModule,global.ng.core));
+}(this, (function (exports,http,core,angularInMemoryWebApi,i0) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -25,9 +25,34 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var DataService = /** @class */ (function () {
+        function DataService(options) {
+            console.log('DataService', options);
+            options = options || {};
+            this.options = new DataConfig(options);
+        }
+        DataService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */
+        DataService.ctorParameters = function () {
+            return [
+                { type: DataConfig, decorators: [{ type: i0.Inject, args: [DATA_CONFIG,] }] }
+            ];
+        };
+        /** @nocollapse */ DataService.ngInjectableDef = i0.defineInjectable({ factory: function DataService_Factory() { return new DataService(i0.inject(DATA_CONFIG)); }, token: DataService, providedIn: "root" });
+        return DataService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var DataModuleComponent = /** @class */ (function () {
         function DataModuleComponent() {
-            this.version = '0.0.1';
+            this.version = '0.0.2';
         }
         /**
          * @return {?}
@@ -153,6 +178,20 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /** @type {?} */
+    var modules = [
+        http.HttpClientModule,
+        angularInMemoryWebApi.HttpClientInMemoryWebApiModule,
+        core.CoreModule,
+    ];
+    /** @type {?} */
+    var services = [
+        DataService,
+    ];
+    /** @type {?} */
+    var components = [
+        DataModuleComponent,
+    ];
     var DataModule = /** @class */ (function () {
         function DataModule(parentModule) {
             if (parentModule) {
@@ -177,18 +216,10 @@
             };
         DataModule.decorators = [
             { type: i0.NgModule, args: [{
-                        imports: [
-                            http.HttpClientModule,
-                            angularInMemoryWebApi.HttpClientInMemoryWebApiModule,
-                        ],
-                        exports: [
-                            DataModuleComponent,
-                            angularInMemoryWebApi.HttpClientInMemoryWebApiModule,
-                        ],
-                        declarations: [
-                            DataModuleComponent,
-                        ],
-                        providers: [],
+                        imports: __spread(modules),
+                        providers: __spread(services),
+                        declarations: __spread(components),
+                        exports: __spread(modules, components),
                     },] }
         ];
         /** @nocollapse */
@@ -212,6 +243,7 @@
 
     exports.DataConfig = DataConfig;
     exports.DATA_CONFIG = DATA_CONFIG;
+    exports.DataService = DataService;
     exports.DataModuleComponent = DataModuleComponent;
     exports.DataModule = DataModule;
     exports.MemoryService = MemoryService;

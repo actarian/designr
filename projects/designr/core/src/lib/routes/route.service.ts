@@ -1,10 +1,10 @@
 
 
 import { isPlatformBrowser, isPlatformServer, Location } from '@angular/common';
-import { ComponentFactory, ComponentFactoryResolver, Inject, Injectable, Injector, PLATFORM_ID } from '@angular/core';
+import { ComponentFactory, Inject, Injectable, Injector, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute, ActivationEnd, NavigationStart, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { concatMap, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
+import { concatMap, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 import { ConfigService } from '../config/config.service';
 import { Page } from '../pages/page';
 import { PageComponent } from '../pages/page.component';
@@ -32,7 +32,6 @@ export class RouteService {
 	public page: Page;
 	public params: Observable<Params>;
 	public queryParams: Observable<Params>;
-	private busy: boolean;
 	public currentMarket: string;
 
 	constructor(
@@ -44,7 +43,6 @@ export class RouteService {
 		private route: ActivatedRoute,
 		private router: Router,
 		private segment: SegmentPipe,
-		private componentFactoryResolver: ComponentFactoryResolver
 	) {
 		this.urlStrategy = this.configService.options.urlStrategy;
 		this._languages.next(this.configService.options.languages);
@@ -215,44 +213,6 @@ export class RouteService {
 			*/
 			concatMap(x => {
 				return of(this.toData(x));
-			})
-		);
-	}
-
-	public _unused_getPageComponentFactory(): Observable<ComponentFactory<PageComponent>> {
-		return this.router.events.pipe(
-			filter(event => event instanceof ActivationEnd),
-			/*
-			tap((event) => {
-				// console.log('ActivationEnd', event);
-			}),
-			*/
-			map(() => this.route),
-			distinctUntilChanged(),
-			map(route => route.firstChild),
-			tap((route) => {
-				this.params = route.params.pipe(
-					concatMap(x => {
-						return of(this.toData(x));
-					})
-				);
-				this.queryParams = route.queryParams.pipe(
-					// tap(x => console.log('queryParams', x)),
-					concatMap(x => {
-						return of(this.toData(x));
-					})
-				);
-				// console.log('params', this.route.params);
-			}),
-			switchMap(route => route.data),
-			map((data): ComponentFactory<PageComponent> => {
-				if (data.pageResolver) {
-					this.page = data.pageResolver.page;
-					const factory: ComponentFactory<PageComponent> = this.componentFactoryResolver.resolveComponentFactory(data.pageResolver.component);
-					return factory;
-				} else {
-					return null;
-				}
 			})
 		);
 	}

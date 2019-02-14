@@ -1,23 +1,52 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { CoreModule } from '@designr/core';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { DataConfig, DATA_CONFIG } from './config/data.config';
+import { DataService } from './config/data.service';
 import { DataModuleComponent } from './data-module.component';
 import { MemoryService } from './memory/memory.service';
 
+const modules = [
+	HttpClientModule,
+	HttpClientInMemoryWebApiModule,
+	CoreModule,
+];
+
+const services = [
+	DataService,
+];
+
+const components = [
+	DataModuleComponent,
+];
+
+const directives = [
+];
+
+const pipes = [
+];
+
+const validators = [
+];
+
+const guards = [
+];
+
 @NgModule({
 	imports: [
-		HttpClientModule,
-		HttpClientInMemoryWebApiModule,
+		...modules,
 	],
-	exports: [
-		DataModuleComponent,
-		HttpClientInMemoryWebApiModule,
+	providers: [
+		...services,
 	],
 	declarations: [
-		DataModuleComponent,
+		...components,
 	],
-	providers: [],
+	exports: [
+		...modules,
+		...components,
+	],
 })
 
 export class DataModule {

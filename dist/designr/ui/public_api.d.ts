@@ -1,3 +1,5 @@
+export { UIConfig, UI_CONFIG } from './lib/config/ui.config';
+export { UIService } from './lib/config/ui.service';
 export { UIModuleComponent } from './lib/ui-module.component';
 export { UIModule } from './lib/ui.module';
 export { ClickOutsideDirective } from './lib/ui/click-outside/click-outside.directive';

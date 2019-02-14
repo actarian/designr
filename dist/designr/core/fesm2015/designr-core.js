@@ -6,11 +6,11 @@ import { ActivatedRoute, ActivationEnd, NavigationStart, Router, RouterModule, N
 import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, DOCUMENT, isPlatformServer, CommonModule } from '@angular/common';
 export { CommonModule } from '@angular/common';
+import { makeStateKey, TransferState, Meta, Title, DomSanitizer } from '@angular/platform-browser';
+import { Inject, Injectable, PLATFORM_ID, Injector, Component, NgModule, ViewEncapsulation, ChangeDetectorRef, Pipe, Directive, ElementRef, Input, Renderer2, ViewContainerRef, forwardRef, Attribute, EventEmitter, HostListener, Output, ComponentFactoryResolver, InjectionToken, WrappedValue, defineInjectable, inject, INJECTOR, ViewChild, NgZone, Optional, SkipSelf } from '@angular/core';
+export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
 import { tap, concatMap, distinctUntilChanged, filter, map, switchMap, catchError, debounceTime, take, first, takeUntil } from 'rxjs/operators';
-import { makeStateKey, TransferState, Meta, Title, DomSanitizer } from '@angular/platform-browser';
-import { Inject, Injectable, PLATFORM_ID, Injector, Component, NgModule, EventEmitter, ViewEncapsulation, ChangeDetectorRef, Pipe, Directive, ElementRef, Input, Renderer2, ViewContainerRef, forwardRef, Attribute, HostListener, Output, ComponentFactoryResolver, InjectionToken, WrappedValue, defineInjectable, inject, INJECTOR, ViewChild, NgZone, Optional, SkipSelf } from '@angular/core';
-export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -790,7 +790,7 @@ DefaultContentDirective.propDecorators = {
  */
 class CoreModuleComponent {
     constructor() {
-        this.version = '0.0.1';
+        this.version = '0.0.2';
     }
     /**
      * @return {?}
@@ -1368,9 +1368,8 @@ class RouteService {
      * @param {?} route
      * @param {?} router
      * @param {?} segment
-     * @param {?} componentFactoryResolver
      */
-    constructor(platformId, configService, injector, translateService, location, route, router, segment, componentFactoryResolver) {
+    constructor(platformId, configService, injector, translateService, location, route, router, segment) {
         this.platformId = platformId;
         this.configService = configService;
         this.injector = injector;
@@ -1379,7 +1378,6 @@ class RouteService {
         this.route = route;
         this.router = router;
         this.segment = segment;
-        this.componentFactoryResolver = componentFactoryResolver;
         this._language = new BehaviorSubject({});
         this.language = this._language.asObservable();
         this._languages = new BehaviorSubject([]);
@@ -1608,38 +1606,6 @@ class RouteService {
         }));
     }
     /**
-     * @return {?}
-     */
-    _unused_getPageComponentFactory() {
-        return this.router.events.pipe(filter(event => event instanceof ActivationEnd), 
-        /*
-        tap((event) => {
-            // console.log('ActivationEnd', event);
-        }),
-        */
-        map(() => this.route), distinctUntilChanged(), map(route => route.firstChild), tap((route) => {
-            this.params = route.params.pipe(concatMap(x => {
-                return of(this.toData(x));
-            }));
-            this.queryParams = route.queryParams.pipe(
-            // tap(x => console.log('queryParams', x)),
-            concatMap(x => {
-                return of(this.toData(x));
-            }));
-            // console.log('params', this.route.params);
-        }), switchMap(route => route.data), map((data) => {
-            if (data.pageResolver) {
-                this.page = data.pageResolver.page;
-                /** @type {?} */
-                const factory = this.componentFactoryResolver.resolveComponentFactory(data.pageResolver.component);
-                return factory;
-            }
-            else {
-                return null;
-            }
-        }));
-    }
-    /**
      * @param {?} lang
      * @param {?=} silent
      * @return {?}
@@ -1781,10 +1747,9 @@ RouteService.ctorParameters = () => [
     { type: Location },
     { type: ActivatedRoute },
     { type: Router },
-    { type: SegmentPipe },
-    { type: ComponentFactoryResolver }
+    { type: SegmentPipe }
 ];
-/** @nocollapse */ RouteService.ngInjectableDef = defineInjectable({ factory: function RouteService_Factory() { return new RouteService(inject(PLATFORM_ID), inject(ConfigService), inject(INJECTOR), inject(TranslateService), inject(Location), inject(ActivatedRoute), inject(Router), inject(SegmentPipe), inject(ComponentFactoryResolver)); }, token: RouteService, providedIn: "root" });
+/** @nocollapse */ RouteService.ngInjectableDef = defineInjectable({ factory: function RouteService_Factory() { return new RouteService(inject(PLATFORM_ID), inject(ConfigService), inject(INJECTOR), inject(TranslateService), inject(Location), inject(ActivatedRoute), inject(Router), inject(SegmentPipe)); }, token: RouteService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -2136,6 +2101,8 @@ const ImageType = {
 ImageType[ImageType.Default] = 'Default';
 ImageType[ImageType.Gallery] = 'Gallery';
 ImageType[ImageType.Share] = 'Share';
+class Image {
+}
 
 /**
  * @fileoverview added by tsickle
@@ -4749,6 +4716,77 @@ TrustPipe.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+const modules = [
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CoreRouting,
+];
+/** @type {?} */
+const services = [
+    AuthService,
+    ConfigService,
+    ControlService,
+    CookieStorageService,
+    EventDispatcherService,
+    FormService,
+    HttpStatusCodeService,
+    LabelService,
+    LocalStorageService,
+    Logger,
+    MenuService,
+    OnceService,
+    PageService,
+    SessionStorageService,
+    StorageService,
+];
+/** @type {?} */
+const components = [
+    ControlComponent,
+    CoreModuleComponent,
+    DisposableComponent,
+    JsonFormatterComponent,
+    LoggerComponent,
+    PageComponent,
+    PageNotFoundComponent,
+    PageOutletComponent,
+];
+/** @type {?} */
+const directives = [
+    DefaultContentDirective,
+    LabelDirective,
+    UppercaseDirective,
+];
+/** @type {?} */
+const pipes = [
+    AssetPipe,
+    CustomAsyncPipe,
+    HighlightPipe,
+    ImagePipe,
+    LabelAsyncPipe,
+    LabelPipe,
+    PublicPipe,
+    RoutePipe,
+    SafeStylePipe,
+    SafeUrlPipe,
+    SegmentPipe,
+    SlugAsyncPipe,
+    SlugPipe,
+    TranslatePipe,
+    TrustPipe,
+];
+/** @type {?} */
+const validators = [
+    ExistsValidator,
+    MatchValidator,
+];
+/** @type {?} */
+const guards = [
+    PageGuard,
+    StaticGuard,
+];
 class CoreModule {
     /**
      * @param {?} parentModule
@@ -4774,102 +4812,27 @@ class CoreModule {
 CoreModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
-                    CommonModule,
-                    HttpClientModule,
-                    FormsModule,
-                    ReactiveFormsModule,
-                    CoreRouting,
-                ],
-                declarations: [
-                    AssetPipe,
-                    ControlComponent,
-                    CoreModuleComponent,
-                    CustomAsyncPipe,
-                    DefaultContentDirective,
-                    DisposableComponent,
-                    ExistsValidator,
-                    HighlightPipe,
-                    ImagePipe,
-                    JsonFormatterComponent,
-                    LabelAsyncPipe,
-                    LabelDirective,
-                    LabelPipe,
-                    LoggerComponent,
-                    MatchValidator,
-                    PageComponent,
-                    PageNotFoundComponent,
-                    PageOutletComponent,
-                    PublicPipe,
-                    RoutePipe,
-                    SafeStylePipe,
-                    SafeUrlPipe,
-                    SegmentPipe,
-                    SlugAsyncPipe,
-                    SlugPipe,
-                    TranslatePipe,
-                    TrustPipe,
-                    UppercaseDirective,
-                ],
-                exports: [
-                    AssetPipe,
-                    ControlComponent,
-                    CoreModuleComponent,
-                    CustomAsyncPipe,
-                    DefaultContentDirective,
-                    ExistsValidator,
-                    HighlightPipe,
-                    ImagePipe,
-                    JsonFormatterComponent,
-                    LabelAsyncPipe,
-                    LabelDirective,
-                    LabelPipe,
-                    LoggerComponent,
-                    MatchValidator,
-                    PageComponent,
-                    PublicPipe,
-                    RoutePipe,
-                    SafeStylePipe,
-                    SafeUrlPipe,
-                    SegmentPipe,
-                    SlugAsyncPipe,
-                    SlugPipe,
-                    TranslatePipe,
-                    TrustPipe,
-                    UppercaseDirective,
+                    ...modules,
                 ],
                 providers: [
                     { provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
-                    AssetPipe,
-                    AuthService,
-                    ConfigService,
-                    ControlService,
-                    CookieStorageService,
-                    CustomAsyncPipe,
-                    EventDispatcherService,
-                    ExistsValidator,
-                    FormService,
-                    HighlightPipe,
-                    HttpStatusCodeService,
-                    ImagePipe,
-                    LabelPipe,
-                    LabelService,
-                    LocalStorageService,
-                    Logger,
-                    MatchValidator,
-                    MenuService,
-                    OnceService,
-                    PageGuard, StaticGuard,
-                    PageService,
-                    PublicPipe,
-                    RoutePipe,
-                    SafeUrlPipe,
-                    SegmentPipe,
-                    SessionStorageService,
-                    SlugAsyncPipe,
-                    SlugPipe,
-                    StorageService,
-                    TranslatePipe,
-                    TrustPipe,
+                    ...services,
+                    ...pipes,
+                    ...validators,
+                    ...guards,
+                ],
+                declarations: [
+                    ...components,
+                    ...directives,
+                    ...pipes,
+                    ...validators,
+                ],
+                exports: [
+                    ...modules,
+                    ...components,
+                    ...directives,
+                    ...pipes,
+                    ...validators,
                 ],
             },] }
 ];
@@ -4914,6 +4877,65 @@ class DocumentIndex {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @template T
+ */
+class DocumentService extends EntityService {
+    /**
+     * @return {?}
+     */
+    get collection() {
+        return '/api/document';
+    }
+    /**
+     * @param {?} slug
+     * @return {?}
+     */
+    getDetailBySlug(slug) {
+        if (!slug.trim()) {
+            // if not search term, return empty identity array.
+            return of();
+        }
+        return this.get({ slug }).pipe(
+        // tap(x => this.logger.log(`found identities matching "${slug}"`)),
+        switchMap(x => of(x[0])));
+    }
+}
+DocumentService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */ DocumentService.ngInjectableDef = defineInjectable({ factory: function DocumentService_Factory() { return new DocumentService(inject(INJECTOR)); }, token: DocumentService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class Entity {
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class Feature {
+    constructor() {
+        this.readmore = false;
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class Identity {
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class MenuItem {
     /**
      * @param {?=} options
@@ -4932,12 +4954,19 @@ class MenuItem {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class Taxonomy {
+}
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { AuthService, ConfigService, CoreConfig, CORE_CONFIG, DefaultContentDirective, CoreModuleComponent, CoreModule, CoreRouting, CoreService, DisposableComponent, ControlBase, ControlBaseOptions, ControlComponent, ControlService, ExistsValidator, FormService, MatchValidator, UppercaseDirective, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelAsyncPipe, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, EventDispatcherService, MenuItem, MenuService, OnceService, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, AssetPipe, CustomAsyncPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, TranslatePipe, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵb, EntityService as ɵc, IdentityService as ɵd, LinkService as ɵe, TranslateService as ɵa };
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+export { AuthService, ConfigService, CoreConfig, CORE_CONFIG, DefaultContentDirective, CoreModuleComponent, CoreModule, CoreRouting, CoreService, DisposableComponent, ControlBase, ControlBaseOptions, ControlComponent, ControlService, ExistsValidator, FormService, MatchValidator, UppercaseDirective, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelAsyncPipe, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, AssetPipe, CustomAsyncPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, TranslatePipe, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵb, LinkService as ɵc, TranslateService as ɵa };
 
 //# sourceMappingURL=designr-core.js.map

@@ -1,11 +1,48 @@
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-import { __extends } from 'tslib';
-import { Component, Directive, ElementRef, EventEmitter, HostListener, Output, Inject, Input, NgZone, PLATFORM_ID, Renderer2, Injectable, NgModule, Optional, SkipSelf, ViewEncapsulation, ReflectiveInjector, ComponentFactoryResolver, ViewChild, ViewContainerRef, defineInjectable, inject } from '@angular/core';
-import { DisposableComponent } from '@designr/core';
+import { __spread, __extends } from 'tslib';
+import { InjectionToken, Inject, Injectable, Component, Directive, ElementRef, EventEmitter, HostListener, Output, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, NgZone, Input, ViewEncapsulation, ReflectiveInjector, ComponentFactoryResolver, ViewChild, ViewContainerRef, Renderer2 } from '@angular/core';
+import { DisposableComponent, CoreModule } from '@designr/core';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var UIConfig = /** @class */ (function () {
+    function UIConfig(options) {
+        console.log('UIConfig', options);
+        if (options) {
+            Object.assign(this, options);
+        }
+    }
+    return UIConfig;
+}());
+/** @type {?} */
+var UI_CONFIG = new InjectionToken('ui.config');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var UIService = /** @class */ (function () {
+    function UIService(options) {
+        console.log('UIService', options);
+        options = options || {};
+        this.options = new UIConfig(options);
+    }
+    UIService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */
+    UIService.ctorParameters = function () { return [
+        { type: UIConfig, decorators: [{ type: Inject, args: [UI_CONFIG,] }] }
+    ]; };
+    /** @nocollapse */ UIService.ngInjectableDef = defineInjectable({ factory: function UIService_Factory() { return new UIService(inject(UI_CONFIG)); }, token: UIService, providedIn: "root" });
+    return UIService;
+}());
 
 /**
  * @fileoverview added by tsickle
@@ -13,7 +50,7 @@ import { DisposableComponent } from '@designr/core';
  */
 var UIModuleComponent = /** @class */ (function () {
     function UIModuleComponent() {
-        this.version = '0.0.1';
+        this.version = '0.0.2';
     }
     /**
      * @return {?}
@@ -710,39 +747,55 @@ var ModalViewComponent = /** @class */ (function (_super) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+var modules = [
+    CoreModule,
+];
+/** @type {?} */
+var services = [
+    UIService,
+    ModalService,
+];
+/** @type {?} */
+var components = [
+    UIModuleComponent,
+    ModalContainerComponent,
+    ModalViewComponent,
+];
+/** @type {?} */
+var directives = [
+    ClickOutsideDirective,
+    FancyboxDirective,
+    LazyImagesDirective,
+];
 var UIModule = /** @class */ (function () {
     function UIModule(parentModule) {
         if (parentModule) {
             throw new Error('UIModule is already loaded. Import it in the AppModule only');
         }
     }
+    /**
+     * @param {?=} config
+     * @return {?}
+     */
+    UIModule.forRoot = /**
+     * @param {?=} config
+     * @return {?}
+     */
+    function (config) {
+        return {
+            ngModule: UIModule,
+            providers: [
+                { provide: UI_CONFIG, useValue: config },
+            ]
+        };
+    };
     UIModule.decorators = [
         { type: NgModule, args: [{
-                    imports: [
-                        CommonModule,
-                        HttpClientModule,
-                        FormsModule,
-                        ReactiveFormsModule,
-                    ],
-                    declarations: [
-                        ClickOutsideDirective,
-                        UIModuleComponent,
-                        FancyboxDirective,
-                        LazyImagesDirective,
-                        ModalContainerComponent,
-                        ModalViewComponent,
-                    ],
-                    exports: [
-                        ClickOutsideDirective,
-                        UIModuleComponent,
-                        FancyboxDirective,
-                        LazyImagesDirective,
-                        ModalContainerComponent,
-                        ModalViewComponent,
-                    ],
-                    providers: [
-                        ModalService,
-                    ],
+                    imports: __spread(modules),
+                    providers: __spread(services),
+                    declarations: __spread(components, directives),
+                    exports: __spread(modules, components, directives),
                 },] }
     ];
     /** @nocollapse */
@@ -762,6 +815,6 @@ var UIModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { UIModuleComponent, UIModule, ClickOutsideDirective, FancyboxDirective, LazyImagesDirective, ModalContainerComponent, ModalViewComponent, ModalService };
+export { UIConfig, UI_CONFIG, UIService, UIModuleComponent, UIModule, ClickOutsideDirective, FancyboxDirective, LazyImagesDirective, ModalContainerComponent, ModalViewComponent, ModalService };
 
 //# sourceMappingURL=designr-ui.js.map

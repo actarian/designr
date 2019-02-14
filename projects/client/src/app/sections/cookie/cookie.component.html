@@ -1,0 +1,11 @@
+<ng-container *ngIf="!cookieAccepted">
+	<section class="section section--cookie">
+		<div class="container">
+			<div class="group group--cookie">
+				<span>This site uses cookies. By continuing to browse the site, you are agreeing to our use of cookies. </span>
+				<a [routerLink]="'cookie-policy' | slugAsync">Find out more.</a>
+				<button type="button" (click)="acceptCookie();" title="Got It">Got It</button>
+			</div>
+		</div>
+	</section>
+</ng-container>

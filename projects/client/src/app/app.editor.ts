@@ -3,7 +3,7 @@ import { EditorModule } from '@designr/editor';
 
 @NgModule({
 	imports: [
-		EditorModule,
+		EditorModule.forRoot({ enabled: true }),
 	],
 	exports: [EditorModule]
 })

@@ -18,6 +18,8 @@
 			"@designr/core/*": ["dist/designr/core/*"],
 			"@designr/data": ["dist/designr/data"],
 			"@designr/data/*": ["dist/designr/data/*"],
+			"@designr/page": ["dist/designr/page"],
+			"@designr/page/*": ["dist/designr/page/*"],
 			"@designr/ui": ["dist/designr/ui"],
 			"@designr/ui/*": ["dist/designr/ui/*"],
 			"@designr/editor": ["dist/designr/editor"],

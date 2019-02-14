@@ -1,7 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CoreModule } from '@designr/core';
+import { PluginsConfig, PLUGINS_CONFIG } from './config/plugins.config';
 import { PluginsService } from './config/plugins.service';
 import { PluginsModuleComponent } from './plugins-module.component';
 import { FacebookService } from './plugins/facebook/facebook.service';
@@ -14,32 +13,52 @@ import { PayPalService } from './plugins/paypal/paypal.service';
 import { TrustPilotWidgetComponent } from './plugins/trustpilot/trustpilot-widget.component';
 import { TrustPilotService } from './plugins/trustpilot/trustpilot.service';
 
+const modules = [
+	CoreModule,
+];
+
+const services = [
+	PluginsService,
+	FacebookService,
+	GoogleService,
+	GoogleTagManagerService,
+	MapboxService,
+	PayPalService,
+	TrustPilotService,
+];
+
+const components = [
+	PluginsModuleComponent,
+	GoogleTagManagerComponent,
+	PayPalWidgetComponent,
+	TrustPilotWidgetComponent,
+];
+
+const directives = [
+];
+
+const pipes = [
+];
+
+const validators = [
+];
+
+const guards = [
+];
+
 @NgModule({
 	imports: [
-		CommonModule,
-		HttpClientModule,
-		CoreModule,
-	],
-	declarations: [
-		PluginsModuleComponent,
-		GoogleTagManagerComponent,
-		PayPalWidgetComponent,
-		TrustPilotWidgetComponent,
-	],
-	exports: [
-		PluginsModuleComponent,
-		GoogleTagManagerComponent,
-		PayPalWidgetComponent,
-		TrustPilotWidgetComponent,
+		...modules
 	],
 	providers: [
-		PluginsService,
-		FacebookService,
-		GoogleService,
-		GoogleTagManagerService,
-		MapboxService,
-		PayPalService,
-		TrustPilotService,
+		...services
+	],
+	declarations: [
+		...components
+	],
+	exports: [
+		...modules,
+		...components,
 	],
 })
 
@@ -53,4 +72,14 @@ export class PluginsModule {
 		}
 	}
 
+	public static forRoot(
+		config?: PluginsConfig,
+	): ModuleWithProviders {
+		return {
+			ngModule: PluginsModule,
+			providers: [
+				{ provide: PLUGINS_CONFIG, useValue: config },
+			]
+		};
+	}
 }

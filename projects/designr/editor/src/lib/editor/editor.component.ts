@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { ConfigService, ControlBase, ControlBaseOptions, DisposableComponent, FormService, Page, PageResolver, PageResolverService } from '@designr/core';
 import { MarkdownService } from 'ngx-markdown';
 import { takeUntil } from 'rxjs/operators';
+import { EditorConfig, EDITOR_CONFIG } from '../config/editor.config';
 
 @Component({
 	selector: 'core-editor',
@@ -44,6 +45,7 @@ export class EditorComponent extends DisposableComponent implements AfterViewIni
 
 	constructor(
 		@Inject(PLATFORM_ID) private platformId: string,
+		@Inject(EDITOR_CONFIG) private config: EditorConfig,
 		private configService: ConfigService,
 		private markdownService: MarkdownService,
 		private formService: FormService,
@@ -108,7 +110,7 @@ export class EditorComponent extends DisposableComponent implements AfterViewIni
 	@HostListener('document:keydown', ['$event'])
 	onKeydown(e: KeyboardEvent) {
 		if (e.key === 'e' && e.ctrlKey) {
-			// this.editing = this.configService.options.editor && !this.editing;
+			this.editing = this.config.enabled && !this.editing;
 			this.editing = !this.editing;
 			// console.log('AppComponent.document:keydown', e.key, e.ctrlKey, e.altKey, e.code);
 		}

@@ -54,7 +54,7 @@
      */
     var PluginsModuleComponent = /** @class */ (function () {
         function PluginsModuleComponent() {
-            this.version = '0.0.1';
+            this.version = '0.0.2';
         }
         /**
          * @return {?}
@@ -74,6 +74,64 @@
         PluginsModuleComponent.ctorParameters = function () { return []; };
         return PluginsModuleComponent;
     }());
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+    /* global Reflect, Promise */
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b)
+                if (b.hasOwnProperty(p))
+                    d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    function __extends(d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    }
+    function __read(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m)
+            return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
+                ar.push(r.value);
+        }
+        catch (error) {
+            e = { error: error };
+        }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"]))
+                    m.call(i);
+            }
+            finally {
+                if (e)
+                    throw e.error;
+            }
+        }
+        return ar;
+    }
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
+    }
 
     /**
      * @fileoverview added by tsickle
@@ -328,35 +386,6 @@
         /** @nocollapse */ FacebookService.ngInjectableDef = i0.defineInjectable({ factory: function FacebookService_Factory() { return new FacebookService(i0.inject(i0.PLATFORM_ID), i0.inject(PluginsService), i0.inject(i2.LocalStorageService), i0.inject(i2.OnceService), i0.inject(i2.RouteService)); }, token: FacebookService, providedIn: "root" });
         return FacebookService;
     }());
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
-
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
-
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
-    ***************************************************************************** */
-    /* global Reflect, Promise */
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
-                    d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    function __extends(d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    }
 
     /**
      * @fileoverview added by tsickle
@@ -1245,40 +1274,55 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /** @type {?} */
+    var modules = [
+        i2.CoreModule,
+    ];
+    /** @type {?} */
+    var services = [
+        PluginsService,
+        FacebookService,
+        GoogleService,
+        GoogleTagManagerService,
+        MapboxService,
+        PayPalService,
+        TrustPilotService,
+    ];
+    /** @type {?} */
+    var components = [
+        PluginsModuleComponent,
+        GoogleTagManagerComponent,
+        PayPalWidgetComponent,
+        TrustPilotWidgetComponent,
+    ];
     var PluginsModule = /** @class */ (function () {
         function PluginsModule(parentModule) {
             if (parentModule) {
                 throw new Error('PluginsModule is already loaded. Import it in the AppModule only');
             }
         }
+        /**
+         * @param {?=} config
+         * @return {?}
+         */
+        PluginsModule.forRoot = /**
+         * @param {?=} config
+         * @return {?}
+         */
+            function (config) {
+                return {
+                    ngModule: PluginsModule,
+                    providers: [
+                        { provide: PLUGINS_CONFIG, useValue: config },
+                    ]
+                };
+            };
         PluginsModule.decorators = [
             { type: i0.NgModule, args: [{
-                        imports: [
-                            common.CommonModule,
-                            http.HttpClientModule,
-                            i2.CoreModule,
-                        ],
-                        declarations: [
-                            PluginsModuleComponent,
-                            GoogleTagManagerComponent,
-                            PayPalWidgetComponent,
-                            TrustPilotWidgetComponent,
-                        ],
-                        exports: [
-                            PluginsModuleComponent,
-                            GoogleTagManagerComponent,
-                            PayPalWidgetComponent,
-                            TrustPilotWidgetComponent,
-                        ],
-                        providers: [
-                            PluginsService,
-                            FacebookService,
-                            GoogleService,
-                            GoogleTagManagerService,
-                            MapboxService,
-                            PayPalService,
-                            TrustPilotService,
-                        ],
+                        imports: __spread(modules),
+                        providers: __spread(services),
+                        declarations: __spread(components),
+                        exports: __spread(modules, components),
                     },] }
         ];
         /** @nocollapse */

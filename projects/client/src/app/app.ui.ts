@@ -3,7 +3,7 @@ import { UIModule } from '@designr/ui';
 
 @NgModule({
 	imports: [
-		UIModule,
+		UIModule.forRoot({}),
 	],
 	exports: [UIModule]
 })

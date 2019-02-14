@@ -20,7 +20,7 @@ export class DocumentService<T extends Document> extends EntityService<T> {
 		}
 		return this.get({ slug }).pipe(
 			// tap(x => this.logger.log(`found identities matching "${slug}"`)),
-			switchMap(x => x[0])
+			switchMap(x => of(x[0]))
 		);
 	}
 
