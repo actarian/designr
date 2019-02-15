@@ -35,6 +35,7 @@ ___
 | @designr/core    | `ng build @designr/core --watch` |
 | @designr/data    | `ng build @designr/data --watch` |  
 | @designr/editor  | `ng build @designr/editor --watch` |  
+| @designr/page    | `ng build @designr/page --watch` |
 | @designr/plugins | `ng build @designr/plugins --watch` |
 | @designr/ui      | `ng build @designr/ui --watch` |
 
@@ -71,6 +72,19 @@ ___
 ___
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.4.
+
+___
+
+## Publish Libraries
+
+| | |
+|-----------------------|-|
+| /dist/designr/core    | `npm publish --access public` |
+| /dist/designr/data    | `npm publish --access public` |
+| /dist/designr/editor  | `npm publish --access public` |
+| /dist/designr/page    | `npm publish --access public` |
+| /dist/designr/plugins | `npm publish --access public` |
+| /dist/designr/ui      | `npm publish --access public` |
 
 <!--
 
