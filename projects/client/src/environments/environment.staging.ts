@@ -1,8 +1,13 @@
 
 import * as common from './common';
 
-export const environment = {
-	...common.environment,
+const core = {
+	...common.environment.core,
 	production: true,
 	editor: false,
+};
+
+export const environment = {
+	...common.environment,
+	core,
 };

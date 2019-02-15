@@ -1,5 +1,5 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
-import { ConfigService } from '../config/config.service';
+import { CoreService } from '../config/core.service';
 import { SegmentPipe } from './segment.pipe';
 
 @Pipe({
@@ -13,13 +13,13 @@ import { SegmentPipe } from './segment.pipe';
 export class PublicPipe implements PipeTransform {
 
 	constructor(
-		private configService: ConfigService,
+		private coreService: CoreService,
 		private segment: SegmentPipe
 	) { }
 
 	transform(data: any[] | string): string {
 		const segments = this.segment.transform(data);
-		segments.unshift(this.configService.options.public);
+		segments.unshift(this.coreService.options.public);
 		return segments.join('/');
 	}
 

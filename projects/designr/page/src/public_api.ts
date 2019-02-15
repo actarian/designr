@@ -2,8 +2,8 @@
  * Public API Surface of core
  */
 
-export { CommonModule } from '@angular/common';
-export { ModuleWithProviders, NgModule, Optional, SkipSelf, Type } from '@angular/core';
+// export { CommonModule } from '@angular/common';
+// export { ModuleWithProviders, NgModule, Optional, SkipSelf, Type } from '@angular/core';
 export { PageModuleComponent } from './lib/page-module.component';
 export { PageModule } from './lib/page.module';
 export { PageRouting } from './lib/page.routing';

@@ -1,4 +1,5 @@
 import { LocalStorageService, OnceService, RouteService, StorageService } from '@designr/core';
+import { PageService } from '@designr/page';
 import { Observable } from 'rxjs';
 import { PluginsService } from '../../config/plugins.service';
 export declare class FacebookConfig {
@@ -39,11 +40,12 @@ export declare class FacebookService {
     private storageService;
     private onceService;
     private routeService;
+    private pageService;
     authResponse: FacebookAuthResponse;
     storage: StorageService;
     private options;
     private FB;
-    constructor(platformId: string, pluginsService: PluginsService, storageService: LocalStorageService, onceService: OnceService, routeService: RouteService);
+    constructor(platformId: string, pluginsService: PluginsService, storageService: LocalStorageService, onceService: OnceService, routeService: RouteService, pageService: PageService);
     init(): void;
     facebook(): Observable<any>;
     status(): Observable<{}>;

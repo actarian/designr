@@ -1,4 +1,4 @@
-import { NgModule } from '@designr/core';
+import { NgModule } from '@angular/core';
 import { DataModule } from '@designr/data';
 import { environment } from '../environments/environment';
 import { label } from './data/label';
@@ -17,7 +17,7 @@ export const DATA: { [key: string]: any[] } = {
 	imports: [
 		DataModule.forRoot({
 			datas: DATA,
-			memory: environment.memory,
+			memory: environment.data.memory,
 		}),
 	],
 	exports: [DataModule]

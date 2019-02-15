@@ -2,9 +2,9 @@
  * Public API Surface of core
  */
 
-export { CommonModule } from '@angular/common';
-export { HTTP_INTERCEPTORS } from '@angular/common/http';
-export { ModuleWithProviders, NgModule, Optional, SkipSelf, Type } from '@angular/core';
+// export { CommonModule } from '@angular/common';
+// export { HTTP_INTERCEPTORS } from '@angular/common/http';
+// export { ModuleWithProviders, NgModule, Optional, SkipSelf, Type } from '@angular/core';
 export { PluginsConfig, PLUGINS_CONFIG } from './lib/config/plugins.config';
 export { PluginsService } from './lib/config/plugins.service';
 export { PluginsModuleComponent } from './lib/plugins-module.component';

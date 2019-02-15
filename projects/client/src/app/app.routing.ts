@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { ExtraOptions, RouterModule, Routes } from '@angular/router';
+import { environment } from '../environments/environment';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const ROUTES: Routes = [{
@@ -8,12 +9,7 @@ const ROUTES: Routes = [{
 
 @NgModule({
 	imports: [
-		RouterModule.forRoot(ROUTES, {
-			initialNavigation: 'enabled',
-			enableTracing: false,
-			useHash: true,
-		} // environment.routing
-		)
+		RouterModule.forRoot(ROUTES, environment.core.routing as ExtraOptions)
 	],
 	exports: [RouterModule]
 })

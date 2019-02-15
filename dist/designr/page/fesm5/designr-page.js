@@ -1,13 +1,11 @@
 import { NavigationEnd, Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { __spread, __extends } from 'tslib';
 import { Meta, Title } from '@angular/platform-browser';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
-export { CommonModule } from '@angular/common';
+import { isPlatformBrowser, DOCUMENT, CommonModule } from '@angular/common';
 import { DisposableComponent, RouteService, EntityService, HttpStatusCodeService, ImageType, CoreModule } from '@designr/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Component, InjectionToken, Injector, Input, PLATFORM_ID, ViewEncapsulation, Inject, Injectable, NgModule, defineInjectable, inject, Optional, SkipSelf, ViewContainerRef, ComponentFactoryResolver, INJECTOR } from '@angular/core';
-export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -85,8 +83,9 @@ var Page = /** @class */ (function () {
             if (options.related) {
                 /** @type {?} */
                 var related = options.related.map(function (x) {
+                    // const item = new PageIndex(x.page);
                     /** @type {?} */
-                    var item = new PageIndex(x.page);
+                    var item = new PageIndex(x);
                     item.relationType = x.type;
                     return item;
                 });
@@ -556,12 +555,10 @@ var PageService = /** @class */ (function (_super) {
         // console.log('PageOutletComponent.addOrUpdateMetaData', page.id, page.title, page.url);
     };
     /**
-     * @private
      * @param {?} page
      * @return {?}
      */
     PageService.prototype.getSocialImage = /**
-     * @private
      * @param {?} page
      * @return {?}
      */
@@ -575,12 +572,10 @@ var PageService = /** @class */ (function (_super) {
         }));
     };
     /**
-     * @private
      * @param {?} definition
      * @return {?}
      */
     PageService.prototype.addOrUpdateMeta = /**
-     * @private
      * @param {?} definition
      * @return {?}
      */
@@ -600,12 +595,10 @@ var PageService = /** @class */ (function (_super) {
         }
     };
     /**
-     * @private
      * @param {?} definition
      * @return {?}
      */
     PageService.prototype.addOrUpdateLink = /**
-     * @private
      * @param {?} definition
      * @return {?}
      */
@@ -684,7 +677,7 @@ var PageOutletComponent = /** @class */ (function (_super) {
         var component = PageNotFoundComponent;
         if (data.pageResolver) {
             component = data.pageResolver.component;
-            this.routeService.page = data.pageResolver.page;
+            this.pageService.page = data.pageResolver.page;
             /** @type {?} */
             var factory = this.componentFactoryResolver.resolveComponentFactory(component);
             this.factory = factory;
@@ -710,7 +703,7 @@ var PageOutletComponent = /** @class */ (function (_super) {
                     });
                     this.router.resetConfig(config);
                 }
-                this.pageService.addOrUpdateMetaData(this.routeService.page);
+                this.pageService.addOrUpdateMetaData(this.pageService.page);
             }
         } /* else {
             // console.log('PageOutletComponent.setSnapshot 404', data);
@@ -1009,11 +1002,6 @@ var PageRouting = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var modules = [
-    CoreModule,
-    PageRouting,
-];
-/** @type {?} */
 var services = [
     PageService,
 ];
@@ -1053,10 +1041,17 @@ var PageModule = /** @class */ (function () {
     };
     PageModule.decorators = [
         { type: NgModule, args: [{
-                    imports: __spread(modules),
+                    imports: [
+                        CommonModule,
+                        CoreModule,
+                        PageRouting,
+                    ],
                     providers: __spread(services, guards),
                     declarations: __spread(components),
-                    exports: __spread(modules, components),
+                    exports: __spread([
+                        CoreModule,
+                        PageRouting
+                    ], components),
                 },] }
     ];
     /** @nocollapse */

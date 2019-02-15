@@ -13,6 +13,7 @@ import { Page } from './page';
 export class PageService extends EntityService<Page> {
 
 	public options: PageConfig;
+	public page: Page;
 
 	get collection(): string {
 		return '/api/page';
@@ -95,14 +96,11 @@ export class PageService extends EntityService<Page> {
 		if (!page) {
 			return;
 		}
-		// !!!
-		// const fbAppId: string = this.config.plugins && this.config.plugins.facebook ? this.config.plugins.facebook.appId.toString() : '';
 		this.titleService.setTitle(page.title);
 		this.addOrUpdateMeta({ property: 'og:title', content: page.title });
 		this.addOrUpdateMeta({ property: 'og:image', content: this.getSocialImage(page).url });
 		this.addOrUpdateMeta({ property: 'og:image:width', content: '1200' });
 		this.addOrUpdateMeta({ property: 'og:image:height', content: '630' });
-		// this.addOrUpdateMeta({ property: 'fb:app_id', content: fbAppId });
 		this.addOrUpdateMeta({ property: 'og:url', content: page.url || this.origin });
 		const meta = page.meta;
 		if (meta) {
@@ -117,7 +115,7 @@ export class PageService extends EntityService<Page> {
 		// console.log('PageOutletComponent.addOrUpdateMetaData', page.id, page.title, page.url);
 	}
 
-	private getSocialImage(page: Page): Image {
+	getSocialImage(page: Page): Image {
 		const image = page.images ? (
 			page.images.find(i => i.type === ImageType.Share) ||
 			page.images.find(i => i.type === ImageType.Default) ||
@@ -128,7 +126,7 @@ export class PageService extends EntityService<Page> {
 		} as Image;
 	}
 
-	private addOrUpdateMeta(definition: MetaDefinition) {
+	addOrUpdateMeta(definition: MetaDefinition) {
 		const selector = definition.name ? `name="${definition.name}"` : `property="${definition.property}"`;
 		if (this.metaService.getTag(selector)) {
 			if (definition.content) {
@@ -141,7 +139,7 @@ export class PageService extends EntityService<Page> {
 		}
 	}
 
-	private addOrUpdateLink(definition: LinkDefinition) {
+	addOrUpdateLink(definition: LinkDefinition) {
 		const selector = definition.id ? `#${definition.id}` : `[rel="${definition.rel}"]`;
 		if (this.linkService.getTag(selector)) {
 			if (definition.href) {

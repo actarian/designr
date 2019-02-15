@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CoreModule } from '@designr/core';
 import { PluginsConfig, PLUGINS_CONFIG } from './config/plugins.config';
@@ -12,10 +13,6 @@ import { PayPalWidgetComponent } from './plugins/paypal/paypal-widget.component'
 import { PayPalService } from './plugins/paypal/paypal.service';
 import { TrustPilotWidgetComponent } from './plugins/trustpilot/trustpilot-widget.component';
 import { TrustPilotService } from './plugins/trustpilot/trustpilot.service';
-
-const modules = [
-	CoreModule,
-];
 
 const services = [
 	PluginsService,
@@ -48,7 +45,8 @@ const guards = [
 
 @NgModule({
 	imports: [
-		...modules
+		CommonModule,
+		CoreModule,
 	],
 	providers: [
 		...services
@@ -57,7 +55,7 @@ const guards = [
 		...components
 	],
 	exports: [
-		...modules,
+		CoreModule,
 		...components,
 	],
 })

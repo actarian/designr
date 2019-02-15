@@ -4,8 +4,8 @@ import { Injectable, Injector, PLATFORM_ID } from '@angular/core';
 import { makeStateKey, StateKey, TransferState } from '@angular/platform-browser';
 import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { ConfigService } from '../config/config.service';
 import { CoreConfig } from '../config/core.config';
+import { CoreService } from '../config/core.service';
 import { Logger } from '../logger/logger';
 import { Identity } from '../models/identity';
 
@@ -64,7 +64,7 @@ export class ApiService<T extends Identity> {
 	private _config: CoreConfig;
 	get config(): CoreConfig {
 		if (!this._config) {
-			this._config = this.injector.get(ConfigService).options;
+			this._config = this.injector.get(CoreService).options;
 		}
 		return this._config;
 	}

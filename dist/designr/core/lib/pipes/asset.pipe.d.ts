@@ -1,9 +1,9 @@
 import { PipeTransform } from '@angular/core';
-import { ConfigService } from '../config/config.service';
+import { CoreService } from '../config/core.service';
 import { SegmentPipe } from './segment.pipe';
 export declare class AssetPipe implements PipeTransform {
-    private configService;
+    private coreService;
     private segment;
-    constructor(configService: ConfigService, segment: SegmentPipe);
+    constructor(coreService: CoreService, segment: SegmentPipe);
     transform(data: any[] | string): string;
 }

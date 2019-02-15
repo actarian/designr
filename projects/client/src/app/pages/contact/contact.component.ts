@@ -1,6 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ControlBase, FormService, PageComponent } from '@designr/core';
+import { ControlBase, FormService } from '@designr/core';
+import { PageComponent } from '@designr/page';
 
 @Component({
 	selector: 'contact-component',

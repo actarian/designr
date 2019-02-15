@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common/http'), require('@angular/router'), require('@angular/common'), require('@angular/core'), require('@designr/core'), require('rxjs'), require('rxjs/operators')) :
-    typeof define === 'function' && define.amd ? define('@designr/plugins', ['exports', '@angular/common/http', '@angular/router', '@angular/common', '@angular/core', '@designr/core', 'rxjs', 'rxjs/operators'], factory) :
-    (factory((global.designr = global.designr || {}, global.designr.plugins = {}),global.ng.common.http,global.ng.router,global.ng.common,global.ng.core,global.core,global.rxjs,global.rxjs.operators));
-}(this, (function (exports,http,router,common,i0,i2,rxjs,operators) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@designr/page'), require('@angular/router'), require('@angular/common'), require('@angular/core'), require('@designr/core'), require('rxjs'), require('rxjs/operators')) :
+    typeof define === 'function' && define.amd ? define('@designr/plugins', ['exports', '@designr/page', '@angular/router', '@angular/common', '@angular/core', '@designr/core', 'rxjs', 'rxjs/operators'], factory) :
+    (factory((global.designr = global.designr || {}, global.designr.plugins = {}),global.i3,global.ng.router,global.ng.common,global.ng.core,global.core,global.rxjs,global.rxjs.operators));
+}(this, (function (exports,i3,router,common,i0,i2,rxjs,operators) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -146,12 +146,13 @@
         return FacebookConfig;
     }());
     var FacebookService = /** @class */ (function () {
-        function FacebookService(platformId, pluginsService, storageService, onceService, routeService) {
+        function FacebookService(platformId, pluginsService, storageService, onceService, routeService, pageService) {
             this.platformId = platformId;
             this.pluginsService = pluginsService;
             this.storageService = storageService;
             this.onceService = onceService;
             this.routeService = routeService;
+            this.pageService = pageService;
             this.init();
         }
         /**
@@ -167,6 +168,9 @@
                 this.options = Object.assign(new FacebookConfig(), this.pluginsService.options.facebook);
                 this.storage = this.storageService.tryGet();
                 this.authResponse = this.storage.get('facebook');
+                if (this.options.appId) {
+                    this.pageService.addOrUpdateMeta({ property: 'fb:app_id', content: this.options.appId.toString() });
+                }
                 // console.log('FacebookService.authResponse', this.authResponse);
             };
         /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -380,10 +384,11 @@
                 { type: PluginsService },
                 { type: i2.LocalStorageService },
                 { type: i2.OnceService },
-                { type: i2.RouteService }
+                { type: i2.RouteService },
+                { type: i3.PageService }
             ];
         };
-        /** @nocollapse */ FacebookService.ngInjectableDef = i0.defineInjectable({ factory: function FacebookService_Factory() { return new FacebookService(i0.inject(i0.PLATFORM_ID), i0.inject(PluginsService), i0.inject(i2.LocalStorageService), i0.inject(i2.OnceService), i0.inject(i2.RouteService)); }, token: FacebookService, providedIn: "root" });
+        /** @nocollapse */ FacebookService.ngInjectableDef = i0.defineInjectable({ factory: function FacebookService_Factory() { return new FacebookService(i0.inject(i0.PLATFORM_ID), i0.inject(PluginsService), i0.inject(i2.LocalStorageService), i0.inject(i2.OnceService), i0.inject(i2.RouteService), i0.inject(i3.PageService)); }, token: FacebookService, providedIn: "root" });
         return FacebookService;
     }());
 
@@ -1275,10 +1280,6 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var modules = [
-        i2.CoreModule,
-    ];
-    /** @type {?} */
     var services = [
         PluginsService,
         FacebookService,
@@ -1319,10 +1320,15 @@
             };
         PluginsModule.decorators = [
             { type: i0.NgModule, args: [{
-                        imports: __spread(modules),
+                        imports: [
+                            common.CommonModule,
+                            i2.CoreModule,
+                        ],
                         providers: __spread(services),
                         declarations: __spread(components),
-                        exports: __spread(modules, components),
+                        exports: __spread([
+                            i2.CoreModule
+                        ], components),
                     },] }
         ];
         /** @nocollapse */
@@ -1344,12 +1350,6 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
-    exports.HTTP_INTERCEPTORS = http.HTTP_INTERCEPTORS;
-    exports.CommonModule = common.CommonModule;
-    exports.NgModule = i0.NgModule;
-    exports.Optional = i0.Optional;
-    exports.SkipSelf = i0.SkipSelf;
-    exports.Type = i0.Type;
     exports.PluginsConfig = PluginsConfig;
     exports.PLUGINS_CONFIG = PLUGINS_CONFIG;
     exports.PluginsService = PluginsService;

@@ -1,12 +1,10 @@
-export { HTTP_INTERCEPTORS } from '@angular/common/http';
-export { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { __spread, __extends } from 'tslib';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { isPlatformBrowser } from '@angular/common';
-export { CommonModule } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject, ViewEncapsulation, PLATFORM_ID, HostListener } from '@angular/core';
-export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
-import { ConfigService, DisposableComponent, FormService, PageResolverService, CoreModule } from '@designr/core';
+import { DisposableComponent, FormService, CoreModule } from '@designr/core';
+import { PageResolverService, PageService } from '@designr/page';
 import { MarkdownService, MarkdownModule, MarkedOptions } from 'ngx-markdown';
 export { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { takeUntil } from 'rxjs/operators';
@@ -83,11 +81,11 @@ var EditorModuleComponent = /** @class */ (function () {
  */
 var EditorComponent = /** @class */ (function (_super) {
     __extends(EditorComponent, _super);
-    function EditorComponent(platformId, config, configService, markdownService, formService, pageResolverService) {
+    function EditorComponent(platformId, config, pageService, markdownService, formService, pageResolverService) {
         var _this = _super.call(this) || this;
         _this.platformId = platformId;
         _this.config = config;
-        _this.configService = configService;
+        _this.pageService = pageService;
         _this.markdownService = markdownService;
         _this.formService = formService;
         _this.pageResolverService = pageResolverService;
@@ -133,7 +131,7 @@ var EditorComponent = /** @class */ (function (_super) {
         function () {
             if (this._page) {
                 /** @type {?} */
-                var component = this.configService.options.pages[this._page.component];
+                var component = this.pageService.options.pages[this._page.component];
                 if (component) {
                     return component.name;
                 }
@@ -276,7 +274,7 @@ var EditorComponent = /** @class */ (function (_super) {
     EditorComponent.ctorParameters = function () { return [
         { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
         { type: EditorConfig, decorators: [{ type: Inject, args: [EDITOR_CONFIG,] }] },
-        { type: ConfigService },
+        { type: PageService },
         { type: MarkdownService },
         { type: FormService },
         { type: PageResolverService }
@@ -291,11 +289,6 @@ var EditorComponent = /** @class */ (function (_super) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-/** @type {?} */
-var modules = [
-    MarkdownModule,
-    CoreModule,
-];
 /** @type {?} */
 var services = [
     EditorService,
@@ -332,13 +325,16 @@ var EditorModule = /** @class */ (function () {
         return {
             ngModule: EditorModule,
             providers: [
-                { provide: EDITOR_CONFIG, useValue: config || {} },
+                { provide: EDITOR_CONFIG, useValue: config },
             ]
         };
     };
     EditorModule.decorators = [
         { type: NgModule, args: [{
                     imports: [
+                        CommonModule,
+                        FormsModule,
+                        ReactiveFormsModule,
                         MarkdownModule.forRoot({
                             markedOptions: {
                                 provide: MarkedOptions,
@@ -349,7 +345,9 @@ var EditorModule = /** @class */ (function () {
                     ],
                     providers: __spread(services),
                     declarations: __spread(components),
-                    exports: __spread(modules, components),
+                    exports: __spread([
+                        CoreModule
+                    ], components),
                 },] }
     ];
     /** @nocollapse */

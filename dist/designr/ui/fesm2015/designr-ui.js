@@ -1,7 +1,7 @@
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, Directive, ElementRef, EventEmitter, HostListener, Output, ViewEncapsulation, ComponentFactoryResolver, Input, ReflectiveInjector, ViewChild, ViewContainerRef, defineInjectable, inject, PLATFORM_ID, NgZone, Renderer2 } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, Directive, ElementRef, EventEmitter, HostListener, Output, ViewEncapsulation, ComponentFactoryResolver, Input, ReflectiveInjector, ViewChild, ViewContainerRef, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, NgZone, Renderer2 } from '@angular/core';
 import { DisposableComponent, CoreModule } from '@designr/core';
 
 /**
@@ -659,10 +659,6 @@ ModalViewComponent.propDecorators = {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const modules = [
-    CoreModule,
-];
-/** @type {?} */
 const services = [
     UIService,
     ModalService,
@@ -704,7 +700,8 @@ class UIModule {
 UIModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
-                    ...modules,
+                    CommonModule,
+                    CoreModule,
                 ],
                 providers: [
                     ...services
@@ -714,7 +711,7 @@ UIModule.decorators = [
                     ...directives,
                 ],
                 exports: [
-                    ...modules,
+                    CoreModule,
                     ...components,
                     ...directives,
                 ],

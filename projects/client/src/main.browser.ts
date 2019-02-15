@@ -4,7 +4,7 @@ import { ORIGIN_URL } from '@nguniversal/aspnetcore-engine/tokens';
 import { AppModuleBrowser } from './app/app.module.browser';
 import { environment } from './environments/environment';
 
-if (environment.production) {
+if (environment.core.production) {
 	enableProdMode();
 }
 

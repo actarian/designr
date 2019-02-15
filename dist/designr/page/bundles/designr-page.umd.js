@@ -383,8 +383,9 @@
                 if (options.related) {
                     /** @type {?} */
                     var related = options.related.map(function (x) {
+                        // const item = new PageIndex(x.page);
                         /** @type {?} */
-                        var item = new PageIndex(x.page);
+                        var item = new PageIndex(x);
                         item.relationType = x.type;
                         return item;
                     });
@@ -611,12 +612,10 @@
                 // console.log('PageOutletComponent.addOrUpdateMetaData', page.id, page.title, page.url);
             };
         /**
-         * @private
          * @param {?} page
          * @return {?}
          */
         PageService.prototype.getSocialImage = /**
-         * @private
          * @param {?} page
          * @return {?}
          */
@@ -630,12 +629,10 @@
                 }));
             };
         /**
-         * @private
          * @param {?} definition
          * @return {?}
          */
         PageService.prototype.addOrUpdateMeta = /**
-         * @private
          * @param {?} definition
          * @return {?}
          */
@@ -655,12 +652,10 @@
                 }
             };
         /**
-         * @private
          * @param {?} definition
          * @return {?}
          */
         PageService.prototype.addOrUpdateLink = /**
-         * @private
          * @param {?} definition
          * @return {?}
          */
@@ -741,7 +736,7 @@
                 var component = PageNotFoundComponent;
                 if (data.pageResolver) {
                     component = data.pageResolver.component;
-                    this.routeService.page = data.pageResolver.page;
+                    this.pageService.page = data.pageResolver.page;
                     /** @type {?} */
                     var factory = this.componentFactoryResolver.resolveComponentFactory(component);
                     this.factory = factory;
@@ -767,7 +762,7 @@
                             });
                             this.router.resetConfig(config);
                         }
-                        this.pageService.addOrUpdateMetaData(this.routeService.page);
+                        this.pageService.addOrUpdateMetaData(this.pageService.page);
                     }
                 } /* else {
                     // console.log('PageOutletComponent.setSnapshot 404', data);
@@ -1070,11 +1065,6 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var modules = [
-        i2$1.CoreModule,
-        PageRouting,
-    ];
-    /** @type {?} */
     var services = [
         PageService,
     ];
@@ -1114,10 +1104,17 @@
             };
         PageModule.decorators = [
             { type: i0.NgModule, args: [{
-                        imports: __spread(modules),
+                        imports: [
+                            i1.CommonModule,
+                            i2$1.CoreModule,
+                            PageRouting,
+                        ],
                         providers: __spread(services, guards),
                         declarations: __spread(components),
-                        exports: __spread(modules, components),
+                        exports: __spread([
+                            i2$1.CoreModule,
+                            PageRouting
+                        ], components),
                     },] }
         ];
         /** @nocollapse */
@@ -1139,11 +1136,6 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
-    exports.CommonModule = i1.CommonModule;
-    exports.NgModule = i0.NgModule;
-    exports.Optional = i0.Optional;
-    exports.SkipSelf = i0.SkipSelf;
-    exports.Type = i0.Type;
     exports.PageModuleComponent = PageModuleComponent;
     exports.PageModule = PageModule;
     exports.PageRouting = PageRouting;

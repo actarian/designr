@@ -12,7 +12,7 @@ import { AppModule } from './app.module';
 		ServerModule,
 		ServerTransferStateModule,
 		NoopAnimationsModule,
-		// PrebootModule.withConfig(environment.preboot),
+		// PrebootModule.withConfig(environment.core.preboot),
 		/*
 		ServerPrebootModule.recordEvents({ appRoot: 'app-root' }),
 		HttpTransferCacheModule still needs fixes for 5.0

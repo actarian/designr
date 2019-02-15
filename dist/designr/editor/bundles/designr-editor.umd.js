@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common/http'), require('@angular/forms'), require('@angular/animations'), require('@angular/common'), require('@angular/core'), require('@designr/core'), require('ngx-markdown'), require('rxjs/operators')) :
-    typeof define === 'function' && define.amd ? define('@designr/editor', ['exports', '@angular/common/http', '@angular/forms', '@angular/animations', '@angular/common', '@angular/core', '@designr/core', 'ngx-markdown', 'rxjs/operators'], factory) :
-    (factory((global.designr = global.designr || {}, global.designr.editor = {}),global.ng.common.http,global.ng.forms,global.ng.animations,global.ng.common,global.ng.core,global.core,global.ngxMarkdown,global.rxjs.operators));
-}(this, (function (exports,http,forms,animations,common,i0,core,ngxMarkdown,operators) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/forms'), require('@angular/animations'), require('@angular/common'), require('@angular/core'), require('@designr/core'), require('@designr/page'), require('ngx-markdown'), require('rxjs/operators')) :
+    typeof define === 'function' && define.amd ? define('@designr/editor', ['exports', '@angular/forms', '@angular/animations', '@angular/common', '@angular/core', '@designr/core', '@designr/page', 'ngx-markdown', 'rxjs/operators'], factory) :
+    (factory((global.designr = global.designr || {}, global.designr.editor = {}),global.ng.forms,global.ng.animations,global.ng.common,global.ng.core,global.core,global.page,global.ngxMarkdown,global.rxjs.operators));
+}(this, (function (exports,forms,animations,common,i0,core,page,ngxMarkdown,operators) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -136,11 +136,11 @@
      */
     var EditorComponent = /** @class */ (function (_super) {
         __extends(EditorComponent, _super);
-        function EditorComponent(platformId, config, configService, markdownService, formService, pageResolverService) {
+        function EditorComponent(platformId, config, pageService, markdownService, formService, pageResolverService) {
             var _this = _super.call(this) || this;
             _this.platformId = platformId;
             _this.config = config;
-            _this.configService = configService;
+            _this.pageService = pageService;
             _this.markdownService = markdownService;
             _this.formService = formService;
             _this.pageResolverService = pageResolverService;
@@ -158,12 +158,12 @@
             set: /**
              * @param {?} page
              * @return {?}
-             */ function (page) {
+             */ function (page$$1) {
                 var _this = this;
-                this._pageCopy = Object.assign({}, page);
-                this._page = page;
+                this._pageCopy = Object.assign({}, page$$1);
+                this._page = page$$1;
                 if (this._page) {
-                    this.controls = this.formService.getControlsFromOptions(this.getControlsByPage(page));
+                    this.controls = this.formService.getControlsFromOptions(this.getControlsByPage(page$$1));
                     this.group = this.formService.getGroupFromControls(this.controls);
                     this.group.valueChanges.subscribe(function (x) {
                         _this.onAssign(x); // Object.assign(this._page, x);
@@ -183,7 +183,7 @@
              */ function () {
                 if (this._page) {
                     /** @type {?} */
-                    var component = this.configService.options.pages[this._page.component];
+                    var component = this.pageService.options.pages[this._page.component];
                     if (component) {
                         return component.name;
                     }
@@ -200,11 +200,11 @@
          * @param {?} page
          * @return {?}
          */
-            function (page) {
-                return page ? Object.keys(page).filter(function (key) { return typeof page[key] !== 'object'; }).map(function (key, i) {
+            function (page$$1) {
+                return page$$1 ? Object.keys(page$$1).filter(function (key) { return typeof page$$1[key] !== 'object'; }).map(function (key, i) {
                     return {
                         key: key,
-                        value: page[key],
+                        value: page$$1[key],
                         schema: key === 'description' ? 'markdown' : 'text',
                         label: key,
                         placeholder: key,
@@ -327,10 +327,10 @@
             return [
                 { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
                 { type: EditorConfig, decorators: [{ type: i0.Inject, args: [EDITOR_CONFIG,] }] },
-                { type: core.ConfigService },
+                { type: page.PageService },
                 { type: ngxMarkdown.MarkdownService },
                 { type: core.FormService },
-                { type: core.PageResolverService }
+                { type: page.PageResolverService }
             ];
         };
         EditorComponent.propDecorators = {
@@ -343,11 +343,6 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    /** @type {?} */
-    var modules = [
-        ngxMarkdown.MarkdownModule,
-        core.CoreModule,
-    ];
     /** @type {?} */
     var services = [
         EditorService,
@@ -384,13 +379,16 @@
                 return {
                     ngModule: EditorModule,
                     providers: [
-                        { provide: EDITOR_CONFIG, useValue: config || {} },
+                        { provide: EDITOR_CONFIG, useValue: config },
                     ]
                 };
             };
         EditorModule.decorators = [
             { type: i0.NgModule, args: [{
                         imports: [
+                            common.CommonModule,
+                            forms.FormsModule,
+                            forms.ReactiveFormsModule,
                             ngxMarkdown.MarkdownModule.forRoot({
                                 markedOptions: {
                                     provide: ngxMarkdown.MarkedOptions,
@@ -401,7 +399,9 @@
                         ],
                         providers: __spread(services),
                         declarations: __spread(components),
-                        exports: __spread(modules, components),
+                        exports: __spread([
+                            core.CoreModule
+                        ], components),
                     },] }
         ];
         /** @nocollapse */
@@ -423,14 +423,6 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
-    exports.HTTP_INTERCEPTORS = http.HTTP_INTERCEPTORS;
-    exports.FormsModule = forms.FormsModule;
-    exports.ReactiveFormsModule = forms.ReactiveFormsModule;
-    exports.CommonModule = common.CommonModule;
-    exports.NgModule = i0.NgModule;
-    exports.Optional = i0.Optional;
-    exports.SkipSelf = i0.SkipSelf;
-    exports.Type = i0.Type;
     exports.MarkdownModule = ngxMarkdown.MarkdownModule;
     exports.MarkedOptions = ngxMarkdown.MarkedOptions;
     exports.EditorConfig = EditorConfig;

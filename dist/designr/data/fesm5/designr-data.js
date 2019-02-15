@@ -1,4 +1,5 @@
 import { __spread } from 'tslib';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '@designr/core';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
@@ -131,12 +132,6 @@ var MemoryService = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var modules = [
-    HttpClientModule,
-    HttpClientInMemoryWebApiModule,
-    CoreModule,
-];
-/** @type {?} */
 var services = [
     DataService,
 ];
@@ -168,10 +163,18 @@ var DataModule = /** @class */ (function () {
     };
     DataModule.decorators = [
         { type: NgModule, args: [{
-                    imports: __spread(modules),
+                    imports: [
+                        CommonModule,
+                        HttpClientModule,
+                        HttpClientInMemoryWebApiModule,
+                        CoreModule,
+                    ],
                     providers: __spread(services),
                     declarations: __spread(components),
-                    exports: __spread(modules, components),
+                    exports: __spread([
+                        HttpClientInMemoryWebApiModule,
+                        CoreModule
+                    ], components),
                 },] }
     ];
     /** @nocollapse */

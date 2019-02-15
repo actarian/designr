@@ -1,4 +1,5 @@
-import { CoreModule, NgModule, Pages } from '@designr/core';
+import { NgModule } from '@angular/core';
+import { PageModule, Pages } from '@designr/page';
 import { ContactComponent } from './pages/contact/contact.component';
 import { DefaultComponent } from './pages/default/default.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -20,13 +21,13 @@ export const PAGES: Pages = {
 
 @NgModule({
 	imports: [
-		CoreModule.forRoot({
+		PageModule.forRoot({
 			pages: PAGES,
 			defaultPage: DefaultComponent,
 			notFoundPage: NotFoundComponent,
 		}),
 	],
-	exports: [CoreModule]
+	exports: [PageModule]
 })
 
 export class AppPages { }

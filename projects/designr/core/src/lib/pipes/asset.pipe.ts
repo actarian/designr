@@ -1,5 +1,5 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
-import { ConfigService } from '../config/config.service';
+import { CoreService } from '../config/core.service';
 import { SegmentPipe } from './segment.pipe';
 
 @Pipe({
@@ -13,7 +13,7 @@ import { SegmentPipe } from './segment.pipe';
 export class AssetPipe implements PipeTransform {
 
 	constructor(
-		private configService: ConfigService,
+		private coreService: CoreService,
 		private segment: SegmentPipe
 	) { }
 
@@ -22,7 +22,7 @@ export class AssetPipe implements PipeTransform {
 			return data;
 		} else {
 			const segments = this.segment.transform(data);
-			segments.unshift(this.configService.options.assets);
+			segments.unshift(this.coreService.options.assets);
 			return segments.join('/');
 		}
 	}

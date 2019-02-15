@@ -1,11 +1,9 @@
-export { HTTP_INTERCEPTORS } from '@angular/common/http';
-export { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { isPlatformBrowser } from '@angular/common';
-export { CommonModule } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject, ViewEncapsulation, PLATFORM_ID, HostListener } from '@angular/core';
-export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
-import { ConfigService, DisposableComponent, FormService, PageResolverService, CoreModule } from '@designr/core';
+import { DisposableComponent, FormService, CoreModule } from '@designr/core';
+import { PageResolverService, PageService } from '@designr/page';
 import { MarkdownService, MarkdownModule, MarkedOptions } from 'ngx-markdown';
 export { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { takeUntil } from 'rxjs/operators';
@@ -84,16 +82,16 @@ class EditorComponent extends DisposableComponent {
     /**
      * @param {?} platformId
      * @param {?} config
-     * @param {?} configService
+     * @param {?} pageService
      * @param {?} markdownService
      * @param {?} formService
      * @param {?} pageResolverService
      */
-    constructor(platformId, config, configService, markdownService, formService, pageResolverService) {
+    constructor(platformId, config, pageService, markdownService, formService, pageResolverService) {
         super();
         this.platformId = platformId;
         this.config = config;
-        this.configService = configService;
+        this.pageService = pageService;
         this.markdownService = markdownService;
         this.formService = formService;
         this.pageResolverService = pageResolverService;
@@ -132,7 +130,7 @@ class EditorComponent extends DisposableComponent {
     get componentName() {
         if (this._page) {
             /** @type {?} */
-            const component = this.configService.options.pages[this._page.component];
+            const component = this.pageService.options.pages[this._page.component];
             if (component) {
                 return component.name;
             }
@@ -248,7 +246,7 @@ EditorComponent.decorators = [
 EditorComponent.ctorParameters = () => [
     { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
     { type: EditorConfig, decorators: [{ type: Inject, args: [EDITOR_CONFIG,] }] },
-    { type: ConfigService },
+    { type: PageService },
     { type: MarkdownService },
     { type: FormService },
     { type: PageResolverService }
@@ -261,11 +259,6 @@ EditorComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-/** @type {?} */
-const modules = [
-    MarkdownModule,
-    CoreModule,
-];
 /** @type {?} */
 const services = [
     EditorService,
@@ -301,7 +294,7 @@ class EditorModule {
         return {
             ngModule: EditorModule,
             providers: [
-                { provide: EDITOR_CONFIG, useValue: config || {} },
+                { provide: EDITOR_CONFIG, useValue: config },
             ]
         };
     }
@@ -309,6 +302,9 @@ class EditorModule {
 EditorModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
+                    CommonModule,
+                    FormsModule,
+                    ReactiveFormsModule,
                     MarkdownModule.forRoot({
                         markedOptions: {
                             provide: MarkedOptions,
@@ -324,7 +320,7 @@ EditorModule.decorators = [
                     ...components,
                 ],
                 exports: [
-                    ...modules,
+                    CoreModule,
                     ...components,
                 ],
             },] }

@@ -1,15 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@designr/core';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { EditorConfig, EDITOR_CONFIG } from './config/editor.config';
 import { EditorService } from './config/editor.service';
 import { EditorModuleComponent } from './editor-module.component';
 import { EditorComponent } from './editor/editor.component';
-
-const modules = [
-	MarkdownModule,
-	CoreModule,
-];
 
 const services = [
 	EditorService,
@@ -34,6 +31,9 @@ const guards = [
 
 @NgModule({
 	imports: [
+		CommonModule,
+		FormsModule,
+		ReactiveFormsModule,
 		MarkdownModule.forRoot({
 			markedOptions: {
 				provide: MarkedOptions,
@@ -57,7 +57,7 @@ const guards = [
 		...components,
 	],
 	exports: [
-		...modules,
+		CoreModule,
 		...components,
 	],
 })

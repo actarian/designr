@@ -1,4 +1,4 @@
-import { NgModule } from '@designr/core';
+import { NgModule } from '@angular/core';
 import { EditorModule } from '@designr/editor';
 
 @NgModule({

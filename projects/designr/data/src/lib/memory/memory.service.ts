@@ -9,8 +9,8 @@ export class MemoryService implements InMemoryDbService {
 
 	constructor(
 		@Inject(DATA_CONFIG) private config: DataConfig,
-		// @Inject(forwardRef(() => ConfigService)) public configService: ConfigService
-		// private configService: ConfigService,
+		// @Inject(forwardRef(() => DataService)) public dataService: DataService
+		// private dataService: DataService,
 	) {
 		console.log('DatasService', config);
 	}
@@ -23,9 +23,9 @@ export class MemoryService implements InMemoryDbService {
 	parseRequestUrl(url: string, service): ParsedRequestUrl {
 		// !!! REMAPPING
 		/*
-		if (this.configService.options.memory && this.configService.options.memory.remap) {
-			Object.keys(this.configService.options.memory.remap).forEach((k: string) => {
-				url = url.replace(k, this.configService.options.memory.remap[k]);
+		if (this.dataService.options.memory && this.dataService.options.memory.remap) {
+			Object.keys(this.dataService.options.memory.remap).forEach((k: string) => {
+				url = url.replace(k, this.dataService.options.memory.remap[k]);
 			});
 		}
 		*/

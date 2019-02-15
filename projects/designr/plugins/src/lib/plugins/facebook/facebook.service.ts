@@ -4,6 +4,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { LocalStorageService, OnceService, RouteService, StorageService } from '@designr/core';
+import { PageService } from '@designr/page';
 import { from, Observable, of } from 'rxjs';
 import { concatMap, filter } from 'rxjs/operators';
 import { PluginsService } from '../../config/plugins.service';
@@ -61,6 +62,7 @@ export class FacebookService {
 		private storageService: LocalStorageService,
 		private onceService: OnceService,
 		private routeService: RouteService,
+		private pageService: PageService,
 	) {
 		this.init();
 	}
@@ -72,6 +74,9 @@ export class FacebookService {
 		this.options = Object.assign(new FacebookConfig(), this.pluginsService.options.facebook);
 		this.storage = this.storageService.tryGet();
 		this.authResponse = this.storage.get('facebook');
+		if (this.options.appId) {
+			this.pageService.addOrUpdateMeta({ property: 'fb:app_id', content: this.options.appId.toString() });
+		}
 		// console.log('FacebookService.authResponse', this.authResponse);
 	}
 

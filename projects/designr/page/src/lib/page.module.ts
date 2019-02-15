@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CoreModule } from '@designr/core';
 import { PageConfig, PAGE_CONFIG } from './config/page.config';
@@ -9,11 +10,6 @@ import { PageComponent } from './pages/page.component';
 import { PageGuard } from './pages/page.guard';
 import { PageService } from './pages/page.service';
 import { StaticGuard } from './pages/static.guard';
-
-const modules = [
-	CoreModule,
-	PageRouting,
-];
 
 const services = [
 	PageService,
@@ -42,7 +38,9 @@ const guards = [
 
 @NgModule({
 	imports: [
-		...modules,
+		CommonModule,
+		CoreModule,
+		PageRouting,
 	],
 	providers: [
 		...services,
@@ -52,7 +50,8 @@ const guards = [
 		...components,
 	],
 	exports: [
-		...modules,
+		CoreModule,
+		PageRouting,
 		...components,
 	],
 })

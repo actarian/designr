@@ -1,0 +1,23 @@
+<ng-container *ngFor="let item of relatedItems">
+	<section class="section section--item">
+		<div class="background">
+			<img srcset="{{page.images | imageUrl : 'Default' : 'width=991&height=520&rmode=crop'}} 991w,
+							{{page.images | imageUrl : 'Default' : 'width=1199&height=524&rmode=crop'}} 1199w,
+							{{page.images | imageUrl : 'Default' : 'width=1600&height=665&rmode=crop'}} 1520w,
+							{{page.images | imageUrl : 'Default' : 'width=1920&height=654&rmode=crop'}} 1800w" sizes="
+						(max-width: 991px) 991px,
+						(max-width: 1199px) 1199px,
+						(max-width: 1520px) 1520px,
+						1800px" src="{{page.images | imageUrl : 'Default' : 'width=1920&height=654&rmode=crop'}}" alt="{{page.images?.length ? page.images[0].title : ''}}">
+		</div>
+		<div class="container">
+			<div class="group group--headline">
+				<h3 [innerHTML]="item.title"></h3>
+				<h4 [innerHTML]="item.abstract"></h4>
+			</div>
+			<div class="group group--cta">
+				<a [routerLink]="item.slug | slugAsync">{{item.title}}</a>
+			</div>
+		</div>
+	</section>
+</ng-container>

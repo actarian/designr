@@ -28,17 +28,17 @@ export class MapboxService {
 
 	constructor(
 		@Inject(PLATFORM_ID) private platformId: string,
-		private configService: ConfigService,
+		private pluginsService: PluginsService,
 		private zone: NgZone,
 	) {
 		this.init();
 	}
 
 	init(): void {
-		if (!this.configService.options.plugins && !this.configService.options.plugins.mapbox) {
+		if (!this.pluginsService.options.plugins && !this.pluginsService.options.plugins.mapbox) {
 			throw new Error('MapboxService.error missing config object in environment.plugins.mapbox');
 		}
-		this.options = Object.assign(new MapboxConfig(), this.configService.options.plugins.mapbox);
+		this.options = Object.assign(new MapboxConfig(), this.pluginsService.options.plugins.mapbox);
 	}
 
 	getMap(options: MapboxMapOptions): Observable<mapboxgl.Map> {

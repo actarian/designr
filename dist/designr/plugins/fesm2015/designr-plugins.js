@@ -1,9 +1,7 @@
-export { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { PageService } from '@designr/page';
 import { NavigationEnd, Router } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
-export { CommonModule } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, Input, EventEmitter, Output, NgZone, ViewEncapsulation, ElementRef } from '@angular/core';
-export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
 import { LocalStorageService, OnceService, RouteService, CoreModule, DisposableComponent, Logger } from '@designr/core';
 import { from, of, Observable } from 'rxjs';
 import { concatMap, filter, first, map, takeUntil, mergeMap } from 'rxjs/operators';
@@ -95,13 +93,15 @@ class FacebookService {
      * @param {?} storageService
      * @param {?} onceService
      * @param {?} routeService
+     * @param {?} pageService
      */
-    constructor(platformId, pluginsService, storageService, onceService, routeService) {
+    constructor(platformId, pluginsService, storageService, onceService, routeService, pageService) {
         this.platformId = platformId;
         this.pluginsService = pluginsService;
         this.storageService = storageService;
         this.onceService = onceService;
         this.routeService = routeService;
+        this.pageService = pageService;
         this.init();
     }
     /**
@@ -114,6 +114,9 @@ class FacebookService {
         this.options = Object.assign(new FacebookConfig(), this.pluginsService.options.facebook);
         this.storage = this.storageService.tryGet();
         this.authResponse = this.storage.get('facebook');
+        if (this.options.appId) {
+            this.pageService.addOrUpdateMeta({ property: 'fb:app_id', content: this.options.appId.toString() });
+        }
         // console.log('FacebookService.authResponse', this.authResponse);
     }
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -300,9 +303,10 @@ FacebookService.ctorParameters = () => [
     { type: PluginsService },
     { type: LocalStorageService },
     { type: OnceService },
-    { type: RouteService }
+    { type: RouteService },
+    { type: PageService }
 ];
-/** @nocollapse */ FacebookService.ngInjectableDef = defineInjectable({ factory: function FacebookService_Factory() { return new FacebookService(inject(PLATFORM_ID), inject(PluginsService), inject(LocalStorageService), inject(OnceService), inject(RouteService)); }, token: FacebookService, providedIn: "root" });
+/** @nocollapse */ FacebookService.ngInjectableDef = defineInjectable({ factory: function FacebookService_Factory() { return new FacebookService(inject(PLATFORM_ID), inject(PluginsService), inject(LocalStorageService), inject(OnceService), inject(RouteService), inject(PageService)); }, token: FacebookService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -1065,10 +1069,6 @@ TrustPilotWidgetComponent.propDecorators = {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const modules = [
-    CoreModule,
-];
-/** @type {?} */
 const services = [
     PluginsService,
     FacebookService,
@@ -1110,7 +1110,8 @@ class PluginsModule {
 PluginsModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
-                    ...modules
+                    CommonModule,
+                    CoreModule,
                 ],
                 providers: [
                     ...services
@@ -1119,7 +1120,7 @@ PluginsModule.decorators = [
                     ...components
                 ],
                 exports: [
-                    ...modules,
+                    CoreModule,
                     ...components,
                 ],
             },] }

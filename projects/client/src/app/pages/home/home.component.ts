@@ -1,5 +1,5 @@
 import { Component, Injector } from '@angular/core';
-import { PageComponent } from '@designr/core';
+import { PageComponent } from '@designr/page';
 
 @Component({
 	selector: 'home-component',

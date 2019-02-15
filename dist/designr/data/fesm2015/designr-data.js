@@ -1,7 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '@designr/core';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, defineInjectable, inject, NgModule, Optional, SkipSelf } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -124,12 +125,6 @@ MemoryService.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const modules = [
-    HttpClientModule,
-    HttpClientInMemoryWebApiModule,
-    CoreModule,
-];
-/** @type {?} */
 const services = [
     DataService,
 ];
@@ -163,7 +158,10 @@ class DataModule {
 DataModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
-                    ...modules,
+                    CommonModule,
+                    HttpClientModule,
+                    HttpClientInMemoryWebApiModule,
+                    CoreModule,
                 ],
                 providers: [
                     ...services,
@@ -172,7 +170,8 @@ DataModule.decorators = [
                     ...components,
                 ],
                 exports: [
-                    ...modules,
+                    HttpClientInMemoryWebApiModule,
+                    CoreModule,
                     ...components,
                 ],
             },] }

@@ -403,6 +403,8 @@ MIT
 
 @designr/core
 
+@designr/page
+
 @designr/plugins
 
 angular-in-memory-web-api
@@ -432,10 +434,10 @@ THE SOFTWARE.
 
 @designr/data
 
+@designr/editor
+
 ngx-markdown
 MIT
-
-@designr/editor
 
 @designr/ui
 

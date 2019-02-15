@@ -5,7 +5,6 @@ import { ControlBase } from './control-base';
 @Component({
 	selector: 'core-control',
 	templateUrl: './control.component.html',
-	styleUrls: ['./control.component.scss'],
 	providers: [{
 		provide: NG_VALUE_ACCESSOR,
 		useExisting: forwardRef(() => ControlComponent),

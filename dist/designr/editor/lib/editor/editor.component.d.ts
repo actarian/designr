@@ -1,12 +1,13 @@
 import { AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ConfigService, ControlBase, ControlBaseOptions, DisposableComponent, FormService, Page, PageResolverService } from '@designr/core';
+import { ControlBase, ControlBaseOptions, DisposableComponent, FormService } from '@designr/core';
+import { Page, PageResolverService, PageService } from '@designr/page';
 import { MarkdownService } from 'ngx-markdown';
 import { EditorConfig } from '../config/editor.config';
 export declare class EditorComponent extends DisposableComponent implements AfterViewInit {
     private platformId;
     private config;
-    private configService;
+    private pageService;
     private markdownService;
     private formService;
     private pageResolverService;
@@ -17,7 +18,7 @@ export declare class EditorComponent extends DisposableComponent implements Afte
     editing: boolean;
     busy: boolean;
     submitted: boolean;
-    constructor(platformId: string, config: EditorConfig, configService: ConfigService, markdownService: MarkdownService, formService: FormService, pageResolverService: PageResolverService);
+    constructor(platformId: string, config: EditorConfig, pageService: PageService, markdownService: MarkdownService, formService: FormService, pageResolverService: PageResolverService);
     page: Page;
     readonly componentName: string;
     getControlsByPage(page: Page): ControlBaseOptions<any>[];

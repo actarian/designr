@@ -1,13 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { ConfigService } from '../config/config.service';
+import { CoreService } from '../config/core.service';
 export declare class LoggerError extends HttpErrorResponse {
     body?: any;
 }
 export declare class Logger {
-    private configService;
+    private coreService;
     httpError: LoggerError;
     logs: string[];
-    constructor(configService: ConfigService);
+    constructor(coreService: CoreService);
     request(...args: any[]): void;
     log(...args: any[]): void;
     warn(...args: any[]): void;

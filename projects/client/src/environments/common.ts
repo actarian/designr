@@ -1,42 +1,48 @@
 
-export enum AuthStrategy {
-	Bearer = 0,
-	Cookie = 1,
-}
+import { AuthStrategy } from '@designr/core';
 
 export const environment = {
-	transition: {
-		appId: 'app'
+	core: {
+		authStrategy: AuthStrategy.Cookie,
+		assets: '/assets',
+		defaultLanguage: 'it',
+		defaultMarket: 'it',
+		languages: [
+			{ id: 1, name: 'Italiano', lang: 'it' }
+		],
+		public: '/',
+		preboot: {
+			appRoot: 'app-component'
+		},
+		production: false,
+		transition: {
+			appId: 'app'
+		},
+		routing: {
+			initialNavigation: 'enabled',
+			enableTracing: false,
+			useHash: true,
+		},
+		urlStrategy: '',
+		useLang: false,
+		useMarket: false,
+		useServiceWorker: false,
 	},
-	preboot: {
-		appRoot: 'app-component'
+	data: {
+		memory: {
+			apiBase: 'api/',
+			passThruUnknownUrl: true,
+			dataEncapsulation: false,
+			delay: 0,
+			remap: {
+				'/user/views': '/lastview',
+				'/user/destinations': '/destinations',
+			}
+		},
 	},
-	memory: {
-		apiBase: 'api/',
-		passThruUnknownUrl: true,
-		dataEncapsulation: false,
-		delay: 0,
-		remap: {
-			'/user/views': '/lastview',
-			'/user/destinations': '/destinations',
-		}
+	editor: {
+		enabled: true,
 	},
-	assets: '/assets',
-	enableTracing: false,
-	public: '/',
-	useHash: false,
-	useLang: false,
-	useMarket: false,
-	urlStrategy: '',
-	defaultLanguage: 'it',
-	defaultMarket: 'it',
-	languages: [
-		{ id: 1, name: 'Italiano', lang: 'it' }
-	],
-	authStrategy: AuthStrategy.Cookie,
-	production: false,
-	useServiceWorker: false,
-	editor: true,
 	plugins: {
 		facebook: {
 			appId: 2044894462438447,
@@ -94,12 +100,3 @@ export const environment = {
 		},
 	}
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

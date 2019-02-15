@@ -2,18 +2,12 @@
  * Public API Surface of core
  */
 
-export { CommonModule } from '@angular/common';
-export { HTTP_INTERCEPTORS } from '@angular/common/http';
-export { ModuleWithProviders, NgModule, Optional, SkipSelf, Type } from '@angular/core';
-export { FormsModule, ReactiveFormsModule } from '@angular/forms';
-export { AuthService } from './lib/auth/auth.service';
-export { ConfigService } from './lib/config/config.service';
+export { AuthService, AuthStrategy } from './lib/auth/auth.service';
 export { CoreConfig, CORE_CONFIG } from './lib/config/core.config';
+export { CoreService } from './lib/config/core.service';
 export { DefaultContentDirective } from './lib/content/default-content.directive';
 export { CoreModuleComponent } from './lib/core-module.component';
 export { CoreModule } from './lib/core.module';
-export { CoreRouting } from './lib/core.routing';
-export { CoreService } from './lib/core.service';
 export { DisposableComponent } from './lib/disposable/disposable.component';
 export { ControlBase, ControlBaseOptions } from './lib/forms/controls/control-base';
 export { ControlComponent } from './lib/forms/controls/control.component';
@@ -46,18 +40,9 @@ export { MenuItem } from './lib/models/menu-item';
 export { MenuService } from './lib/models/menu.service';
 export { Taxonomy } from './lib/models/taxonomy';
 export { OnceService } from './lib/once/once.service';
-export { Page, PageIndex, PageMeta, PageRelation } from './lib/pages/page';
-export { PageNotFoundComponent } from './lib/pages/page-not-found.component';
-export { PageOutletComponent } from './lib/pages/page-outlet.component';
-export { PageResolver } from './lib/pages/page-resolver';
-export { PageResolverService } from './lib/pages/page-resolver.service';
-export { PageComponent } from './lib/pages/page.component';
-export { PageGuard } from './lib/pages/page.guard';
-export { PageService } from './lib/pages/page.service';
-export { Pages } from './lib/pages/pages';
-export { StaticGuard } from './lib/pages/static.guard';
 export { AssetPipe } from './lib/pipes/asset.pipe';
 export { CustomAsyncPipe } from './lib/pipes/custom-async.pipe';
+export { ImageUrlPipe } from './lib/pipes/image-url.pipe';
 export { ImagePipe } from './lib/pipes/image.pipe';
 export { PublicPipe } from './lib/pipes/public.pipe';
 export { SegmentPipe } from './lib/pipes/segment.pipe';

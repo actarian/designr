@@ -824,10 +824,6 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var modules = [
-        core.CoreModule,
-    ];
-    /** @type {?} */
     var services = [
         UIService,
         ModalService,
@@ -868,10 +864,15 @@
             };
         UIModule.decorators = [
             { type: i0.NgModule, args: [{
-                        imports: __spread(modules),
+                        imports: [
+                            common.CommonModule,
+                            core.CoreModule,
+                        ],
                         providers: __spread(services),
                         declarations: __spread(components, directives),
-                        exports: __spread(modules, components, directives),
+                        exports: __spread([
+                            core.CoreModule
+                        ], components, directives),
                     },] }
         ];
         /** @nocollapse */

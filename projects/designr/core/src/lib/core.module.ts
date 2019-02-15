@@ -3,11 +3,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
-import { ConfigService } from './config/config.service';
 import { CoreConfig, CORE_CONFIG } from './config/core.config';
+import { CoreService } from './config/core.service';
 import { DefaultContentDirective } from './content/default-content.directive';
 import { CoreModuleComponent } from './core-module.component';
-import { CoreRouting } from './core.routing';
 import { DisposableComponent } from './disposable/disposable.component';
 import { ControlComponent } from './forms/controls/control.component';
 import { ControlService } from './forms/controls/control.service';
@@ -28,14 +27,9 @@ import { LoggerComponent } from './logger/logger.component';
 import { EventDispatcherService } from './models/event-dispatcher.service';
 import { MenuService } from './models/menu.service';
 import { OnceService } from './once/once.service';
-import { PageNotFoundComponent } from './pages/page-not-found.component';
-import { PageOutletComponent } from './pages/page-outlet.component';
-import { PageComponent } from './pages/page.component';
-import { PageGuard } from './pages/page.guard';
-import { PageService } from './pages/page.service';
-import { StaticGuard } from './pages/static.guard';
 import { AssetPipe } from './pipes/asset.pipe';
 import { CustomAsyncPipe } from './pipes/custom-async.pipe';
+import { ImageUrlPipe } from './pipes/image-url.pipe';
 import { ImagePipe } from './pipes/image.pipe';
 import { PublicPipe } from './pipes/public.pipe';
 import { SegmentPipe } from './pipes/segment.pipe';
@@ -48,17 +42,9 @@ import { SafeStylePipe } from './trust/safe-style.pipe';
 import { SafeUrlPipe } from './trust/safe-url.pipe';
 import { TrustPipe } from './trust/trust.pipe';
 
-const modules = [
-	CommonModule,
-	HttpClientModule,
-	FormsModule,
-	ReactiveFormsModule,
-	CoreRouting,
-];
-
 const services = [
 	AuthService,
-	ConfigService,
+	CoreService,
 	ControlService,
 	CookieStorageService,
 	EventDispatcherService,
@@ -69,7 +55,6 @@ const services = [
 	Logger,
 	MenuService,
 	OnceService,
-	PageService,
 	SessionStorageService,
 	StorageService,
 ];
@@ -80,9 +65,6 @@ const components = [
 	DisposableComponent,
 	JsonFormatterComponent,
 	LoggerComponent,
-	PageComponent,
-	PageNotFoundComponent,
-	PageOutletComponent,
 ];
 
 const directives = [
@@ -96,6 +78,7 @@ const pipes = [
 	CustomAsyncPipe,
 	HighlightPipe,
 	ImagePipe,
+	ImageUrlPipe,
 	LabelAsyncPipe,
 	LabelPipe,
 	PublicPipe,
@@ -115,20 +98,20 @@ const validators = [
 ];
 
 const guards = [
-	PageGuard,
-	StaticGuard,
 ];
 
 @NgModule({
 	imports: [
-		...modules,
+		CommonModule,
+		HttpClientModule,
+		FormsModule,
+		ReactiveFormsModule,
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
 		...services,
 		...pipes,
 		...validators,
-		...guards,
 	],
 	declarations: [
 		...components,
@@ -137,7 +120,6 @@ const guards = [
 		...validators,
 	],
 	exports: [
-		...modules,
 		...components,
 		...directives,
 		...pipes,

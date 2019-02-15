@@ -1,0 +1,11 @@
+<div class="background" *ngIf="image">
+	<img srcset="
+		{{image.url}}?width=991&height=520&rmode=crop 991w,
+		{{image.url}}?width=1199&height=524&rmode=crop 1199w,
+		{{image.url}}?width=1600&height=665&rmode=crop 1520w,
+		{{image.url}}?width=1920&height=654&rmode=crop 1800w" sizes="
+		(max-width: 991px) 991px,
+		(max-width: 1199px) 1199px,
+		(max-width: 1520px) 1520px,
+		1800px" src="{{image.url}}?width=1920&height=654&rmode=crop" alt="{{image.title}}">
+</div>

@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common/http'), require('@designr/core'), require('angular-in-memory-web-api'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('@designr/data', ['exports', '@angular/common/http', '@designr/core', 'angular-in-memory-web-api', '@angular/core'], factory) :
-    (factory((global.designr = global.designr || {}, global.designr.data = {}),global.ng.common.http,global.core,global.HttpClientInMemoryWebApiModule,global.ng.core));
-}(this, (function (exports,http,core,angularInMemoryWebApi,i0) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@angular/common/http'), require('@designr/core'), require('angular-in-memory-web-api'), require('@angular/core')) :
+    typeof define === 'function' && define.amd ? define('@designr/data', ['exports', '@angular/common', '@angular/common/http', '@designr/core', 'angular-in-memory-web-api', '@angular/core'], factory) :
+    (factory((global.designr = global.designr || {}, global.designr.data = {}),global.ng.common,global.ng.common.http,global.core,global.HttpClientInMemoryWebApiModule,global.ng.core));
+}(this, (function (exports,common,http,core,angularInMemoryWebApi,i0) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -179,12 +179,6 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
-    var modules = [
-        http.HttpClientModule,
-        angularInMemoryWebApi.HttpClientInMemoryWebApiModule,
-        core.CoreModule,
-    ];
-    /** @type {?} */
     var services = [
         DataService,
     ];
@@ -216,10 +210,18 @@
             };
         DataModule.decorators = [
             { type: i0.NgModule, args: [{
-                        imports: __spread(modules),
+                        imports: [
+                            common.CommonModule,
+                            http.HttpClientModule,
+                            angularInMemoryWebApi.HttpClientInMemoryWebApiModule,
+                            core.CoreModule,
+                        ],
                         providers: __spread(services),
                         declarations: __spread(components),
-                        exports: __spread(modules, components),
+                        exports: __spread([
+                            angularInMemoryWebApi.HttpClientInMemoryWebApiModule,
+                            core.CoreModule
+                        ], components),
                     },] }
         ];
         /** @nocollapse */

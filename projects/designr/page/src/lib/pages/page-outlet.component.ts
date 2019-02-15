@@ -39,7 +39,7 @@ export class PageOutletComponent extends DisposableComponent {
 		let component: any = PageNotFoundComponent;
 		if (data.pageResolver) {
 			component = data.pageResolver.component;
-			this.routeService.page = data.pageResolver.page;
+			this.pageService.page = data.pageResolver.page;
 			const factory: ComponentFactory<PageComponent> = this.componentFactoryResolver.resolveComponentFactory(component);
 			this.factory = factory;
 			this.viewContainerRef.clear();
@@ -60,7 +60,7 @@ export class PageOutletComponent extends DisposableComponent {
 					});
 					this.router.resetConfig(config);
 				}
-				this.pageService.addOrUpdateMetaData(this.routeService.page);
+				this.pageService.addOrUpdateMetaData(this.pageService.page);
 			}
 		}/* else {
 			// console.log('PageOutletComponent.setSnapshot 404', data);

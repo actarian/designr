@@ -2,7 +2,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, HostListener, Inject, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ConfigService, ControlBase, ControlBaseOptions, DisposableComponent, FormService, Page, PageResolver, PageResolverService } from '@designr/core';
+import { ControlBase, ControlBaseOptions, DisposableComponent, FormService } from '@designr/core';
+import { Page, PageResolver, PageResolverService, PageService } from '@designr/page';
 import { MarkdownService } from 'ngx-markdown';
 import { takeUntil } from 'rxjs/operators';
 import { EditorConfig, EDITOR_CONFIG } from '../config/editor.config';
@@ -46,7 +47,7 @@ export class EditorComponent extends DisposableComponent implements AfterViewIni
 	constructor(
 		@Inject(PLATFORM_ID) private platformId: string,
 		@Inject(EDITOR_CONFIG) private config: EditorConfig,
-		private configService: ConfigService,
+		private pageService: PageService,
 		private markdownService: MarkdownService,
 		private formService: FormService,
 		private pageResolverService: PageResolverService,
@@ -75,7 +76,7 @@ export class EditorComponent extends DisposableComponent implements AfterViewIni
 
 	get componentName(): string {
 		if (this._page) {
-			const component = this.configService.options.pages[this._page.component];
+			const component = this.pageService.options.pages[this._page.component];
 			if (component) {
 				return component.name;
 			}

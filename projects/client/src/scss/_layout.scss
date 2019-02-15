@@ -1,0 +1,36 @@
+.wrapper {
+	padding-top: 0;
+}
+
+.container {
+	position: relative;
+	width: 100%;
+	max-width: 1040px;
+	margin: 0 auto;
+	padding: 15px;
+}
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
+	margin: 0 -15px;
+
+	&>* {
+		margin-left: 15px;
+		margin-right: 15px;
+	}
+}
+
+section {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	min-height: 200px;
+}
+
+section+section {
+	border-bottom: 1px solid #eee;
+}

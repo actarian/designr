@@ -1,15 +1,13 @@
 import { Location } from '@angular/common';
-import { ComponentFactory, Injector } from '@angular/core';
+import { Injector } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ConfigService } from '../config/config.service';
-import { Page } from '../pages/page';
-import { PageComponent } from '../pages/page.component';
+import { CoreService } from '../config/core.service';
 import { SegmentPipe } from '../pipes/segment.pipe';
 import { TranslateService } from '../translate/translate.service';
 export declare class RouteService {
     private platformId;
-    private configService;
+    private coreService;
     private injector;
     private translateService;
     private location;
@@ -25,11 +23,10 @@ export declare class RouteService {
     readonly languages: Observable<any[]>;
     private _lang;
     private path;
-    page: Page;
     params: Observable<Params>;
     queryParams: Observable<Params>;
     currentMarket: string;
-    constructor(platformId: string, configService: ConfigService, injector: Injector, translateService: TranslateService, location: Location, route: ActivatedRoute, router: Router, segment: SegmentPipe);
+    constructor(platformId: string, coreService: CoreService, injector: Injector, translateService: TranslateService, location: Location, route: ActivatedRoute, router: Router, segment: SegmentPipe);
     private lang;
     readonly currentLang: string;
     pageParams$: BehaviorSubject<Params>;
@@ -44,7 +41,6 @@ export declare class RouteService {
     toSlug(data: any[] | string): any[];
     toParams(data: any): any;
     toData(params: any): any;
-    getParams(): Observable<ComponentFactory<PageComponent>>;
     setLanguage(lang: string, silent?: boolean): void;
     private setLanguages;
     private subscribeToRouter;

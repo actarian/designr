@@ -19,8 +19,8 @@ export function getRequest() {
 	imports: [
 		BrowserAnimationsModule,
 		AppModule,
-		ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production && environment.useServiceWorker }),
-		// PrebootModule.withConfig(environment.preboot),
+		ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.core.production && environment.core.useServiceWorker }),
+		// PrebootModule.withConfig(environment.core.preboot),
 	],
 	providers: [
 		// We need this for our Http calls since they'll be using an ORIGIN_URL provided in main.server

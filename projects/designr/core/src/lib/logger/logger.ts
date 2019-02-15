@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ConfigService } from '../config/config.service';
+import { CoreService } from '../config/core.service';
 
 export class LoggerError extends HttpErrorResponse {
 	body?: any;
@@ -15,13 +15,13 @@ export class Logger {
 	logs: string[] = [];
 
 	constructor(
-		private configService: ConfigService,
+		private coreService: CoreService,
 	) {
 		//
 	}
 
 	request(...args: any[]) {
-		if (!this.configService.options.production) {
+		if (!this.coreService.options.production) {
 			const s = args.join(', ');
 			this.logs.push(s);
 			// console.log.apply(this, ['%c %s', 'background: #dddddd; color: #111'].concat(args));
@@ -29,7 +29,7 @@ export class Logger {
 	}
 
 	log(...args: any[]) {
-		if (!this.configService.options.production) {
+		if (!this.coreService.options.production) {
 			const s = args.join(', ');
 			this.logs.push(s);
 			console.log.apply(this, ['%c%s', 'background: #1976d2; color: #fff; border-radius: 3px; padding: 4px 8px; margin-bottom: 4px;'].concat(args));
@@ -37,7 +37,7 @@ export class Logger {
 	}
 
 	warn(...args: any[]) {
-		if (!this.configService.options.production) {
+		if (!this.coreService.options.production) {
 			const s = args.join(', ');
 			this.logs.push(s);
 			console.log.apply(this, ['%c%s', 'background: #ff5500; color: #fff'].concat(args));
@@ -45,7 +45,7 @@ export class Logger {
 	}
 
 	error(...args: any[]) {
-		if (!this.configService.options.production) {
+		if (!this.coreService.options.production) {
 			const s = args.join(', ');
 			this.logs.push(s);
 			console.error.apply(console, args);
@@ -54,7 +54,7 @@ export class Logger {
 
 	http(error: HttpErrorResponse) {
 		this.httpError = error;
-		if (!this.configService.options.production) {
+		if (!this.coreService.options.production) {
 			this.logs.push(error.message);
 		}
 		console.warn('Logger.http.error', error.status, error.statusText, error.url);

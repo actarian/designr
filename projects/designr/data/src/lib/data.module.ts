@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CoreModule } from '@designr/core';
@@ -6,12 +7,6 @@ import { DataConfig, DATA_CONFIG } from './config/data.config';
 import { DataService } from './config/data.service';
 import { DataModuleComponent } from './data-module.component';
 import { MemoryService } from './memory/memory.service';
-
-const modules = [
-	HttpClientModule,
-	HttpClientInMemoryWebApiModule,
-	CoreModule,
-];
 
 const services = [
 	DataService,
@@ -35,7 +30,10 @@ const guards = [
 
 @NgModule({
 	imports: [
-		...modules,
+		CommonModule,
+		HttpClientModule,
+		HttpClientInMemoryWebApiModule,
+		CoreModule,
 	],
 	providers: [
 		...services,
@@ -44,7 +42,8 @@ const guards = [
 		...components,
 	],
 	exports: [
-		...modules,
+		HttpClientInMemoryWebApiModule,
+		CoreModule,
 		...components,
 	],
 })

@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { __spread, __extends } from 'tslib';
@@ -748,10 +748,6 @@ var ModalViewComponent = /** @class */ (function (_super) {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var modules = [
-    CoreModule,
-];
-/** @type {?} */
 var services = [
     UIService,
     ModalService,
@@ -792,10 +788,15 @@ var UIModule = /** @class */ (function () {
     };
     UIModule.decorators = [
         { type: NgModule, args: [{
-                    imports: __spread(modules),
+                    imports: [
+                        CommonModule,
+                        CoreModule,
+                    ],
                     providers: __spread(services),
                     declarations: __spread(components, directives),
-                    exports: __spread(modules, components, directives),
+                    exports: __spread([
+                        CoreModule
+                    ], components, directives),
                 },] }
     ];
     /** @nocollapse */

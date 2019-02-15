@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CoreModule } from '@designr/core';
 import { UIConfig, UI_CONFIG } from './config/ui.config';
@@ -9,10 +10,6 @@ import { LazyImagesDirective } from './ui/lazy-images/lazy-images.directive';
 import { ModalContainerComponent } from './ui/modal/modal-container.component';
 import { ModalViewComponent } from './ui/modal/modal-view.component';
 import { ModalService } from './ui/modal/modal.service';
-
-const modules = [
-	CoreModule,
-];
 
 const services = [
 	UIService,
@@ -42,7 +39,8 @@ const guards = [
 
 @NgModule({
 	imports: [
-		...modules,
+		CommonModule,
+		CoreModule,
 	],
 	providers: [
 		...services
@@ -52,7 +50,7 @@ const guards = [
 		...directives,
 	],
 	exports: [
-		...modules,
+		CoreModule,
 		...components,
 		...directives,
 	],

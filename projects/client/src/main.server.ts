@@ -11,7 +11,7 @@ import 'zone.js/dist/zone-node';
 import { AppModuleServer } from './app/app.module.server';
 import { environment } from './environments/environment';
 
-if (environment.production) {
+if (environment.core.production) {
 	enableProdMode();
 }
 

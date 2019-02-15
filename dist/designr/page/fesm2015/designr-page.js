@@ -1,12 +1,10 @@
 import { NavigationEnd, Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
-export { CommonModule } from '@angular/common';
+import { isPlatformBrowser, DOCUMENT, CommonModule } from '@angular/common';
 import { DisposableComponent, RouteService, EntityService, HttpStatusCodeService, ImageType, CoreModule } from '@designr/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Component, InjectionToken, Injector, Input, PLATFORM_ID, ViewEncapsulation, Inject, Injectable, NgModule, Optional, SkipSelf, ComponentFactoryResolver, ViewContainerRef, defineInjectable, inject, INJECTOR } from '@angular/core';
-export { NgModule, Optional, SkipSelf, Type } from '@angular/core';
+import { Component, InjectionToken, Injector, Input, PLATFORM_ID, ViewEncapsulation, Inject, Injectable, NgModule, ComponentFactoryResolver, ViewContainerRef, defineInjectable, inject, Optional, SkipSelf, INJECTOR } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -81,8 +79,9 @@ class Page {
             if (options.related) {
                 /** @type {?} */
                 const related = options.related.map((x) => {
+                    // const item = new PageIndex(x.page);
                     /** @type {?} */
-                    const item = new PageIndex(x.page);
+                    const item = new PageIndex(x);
                     item.relationType = x.type;
                     return item;
                 });
@@ -460,7 +459,6 @@ class PageService extends EntityService {
         // console.log('PageOutletComponent.addOrUpdateMetaData', page.id, page.title, page.url);
     }
     /**
-     * @private
      * @param {?} page
      * @return {?}
      */
@@ -474,7 +472,6 @@ class PageService extends EntityService {
         }));
     }
     /**
-     * @private
      * @param {?} definition
      * @return {?}
      */
@@ -494,7 +491,6 @@ class PageService extends EntityService {
         }
     }
     /**
-     * @private
      * @param {?} definition
      * @return {?}
      */
@@ -574,7 +570,7 @@ class PageOutletComponent extends DisposableComponent {
         let component = PageNotFoundComponent;
         if (data.pageResolver) {
             component = data.pageResolver.component;
-            this.routeService.page = data.pageResolver.page;
+            this.pageService.page = data.pageResolver.page;
             /** @type {?} */
             const factory = this.componentFactoryResolver.resolveComponentFactory(component);
             this.factory = factory;
@@ -600,7 +596,7 @@ class PageOutletComponent extends DisposableComponent {
                     });
                     this.router.resetConfig(config);
                 }
-                this.pageService.addOrUpdateMetaData(this.routeService.page);
+                this.pageService.addOrUpdateMetaData(this.pageService.page);
             }
         } /* else {
             // console.log('PageOutletComponent.setSnapshot 404', data);
@@ -842,11 +838,6 @@ PageRouting.decorators = [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const modules = [
-    CoreModule,
-    PageRouting,
-];
-/** @type {?} */
 const services = [
     PageService,
 ];
@@ -887,7 +878,9 @@ class PageModule {
 PageModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
-                    ...modules,
+                    CommonModule,
+                    CoreModule,
+                    PageRouting,
                 ],
                 providers: [
                     ...services,
@@ -897,7 +890,8 @@ PageModule.decorators = [
                     ...components,
                 ],
                 exports: [
-                    ...modules,
+                    CoreModule,
+                    PageRouting,
                     ...components,
                 ],
             },] }
