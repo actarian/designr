@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Logger } from '../logger/logger';
-import { RouteService } from '../routes/route.service';
+import { RouteService } from '../route/route.service';
 import { HttpStatusCodeService } from './http-status-code.service';
 
 @Injectable({

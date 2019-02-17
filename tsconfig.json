@@ -18,14 +18,16 @@
 			"@designr/core/*": ["dist/designr/core/*"],
 			"@designr/data": ["dist/designr/data"],
 			"@designr/data/*": ["dist/designr/data/*"],
-			"@designr/page": ["dist/designr/page"],
-			"@designr/page/*": ["dist/designr/page/*"],
-			"@designr/ui": ["dist/designr/ui"],
-			"@designr/ui/*": ["dist/designr/ui/*"],
 			"@designr/editor": ["dist/designr/editor"],
 			"@designr/editor/*": ["dist/designr/editor/*"],
+			"@designr/page": ["dist/designr/page"],
+			"@designr/page/*": ["dist/designr/page/*"],
 			"@designr/plugins": ["dist/designr/plugins"],
-			"@designr/plugins/*": ["dist/designr/plugins/*"]
+			"@designr/plugins/*": ["dist/designr/plugins/*"],
+			"@designr/section": ["dist/designr/section"],
+			"@designr/section/*": ["dist/designr/section/*"],
+			"@designr/ui": ["dist/designr/ui"],
+			"@designr/ui/*": ["dist/designr/ui/*"]
 		}
 	},
 	"exclude": ["node_modules"],

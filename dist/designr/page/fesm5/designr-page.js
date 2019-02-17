@@ -5,7 +5,26 @@ import { isPlatformBrowser, DOCUMENT, CommonModule } from '@angular/common';
 import { DisposableComponent, RouteService, EntityService, HttpStatusCodeService, ImageType, CoreModule } from '@designr/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Component, InjectionToken, Injector, Input, PLATFORM_ID, ViewEncapsulation, Inject, Injectable, NgModule, defineInjectable, inject, Optional, SkipSelf, ViewContainerRef, ComponentFactoryResolver, INJECTOR } from '@angular/core';
+import { InjectionToken, Component, Injector, Input, PLATFORM_ID, ViewEncapsulation, Inject, Injectable, NgModule, defineInjectable, inject, Optional, SkipSelf, ViewContainerRef, ComponentFactoryResolver, INJECTOR } from '@angular/core';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var PageConfig = /** @class */ (function () {
+    function PageConfig(options) {
+        this.pages = {};
+        console.log('PageConfig', options);
+        if (options) {
+            this.pages = options.pages || {};
+            this.defaultPage = options.defaultPage;
+            this.notFoundPage = options.notFoundPage;
+        }
+    }
+    return PageConfig;
+}());
+/** @type {?} */
+var PAGE_CONFIG = new InjectionToken('page.config');
 
 /**
  * @fileoverview added by tsickle
@@ -33,25 +52,6 @@ var PageModuleComponent = /** @class */ (function () {
     PageModuleComponent.ctorParameters = function () { return []; };
     return PageModuleComponent;
 }());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-var PageConfig = /** @class */ (function () {
-    function PageConfig(options) {
-        this.pages = {};
-        console.log('PageConfig', options);
-        if (options) {
-            this.pages = options.pages || {};
-            this.defaultPage = options.defaultPage;
-            this.notFoundPage = options.notFoundPage;
-        }
-    }
-    return PageConfig;
-}());
-/** @type {?} */
-var PAGE_CONFIG = new InjectionToken('page.config');
 
 /**
  * @fileoverview added by tsickle
@@ -257,7 +257,7 @@ var PageComponent = /** @class */ (function (_super) {
     PageComponent.decorators = [
         { type: Component, args: [{
                     selector: 'core-page',
-                    template: "<h1>I'm a default view!</h1>"
+                    template: "<div class=\"page\">Page not found!</div>"
                 }] }
     ];
     /** @nocollapse */
@@ -287,9 +287,8 @@ var PageNotFoundComponent = /** @class */ (function (_super) {
     PageNotFoundComponent.decorators = [
         { type: Component, args: [{
                     selector: 'page-not-found-component',
-                    template: "<div class=\"container\">\n\t<h3>il file <span>{{url}}</span> non \u00E8 stato trovato</h3>\n</div>\n",
-                    encapsulation: ViewEncapsulation.Emulated,
-                    styles: [""]
+                    template: "<div class=\"page\">Page <span>{{url}}</span> not found</div>",
+                    encapsulation: ViewEncapsulation.Emulated
                 }] }
     ];
     /** @nocollapse */
@@ -532,14 +531,11 @@ var PageService = /** @class */ (function (_super) {
         if (!page) {
             return;
         }
-        // !!!
-        // const fbAppId: string = this.config.plugins && this.config.plugins.facebook ? this.config.plugins.facebook.appId.toString() : '';
         this.titleService.setTitle(page.title);
         this.addOrUpdateMeta({ property: 'og:title', content: page.title });
         this.addOrUpdateMeta({ property: 'og:image', content: this.getSocialImage(page).url });
         this.addOrUpdateMeta({ property: 'og:image:width', content: '1200' });
         this.addOrUpdateMeta({ property: 'og:image:height', content: '630' });
-        // this.addOrUpdateMeta({ property: 'fb:app_id', content: fbAppId });
         this.addOrUpdateMeta({ property: 'og:url', content: page.url || this.origin });
         /** @type {?} */
         var meta = page.meta;
@@ -677,33 +673,33 @@ var PageOutletComponent = /** @class */ (function (_super) {
         var component = PageNotFoundComponent;
         if (data.pageResolver) {
             component = data.pageResolver.component;
-            this.pageService.page = data.pageResolver.page;
+            /** @type {?} */
+            var page = data.pageResolver.page;
             /** @type {?} */
             var factory = this.componentFactoryResolver.resolveComponentFactory(component);
-            this.factory = factory;
             this.viewContainerRef.clear();
             /** @type {?} */
-            var componentRef = this.viewContainerRef.createComponent(this.factory);
+            var componentRef = this.viewContainerRef.createComponent(factory);
             /** @type {?} */
             var instance = componentRef.instance;
-            instance.page = data.pageResolver.page;
+            instance.page = page;
             instance.params = params;
             instance.queryParams = queryParams;
             if (typeof instance['PageInit'] === 'function') {
                 instance['PageInit']();
             }
-            if (data.pageResolver.page) {
+            if (page) {
                 /** @type {?} */
                 var config = this.router.config.slice();
                 /** @type {?} */
-                var slug = data.pageResolver.page.slug;
+                var slug = page.slug;
                 if (slug) {
                     config.push({
-                        path: slug.indexOf('/') === 0 ? slug.substr(1) : slug, component: data.pageResolver.component,
+                        path: slug.indexOf('/') === 0 ? slug.substr(1) : slug, component: component,
                     });
                     this.router.resetConfig(config);
                 }
-                this.pageService.addOrUpdateMetaData(this.pageService.page);
+                this.pageService.addOrUpdateMetaData(page);
             }
         } /* else {
             // console.log('PageOutletComponent.setSnapshot 404', data);
@@ -1048,6 +1044,7 @@ var PageModule = /** @class */ (function () {
                     ],
                     providers: __spread(services, guards),
                     declarations: __spread(components),
+                    entryComponents: __spread(components),
                     exports: __spread([
                         CoreModule,
                         PageRouting
@@ -1071,6 +1068,6 @@ var PageModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PageModuleComponent, PageModule, PageRouting, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, PAGE_CONFIG as ɵb, PageConfig as ɵa, LinkService as ɵc };
+export { PageConfig, PAGE_CONFIG, PageModuleComponent, PageModule, PageRouting, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, LinkService as ɵa };
 
 //# sourceMappingURL=designr-page.js.map

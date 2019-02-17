@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { RouteService } from '../routes/route.service';
+import { RouteService } from '../route/route.service';
 import { AuthService } from './auth.service';
 
 @Injectable({

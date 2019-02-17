@@ -73,41 +73,6 @@
 				}
 			}
 		},
-		"@designr/page": {
-			"root": "projects/designr/page",
-			"sourceRoot": "projects/designr/page/src",
-			"projectType": "library",
-			"prefix": "page",
-			"architect": {
-				"build": {
-					"builder": "@angular-devkit/build-ng-packagr:build",
-					"options": {
-						"tsConfig": "projects/designr/page/tsconfig.lib.json",
-						"project": "projects/designr/page/ng-package.json"
-					}
-				},
-				"test": {
-					"builder": "@angular-devkit/build-angular:karma",
-					"options": {
-						"main": "projects/designr/page/src/test.ts",
-						"tsConfig": "projects/designr/page/tsconfig.spec.json",
-						"karmaConfig": "projects/designr/page/karma.conf.js"
-					}
-				},
-				"lint": {
-					"builder": "@angular-devkit/build-angular:tslint",
-					"options": {
-						"tsConfig": [
-							"projects/designr/page/tsconfig.lib.json",
-							"projects/designr/page/tsconfig.spec.json"
-						],
-						"exclude": [
-              				"**/node_modules/**"
-            			]
-					}
-				}
-			}
-		},
 		"@designr/editor": {
 			"root": "projects/designr/editor",
 			"sourceRoot": "projects/designr/editor/src",
@@ -143,6 +108,41 @@
 				}
 			}
 		},
+		"@designr/page": {
+			"root": "projects/designr/page",
+			"sourceRoot": "projects/designr/page/src",
+			"projectType": "library",
+			"prefix": "page",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-ng-packagr:build",
+					"options": {
+						"tsConfig": "projects/designr/page/tsconfig.lib.json",
+						"project": "projects/designr/page/ng-package.json"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/designr/page/src/test.ts",
+						"tsConfig": "projects/designr/page/tsconfig.spec.json",
+						"karmaConfig": "projects/designr/page/karma.conf.js"
+					}
+				},
+				"lint": {
+					"builder": "@angular-devkit/build-angular:tslint",
+					"options": {
+						"tsConfig": [
+							"projects/designr/page/tsconfig.lib.json",
+							"projects/designr/page/tsconfig.spec.json"
+						],
+						"exclude": [
+              				"**/node_modules/**"
+            			]
+					}
+				}
+			}
+		},
 		"@designr/plugins": {
 			"root": "projects/designr/plugins",
 			"sourceRoot": "projects/designr/plugins/src",
@@ -170,6 +170,41 @@
 						"tsConfig": [
 							"projects/designr/plugins/tsconfig.lib.json",
 							"projects/designr/plugins/tsconfig.spec.json"
+						],
+						"exclude": [
+              				"**/node_modules/**"
+            			]
+					}
+				}
+			}
+		},
+		"@designr/section": {
+			"root": "projects/designr/section",
+			"sourceRoot": "projects/designr/section/src",
+			"projectType": "library",
+			"prefix": "section",
+			"architect": {
+				"build": {
+					"builder": "@angular-devkit/build-ng-packagr:build",
+					"options": {
+						"tsConfig": "projects/designr/section/tsconfig.lib.json",
+						"project": "projects/designr/section/ng-package.json"
+					}
+				},
+				"test": {
+					"builder": "@angular-devkit/build-angular:karma",
+					"options": {
+						"main": "projects/designr/section/src/test.ts",
+						"tsConfig": "projects/designr/section/tsconfig.spec.json",
+						"karmaConfig": "projects/designr/section/karma.conf.js"
+					}
+				},
+				"lint": {
+					"builder": "@angular-devkit/build-angular:tslint",
+					"options": {
+						"tsConfig": [
+							"projects/designr/section/tsconfig.lib.json",
+							"projects/designr/section/tsconfig.spec.json"
 						],
 						"exclude": [
               				"**/node_modules/**"

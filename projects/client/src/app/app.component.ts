@@ -23,7 +23,7 @@ export class AppComponent extends DisposableComponent implements DoCheck, AfterV
 		// private swUpdate: SwUpdate,
 	) {
 		super();
-		RouteService.startTime = this.routeService.getTime();
+		this.routeService.start();
 		// get slugs from bom
 		this.slugService.register().pipe(
 			takeUntil(this.unsubscribe)
@@ -35,20 +35,19 @@ export class AppComponent extends DisposableComponent implements DoCheck, AfterV
 	}
 
 	ngAfterViewChecked() {
-		RouteService.endTime = this.routeService.getTime();
-		// console.log('rendered', RouteService.endTime - RouteService.startTime);
+		this.routeService.end();
 		// console.log(document.getElementsByTagName('body')[0].innerHTML);
 	}
 
 	ngDoCheck() {
 		// called whenever Angular runs change detection
-		// console.log('ngDoCheck');
+		// console.log('AppComponent.ngDoCheck');
 		this.slugService.collect();
 		this.labelService.collect();
 	}
 
 	onPageView(e: GoogleTagManagerPageViewEvent) {
-		console.log(e);
+		console.log('AppComponent.onPageView', e);
 	}
 
 }

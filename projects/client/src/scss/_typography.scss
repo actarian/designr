@@ -1,7 +1,47 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600');
+@import url('https://fonts.googleapis.com/css?family=Judson');
 
 body {
 	font-family: 'Source Sans Pro', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 	font-size: 16px;
 	line-height: 1.2;
+}
+
+.h1 {
+	font-size: 68px;
+	font-weight: 100;
+	line-height: 1;
+	margin-bottom: 10px;
+}
+
+.h2 {
+	font-family: 'Judson', serif;
+	font-size: 52px;
+	font-weight: 200;
+	line-height: 1;
+	margin-bottom: 10px;
+}
+
+.h3 {
+	font-size: 38px;
+	font-weight: 300;
+	margin-bottom: 10px;
+}
+
+.h4 {
+	font-family: 'Judson', serif;
+	font-size: 30px;
+	font-weight: 300;
+	margin-bottom: 10px;
+}
+
+.h5 {
+	font-size: 20px;
+	font-weight: 300;
+	margin-bottom: 10px;
+}
+
+.h6 {
+	font-size: 18px;
+	font-weight: 600;
 }

@@ -2464,6 +2464,19 @@ class RouteService {
             return (time[0] * 1e9 + time[1]) / 1e6;
         }
     }
+    /**
+     * @return {?}
+     */
+    start() {
+        RouteService.startTime = this.getTime();
+    }
+    /**
+     * @return {?}
+     */
+    end() {
+        RouteService.endTime = this.getTime();
+        console.log('RouteService.end', RouteService.endTime - RouteService.startTime);
+    }
 }
 RouteService.decorators = [
     { type: Injectable, args: [{

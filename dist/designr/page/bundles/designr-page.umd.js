@@ -8,6 +8,25 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var PageConfig = /** @class */ (function () {
+        function PageConfig(options) {
+            this.pages = {};
+            console.log('PageConfig', options);
+            if (options) {
+                this.pages = options.pages || {};
+                this.defaultPage = options.defaultPage;
+                this.notFoundPage = options.notFoundPage;
+            }
+        }
+        return PageConfig;
+    }());
+    /** @type {?} */
+    var PAGE_CONFIG = new i0.InjectionToken('page.config');
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var PageModuleComponent = /** @class */ (function () {
         function PageModuleComponent() {
             this.version = '0.0.2';
@@ -88,25 +107,6 @@
             ar = ar.concat(__read(arguments[i]));
         return ar;
     }
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var PageConfig = /** @class */ (function () {
-        function PageConfig(options) {
-            this.pages = {};
-            console.log('PageConfig', options);
-            if (options) {
-                this.pages = options.pages || {};
-                this.defaultPage = options.defaultPage;
-                this.notFoundPage = options.notFoundPage;
-            }
-        }
-        return PageConfig;
-    }());
-    /** @type {?} */
-    var PAGE_CONFIG = new i0.InjectionToken('page.config');
 
     /**
      * @fileoverview added by tsickle
@@ -194,7 +194,7 @@
         PageComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'core-page',
-                        template: "<h1>I'm a default view!</h1>"
+                        template: "<div class=\"page\">Page not found!</div>"
                     }] }
         ];
         /** @nocollapse */
@@ -226,9 +226,8 @@
         PageNotFoundComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'page-not-found-component',
-                        template: "<div class=\"container\">\n\t<h3>il file <span>{{url}}</span> non \u00E8 stato trovato</h3>\n</div>\n",
-                        encapsulation: i0.ViewEncapsulation.Emulated,
-                        styles: [""]
+                        template: "<div class=\"page\">Page <span>{{url}}</span> not found</div>",
+                        encapsulation: i0.ViewEncapsulation.Emulated
                     }] }
         ];
         /** @nocollapse */
@@ -589,14 +588,11 @@
                 if (!page) {
                     return;
                 }
-                // !!!
-                // const fbAppId: string = this.config.plugins && this.config.plugins.facebook ? this.config.plugins.facebook.appId.toString() : '';
                 this.titleService.setTitle(page.title);
                 this.addOrUpdateMeta({ property: 'og:title', content: page.title });
                 this.addOrUpdateMeta({ property: 'og:image', content: this.getSocialImage(page).url });
                 this.addOrUpdateMeta({ property: 'og:image:width', content: '1200' });
                 this.addOrUpdateMeta({ property: 'og:image:height', content: '630' });
-                // this.addOrUpdateMeta({ property: 'fb:app_id', content: fbAppId });
                 this.addOrUpdateMeta({ property: 'og:url', content: page.url || this.origin });
                 /** @type {?} */
                 var meta = page.meta;
@@ -736,33 +732,33 @@
                 var component = PageNotFoundComponent;
                 if (data.pageResolver) {
                     component = data.pageResolver.component;
-                    this.pageService.page = data.pageResolver.page;
+                    /** @type {?} */
+                    var page = data.pageResolver.page;
                     /** @type {?} */
                     var factory = this.componentFactoryResolver.resolveComponentFactory(component);
-                    this.factory = factory;
                     this.viewContainerRef.clear();
                     /** @type {?} */
-                    var componentRef = this.viewContainerRef.createComponent(this.factory);
+                    var componentRef = this.viewContainerRef.createComponent(factory);
                     /** @type {?} */
                     var instance = componentRef.instance;
-                    instance.page = data.pageResolver.page;
+                    instance.page = page;
                     instance.params = params;
                     instance.queryParams = queryParams;
                     if (typeof instance['PageInit'] === 'function') {
                         instance['PageInit']();
                     }
-                    if (data.pageResolver.page) {
+                    if (page) {
                         /** @type {?} */
                         var config = this.router.config.slice();
                         /** @type {?} */
-                        var slug = data.pageResolver.page.slug;
+                        var slug = page.slug;
                         if (slug) {
                             config.push({
-                                path: slug.indexOf('/') === 0 ? slug.substr(1) : slug, component: data.pageResolver.component,
+                                path: slug.indexOf('/') === 0 ? slug.substr(1) : slug, component: component,
                             });
                             this.router.resetConfig(config);
                         }
-                        this.pageService.addOrUpdateMetaData(this.pageService.page);
+                        this.pageService.addOrUpdateMetaData(page);
                     }
                 } /* else {
                     // console.log('PageOutletComponent.setSnapshot 404', data);
@@ -1111,6 +1107,7 @@
                         ],
                         providers: __spread(services, guards),
                         declarations: __spread(components),
+                        entryComponents: __spread(components),
                         exports: __spread([
                             i2$1.CoreModule,
                             PageRouting
@@ -1136,6 +1133,8 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
+    exports.PageConfig = PageConfig;
+    exports.PAGE_CONFIG = PAGE_CONFIG;
     exports.PageModuleComponent = PageModuleComponent;
     exports.PageModule = PageModule;
     exports.PageRouting = PageRouting;
@@ -1151,9 +1150,7 @@
     exports.PageGuard = PageGuard;
     exports.PageService = PageService;
     exports.StaticGuard = StaticGuard;
-    exports.ɵb = PAGE_CONFIG;
-    exports.ɵa = PageConfig;
-    exports.ɵc = LinkService;
+    exports.ɵa = LinkService;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

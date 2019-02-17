@@ -1,6 +1,6 @@
 import { InjectionToken, Type } from '@angular/core';
-import { PageComponent } from '../pages/page.component';
-import { Pages } from '../pages/pages';
+import { Pages } from '../page/page';
+import { PageComponent } from '../page/page.component';
 export declare class PageConfig {
     defaultPage?: Type<PageComponent>;
     notFoundPage?: Type<PageComponent>;

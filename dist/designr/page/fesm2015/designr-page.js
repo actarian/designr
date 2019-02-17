@@ -4,7 +4,28 @@ import { isPlatformBrowser, DOCUMENT, CommonModule } from '@angular/common';
 import { DisposableComponent, RouteService, EntityService, HttpStatusCodeService, ImageType, CoreModule } from '@designr/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Component, InjectionToken, Injector, Input, PLATFORM_ID, ViewEncapsulation, Inject, Injectable, NgModule, ComponentFactoryResolver, ViewContainerRef, defineInjectable, inject, Optional, SkipSelf, INJECTOR } from '@angular/core';
+import { InjectionToken, Component, Injector, Input, PLATFORM_ID, ViewEncapsulation, Inject, Injectable, NgModule, ComponentFactoryResolver, ViewContainerRef, defineInjectable, inject, Optional, SkipSelf, INJECTOR } from '@angular/core';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class PageConfig {
+    /**
+     * @param {?=} options
+     */
+    constructor(options) {
+        this.pages = {};
+        console.log('PageConfig', options);
+        if (options) {
+            this.pages = options.pages || {};
+            this.defaultPage = options.defaultPage;
+            this.notFoundPage = options.notFoundPage;
+        }
+    }
+}
+/** @type {?} */
+const PAGE_CONFIG = new InjectionToken('page.config');
 
 /**
  * @fileoverview added by tsickle
@@ -28,27 +49,6 @@ PageModuleComponent.decorators = [
 ];
 /** @nocollapse */
 PageModuleComponent.ctorParameters = () => [];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class PageConfig {
-    /**
-     * @param {?=} options
-     */
-    constructor(options) {
-        this.pages = {};
-        console.log('PageConfig', options);
-        if (options) {
-            this.pages = options.pages || {};
-            this.defaultPage = options.defaultPage;
-            this.notFoundPage = options.notFoundPage;
-        }
-    }
-}
-/** @type {?} */
-const PAGE_CONFIG = new InjectionToken('page.config');
 
 /**
  * @fileoverview added by tsickle
@@ -211,7 +211,7 @@ class PageComponent extends DisposableComponent {
 PageComponent.decorators = [
     { type: Component, args: [{
                 selector: 'core-page',
-                template: `<h1>I'm a default view!</h1>`
+                template: `<div class="page">Page not found!</div>`
             }] }
 ];
 /** @nocollapse */
@@ -241,9 +241,8 @@ class PageNotFoundComponent extends PageComponent {
 PageNotFoundComponent.decorators = [
     { type: Component, args: [{
                 selector: 'page-not-found-component',
-                template: "<div class=\"container\">\n\t<h3>il file <span>{{url}}</span> non \u00E8 stato trovato</h3>\n</div>\n",
-                encapsulation: ViewEncapsulation.Emulated,
-                styles: [""]
+                template: `<div class="page">Page <span>{{url}}</span> not found</div>`,
+                encapsulation: ViewEncapsulation.Emulated
             }] }
 ];
 /** @nocollapse */
@@ -436,14 +435,11 @@ class PageService extends EntityService {
         if (!page) {
             return;
         }
-        // !!!
-        // const fbAppId: string = this.config.plugins && this.config.plugins.facebook ? this.config.plugins.facebook.appId.toString() : '';
         this.titleService.setTitle(page.title);
         this.addOrUpdateMeta({ property: 'og:title', content: page.title });
         this.addOrUpdateMeta({ property: 'og:image', content: this.getSocialImage(page).url });
         this.addOrUpdateMeta({ property: 'og:image:width', content: '1200' });
         this.addOrUpdateMeta({ property: 'og:image:height', content: '630' });
-        // this.addOrUpdateMeta({ property: 'fb:app_id', content: fbAppId });
         this.addOrUpdateMeta({ property: 'og:url', content: page.url || this.origin });
         /** @type {?} */
         const meta = page.meta;
@@ -570,33 +566,33 @@ class PageOutletComponent extends DisposableComponent {
         let component = PageNotFoundComponent;
         if (data.pageResolver) {
             component = data.pageResolver.component;
-            this.pageService.page = data.pageResolver.page;
+            /** @type {?} */
+            const page = data.pageResolver.page;
             /** @type {?} */
             const factory = this.componentFactoryResolver.resolveComponentFactory(component);
-            this.factory = factory;
             this.viewContainerRef.clear();
             /** @type {?} */
-            const componentRef = this.viewContainerRef.createComponent(this.factory);
+            const componentRef = this.viewContainerRef.createComponent(factory);
             /** @type {?} */
             const instance = componentRef.instance;
-            instance.page = data.pageResolver.page;
+            instance.page = page;
             instance.params = params;
             instance.queryParams = queryParams;
             if (typeof instance['PageInit'] === 'function') {
                 instance['PageInit']();
             }
-            if (data.pageResolver.page) {
+            if (page) {
                 /** @type {?} */
                 const config = this.router.config.slice();
                 /** @type {?} */
-                const slug = data.pageResolver.page.slug;
+                const slug = page.slug;
                 if (slug) {
                     config.push({
-                        path: slug.indexOf('/') === 0 ? slug.substr(1) : slug, component: data.pageResolver.component,
+                        path: slug.indexOf('/') === 0 ? slug.substr(1) : slug, component: component,
                     });
                     this.router.resetConfig(config);
                 }
-                this.pageService.addOrUpdateMetaData(this.pageService.page);
+                this.pageService.addOrUpdateMetaData(page);
             }
         } /* else {
             // console.log('PageOutletComponent.setSnapshot 404', data);
@@ -889,6 +885,9 @@ PageModule.decorators = [
                 declarations: [
                     ...components,
                 ],
+                entryComponents: [
+                    ...components,
+                ],
                 exports: [
                     CoreModule,
                     PageRouting,
@@ -911,6 +910,6 @@ PageModule.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PageModuleComponent, PageModule, PageRouting, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, PAGE_CONFIG as ɵb, PageConfig as ɵa, LinkService as ɵc };
+export { PageConfig, PAGE_CONFIG, PageModuleComponent, PageModule, PageRouting, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, LinkService as ɵa };
 
 //# sourceMappingURL=designr-page.js.map

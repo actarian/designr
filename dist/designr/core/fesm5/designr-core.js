@@ -2973,6 +2973,25 @@ var RouteService = /** @class */ (function () {
             return (time[0] * 1e9 + time[1]) / 1e6;
         }
     };
+    /**
+     * @return {?}
+     */
+    RouteService.prototype.start = /**
+     * @return {?}
+     */
+    function () {
+        RouteService.startTime = this.getTime();
+    };
+    /**
+     * @return {?}
+     */
+    RouteService.prototype.end = /**
+     * @return {?}
+     */
+    function () {
+        RouteService.endTime = this.getTime();
+        console.log('RouteService.end', RouteService.endTime - RouteService.startTime);
+    };
     RouteService.decorators = [
         { type: Injectable, args: [{
                     providedIn: 'root'

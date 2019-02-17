@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PageNotFoundComponent } from './pages/page-not-found.component';
-import { PageOutletComponent } from './pages/page-outlet.component';
-import { PageResolverService } from './pages/page-resolver.service';
-import { PageGuard } from './pages/page.guard';
-import { StaticGuard } from './pages/static.guard';
+import { PageNotFoundComponent } from './page/page-not-found.component';
+import { PageOutletComponent } from './page/page-outlet.component';
+import { PageResolverService } from './page/page-resolver.service';
+import { PageGuard } from './page/page.guard';
+import { StaticGuard } from './page/static.guard';
 
 const routes: Routes = [
 	{ path: 'page/:id', component: PageOutletComponent, resolve: { pageResolver: PageResolverService } },

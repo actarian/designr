@@ -1,10 +1,29 @@
-a {
+a,
+button,
+.btn {
 	display: inline-block;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	transition: all ease-in-out 350ms;
 
 	&,
 	&:active,
+	&:focus,
 	&:hover,
 	&:visited {
 		color: inherit;
+		outline: none;
 	}
+
+	&:hover {
+		box-shadow: 0 10px 10px -5px rgba(0, 0, 0, 0.15);
+	}
+}
+
+.btn--cta {
+	padding: 5px 10px;
+	border-radius: 4px;
+	background: #888;
+	color: #fff;
 }

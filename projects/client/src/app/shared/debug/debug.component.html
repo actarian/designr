@@ -1,0 +1,15 @@
+<section class="section section--debug">
+	<div class="container">
+		<div class="group group--cta">
+			<button class="btn btn--cta" type="button" (click)="debug.active = !debug.active" #debug>Page</button>
+		</div>
+		<ng-container *ngIf="debug.active">
+			<div class="group group--meta">
+				<ul>
+					<li *ngFor="let item of page.meta | keyvalue"><b>{{item.key}}</b>&nbsp;<span>{{item.value}}</span></li>
+				</ul>
+			</div>
+			<json-formatter [json]="page"></json-formatter>
+		</ng-container>
+	</div>
+</section>

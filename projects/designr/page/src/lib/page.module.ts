@@ -4,12 +4,12 @@ import { CoreModule } from '@designr/core';
 import { PageConfig, PAGE_CONFIG } from './config/page.config';
 import { PageModuleComponent } from './page-module.component';
 import { PageRouting } from './page.routing';
-import { PageNotFoundComponent } from './pages/page-not-found.component';
-import { PageOutletComponent } from './pages/page-outlet.component';
-import { PageComponent } from './pages/page.component';
-import { PageGuard } from './pages/page.guard';
-import { PageService } from './pages/page.service';
-import { StaticGuard } from './pages/static.guard';
+import { PageNotFoundComponent } from './page/page-not-found.component';
+import { PageOutletComponent } from './page/page-outlet.component';
+import { PageComponent } from './page/page.component';
+import { PageGuard } from './page/page.guard';
+import { PageService } from './page/page.service';
+import { StaticGuard } from './page/static.guard';
 
 const services = [
 	PageService,
@@ -47,6 +47,9 @@ const guards = [
 		...guards,
 	],
 	declarations: [
+		...components,
+	],
+	entryComponents: [
 		...components,
 	],
 	exports: [

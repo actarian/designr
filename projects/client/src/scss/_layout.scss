@@ -21,16 +21,3 @@
 		margin-right: 15px;
 	}
 }
-
-section {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: center;
-	min-height: 200px;
-}
-
-section+section {
-	border-bottom: 1px solid #eee;
-}

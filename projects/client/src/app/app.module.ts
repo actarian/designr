@@ -12,16 +12,17 @@ import { AppEditor } from './app.editor';
 import { AppPages, pages } from './app.pages';
 import { AppPlugins } from './app.plugins';
 import { AppRouting } from './app.routing';
+import { AppSections, sections } from './app.sections';
 import { AppUI } from './app.ui';
-import { ContentComponent } from './common/content/content.component';
-import { CookieComponent } from './common/cookie/cookie.component';
-import { DebugComponent } from './common/debug/debug.component';
-import { FeatureComponent } from './common/feature/feature.component';
-import { FooterComponent } from './common/footer/footer.component';
-import { HeaderComponent } from './common/header/header.component';
-import { HeroComponent } from './common/hero/hero.component';
-import { PictureComponent } from './common/picture/picture.component';
-import { RelatedComponent } from './common/related/related.component';
+import { ContentComponent } from './shared/content/content.component';
+import { CookieComponent } from './shared/cookie/cookie.component';
+import { DebugComponent } from './shared/debug/debug.component';
+import { FeatureComponent } from './shared/feature/feature.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { HeroComponent } from './shared/hero/hero.component';
+import { PictureComponent } from './shared/picture/picture.component';
+import { RelatedComponent } from './shared/related/related.component';
 
 const modules = [
 	CommonModule,
@@ -31,6 +32,7 @@ const modules = [
 	AppCore,
 	AppDatas,
 	AppRouting, // first
+	AppSections,
 	AppPages,
 	AppEditor,
 	AppPlugins,
@@ -40,7 +42,7 @@ const modules = [
 const services = [
 ];
 
-const sections: Type<DisposableComponent>[] = [
+const shared: Type<DisposableComponent>[] = [
 	ContentComponent,
 	CookieComponent,
 	DebugComponent,
@@ -50,9 +52,6 @@ const sections: Type<DisposableComponent>[] = [
 	HeroComponent,
 	PictureComponent,
 	RelatedComponent,
-];
-
-const components = [
 ];
 
 const directives = [
@@ -76,11 +75,13 @@ const guards = [
 	providers: [],
 	declarations: [
 		AppComponent,
-		...sections,
 		...pages,
+		...sections,
+		...shared,
 	],
 	entryComponents: [
 		...pages,
+		...sections,
 	]
 })
 
