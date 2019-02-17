@@ -37,6 +37,7 @@ ___
 | @designr/editor  | `ng build @designr/editor --watch` |  
 | @designr/page    | `ng build @designr/page --watch` |
 | @designr/plugins | `ng build @designr/plugins --watch` |
+| @designr/section | `ng build @designr/section --watch` |
 | @designr/ui      | `ng build @designr/ui --watch` |
 
 ___
@@ -84,6 +85,7 @@ ___
 | /dist/designr/editor  | `npm publish --access public` |
 | /dist/designr/page    | `npm publish --access public` |
 | /dist/designr/plugins | `npm publish --access public` |
+| /dist/designr/section | `npm publish --access public` |
 | /dist/designr/ui      | `npm publish --access public` |
 
 <!--
