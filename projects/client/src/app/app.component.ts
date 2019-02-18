@@ -1,5 +1,5 @@
 import { AfterViewChecked, Component, DoCheck, Inject, PLATFORM_ID } from '@angular/core';
-import { DisposableComponent, Label, LabelService, LocalStorageService, RouteService, SlugService } from '@designr/core';
+import { DisposableComponent, Label, LabelService, RouteService, SlugService } from '@designr/core';
 import { GoogleTagManagerPageViewEvent } from '@designr/plugins';
 // import { SwUpdate } from '@angular/service-worker';
 import { takeUntil } from 'rxjs/operators';
@@ -15,7 +15,6 @@ export class AppComponent extends DisposableComponent implements DoCheck, AfterV
 
 	constructor(
 		@Inject(PLATFORM_ID) private platformId: string,
-		private storageService: LocalStorageService,
 		private slugService: SlugService,
 		private labelService: LabelService<Label>,
 		private routeService: RouteService,
