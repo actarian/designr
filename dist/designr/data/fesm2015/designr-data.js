@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from '@designr/core';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InjectionToken, Inject, Injectable, Component, defineInjectable, inject, NgModule, Optional, SkipSelf } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -98,9 +98,9 @@ class MemoryService {
     parseRequestUrl(url, service) {
         // !!! REMAPPING
         /*
-                if (this.configService.options.memory && this.configService.options.memory.remap) {
-                    Object.keys(this.configService.options.memory.remap).forEach((k: string) => {
-                        url = url.replace(k, this.configService.options.memory.remap[k]);
+                if (this.dataService.options.memory && this.dataService.options.memory.remap) {
+                    Object.keys(this.dataService.options.memory.remap).forEach((k: string) => {
+                        url = url.replace(k, this.dataService.options.memory.remap[k]);
                     });
                 }
                 */

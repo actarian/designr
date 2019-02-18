@@ -149,9 +149,9 @@
             function (url, service) {
                 // !!! REMAPPING
                 /*
-                        if (this.configService.options.memory && this.configService.options.memory.remap) {
-                            Object.keys(this.configService.options.memory.remap).forEach((k: string) => {
-                                url = url.replace(k, this.configService.options.memory.remap[k]);
+                        if (this.dataService.options.memory && this.dataService.options.memory.remap) {
+                            Object.keys(this.dataService.options.memory.remap).forEach((k: string) => {
+                                url = url.replace(k, this.dataService.options.memory.remap[k]);
                             });
                         }
                         */
