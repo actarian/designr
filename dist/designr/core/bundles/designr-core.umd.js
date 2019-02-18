@@ -772,21 +772,12 @@
      */
     var CoreTransitionConfig = /** @class */ (function () {
         function CoreTransitionConfig(options) {
-            console.log('CoreTransitionConfig', options);
+            // console.log('CoreTransitionConfig', options);
             if (options) {
                 Object.assign(this, options);
             }
         }
         return CoreTransitionConfig;
-    }());
-    var CorePrebootConfig = /** @class */ (function () {
-        function CorePrebootConfig(options) {
-            console.log('CorePrebootConfig', options);
-            if (options) {
-                Object.assign(this, options);
-            }
-        }
-        return CorePrebootConfig;
     }());
     var CoreConfig = /** @class */ (function () {
         function CoreConfig(options) {
@@ -801,13 +792,12 @@
             this.urlStrategy = '';
             this.useLang = false;
             this.useMarket = false;
-            console.log('CoreConfig', options);
+            // console.log('CoreConfig', options);
             if (options) {
-                this.preboot = new CorePrebootConfig(options.preboot);
+                Object.assign(this, options);
                 this.transition = new CoreTransitionConfig(options.transition);
             }
             else {
-                this.preboot = new CorePrebootConfig();
                 this.transition = new CoreTransitionConfig();
             }
         }
@@ -822,7 +812,7 @@
      */
     var CoreService = /** @class */ (function () {
         function CoreService(options) {
-            console.log('CoreService', options);
+            // console.log('CoreService', options);
             options = options || {};
             // options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
             // options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;

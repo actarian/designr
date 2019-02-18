@@ -6,12 +6,8 @@ export declare class Language {
     lang?: string;
 }
 export declare class CoreTransitionConfig {
-    appId?: string;
+    appId: string;
     constructor(options?: CoreTransitionConfig);
-}
-export declare class CorePrebootConfig {
-    appRoot?: string;
-    constructor(options?: CorePrebootConfig);
 }
 export declare class CoreConfig {
     assets?: string;
@@ -20,7 +16,6 @@ export declare class CoreConfig {
     defaultMarket?: string;
     languages?: Language[];
     origin?: string;
-    preboot?: CorePrebootConfig;
     production?: boolean;
     public?: string;
     transition?: CoreTransitionConfig;

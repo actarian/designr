@@ -3,7 +3,7 @@ import { InjectionToken } from '@angular/core';
 export class UIConfig {
 
 	constructor(options?: UIConfig) {
-		console.log('UIConfig', options);
+		// console.log('UIConfig', options);
 		if (options) {
 			Object.assign(this, options);
 		}

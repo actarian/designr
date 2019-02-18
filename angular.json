@@ -287,10 +287,7 @@
 							"extractLicenses": false,
 							"vendorChunk": false,
 							"buildOptimizer": false,
-							"fileReplacements": [{
-								"replace": "projects/client/src/environments/environment.ts",
-								"with": "projects/client/src/environments/environment.development.ts"
-							}],
+							"fileReplacements": [{ "replace": "projects/client/src/environments/environment.ts", "with": "projects/client/src/environments/environment.development.ts" }],
 							"serviceWorker": true
 						},
 						"staging": {
@@ -304,10 +301,7 @@
 							"extractLicenses": true,
 							"vendorChunk": false,
 							"buildOptimizer": true,
-							"fileReplacements": [{
-								"replace": "projects/client/src/environments/environment.ts",
-								"with": "projects/client/src/environments/environment.staging.ts"
-							}],
+							"fileReplacements": [{ "replace": "projects/client/src/environments/environment.ts", "with": "projects/client/src/environments/environment.staging.ts" }],
 							"serviceWorker": true
 						},
 						"production": {
@@ -321,19 +315,13 @@
 							"extractLicenses": true,
 							"vendorChunk": false,
 							"buildOptimizer": true,
-							"fileReplacements": [{
-								"replace": "projects/client/src/environments/environment.ts",
-								"with": "projects/client/src/environments/environment.production.ts"
-							}],
+							"fileReplacements": [{ "replace": "projects/client/src/environments/environment.ts", "with": "projects/client/src/environments/environment.production.ts" }],
 							"serviceWorker": true
 						},
 						"docs": {
 							"baseHref": "/designr/",
 							"deployUrl": "/designr/",
-							"fileReplacements": [{
-								"replace": "projects/client/src/environments/environment.ts",
-								"with": "projects/client/src/environments/environment.docs.ts"
-                			}],
+							"fileReplacements": [{ "replace": "projects/client/src/environments/environment.ts", "with": "projects/client/src/environments/environment.docs.ts" }],
 							"optimization": true,
 							"outputPath": "docs",
 							"outputHashing": "all",
@@ -345,11 +333,7 @@
 							"vendorChunk": false,
 							"buildOptimizer": true,
 							"serviceWorker": false,
-							"budgets": [{
-								"type": "initial",
-								"maximumWarning": "2mb",
-								"maximumError": "5mb"
-                			}]
+							"budgets": [{ "type": "initial", "maximumWarning": "2mb", "maximumError": "5mb" }]
 						}
 					}
 				},
@@ -415,10 +399,7 @@
 							"namedChunks": false,
 							"extractLicenses": true,
 							"vendorChunk": false,
-							"fileReplacements": [{
-								"replace": "projects/client/src/environments/environment.ts",
-								"with": "projects/client/src/environments/environment.development.ts"
-							}]
+							"fileReplacements": [{ "replace": "projects/client/src/environments/environment.ts", "with": "projects/client/src/environments/environment.development.ts" }]
 						},
 						"staging": {
 							"outputPath": "dist/staging/server",
@@ -428,10 +409,7 @@
 							"namedChunks": false,
 							"extractLicenses": true,
 							"vendorChunk": false,
-							"fileReplacements": [{
-								"replace": "projects/client/src/environments/environment.ts",
-								"with": "projects/client/src/environments/environment.staging.ts"
-							}]
+							"fileReplacements": [{ "replace": "projects/client/src/environments/environment.ts", "with": "projects/client/src/environments/environment.staging.ts" }]
 						},
 						"production": {
 							"outputPath": "dist/production/server",
@@ -441,10 +419,7 @@
 							"namedChunks": false,
 							"extractLicenses": true,
 							"vendorChunk": false,
-							"fileReplacements": [{
-								"replace": "projects/client/src/environments/environment.ts",
-								"with": "projects/client/src/environments/environment.production.ts"
-							}]
+							"fileReplacements": [{ "replace": "projects/client/src/environments/environment.ts", "with": "projects/client/src/environments/environment.production.ts" }]
 						}
 					}
 				},

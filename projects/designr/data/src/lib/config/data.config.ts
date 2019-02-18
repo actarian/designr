@@ -9,7 +9,7 @@ export class DataConfig {
 	memory?: InMemoryBackendConfigArgs;
 
 	constructor(options?: DataConfig) {
-		console.log('DataConfig', options);
+		// console.log('DataConfig', options);
 		if (options) {
 			this.datas = options.datas || {};
 		}

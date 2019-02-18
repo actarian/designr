@@ -5,7 +5,7 @@ export class SectionConfig {
 	sections?: Sections = {};
 
 	constructor(options?: SectionConfig) {
-		console.log('SectionConfig', options);
+		// console.log('SectionConfig', options);
 		if (options) {
 			this.sections = options.sections || {};
 		}

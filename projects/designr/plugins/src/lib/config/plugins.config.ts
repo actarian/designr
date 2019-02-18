@@ -16,7 +16,7 @@ export class PluginsConfig {
 	trustPilot?: TrustPilotConfig;
 
 	constructor(options?: PluginsConfig) {
-		console.log('PluginsConfig', options);
+		// console.log('PluginsConfig', options);
 		if (options) {
 			Object.assign(this, options);
 		}

@@ -642,18 +642,7 @@ class CoreTransitionConfig {
      * @param {?=} options
      */
     constructor(options) {
-        console.log('CoreTransitionConfig', options);
-        if (options) {
-            Object.assign(this, options);
-        }
-    }
-}
-class CorePrebootConfig {
-    /**
-     * @param {?=} options
-     */
-    constructor(options) {
-        console.log('CorePrebootConfig', options);
+        // console.log('CoreTransitionConfig', options);
         if (options) {
             Object.assign(this, options);
         }
@@ -676,13 +665,12 @@ class CoreConfig {
         this.urlStrategy = '';
         this.useLang = false;
         this.useMarket = false;
-        console.log('CoreConfig', options);
+        // console.log('CoreConfig', options);
         if (options) {
-            this.preboot = new CorePrebootConfig(options.preboot);
+            Object.assign(this, options);
             this.transition = new CoreTransitionConfig(options.transition);
         }
         else {
-            this.preboot = new CorePrebootConfig();
             this.transition = new CoreTransitionConfig();
         }
     }
@@ -699,7 +687,7 @@ class CoreService {
      * @param {?} options
      */
     constructor(options) {
-        console.log('CoreService', options);
+        // console.log('CoreService', options);
         options = options || {};
         // options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
         // options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;

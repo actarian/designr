@@ -12,7 +12,7 @@ export class CoreService {
 	constructor(
 		@Inject(CORE_CONFIG) options: CoreConfig
 	) {
-		console.log('CoreService', options);
+		// console.log('CoreService', options);
 		options = options || {};
 		// options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
 		// options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;

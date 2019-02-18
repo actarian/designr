@@ -12,7 +12,7 @@ export class DataService {
 	constructor(
 		@Inject(DATA_CONFIG) options: DataConfig
 	) {
-		console.log('DataService', options);
+		// console.log('DataService', options);
 		options = options || {};
 		this.options = new DataConfig(options);
 	}

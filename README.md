@@ -22,6 +22,12 @@ ___
 
 ___
 
+#### [Angular Schematics](https://www.npmjs.com/package/@angular-devkit/schematics) version 0.13.1
+* windows `npm install -g @angular-devkit/schematics-cli`  
+* mac `sudo npm install -g @angular-devkit/schematics-cli --unsafe-perm`
+
+___
+
 ## Install packages
 
 * `npm install`

@@ -20,7 +20,6 @@ export function getRequest() {
 		BrowserAnimationsModule,
 		AppModule,
 		ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.core.production && environment.core.useServiceWorker }),
-		// PrebootModule.withConfig(environment.core.preboot),
 	],
 	providers: [
 		// We need this for our Http calls since they'll be using an ORIGIN_URL provided in main.server

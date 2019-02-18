@@ -12,7 +12,7 @@ export class SectionService {
 	constructor(
 		@Inject(SECTION_CONFIG) options: SectionConfig,
 	) {
-		console.log('SectionService', options);
+		// console.log('SectionService', options);
 		options = options || {};
 		this.options = new SectionConfig(options);
 	}

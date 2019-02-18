@@ -12,7 +12,7 @@ export class UIService {
 	constructor(
 		@Inject(UI_CONFIG) options: UIConfig
 	) {
-		console.log('UIService', options);
+		// console.log('UIService', options);
 		options = options || {};
 		this.options = new UIConfig(options);
 	}

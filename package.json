@@ -1,6 +1,6 @@
 {
 	"name": "designr",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",
@@ -23,7 +23,8 @@
 		"dependency:production:fix": "node -e \"require('./utils/replace.js')('./dist/production/server/main.js', new RegExp('angular-in.memory-web-api(.[^\\\"]*)', 'gm'), 'angular-in-memory-web-api')\"",
 		"debug:development": "node -e \"require('./utils/debug.js')(require('./dist/development/server/main.js').default, 'https://development.labs.it/')\"",
 		"debug:staging": "node -e \"require('./utils/debug.js')(require('./dist/staging/server/main.js').default, 'http://staging.site.it/')\"",
-		"debug:production": "node -e \"require('./utils/debug.js')(require('./dist/production/server/main.js').default, 'https://www.site.it/')\""
+		"debug:production": "node -e \"require('./utils/debug.js')(require('./dist/production/server/main.js').default, 'https://www.site.it/')\"",
+		"pubver": "node -e \"require('./utils/publish.js')('../projects/designr')\""
 	},
 	"private": true,
 	"dependencies": {

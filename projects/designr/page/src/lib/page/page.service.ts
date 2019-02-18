@@ -28,7 +28,7 @@ export class PageService extends EntityService<Page> {
 		private statusCodeService: HttpStatusCodeService,
 	) {
 		super(injector);
-		console.log('PageService', options);
+		// console.log('PageService', options);
 		options = options || {};
 		// options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
 		// options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;

@@ -12,7 +12,7 @@ export class PluginsService {
 	constructor(
 		@Inject(PLUGINS_CONFIG) options: PluginsConfig
 	) {
-		console.log('PluginsService', options);
+		// console.log('PluginsService', options);
 		options = options || {};
 		// options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
 		// options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;

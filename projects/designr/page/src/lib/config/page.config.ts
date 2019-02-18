@@ -8,7 +8,7 @@ export class PageConfig {
 	pages?: Pages = {};
 
 	constructor(options?: PageConfig) {
-		console.log('PageConfig', options);
+		// console.log('PageConfig', options);
 		if (options) {
 			this.pages = options.pages || {};
 			this.defaultPage = options.defaultPage;

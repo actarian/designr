@@ -6,7 +6,7 @@ export class EditorConfig {
 	enabled?: boolean;
 
 	constructor(options?: EditorConfig) {
-		console.log('EditorConfig', options);
+		// console.log('EditorConfig', options);
 		if (options) {
 			this.enabled = options.enabled || false;
 		}

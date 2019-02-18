@@ -12,7 +12,7 @@ export class EditorService {
 	constructor(
 		@Inject(EDITOR_CONFIG) options: EditorConfig
 	) {
-		console.log('EditorService', options);
+		// console.log('EditorService', options);
 		options = options || {};
 		this.options = new EditorConfig(options);
 	}
