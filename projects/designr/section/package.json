@@ -1,6 +1,6 @@
 {
 	"name": "@designr/section",
-	"version": "0.0.3",
+	"version": "0.0.2",
 	"peerDependencies": {
 		"@angular/common": "~7.2.4",
 		"@angular/core": "~7.2.4"
