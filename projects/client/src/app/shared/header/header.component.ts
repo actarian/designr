@@ -1,7 +1,10 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
 import { DisposableComponent, MenuItem, MenuService, RouteService } from '@designr/core';
+import { ModalCompleteEvent, ModalService } from '@designr/ui';
 import { takeUntil } from 'rxjs/operators';
+import { AuthComponent } from '../../modals/auth/auth.component';
+import { UserService } from '../user/user.service';
 
 @Component({
 	selector: 'header-component',
@@ -27,10 +30,14 @@ export class HeaderComponent extends DisposableComponent implements OnInit {
 	public menu: MenuItem[];
 	public languages: any[];
 	public currentLanguage: any;
+	public scrolled: boolean;
 
 	constructor(
+		private zone: NgZone,
 		public routeService: RouteService,
-		private menuService: MenuService,
+		public menuService: MenuService,
+		public userService: UserService,
+		public modalService: ModalService,
 	) {
 		super();
 	}
@@ -54,6 +61,36 @@ export class HeaderComponent extends DisposableComponent implements OnInit {
 			// console.log('HeaderComponent.getLanguage', x);
 			this.currentLanguage = x;
 		});
+		// observe current user
+		this.userService.observe().pipe(
+			takeUntil(this.unsubscribe)
+		).subscribe(user => {
+			// console.log('HeaderComponent.user', user);
+		});
+	}
+
+	onSign(): void {
+		this.modalService.open({ component: AuthComponent }).pipe(
+			takeUntil(this.unsubscribe)
+		).subscribe(e => {
+			if (e instanceof ModalCompleteEvent) {
+				// console.log('signed');
+			}
+		});
+	}
+
+	onSignOut(): void {
+		this.userService.signOut().subscribe(success => console.log(success));
+	}
+
+	onScroll(event) {
+		// console.log('HeaderComponent', event.scrollTop);
+		const scrolled = event.scrollTop > 100;
+		if (this.scrolled !== scrolled) {
+			this.zone.run(() => {
+				this.scrolled = scrolled;
+			});
+		}
 	}
 
 }

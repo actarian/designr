@@ -11,7 +11,7 @@
     var SectionConfig = /** @class */ (function () {
         function SectionConfig(options) {
             this.sections = {};
-            console.log('SectionConfig', options);
+            // console.log('SectionConfig', options);
             if (options) {
                 this.sections = options.sections || {};
             }
@@ -27,7 +27,7 @@
      */
     var SectionModuleComponent = /** @class */ (function () {
         function SectionModuleComponent() {
-            this.version = '0.0.2';
+            this.version = '0.0.3';
         }
         /**
          * @return {?}
@@ -133,7 +133,7 @@
      */
     var SectionService = /** @class */ (function () {
         function SectionService(options) {
-            console.log('SectionService', options);
+            // console.log('SectionService', options);
             options = options || {};
             this.options = new SectionConfig(options);
         }

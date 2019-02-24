@@ -5,11 +5,11 @@ import { UIConfig, UI_CONFIG } from './config/ui.config';
 import { UIService } from './config/ui.service';
 import { UIModuleComponent } from './ui-module.component';
 import { ClickOutsideDirective } from './ui/click-outside/click-outside.directive';
-import { FancyboxDirective } from './ui/fancybox/fancybox.directive';
 import { LazyImagesDirective } from './ui/lazy-images/lazy-images.directive';
 import { ModalContainerComponent } from './ui/modal/modal-container.component';
 import { ModalViewComponent } from './ui/modal/modal-view.component';
 import { ModalService } from './ui/modal/modal.service';
+import { ScrollDirective } from './ui/scroll/scroll.directive';
 
 const services = [
 	UIService,
@@ -24,8 +24,8 @@ const components = [
 
 const directives = [
 	ClickOutsideDirective,
-	FancyboxDirective,
 	LazyImagesDirective,
+	ScrollDirective,
 ];
 
 const pipes = [

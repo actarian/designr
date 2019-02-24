@@ -1,10 +1,11 @@
 {
 	"name": "@designr/editor",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"peerDependencies": {
 		"@angular/common": "~7.2.4",
 		"@angular/core": "~7.2.4",
-		"@designr/core": "~0.0.1",
+		"@designr/core": "~0.0.3",
+		"@designr/control": "~0.0.3",
 		"marked": "~0.6.0",
 		"ngx-markdown": "~7.1.3"
 	}

@@ -14,7 +14,7 @@ import { InjectionToken, Component, Injector, Input, PLATFORM_ID, ViewEncapsulat
 var PageConfig = /** @class */ (function () {
     function PageConfig(options) {
         this.pages = {};
-        console.log('PageConfig', options);
+        // console.log('PageConfig', options);
         if (options) {
             this.pages = options.pages || {};
             this.defaultPage = options.defaultPage;
@@ -32,7 +32,7 @@ var PAGE_CONFIG = new InjectionToken('page.config');
  */
 var PageModuleComponent = /** @class */ (function () {
     function PageModuleComponent() {
-        this.version = '0.0.2';
+        this.version = '0.0.3';
     }
     /**
      * @return {?}
@@ -422,7 +422,7 @@ var PageService = /** @class */ (function (_super) {
         _this.metaService = metaService;
         _this.linkService = linkService;
         _this.statusCodeService = statusCodeService;
-        console.log('PageService', options);
+        // console.log('PageService', options);
         options = options || {};
         // options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
         // options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;

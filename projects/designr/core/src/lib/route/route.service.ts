@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { CoreService } from '../config/core.service';
 import { SegmentPipe } from '../pipes/segment.pipe';
+import { Translate } from '../translate/translate';
 import { TranslateService } from '../translate/translate.service';
 
 declare const Buffer;
@@ -35,7 +36,7 @@ export class RouteService {
 		@Inject(PLATFORM_ID) private platformId: string,
 		private coreService: CoreService,
 		private injector: Injector,
-		private translateService: TranslateService,
+		private translateService: TranslateService<Translate>,
 		private location: Location,
 		private route: ActivatedRoute,
 		private router: Router,

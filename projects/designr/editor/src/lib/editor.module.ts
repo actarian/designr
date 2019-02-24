@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ControlModule } from '@designr/control';
 import { CoreModule } from '@designr/core';
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { EditorConfig, EDITOR_CONFIG } from './config/editor.config';
@@ -49,6 +50,7 @@ const guards = [
 			},
 		}),
 		CoreModule,
+		ControlModule,
 	],
 	providers: [
 		...services,

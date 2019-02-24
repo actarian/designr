@@ -7,6 +7,7 @@ export class SectionConfig {
 	constructor(options?: SectionConfig) {
 		// console.log('SectionConfig', options);
 		if (options) {
+			Object.assign(this, options);
 			this.sections = options.sections || {};
 		}
 	}

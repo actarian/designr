@@ -2,7 +2,8 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Component, HostListener, Inject, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ControlBase, ControlBaseOptions, DisposableComponent, FormService } from '@designr/core';
+import { ControlBase, ControlBaseOptions, FormService } from '@designr/control';
+import { DisposableComponent } from '@designr/core';
 import { Page, PageResolver, PageResolverService, PageService } from '@designr/page';
 import { MarkdownService } from 'ngx-markdown';
 import { takeUntil } from 'rxjs/operators';

@@ -5,12 +5,16 @@ import { label } from './data/label';
 import { menu } from './data/menu';
 import { page } from './data/page';
 import { slug } from './data/slug';
+import { translate } from './data/translate';
+import { user } from './data/user';
 
 export const DATA: { [key: string]: any[] } = {
-	label: label,
-	menu: menu,
-	page: page,
-	slug: slug,
+	label,
+	menu,
+	page,
+	slug,
+	translate,
+	user,
 };
 
 @NgModule({

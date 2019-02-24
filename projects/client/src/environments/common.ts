@@ -83,20 +83,5 @@ export const environment = {
 			businessunitName: 'eurospin-viaggi.wslabs.it',
 			minimumReviews: 1000,
 		},
-		swiper: {
-			direction: 'horizontal',
-			slidesPerView: 'auto',
-			spaceBetween: 8,
-			grabCursor: true,
-			navigation: {
-				nextEl: '.swiper-button-next',
-				prevEl: '.swiper-button-prev',
-			},
-			pagination: {
-				el: '.swiper-pagination',
-				type: 'bullets',
-				clickable: true
-			}
-		},
 	}
 };

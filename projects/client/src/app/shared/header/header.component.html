@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header" [ngClass]="{ scrolled: scrolled }" (scroll)="onScroll($event)">
 	<div class="container">
 		<div class="row">
 			<div class="brand" [routerLink]="'homepage' | slugAsync">
@@ -9,6 +9,15 @@
 					<a class="nav__link" [routerLink]="[item.slug] | route">{{item.name}}</a>
 				</li>
 			</ul>
+			<ng-container *ngIf="!userService.user">
+				<button type="button" class="btn btn--cta" (click)="onSign()">{{'header.signIn' | label : 'signin'}}</button>
+			</ng-container>
+			<ng-container *ngIf="userService.user">
+				<div>
+					<button type="button" class="btn btn--cta">{{userService.user.firstName}}</button>
+					<button type="button" class="btn btn--cta" (click)="onSignOut()">signout</button>
+				</div>
+			</ng-container>
 		</div>
 	</div>
 </header>

@@ -11,6 +11,8 @@ import { GoogleService } from './plugins/google/google.service';
 import { MapboxService } from './plugins/mapbox/mapbox.service';
 import { PayPalWidgetComponent } from './plugins/paypal/paypal-widget.component';
 import { PayPalService } from './plugins/paypal/paypal.service';
+import { SwiperComponent } from './plugins/swiper/swiper.component';
+import { SwiperDirective } from './plugins/swiper/swiper.directive';
 import { TrustPilotWidgetComponent } from './plugins/trustpilot/trustpilot-widget.component';
 import { TrustPilotService } from './plugins/trustpilot/trustpilot.service';
 
@@ -29,6 +31,8 @@ const components = [
 	GoogleTagManagerComponent,
 	PayPalWidgetComponent,
 	TrustPilotWidgetComponent,
+	SwiperComponent,
+	SwiperDirective,
 ];
 
 const directives = [

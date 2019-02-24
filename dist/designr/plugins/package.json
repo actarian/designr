@@ -1,10 +1,11 @@
 {
   "name": "@designr/plugins",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "peerDependencies": {
     "@angular/common": "~7.2.4",
     "@angular/core": "~7.2.4",
-    "mapbox-gl": "~0.52.0"
+    "mapbox-gl": "~0.52.0",
+    "swiper": "~4.4.6"
   },
   "main": "bundles/designr-plugins.umd.js",
   "module": "fesm5/designr-plugins.js",

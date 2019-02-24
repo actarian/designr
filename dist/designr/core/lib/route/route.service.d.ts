@@ -4,6 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CoreService } from '../config/core.service';
 import { SegmentPipe } from '../pipes/segment.pipe';
+import { Translate } from '../translate/translate';
 import { TranslateService } from '../translate/translate.service';
 export declare class RouteService {
     private platformId;
@@ -26,7 +27,7 @@ export declare class RouteService {
     params: Observable<Params>;
     queryParams: Observable<Params>;
     currentMarket: string;
-    constructor(platformId: string, coreService: CoreService, injector: Injector, translateService: TranslateService, location: Location, route: ActivatedRoute, router: Router, segment: SegmentPipe);
+    constructor(platformId: string, coreService: CoreService, injector: Injector, translateService: TranslateService<Translate>, location: Location, route: ActivatedRoute, router: Router, segment: SegmentPipe);
     private lang;
     readonly currentLang: string;
     pageParams$: BehaviorSubject<Params>;

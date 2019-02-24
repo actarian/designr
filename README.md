@@ -38,6 +38,7 @@ ___
 
 | | |
 |------------------|-|
+| @designr/control | `ng build @designr/control --watch` |
 | @designr/core    | `ng build @designr/core --watch` |
 | @designr/data    | `ng build @designr/data --watch` |  
 | @designr/editor  | `ng build @designr/editor --watch` |  
@@ -86,6 +87,7 @@ ___
 
 | | |
 |-----------------------|-|
+| /dist/designr/control | `npm publish --access public` |
 | /dist/designr/core    | `npm publish --access public` |
 | /dist/designr/data    | `npm publish --access public` |
 | /dist/designr/editor  | `npm publish --access public` |

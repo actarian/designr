@@ -1,8 +1,9 @@
 import { PageService } from '@designr/page';
 import { NavigationEnd, Router } from '@angular/router';
+import * as Swiper from 'swiper/dist/js/swiper.js';
 import { __spread, __extends } from 'tslib';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { InjectionToken, Inject, Injectable, Component, defineInjectable, inject, NgModule, Optional, SkipSelf, PLATFORM_ID, Input, EventEmitter, Output, NgZone, ViewEncapsulation, ElementRef } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, defineInjectable, inject, NgModule, Optional, SkipSelf, PLATFORM_ID, Input, EventEmitter, Output, NgZone, ViewEncapsulation, ElementRef, ChangeDetectorRef, ViewChild, Directive, KeyValueDiffers } from '@angular/core';
 import { LocalStorageService, OnceService, RouteService, CoreModule, DisposableComponent, Logger } from '@designr/core';
 import { from, of, Observable } from 'rxjs';
 import { concatMap, filter, first, map, takeUntil, mergeMap } from 'rxjs/operators';
@@ -14,7 +15,7 @@ import { concatMap, filter, first, map, takeUntil, mergeMap } from 'rxjs/operato
 var PluginsConfig = /** @class */ (function () {
     function PluginsConfig(options) {
         this.origin = '';
-        console.log('PluginsConfig', options);
+        // console.log('PluginsConfig', options);
         if (options) {
             Object.assign(this, options);
         }
@@ -30,7 +31,7 @@ var PLUGINS_CONFIG = new InjectionToken('plugin.config');
  */
 var PluginsService = /** @class */ (function () {
     function PluginsService(options) {
-        console.log('PluginsService', options);
+        // console.log('PluginsService', options);
         options = options || {};
         // options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
         // options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;
@@ -55,7 +56,7 @@ var PluginsService = /** @class */ (function () {
  */
 var PluginsModuleComponent = /** @class */ (function () {
     function PluginsModuleComponent() {
-        this.version = '0.0.2';
+        this.version = '0.0.3';
     }
     /**
      * @return {?}
@@ -87,6 +88,26 @@ var FacebookConfig = /** @class */ (function () {
         this.version = 'v2.10';
     }
     return FacebookConfig;
+}());
+var FacebookAuthResponse = /** @class */ (function () {
+    function FacebookAuthResponse() {
+    }
+    return FacebookAuthResponse;
+}());
+var FacebookPictureData = /** @class */ (function () {
+    function FacebookPictureData() {
+    }
+    return FacebookPictureData;
+}());
+var FacebookPicture = /** @class */ (function () {
+    function FacebookPicture() {
+    }
+    return FacebookPicture;
+}());
+var FacebookUser = /** @class */ (function () {
+    function FacebookUser() {
+    }
+    return FacebookUser;
 }());
 var FacebookService = /** @class */ (function () {
     function FacebookService(platformId, pluginsService, storageService, onceService, routeService, pageService) {
@@ -533,6 +554,16 @@ var GoogleConfig = /** @class */ (function () {
         this.ux_mode = 'popup';
     }
     return GoogleConfig;
+}());
+var GoogleAuthResponse = /** @class */ (function () {
+    function GoogleAuthResponse() {
+    }
+    return GoogleAuthResponse;
+}());
+var GoogleUser = /** @class */ (function () {
+    function GoogleUser() {
+    }
+    return GoogleUser;
 }());
 var GoogleService = /** @class */ (function () {
     function GoogleService(platformId, pluginsService, storageService, onceService) {
@@ -1011,6 +1042,817 @@ var PayPalWidgetComponent = /** @class */ (function (_super) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+var SWIPER_CONFIG = new InjectionToken('SWIPER_CONFIG');
+/** @type {?} */
+var SwiperEvents = [
+    'init',
+    'beforeDestroy',
+    'scroll',
+    'progress',
+    'keyPress',
+    'beforeResize',
+    'afterResize',
+    'resize',
+    'breakpoint',
+    'beforeResize',
+    'sliderMove',
+    'slideChange',
+    'setTranslate',
+    'setTransition',
+    'fromEdge',
+    'reachEnd',
+    'reachBeginning',
+    'autoplay',
+    'autoplayStop',
+    'autoplayStart',
+    'imagesReady',
+    'lazyImageLoad',
+    'lazyImageReady',
+    'scrollDragEnd',
+    'scrollDragMove',
+    'scrollDragStart',
+    'swiperTap',
+    'swiperClick',
+    'swiperDoubleTap',
+    'swiperTouchEnd',
+    'swiperTouchMove',
+    'swiperTouchStart',
+    'swiperTouchMoveOpposite',
+    'swiperTransitionEnd',
+    'swiperTransitionStart',
+    'slideNextTransitionEnd',
+    'slideNextTransitionStart',
+    'slidePrevTransitionEnd',
+    'slidePrevTransitionStart',
+    'slideChangeTransitionEnd',
+    'slideChangeTransitionStart'
+];
+var SwiperConfig = /** @class */ (function () {
+    function SwiperConfig(config) {
+        if (config === void 0) { config = {}; }
+        this.assign(config);
+    }
+    /**
+     * @param {?=} config
+     * @param {?=} target
+     * @return {?}
+     */
+    SwiperConfig.prototype.assign = /**
+     * @param {?=} config
+     * @param {?=} target
+     * @return {?}
+     */
+    function (config, target) {
+        if (config === void 0) { config = {}; }
+        target = target || this;
+        for (var key in config) {
+            if (config[key] != null && !Array.isArray(config[key]) && typeof config[key] === 'object' &&
+                (typeof HTMLElement === 'undefined' || !(config[key] instanceof HTMLElement))) {
+                target[key] = {};
+                this.assign(config[key], target[key]);
+            }
+            else {
+                target[key] = config[key];
+            }
+        }
+    };
+    return SwiperConfig;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var SwiperDirective = /** @class */ (function () {
+    function SwiperDirective(platformId, zone, elementRef, differs, defaults) {
+        this.platformId = platformId;
+        this.zone = zone;
+        this.elementRef = elementRef;
+        this.differs = differs;
+        this.defaults = defaults;
+        this.index_ = null;
+        this.config_ = null;
+        this.disabled = false;
+        this.performance = false;
+        this.autoplay = new EventEmitter();
+        this.autoplayStart = new EventEmitter();
+        this.autoplayStop = new EventEmitter();
+        this.beforeDestroy = new EventEmitter();
+        this.beforeResize = new EventEmitter();
+        this.breakpoint = new EventEmitter();
+        this.click = new EventEmitter();
+        this.doubleTap = new EventEmitter();
+        this.fromEdge = new EventEmitter();
+        this.imagesReady = new EventEmitter();
+        this.indexChange = new EventEmitter();
+        this.init = new EventEmitter();
+        this.keyPress = new EventEmitter();
+        this.lazyImageLoad = new EventEmitter();
+        this.lazyImageReady = new EventEmitter();
+        this.progress = new EventEmitter();
+        this.reachBeginning = new EventEmitter();
+        this.reachEnd = new EventEmitter();
+        this.resize = new EventEmitter();
+        this.scroll = new EventEmitter();
+        this.scrollDragEnd = new EventEmitter();
+        this.scrollDragMove = new EventEmitter();
+        this.scrollDragStart = new EventEmitter();
+        this.setTransition = new EventEmitter();
+        this.setTranslate = new EventEmitter();
+        this.slideChange = new EventEmitter();
+        this.slideChangeTransitionEnd = new EventEmitter();
+        this.slideChangeTransitionStart = new EventEmitter();
+        this.slideNextTransitionEnd = new EventEmitter();
+        this.slideNextTransitionStart = new EventEmitter();
+        this.slidePrevTransitionEnd = new EventEmitter();
+        this.slidePrevTransitionStart = new EventEmitter();
+        this.sliderMove = new EventEmitter();
+        this.tap = new EventEmitter();
+        this.touchEnd = new EventEmitter();
+        this.touchMove = new EventEmitter();
+        this.touchMoveOpposite = new EventEmitter();
+        this.touchStart = new EventEmitter();
+        this.transitionEnd = new EventEmitter();
+        this.transitionStart = new EventEmitter();
+    }
+    Object.defineProperty(SwiperDirective.prototype, "index", {
+        set: /**
+         * @param {?} index
+         * @return {?}
+         */
+        function (index) {
+            if (index != null) {
+                this.setIndex(index);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @return {?}
+     */
+    SwiperDirective.prototype.ngAfterViewInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
+        /** @type {?} */
+        var params = new SwiperConfig(this.defaults);
+        params.assign(this.config); // Custom configuration
+        if (params.scrollbar === true) {
+            params.scrollbar = {
+                el: '.swiper-scrollbar'
+            };
+        }
+        if (params.pagination === true) {
+            params.pagination = {
+                el: '.swiper-pagination'
+            };
+        }
+        if (params.navigation === true) {
+            params.navigation = {
+                prevEl: '.swiper-button-prev',
+                nextEl: '.swiper-button-next'
+            };
+        }
+        if (this.disabled) {
+            params.allowSlidePrev = false;
+            params.allowSlideNext = false;
+        }
+        if (this.index_ != null) {
+            params.initialSlide = this.index_;
+            this.index_ = null;
+        }
+        params.on = {
+            slideChange: function () {
+                if (_this.swiper_ && _this.indexChange.observers.length) {
+                    _this.emit(_this.indexChange, _this.swiper_.realIndex);
+                }
+            }
+        };
+        this.zone.runOutsideAngular(function () {
+            _this.swiper_ = new Swiper(_this.elementRef.nativeElement, params);
+        });
+        if (params.init !== false && this.init.observers.length) {
+            this.emit(this.init, this.swiper_);
+        }
+        // Add native Swiper event handling
+        SwiperEvents.forEach(function (eventName) {
+            /** @type {?} */
+            var swiperEvent = eventName.replace('swiper', '');
+            swiperEvent = swiperEvent.charAt(0).toLowerCase() + swiperEvent.slice(1);
+            _this.swiper_.on(swiperEvent, function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i] = arguments[_i];
+                }
+                if (args.length === 1) {
+                    args = args[0];
+                }
+                /** @type {?} */
+                var emitter = (/** @type {?} */ (_this[(/** @type {?} */ (swiperEvent))]));
+                if (emitter.observers.length) {
+                    _this.emit(emitter, args);
+                }
+            });
+        });
+        if (!this.config_) {
+            this.config_ = this.differs.find(this.config || {}).create();
+            this.config_.diff(this.config || {});
+        }
+    };
+    /**
+     * @return {?}
+     */
+    SwiperDirective.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        if (this.swiper_) {
+            this.zone.runOutsideAngular(function () {
+                _this.swiper_.destroy(true, _this.swiper_.initialized || false);
+            });
+            this.swiper_ = null;
+        }
+    };
+    /**
+     * @return {?}
+     */
+    SwiperDirective.prototype.ngDoCheck = /**
+     * @return {?}
+     */
+    function () {
+        if (this.config_) {
+            /** @type {?} */
+            var changes = this.config_.diff(this.config || {});
+            if (changes) {
+                this.index_ = this.getIndex(true);
+                this.ngOnDestroy();
+                this.ngAfterViewInit();
+                this.update();
+            }
+        }
+    };
+    /**
+     * @param {?} changes
+     * @return {?}
+     */
+    SwiperDirective.prototype.ngOnChanges = /**
+     * @param {?} changes
+     * @return {?}
+     */
+    function (changes) {
+        var _this = this;
+        if (this.swiper_ && changes['disabled']) {
+            if (changes['disabled'].currentValue !== changes['disabled'].previousValue) {
+                if (changes['disabled'].currentValue === true) {
+                    this.zone.runOutsideAngular(function () {
+                        _this.ngOnDestroy();
+                        _this.ngAfterViewInit();
+                    });
+                }
+                else if (changes['disabled'].currentValue === false) {
+                    this.zone.runOutsideAngular(function () {
+                        _this.ngOnDestroy();
+                        _this.ngAfterViewInit();
+                    });
+                }
+            }
+        }
+    };
+    /**
+     * @private
+     * @param {?} emitter
+     * @param {?} value
+     * @return {?}
+     */
+    SwiperDirective.prototype.emit = /**
+     * @private
+     * @param {?} emitter
+     * @param {?} value
+     * @return {?}
+     */
+    function (emitter, value) {
+        if (this.performance) {
+            emitter.emit(value);
+        }
+        else {
+            this.zone.run(function () { return emitter.emit(value); });
+        }
+    };
+    /**
+     * @return {?}
+     */
+    SwiperDirective.prototype.swiper = /**
+     * @return {?}
+     */
+    function () {
+        return this.swiper_;
+    };
+    /**
+     * @return {?}
+     */
+    SwiperDirective.prototype.initialize = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        if (this.swiper_) {
+            this.zone.runOutsideAngular(function () {
+                _this.swiper_.init();
+            });
+        }
+    };
+    /**
+     * @return {?}
+     */
+    SwiperDirective.prototype.update = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        setTimeout(function () {
+            if (_this.swiper_) {
+                _this.zone.runOutsideAngular(function () {
+                    _this.swiper_.update();
+                });
+            }
+        }, 0);
+    };
+    /**
+     * @param {?=} real
+     * @return {?}
+     */
+    SwiperDirective.prototype.getIndex = /**
+     * @param {?=} real
+     * @return {?}
+     */
+    function (real) {
+        if (!this.swiper_) {
+            return this.index_ || 0;
+        }
+        else {
+            return real ? this.swiper_.realIndex : this.swiper_.activeIndex;
+        }
+    };
+    /**
+     * @param {?} index
+     * @param {?=} speed
+     * @param {?=} silent
+     * @return {?}
+     */
+    SwiperDirective.prototype.setIndex = /**
+     * @param {?} index
+     * @param {?=} speed
+     * @param {?=} silent
+     * @return {?}
+     */
+    function (index, speed, silent) {
+        var _this = this;
+        if (!this.swiper_) {
+            this.index_ = index;
+        }
+        else {
+            /** @type {?} */
+            var realIndex_1 = index * this.swiper_.params.slidesPerGroup;
+            if (this.swiper_.params.loop) {
+                realIndex_1 += this.swiper_.loopedSlides;
+            }
+            this.zone.runOutsideAngular(function () {
+                _this.swiper_.slideTo(realIndex_1, speed, !silent);
+            });
+        }
+    };
+    /**
+     * @param {?=} speed
+     * @param {?=} silent
+     * @return {?}
+     */
+    SwiperDirective.prototype.prevSlide = /**
+     * @param {?=} speed
+     * @param {?=} silent
+     * @return {?}
+     */
+    function (speed, silent) {
+        var _this = this;
+        if (this.swiper_) {
+            this.zone.runOutsideAngular(function () {
+                _this.swiper_.slidePrev(speed, !silent);
+            });
+        }
+    };
+    /**
+     * @param {?=} speed
+     * @param {?=} silent
+     * @return {?}
+     */
+    SwiperDirective.prototype.nextSlide = /**
+     * @param {?=} speed
+     * @param {?=} silent
+     * @return {?}
+     */
+    function (speed, silent) {
+        var _this = this;
+        if (this.swiper_) {
+            this.zone.runOutsideAngular(function () {
+                _this.swiper_.slideNext(speed, !silent);
+            });
+        }
+    };
+    /**
+     * @param {?=} reset
+     * @return {?}
+     */
+    SwiperDirective.prototype.stopAutoplay = /**
+     * @param {?=} reset
+     * @return {?}
+     */
+    function (reset) {
+        var _this = this;
+        if (reset) {
+            this.setIndex(0);
+        }
+        if (this.swiper_ && this.swiper_.autoplay) {
+            this.zone.runOutsideAngular(function () {
+                _this.swiper_.autoplay.stop();
+            });
+        }
+    };
+    /**
+     * @param {?=} reset
+     * @return {?}
+     */
+    SwiperDirective.prototype.startAutoplay = /**
+     * @param {?=} reset
+     * @return {?}
+     */
+    function (reset) {
+        var _this = this;
+        if (reset) {
+            this.setIndex(0);
+        }
+        if (this.swiper_ && this.swiper_.autoplay) {
+            this.zone.runOutsideAngular(function () {
+                _this.swiper_.autoplay.start();
+            });
+        }
+    };
+    SwiperDirective.decorators = [
+        { type: Directive, args: [{
+                    selector: '[swiper]',
+                    exportAs: 'ngxSwiper'
+                },] }
+    ];
+    /** @nocollapse */
+    SwiperDirective.ctorParameters = function () { return [
+        { type: Object, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
+        { type: NgZone },
+        { type: ElementRef },
+        { type: KeyValueDiffers },
+        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [SWIPER_CONFIG,] }] }
+    ]; };
+    SwiperDirective.propDecorators = {
+        index: [{ type: Input }],
+        disabled: [{ type: Input }],
+        performance: [{ type: Input }],
+        config: [{ type: Input, args: ['swiper',] }],
+        autoplay: [{ type: Output }],
+        autoplayStart: [{ type: Output }],
+        autoplayStop: [{ type: Output }],
+        beforeDestroy: [{ type: Output }],
+        beforeResize: [{ type: Output }],
+        breakpoint: [{ type: Output }],
+        click: [{ type: Output }],
+        doubleTap: [{ type: Output }],
+        fromEdge: [{ type: Output }],
+        imagesReady: [{ type: Output }],
+        indexChange: [{ type: Output }],
+        init: [{ type: Output }],
+        keyPress: [{ type: Output }],
+        lazyImageLoad: [{ type: Output }],
+        lazyImageReady: [{ type: Output }],
+        progress: [{ type: Output }],
+        reachBeginning: [{ type: Output }],
+        reachEnd: [{ type: Output }],
+        resize: [{ type: Output }],
+        scroll: [{ type: Output }],
+        scrollDragEnd: [{ type: Output }],
+        scrollDragMove: [{ type: Output }],
+        scrollDragStart: [{ type: Output }],
+        setTransition: [{ type: Output }],
+        setTranslate: [{ type: Output }],
+        slideChange: [{ type: Output }],
+        slideChangeTransitionEnd: [{ type: Output }],
+        slideChangeTransitionStart: [{ type: Output }],
+        slideNextTransitionEnd: [{ type: Output }],
+        slideNextTransitionStart: [{ type: Output }],
+        slidePrevTransitionEnd: [{ type: Output }],
+        slidePrevTransitionStart: [{ type: Output }],
+        sliderMove: [{ type: Output }],
+        tap: [{ type: Output }],
+        touchEnd: [{ type: Output }],
+        touchMove: [{ type: Output }],
+        touchMoveOpposite: [{ type: Output }],
+        touchStart: [{ type: Output }],
+        transitionEnd: [{ type: Output }],
+        transitionStart: [{ type: Output }]
+    };
+    return SwiperDirective;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var SwiperComponent = /** @class */ (function () {
+    function SwiperComponent(zone, cdRef, platformId, defaults) {
+        this.zone = zone;
+        this.cdRef = cdRef;
+        this.platformId = platformId;
+        this.defaults = defaults;
+        this.index = null;
+        this.disabled = false;
+        this.performance = false;
+        this.useSwiperClass = true;
+        this.autoplay = new EventEmitter();
+        this.autoplayStart = new EventEmitter();
+        this.autoplayStop = new EventEmitter();
+        this.beforeDestroy = new EventEmitter();
+        this.beforeResize = new EventEmitter();
+        this.breakpoint = new EventEmitter();
+        this.click = new EventEmitter();
+        this.doubleTap = new EventEmitter();
+        this.fromEdge = new EventEmitter();
+        this.imagesReady = new EventEmitter();
+        this.indexChange = new EventEmitter();
+        this.init = new EventEmitter();
+        this.keyPress = new EventEmitter();
+        this.lazyImageLoad = new EventEmitter();
+        this.lazyImageReady = new EventEmitter();
+        this.progress = new EventEmitter();
+        this.reachBeginning = new EventEmitter();
+        this.reachEnd = new EventEmitter();
+        this.resize = new EventEmitter();
+        this.scroll = new EventEmitter();
+        this.scrollDragEnd = new EventEmitter();
+        this.scrollDragMove = new EventEmitter();
+        this.scrollDragStart = new EventEmitter();
+        this.setTransition = new EventEmitter();
+        this.setTranslate = new EventEmitter();
+        this.slideChange = new EventEmitter();
+        this.slideChangeTransitionEnd = new EventEmitter();
+        this.slideChangeTransitionStart = new EventEmitter();
+        this.slideNextTransitionEnd = new EventEmitter();
+        this.slideNextTransitionStart = new EventEmitter();
+        this.slidePrevTransitionEnd = new EventEmitter();
+        this.slidePrevTransitionStart = new EventEmitter();
+        this.sliderMove = new EventEmitter();
+        this.tap = new EventEmitter();
+        this.touchEnd = new EventEmitter();
+        this.touchMove = new EventEmitter();
+        this.touchMoveOpposite = new EventEmitter();
+        this.touchStart = new EventEmitter();
+        this.transitionEnd = new EventEmitter();
+        this.transitionStart = new EventEmitter();
+        this.mo = null;
+        this.swiperConfig = null;
+        this.paginationBackup = null;
+        this.paginationConfig = null;
+    }
+    Object.defineProperty(SwiperComponent.prototype, "isAtLast", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return (!this.directiveRef || !this.directiveRef.swiper()) ?
+                false : this.directiveRef.swiper()['isEnd'];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SwiperComponent.prototype, "isAtFirst", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return (!this.directiveRef || !this.directiveRef.swiper()) ?
+                false : this.directiveRef.swiper()['isBeginning'];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @return {?}
+     */
+    SwiperComponent.prototype.ngAfterViewInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
+        this.zone.runOutsideAngular(function () {
+            _this.updateClasses();
+            if (_this.swiperSlides && typeof MutationObserver !== 'undefined') {
+                _this.mo = new MutationObserver(function () {
+                    _this.updateClasses();
+                });
+                _this.mo.observe(_this.swiperSlides.nativeElement, { childList: true });
+            }
+        });
+        window.setTimeout(function () {
+            if (_this.directiveRef) {
+                _this.init.emit();
+                _this.directiveRef.indexChange = _this.indexChange;
+                SwiperEvents.forEach(function (eventName) {
+                    if (_this.directiveRef) {
+                        /** @type {?} */
+                        var directiveOutput = (/** @type {?} */ (eventName));
+                        /** @type {?} */
+                        var componentOutput = (/** @type {?} */ (eventName));
+                        _this.directiveRef[directiveOutput] = (/** @type {?} */ (_this[componentOutput]));
+                    }
+                });
+            }
+        }, 0);
+    };
+    /**
+     * @return {?}
+     */
+    SwiperComponent.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        if (this.mo) {
+            this.mo.disconnect();
+        }
+        if (this.config && this.paginationBackup) {
+            this.config.pagination = this.paginationBackup;
+        }
+    };
+    /**
+     * @return {?}
+     */
+    SwiperComponent.prototype.getConfig = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this.swiperConfig = new SwiperConfig(this.defaults);
+        this.swiperConfig.assign(this.config); // Custom configuration
+        if (this.swiperConfig.pagination === true ||
+            (this.swiperConfig.pagination && typeof this.swiperConfig.pagination === 'object' &&
+                (!this.swiperConfig.pagination.type || this.swiperConfig.pagination.type === 'bullets') &&
+                !this.swiperConfig.pagination.renderBullet && this.swiperConfig.pagination.el === '.swiper-pagination')) {
+            this.config = this.config || {};
+            if (!this.paginationConfig) {
+                this.paginationBackup = this.config.pagination;
+                this.paginationConfig = {
+                    el: '.swiper-pagination',
+                    renderBullet: function (index, className) {
+                        /** @type {?} */
+                        var children = _this.swiperSlides ? _this.swiperSlides.nativeElement.children : [];
+                        /** @type {?} */
+                        var bullet = "<span class=\"" + className + " " + className + "-middle\" index=\"" + index + "\"></span>";
+                        if (index === 0) {
+                            bullet = "<span class=\"" + className + " " + className + "-first\" index=\"" + index + "\"></span>";
+                        }
+                        else if (index === (children.length - 1)) {
+                            bullet = "<span class=\"" + className + " " + className + "-last\" index=\"" + index + "\"></span>";
+                        }
+                        return "<span class=\"swiper-pagination-handle\" index=\"" + index + "\">" + bullet + "</span>";
+                    }
+                };
+            }
+            if (this.swiperConfig.pagination === true) {
+                this.config.pagination = this.paginationConfig;
+            }
+            else {
+                this.config.pagination = Object.assign({}, this.config.pagination, this.paginationConfig);
+            }
+        }
+        return (/** @type {?} */ (this.config));
+    };
+    /**
+     * @private
+     * @return {?}
+     */
+    SwiperComponent.prototype.updateClasses = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        if (this.swiperSlides) {
+            /** @type {?} */
+            var updateNeeded = false;
+            /** @type {?} */
+            var children = this.swiperSlides.nativeElement.children;
+            for (var i = 0; i < children.length; i++) {
+                if (!children[i].classList.contains('swiper-slide')) {
+                    updateNeeded = true;
+                    children[i].classList.add('swiper-slide');
+                }
+            }
+            if (updateNeeded && this.directiveRef) {
+                this.directiveRef.update();
+            }
+        }
+        this.cdRef.detectChanges();
+    };
+    /**
+     * @param {?} index
+     * @return {?}
+     */
+    SwiperComponent.prototype.onPaginationClick = /**
+     * @param {?} index
+     * @return {?}
+     */
+    function (index) {
+        if (this.config && this.directiveRef && (this.config.pagination === true ||
+            (this.config.pagination && typeof this.config.pagination === 'object' &&
+                (!this.config.pagination.type || this.config.pagination.type === 'bullets') &&
+                (this.config.pagination.clickable && this.config.pagination.el === '.swiper-pagination')))) {
+            this.directiveRef.setIndex(index);
+        }
+    };
+    SwiperComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'swiper',
+                    exportAs: 'ngxSwiper',
+                    template: "<div #swiper class=\"s-wrapper\" [class.swiper]=\"useSwiperClass\" [class.swiper-container]=\"useSwiperClass\" [swiper]=\"getConfig()\" [index]=\"index\" [disabled]=\"disabled\" [performance]=\"performance\">\n\t<div #swiperSlides class=\"swiper-wrapper\">\n\t\t<ng-content></ng-content>\n\t</div>\n\t<div class=\"swiper-scrollbar\" [hidden]=\"!swiperConfig?.scrollbar || (swiperConfig?.scrollbar !== true && !!swiperConfig?.scrollbar?.el && swiperConfig?.scrollbar?.el !== '.swiper-scrollbar')\"></div>\n\t<div class=\"swiper-button-prev\" [hidden]=\"!swiperConfig?.navigation || (swiperConfig?.navigation !== true && !!swiperConfig?.navigation?.prevEl && swiperConfig?.navigation?.prevEl !== '.swiper-button-prev')\" [attr.disabled]=\"isAtFirst ||\u00A0null\"></div>\n\t<div class=\"swiper-button-next\" [hidden]=\"!swiperConfig?.navigation || (swiperConfig?.navigation !== true && !!swiperConfig?.navigation?.nextEl && swiperConfig?.navigation?.nextEl !== '.swiper-button-next')\" [attr.disabled]=\"isAtLast || null\"></div>\n\t<div class=\"swiper-pagination\" [hidden]=\"!swiperConfig?.pagination || (swiperConfig?.pagination !== true && !!swiperConfig?.pagination?.el && swiperConfig?.pagination?.el !== '.swiper-pagination')\" (click)=\"onPaginationClick($event.target.getAttribute('index'))\" (keyup.enter)=\"onPaginationClick($event.target.getAttribute('index'))\"></div>\n</div>\n",
+                    // styleUrls: ['~swiper/dist/css/swiper.min.css', 'swiper.component.scss'],
+                    encapsulation: ViewEncapsulation.None
+                }] }
+    ];
+    /** @nocollapse */
+    SwiperComponent.ctorParameters = function () { return [
+        { type: NgZone },
+        { type: ChangeDetectorRef },
+        { type: Object, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
+        { type: undefined, decorators: [{ type: Optional }, { type: Inject, args: [SWIPER_CONFIG,] }] }
+    ]; };
+    SwiperComponent.propDecorators = {
+        swiperSlides: [{ type: ViewChild, args: ['swiperSlides',] }],
+        directiveRef: [{ type: ViewChild, args: [SwiperDirective,] }],
+        index: [{ type: Input }],
+        disabled: [{ type: Input }],
+        performance: [{ type: Input }],
+        config: [{ type: Input }],
+        useSwiperClass: [{ type: Input }],
+        autoplay: [{ type: Output }],
+        autoplayStart: [{ type: Output }],
+        autoplayStop: [{ type: Output }],
+        beforeDestroy: [{ type: Output }],
+        beforeResize: [{ type: Output }],
+        breakpoint: [{ type: Output }],
+        click: [{ type: Output }],
+        doubleTap: [{ type: Output }],
+        fromEdge: [{ type: Output }],
+        imagesReady: [{ type: Output }],
+        indexChange: [{ type: Output }],
+        init: [{ type: Output }],
+        keyPress: [{ type: Output }],
+        lazyImageLoad: [{ type: Output }],
+        lazyImageReady: [{ type: Output }],
+        progress: [{ type: Output }],
+        reachBeginning: [{ type: Output }],
+        reachEnd: [{ type: Output }],
+        resize: [{ type: Output }],
+        scroll: [{ type: Output }],
+        scrollDragEnd: [{ type: Output }],
+        scrollDragMove: [{ type: Output }],
+        scrollDragStart: [{ type: Output }],
+        setTransition: [{ type: Output }],
+        setTranslate: [{ type: Output }],
+        slideChange: [{ type: Output }],
+        slideChangeTransitionEnd: [{ type: Output }],
+        slideChangeTransitionStart: [{ type: Output }],
+        slideNextTransitionEnd: [{ type: Output }],
+        slideNextTransitionStart: [{ type: Output }],
+        slidePrevTransitionEnd: [{ type: Output }],
+        slidePrevTransitionStart: [{ type: Output }],
+        sliderMove: [{ type: Output }],
+        tap: [{ type: Output }],
+        touchEnd: [{ type: Output }],
+        touchMove: [{ type: Output }],
+        touchMoveOpposite: [{ type: Output }],
+        touchStart: [{ type: Output }],
+        transitionEnd: [{ type: Output }],
+        transitionStart: [{ type: Output }]
+    };
+    return SwiperComponent;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var TrustPilotConfig = /** @class */ (function () {
     function TrustPilotConfig() {
         this.businessunitId = '58e253ab0000ff00059fc0fe';
@@ -1222,6 +2064,8 @@ var components = [
     GoogleTagManagerComponent,
     PayPalWidgetComponent,
     TrustPilotWidgetComponent,
+    SwiperComponent,
+    SwiperDirective,
 ];
 var PluginsModule = /** @class */ (function () {
     function PluginsModule(parentModule) {
@@ -1275,6 +2119,6 @@ var PluginsModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PluginsConfig, PLUGINS_CONFIG, PluginsService, PluginsModuleComponent, PluginsModule, FacebookService, GoogleTagManagerComponent, GoogleTagManagerPageViewEvent, GoogleTagManagerService, GoogleService, MapboxService, PayPalWidgetComponent, PayPalService, TrustPilotWidgetComponent, TrustPilotService };
+export { PluginsConfig, PLUGINS_CONFIG, PluginsService, PluginsModuleComponent, PluginsModule, FacebookAuthResponse, FacebookConfig, FacebookPicture, FacebookPictureData, FacebookService, FacebookUser, GoogleTagManagerComponent, GoogleTagManagerPageViewEvent, GoogleTagManagerService, GoogleAuthResponse, GoogleConfig, GoogleService, GoogleUser, MapboxService, PayPalWidgetComponent, PayPalService, SwiperComponent, SwiperDirective, SwiperConfig, SwiperEvents, SWIPER_CONFIG, TrustPilotWidgetComponent, TrustPilotService };
 
 //# sourceMappingURL=designr-plugins.js.map

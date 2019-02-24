@@ -14,6 +14,8 @@
 		"typeRoots": ["node_modules/@types"],
 		"lib": ["es2018", "dom"],
 		"paths": {
+			"@designr/control": ["dist/designr/control"],
+			"@designr/control/*": ["dist/designr/control/*"],
 			"@designr/core": ["dist/designr/core"],
 			"@designr/core/*": ["dist/designr/core/*"],
 			"@designr/data": ["dist/designr/data"],

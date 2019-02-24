@@ -14,7 +14,7 @@ export class ImagePipe implements PipeTransform {
 	transform(images: Image[], type?: string): Image {
 		type = type || 'Default';
 		const imageType: ImageType = ImageType[type] || ImageType.Default;
-		return (images && images.length) ? images.find(i => i.type === imageType) || images[0] : null;
+		return (images && images.length) ? images.find(i => i.type === imageType) || null : null; // images[0]
 	}
 
 }

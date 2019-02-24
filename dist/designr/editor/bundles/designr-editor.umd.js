@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/forms'), require('@angular/animations'), require('@angular/common'), require('@angular/core'), require('@designr/core'), require('@designr/page'), require('ngx-markdown'), require('rxjs/operators')) :
-    typeof define === 'function' && define.amd ? define('@designr/editor', ['exports', '@angular/forms', '@angular/animations', '@angular/common', '@angular/core', '@designr/core', '@designr/page', 'ngx-markdown', 'rxjs/operators'], factory) :
-    (factory((global.designr = global.designr || {}, global.designr.editor = {}),global.ng.forms,global.ng.animations,global.ng.common,global.ng.core,global.core,global.page,global.ngxMarkdown,global.rxjs.operators));
-}(this, (function (exports,forms,animations,common,i0,core,page,ngxMarkdown,operators) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/forms'), require('@angular/animations'), require('@angular/common'), require('@angular/core'), require('@designr/control'), require('@designr/core'), require('@designr/page'), require('ngx-markdown'), require('rxjs/operators')) :
+    typeof define === 'function' && define.amd ? define('@designr/editor', ['exports', '@angular/forms', '@angular/animations', '@angular/common', '@angular/core', '@designr/control', '@designr/core', '@designr/page', 'ngx-markdown', 'rxjs/operators'], factory) :
+    (factory((global.designr = global.designr || {}, global.designr.editor = {}),global.ng.forms,global.ng.animations,global.ng.common,global.ng.core,global.control,global.core,global.page,global.ngxMarkdown,global.rxjs.operators));
+}(this, (function (exports,forms,animations,common,i0,control,core,page,ngxMarkdown,operators) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -12,7 +12,7 @@
     var EDITOR_CONFIG = new i0.InjectionToken('editor.config');
     var EditorConfig = /** @class */ (function () {
         function EditorConfig(options) {
-            console.log('EditorConfig', options);
+            // console.log('EditorConfig', options);
             if (options) {
                 this.enabled = options.enabled || false;
             }
@@ -26,7 +26,7 @@
      */
     var EditorService = /** @class */ (function () {
         function EditorService(options) {
-            console.log('EditorService', options);
+            // console.log('EditorService', options);
             options = options || {};
             this.options = new EditorConfig(options);
         }
@@ -51,7 +51,7 @@
      */
     var EditorModuleComponent = /** @class */ (function () {
         function EditorModuleComponent() {
-            this.version = '0.0.2';
+            this.version = '0.0.3';
         }
         /**
          * @return {?}
@@ -299,7 +299,7 @@
         EditorComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'core-editor',
-                        template: "<ng-container>\n\t<div class=\"page--editor\" [@openClose]=\"editing ? 'open' : 'closed'\" (clickOutside)=\"editing = false\">\n\t\t<ng-container *ngIf=\"editing && page\">\n\t\t\t<form class=\"form\" name=\"group\" [formGroup]=\"group\" (ngSubmit)=\"group.valid && onSubmit(group.value)\" #form=\"ngForm\" role=\"form\" novalidate autocomplete=\"off\">\n\t\t\t\t<div class=\"info\">\n\t\t\t\t\t<span class=\"id\">{{page.id}}</span>\n\t\t\t\t\t<span class=\"status\" [ngClass]=\"{ active: page.active }\">{{page.active ? 'active' : 'inactive'}}</span>\n\t\t\t\t\t<span class=\"component\">{{componentName}}</span>\n\t\t\t\t</div>\n\t\t\t\t<hr>\n\t\t\t\t<h2 class=\"h1\" [innerHTML]=\"page.title\"></h2>\n\t\t\t\t<!--\n\t\t\t\t<p [innerHTML]=\"page.description\"></p>\n\t\t\t\t-->\n\t\t\t\t<hr>\n\t\t\t\t<!--\n\t\t\t\t<div class=\"fieldset\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label>Label</label>\n\t\t\t\t\t\t<input placeholder=\"placeholder\" type=\"text\" class=\"form-control\" required [(ngModel)]=\"model.title\" name=\"title\" #title=\"ngModel\" autocomplete=\"title\">\n\t\t\t\t\t\t<div *ngIf=\"title.invalid && (form.submitted || title.dirty || title.touched)\" class=\"alert alert-danger\">\n\t\t\t\t\t\t\t<div *ngIf=\"title.errors.required\">{{ 'errors.required' | translate }}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t-->\n\t\t\t\t<div *ngFor=\"let control of controls\">\n\t\t\t\t\t<core-control [control]=\"control\" [form]=\"group\"></core-control>\n\t\t\t\t</div>\n\t\t\t\t<!-- <control-editable formControlName=\"email\"></control-editable> -->\n\t\t\t\t<div class=\"action-bar\">\n\t\t\t\t\t<button type=\"text\" class=\"btn btn--dimmed\" [disabled]=\"submitted || !group.valid\" (click)=\"onReset()\" title=\"Annulla\"><span>Annulla</span></button>\n\t\t\t\t\t<button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"submitted || !group.valid\" [ngClass]=\"{ 'btn--busy': busy }\" title=\"Salva\"><span>Salva</span></button>\n\t\t\t\t</div>\n\t\t\t</form>\n\t\t</ng-container>\n\t</div>\n</ng-container>\n",
+                        template: "<ng-container>\n\t<div class=\"page--editor\" [@openClose]=\"editing ? 'open' : 'closed'\" (clickOutside)=\"editing = false\">\n\t\t<ng-container *ngIf=\"editing && page\">\n\t\t\t<form class=\"form\" name=\"group\" [formGroup]=\"group\" (ngSubmit)=\"group.valid && onSubmit(group.value)\" #form=\"ngForm\" role=\"form\" novalidate autocomplete=\"off\">\n\t\t\t\t<div class=\"info\">\n\t\t\t\t\t<span class=\"id\">{{page.id}}</span>\n\t\t\t\t\t<span class=\"status\" [ngClass]=\"{ active: page.active }\">{{page.active ? 'active' : 'inactive'}}</span>\n\t\t\t\t\t<span class=\"component\">{{componentName}}</span>\n\t\t\t\t</div>\n\t\t\t\t<hr>\n\t\t\t\t<h2 class=\"h1\" [innerHTML]=\"page.title\"></h2>\n\t\t\t\t<!--\n\t\t\t\t<p [innerHTML]=\"page.description\"></p>\n\t\t\t\t-->\n\t\t\t\t<hr>\n\t\t\t\t<!--\n\t\t\t\t<div class=\"fieldset\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label>Label</label>\n\t\t\t\t\t\t<input placeholder=\"placeholder\" type=\"text\" class=\"form-control\" required [(ngModel)]=\"model.title\" name=\"title\" #title=\"ngModel\" autocomplete=\"title\">\n\t\t\t\t\t\t<div *ngIf=\"title.invalid && (form.submitted || title.dirty || title.touched)\" class=\"alert alert--danger\">\n\t\t\t\t\t\t\t<div *ngIf=\"title.errors.required\">{{ 'errors.required' | translate }}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t-->\n\t\t\t\t<div *ngFor=\"let control of controls\">\n\t\t\t\t\t<core-control [control]=\"control\" [form]=\"group\"></core-control>\n\t\t\t\t</div>\n\t\t\t\t<!-- <control-editable formControlName=\"email\"></control-editable> -->\n\t\t\t\t<div class=\"action-bar\">\n\t\t\t\t\t<button type=\"text\" class=\"btn btn--secondary\" [disabled]=\"submitted || !group.valid\" (click)=\"onReset()\" title=\"Annulla\"><span>Annulla</span></button>\n\t\t\t\t\t<button type=\"submit\" class=\"btn btn--primary\" [disabled]=\"submitted || !group.valid\" [ngClass]=\"{ 'btn--busy': busy }\" title=\"Salva\"><span>Salva</span></button>\n\t\t\t\t</div>\n\t\t\t</form>\n\t\t</ng-container>\n\t</div>\n</ng-container>\n",
                         animations: [
                             animations.trigger('openClose', [
                                 animations.state('open', animations.style({
@@ -329,7 +329,7 @@
                 { type: EditorConfig, decorators: [{ type: i0.Inject, args: [EDITOR_CONFIG,] }] },
                 { type: page.PageService },
                 { type: ngxMarkdown.MarkdownService },
-                { type: core.FormService },
+                { type: control.FormService },
                 { type: page.PageResolverService }
             ];
         };
@@ -396,6 +396,7 @@
                                 },
                             }),
                             core.CoreModule,
+                            control.ControlModule,
                         ],
                         providers: __spread(services),
                         declarations: __spread(components),

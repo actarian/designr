@@ -1,0 +1,21 @@
+{
+  "name": "@designr/control",
+  "version": "0.0.3",
+  "peerDependencies": {
+    "@angular/common": "~7.2.4",
+    "@angular/core": "~7.2.4"
+  },
+  "main": "bundles/designr-control.umd.js",
+  "module": "fesm5/designr-control.js",
+  "es2015": "fesm2015/designr-control.js",
+  "esm5": "esm5/designr-control.js",
+  "esm2015": "esm2015/designr-control.js",
+  "fesm5": "fesm5/designr-control.js",
+  "fesm2015": "fesm2015/designr-control.js",
+  "typings": "designr-control.d.ts",
+  "metadata": "designr-control.metadata.json",
+  "sideEffects": false,
+  "dependencies": {
+    "tslib": "^1.9.0"
+  }
+}

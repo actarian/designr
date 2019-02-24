@@ -1,6 +1,7 @@
 import { AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ControlBase, ControlBaseOptions, DisposableComponent, FormService } from '@designr/core';
+import { ControlBase, ControlBaseOptions, FormService } from '@designr/control';
+import { DisposableComponent } from '@designr/core';
 import { Page, PageResolverService, PageService } from '@designr/page';
 import { MarkdownService } from 'ngx-markdown';
 import { EditorConfig } from '../config/editor.config';

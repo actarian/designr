@@ -2,29 +2,21 @@
  * Public API Surface of core
  */
 
-export { AuthService, AuthStrategy } from './lib/auth/auth.service';
+export { AuthService, AuthStrategy, AuthToken } from './lib/auth/auth.service';
 export { CoreConfig, CORE_CONFIG } from './lib/config/core.config';
 export { CoreService } from './lib/config/core.service';
 export { DefaultContentDirective } from './lib/content/default-content.directive';
 export { CoreModuleComponent } from './lib/core-module.component';
 export { CoreModule } from './lib/core.module';
 export { DisposableComponent } from './lib/disposable/disposable.component';
-export { ControlBase, ControlBaseOptions } from './lib/forms/controls/control-base';
-export { ControlComponent } from './lib/forms/controls/control.component';
-export { ControlService } from './lib/forms/controls/control.service';
-export { ExistsValidator } from './lib/forms/exists.validator';
-export { FormService } from './lib/forms/form.service';
-export { MatchValidator } from './lib/forms/match.validator';
-export { UppercaseDirective } from './lib/forms/uppercase.directive';
 export { HighlightPipe } from './lib/highlight/highlight.pipe';
 export { HttpResponseInterceptor } from './lib/http/http-response.interceptor';
 export { HttpStatusCodeService } from './lib/http/http-status-code.service';
 export { JsonFormatterComponent } from './lib/json-formatter/json-formatter.component';
-export { Label } from './lib/labels/label';
-export { LabelAsyncPipe } from './lib/labels/label-async.pipe';
-export { LabelDirective } from './lib/labels/label.directive';
-export { LabelPipe } from './lib/labels/label.pipe';
-export { LabelService } from './lib/labels/label.service';
+export { Label } from './lib/label/label';
+export { LabelDirective } from './lib/label/label.directive';
+export { LabelPipe } from './lib/label/label.pipe';
+export { LabelService } from './lib/label/label.service';
 export { Logger } from './lib/logger/logger';
 export { LoggerComponent } from './lib/logger/logger.component';
 export { Document, DocumentIndex } from './lib/models/document';
@@ -52,7 +44,10 @@ export { SlugAsyncPipe } from './lib/slug/slug-async.pipe';
 export { SlugPipe } from './lib/slug/slug.pipe';
 export { SlugService } from './lib/slug/slug.service';
 export { CookieStorageService, LocalStorageService, SessionStorageService, StorageService } from './lib/storage/storage.service';
+export { Translate } from './lib/translate/translate';
+export { TranslateDirective } from './lib/translate/translate.directive';
 export { TranslatePipe } from './lib/translate/translate.pipe';
+export { TranslateService } from './lib/translate/translate.service';
 export { SafeStylePipe } from './lib/trust/safe-style.pipe';
 export { SafeUrlPipe } from './lib/trust/safe-url.pipe';
 export { TrustPipe } from './lib/trust/trust.pipe';

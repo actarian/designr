@@ -8,20 +8,13 @@ import { CoreService } from './config/core.service';
 import { DefaultContentDirective } from './content/default-content.directive';
 import { CoreModuleComponent } from './core-module.component';
 import { DisposableComponent } from './disposable/disposable.component';
-import { ControlComponent } from './forms/controls/control.component';
-import { ControlService } from './forms/controls/control.service';
-import { ExistsValidator } from './forms/exists.validator';
-import { FormService } from './forms/form.service';
-import { MatchValidator } from './forms/match.validator';
-import { UppercaseDirective } from './forms/uppercase.directive';
 import { HighlightPipe } from './highlight/highlight.pipe';
 import { HttpResponseInterceptor } from './http/http-response.interceptor';
 import { HttpStatusCodeService } from './http/http-status-code.service';
 import { JsonFormatterComponent } from './json-formatter/json-formatter.component';
-import { LabelAsyncPipe } from './labels/label-async.pipe';
-import { LabelDirective } from './labels/label.directive';
-import { LabelPipe } from './labels/label.pipe';
-import { LabelService } from './labels/label.service';
+import { LabelDirective } from './label/label.directive';
+import { LabelPipe } from './label/label.pipe';
+import { LabelService } from './label/label.service';
 import { Logger } from './logger/logger';
 import { LoggerComponent } from './logger/logger.component';
 import { EventDispatcherService } from './models/event-dispatcher.service';
@@ -37,7 +30,9 @@ import { RoutePipe } from './route/route.pipe';
 import { SlugAsyncPipe } from './slug/slug-async.pipe';
 import { SlugPipe } from './slug/slug.pipe';
 import { CookieStorageService, LocalStorageService, SessionStorageService, StorageService } from './storage/storage.service';
+import { TranslateDirective } from './translate/translate.directive';
 import { TranslatePipe } from './translate/translate.pipe';
+import { TranslateService } from './translate/translate.service';
 import { SafeStylePipe } from './trust/safe-style.pipe';
 import { SafeUrlPipe } from './trust/safe-url.pipe';
 import { TrustPipe } from './trust/trust.pipe';
@@ -45,10 +40,8 @@ import { TrustPipe } from './trust/trust.pipe';
 const services = [
 	AuthService,
 	CoreService,
-	ControlService,
 	CookieStorageService,
 	EventDispatcherService,
-	FormService,
 	HttpStatusCodeService,
 	LabelService,
 	LocalStorageService,
@@ -57,10 +50,10 @@ const services = [
 	OnceService,
 	SessionStorageService,
 	StorageService,
+	TranslateService,
 ];
 
 const components = [
-	ControlComponent,
 	CoreModuleComponent,
 	DisposableComponent,
 	JsonFormatterComponent,
@@ -70,7 +63,7 @@ const components = [
 const directives = [
 	DefaultContentDirective,
 	LabelDirective,
-	UppercaseDirective,
+	TranslateDirective,
 ];
 
 const pipes = [
@@ -79,7 +72,6 @@ const pipes = [
 	HighlightPipe,
 	ImagePipe,
 	ImageUrlPipe,
-	LabelAsyncPipe,
 	LabelPipe,
 	PublicPipe,
 	RoutePipe,
@@ -93,8 +85,6 @@ const pipes = [
 ];
 
 const validators = [
-	ExistsValidator,
-	MatchValidator,
 ];
 
 const guards = [

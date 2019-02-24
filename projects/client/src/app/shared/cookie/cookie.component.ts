@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Component, Inject, Input, PLATFORM_ID } from '@angular/core';
 import { DisposableComponent, SessionStorageService } from '@designr/core';
 import { Page } from '@designr/page';
 
@@ -11,14 +12,17 @@ export class CookieComponent extends DisposableComponent {
 
 	@Input() page: Page;
 
-	public cookieAccepted: boolean;
+	public cookieAccepted: boolean = true;
 
 	constructor(
+		@Inject(PLATFORM_ID) private platformId: string,
 		private storageService: SessionStorageService,
 	) {
 		super();
 		const storage = this.storageService.tryGet();
-		this.cookieAccepted = storage.get('cookieAccepted');
+		if (isPlatformBrowser(this.platformId)) {
+			this.cookieAccepted = storage.get('cookieAccepted');
+		}
 	}
 
 	acceptCookie() {

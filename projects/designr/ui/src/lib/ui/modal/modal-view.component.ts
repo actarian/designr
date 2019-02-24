@@ -5,7 +5,7 @@ import { Modal, ModalData } from './modal';
 @Component({
 	selector: 'core-modal-view-component',
 	templateUrl: './modal-view.component.html',
-	styleUrls: ['./modal-view.component.scss'],
+	// styleUrls: ['./modal-view.component.scss'],
 	encapsulation: ViewEncapsulation.Emulated,
 })
 export class ModalViewComponent extends DisposableComponent implements OnDestroy {

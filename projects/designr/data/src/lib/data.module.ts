@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CoreModule } from '@designr/core';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { DataConfig, DATA_CONFIG } from './config/data.config';
 import { DataService } from './config/data.service';
 import { DataModuleComponent } from './data-module.component';
 import { MemoryService } from './memory/memory.service';
+// import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { HttpClientMemoryModule } from './memory_/http-client-memory.module';
 
 const services = [
 	DataService,
@@ -32,7 +33,7 @@ const guards = [
 	imports: [
 		CommonModule,
 		HttpClientModule,
-		HttpClientInMemoryWebApiModule,
+		HttpClientMemoryModule,
 		CoreModule,
 	],
 	providers: [
@@ -42,7 +43,7 @@ const guards = [
 		...components,
 	],
 	exports: [
-		HttpClientInMemoryWebApiModule,
+		HttpClientMemoryModule,
 		CoreModule,
 		...components,
 	],
@@ -65,9 +66,7 @@ export class DataModule {
 			ngModule: DataModule,
 			providers: [
 				{ provide: DATA_CONFIG, useValue: config },
-				...HttpClientInMemoryWebApiModule.forRoot(
-					MemoryService, config.memory
-				).providers
+				...HttpClientMemoryModule.forRoot(MemoryService, config.memory).providers
 			]
 		};
 	}

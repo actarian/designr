@@ -16,7 +16,7 @@ class PageConfig {
      */
     constructor(options) {
         this.pages = {};
-        console.log('PageConfig', options);
+        // console.log('PageConfig', options);
         if (options) {
             this.pages = options.pages || {};
             this.defaultPage = options.defaultPage;
@@ -33,7 +33,7 @@ const PAGE_CONFIG = new InjectionToken('page.config');
  */
 class PageModuleComponent {
     constructor() {
-        this.version = '0.0.2';
+        this.version = '0.0.3';
     }
     /**
      * @return {?}
@@ -355,7 +355,7 @@ class PageService extends EntityService {
         this.metaService = metaService;
         this.linkService = linkService;
         this.statusCodeService = statusCodeService;
-        console.log('PageService', options);
+        // console.log('PageService', options);
         options = options || {};
         // options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
         // options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;

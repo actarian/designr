@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('rxjs'), require('rxjs/operators'), require('@angular/core'), require('@designr/core')) :
-    typeof define === 'function' && define.amd ? define('@designr/ui', ['exports', '@angular/common', 'rxjs', 'rxjs/operators', '@angular/core', '@designr/core'], factory) :
-    (factory((global.designr = global.designr || {}, global.designr.ui = {}),global.ng.common,global.rxjs,global.rxjs.operators,global.ng.core,global.core));
-}(this, (function (exports,common,rxjs,operators,i0,core) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@angular/core'), require('@designr/core'), require('rxjs'), require('rxjs/operators')) :
+    typeof define === 'function' && define.amd ? define('@designr/ui', ['exports', '@angular/common', '@angular/core', '@designr/core', 'rxjs', 'rxjs/operators'], factory) :
+    (factory((global.designr = global.designr || {}, global.designr.ui = {}),global.ng.common,global.ng.core,global.core,global.rxjs,global.rxjs.operators));
+}(this, (function (exports,common,i0,core,rxjs,operators) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -10,7 +10,7 @@
      */
     var UIConfig = /** @class */ (function () {
         function UIConfig(options) {
-            console.log('UIConfig', options);
+            // console.log('UIConfig', options);
             if (options) {
                 Object.assign(this, options);
             }
@@ -26,7 +26,7 @@
      */
     var UIService = /** @class */ (function () {
         function UIService(options) {
-            console.log('UIService', options);
+            // console.log('UIService', options);
             options = options || {};
             this.options = new UIConfig(options);
         }
@@ -51,7 +51,7 @@
      */
     var UIModuleComponent = /** @class */ (function () {
         function UIModuleComponent() {
-            this.version = '0.0.2';
+            this.version = '0.0.3';
         }
         /**
          * @return {?}
@@ -175,63 +175,6 @@
             onClick: [{ type: i0.HostListener, args: ['document:click', ['$event'],] }]
         };
         return ClickOutsideDirective;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    // use $ for jquery // !!! rimuovere
-    var FancyboxDirective = /** @class */ (function () {
-        function FancyboxDirective(platformId, zone, element) {
-            this.platformId = platformId;
-            this.zone = zone;
-            this.element = element;
-        }
-        /**
-         * @return {?}
-         */
-        FancyboxDirective.prototype.ngAfterViewInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                if (common.isPlatformBrowser(this.platformId)) {
-                    this.zone.runOutsideAngular(function () {
-                        $(function () {
-                            // $(this.element.nativeElement).fancybox(this.fancybox);
-                            /** @type {?} */
-                            var group = Array.from($(_this.element.nativeElement).find(_this.target));
-                            group.forEach(function (item, i) {
-                                return item.addEventListener('click', function (e) {
-                                    $.fancybox.open(group, _this.fancybox, i);
-                                    e.preventDefault();
-                                    e.stopImmediatePropagation();
-                                });
-                            });
-                            // console.log(group);
-                        });
-                    });
-                }
-            };
-        FancyboxDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[fancybox]',
-                    },] }
-        ];
-        /** @nocollapse */
-        FancyboxDirective.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: i0.NgZone },
-                { type: i0.ElementRef }
-            ];
-        };
-        FancyboxDirective.propDecorators = {
-            fancybox: [{ type: i0.Input }],
-            target: [{ type: i0.Input }]
-        };
-        return FancyboxDirective;
     }());
 
     /**
@@ -731,8 +674,8 @@
             { type: i0.Component, args: [{
                         selector: 'core-modal-container-component',
                         template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal-bg\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal-page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal-header\">\r\n\t\t\t<button type=\"button\" class=\"modal-prev\" (click)=\"doPrev()\" title=\"Indietro\" *ngIf=\"modalCount > 1\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-prev\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t\tindietro\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"modal-close\" (click)=\"doClose()\" title=\"Chiudi finestra\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-close\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal-content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<core-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></core-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
-                        encapsulation: i0.ViewEncapsulation.Emulated,
-                        styles: [".modal{position:fixed;display:flex;justify-content:center;align-items:center;top:0;left:0;width:100%;height:100%;z-index:10000;margin:0;padding:0;overflow:hidden;pointer-events:none;opacity:0;transition:opacity 250ms ease-in-out}.modal.active{opacity:1;pointer-events:all}.modal-bg{position:fixed;z-index:0;background:#1e1e1e;opacity:.87;top:0;left:0;bottom:0;right:0}.modal-page{position:relative;z-index:1;background:#fff;max-height:90vh;max-width:90vw;box-shadow:0 10px 40px -5px rgba(0,0,0,.5);overflow-y:auto}@media (max-width:500px){.modal-page{max-height:calc(100% - 80px);margin-top:40px;width:90%;max-width:none}}.modal-page .modal-header .modal-prev{padding:10px;z-index:1;color:#5f5d63;display:flex;font-size:11px;align-items:center;text-transform:uppercase;margin-left:4px}.modal-page .modal-header .modal-prev .ico{width:12px;height:12px;fill:#5f5d63;margin-right:4px}.modal-page .modal-header .modal-close{position:fixed;z-index:1;right:10px;top:10px}.modal-page .modal-header .modal-close .ico{fill:#fff;width:32px;height:32px}"]
+                        // styleUrls: ['./modal-container.component.scss'],
+                        encapsulation: i0.ViewEncapsulation.Emulated
                     }] }
         ];
         /** @nocollapse */
@@ -802,8 +745,8 @@
             { type: i0.Component, args: [{
                         selector: 'core-modal-view-component',
                         template: "<ng-container #modalContainer></ng-container>\r\n",
-                        encapsulation: i0.ViewEncapsulation.Emulated,
-                        styles: [""]
+                        // styleUrls: ['./modal-view.component.scss'],
+                        encapsulation: i0.ViewEncapsulation.Emulated
                     }] }
         ];
         /** @nocollapse */
@@ -817,6 +760,76 @@
             modal: [{ type: i0.Input }]
         };
         return ModalViewComponent;
+    }(core.DisposableComponent));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var ScrollDirective = /** @class */ (function (_super) {
+        __extends(ScrollDirective, _super);
+        function ScrollDirective(platformId, zone, elementRef) {
+            var _this = _super.call(this) || this;
+            _this.platformId = platformId;
+            _this.zone = zone;
+            _this.elementRef = elementRef;
+            _this.scroll = new i0.EventEmitter();
+            _this.scrollEvent = new rxjs.Observable(function (observer) {
+                return _this.zone.runOutsideAngular(function () {
+                    return rxjs.fromEvent(_this.elementRef.nativeElement, 'scroll')
+                        .pipe(operators.takeUntil(_this.unsubscribe))
+                        .subscribe(observer);
+                });
+            });
+            _this.scrollDocumentEvent = new rxjs.Observable(function (observer) {
+                return _this.zone.runOutsideAngular(function () {
+                    return rxjs.fromEvent(window.document, 'scroll')
+                        .pipe(operators.takeUntil(_this.unsubscribe))
+                        .subscribe(observer);
+                });
+            });
+            return _this;
+        }
+        /**
+         * @return {?}
+         */
+        ScrollDirective.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                if (!common.isPlatformBrowser(this.platformId)) {
+                    return;
+                }
+                this.scrollDocumentEvent.subscribe(function (event) {
+                    /** @type {?} */
+                    var e = {
+                        scrollHeight: document.scrollingElement.scrollHeight,
+                        scrollLeft: document.scrollingElement.scrollLeft,
+                        scrollTop: document.scrollingElement.scrollTop,
+                        scrollWidth: document.scrollingElement.scrollWidth,
+                        originalEvent: event,
+                    };
+                    _this.scroll.emit(e);
+                });
+            };
+        ScrollDirective.decorators = [
+            { type: i0.Directive, args: [{
+                        selector: '[scroll]'
+                    },] }
+        ];
+        /** @nocollapse */
+        ScrollDirective.ctorParameters = function () {
+            return [
+                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
+                { type: i0.NgZone },
+                { type: i0.ElementRef }
+            ];
+        };
+        ScrollDirective.propDecorators = {
+            scroll: [{ type: i0.Output }]
+        };
+        return ScrollDirective;
     }(core.DisposableComponent));
 
     /**
@@ -837,8 +850,8 @@
     /** @type {?} */
     var directives = [
         ClickOutsideDirective,
-        FancyboxDirective,
         LazyImagesDirective,
+        ScrollDirective,
     ];
     var UIModule = /** @class */ (function () {
         function UIModule(parentModule) {
@@ -900,11 +913,13 @@
     exports.UIModuleComponent = UIModuleComponent;
     exports.UIModule = UIModule;
     exports.ClickOutsideDirective = ClickOutsideDirective;
-    exports.FancyboxDirective = FancyboxDirective;
     exports.LazyImagesDirective = LazyImagesDirective;
+    exports.ModalCompleteEvent = ModalCompleteEvent;
+    exports.ModalData = ModalData;
     exports.ModalContainerComponent = ModalContainerComponent;
     exports.ModalViewComponent = ModalViewComponent;
     exports.ModalService = ModalService;
+    exports.ScrollDirective = ScrollDirective;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

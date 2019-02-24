@@ -7,7 +7,7 @@ import { ModalService } from './modal.service';
 @Component({
 	selector: 'core-modal-container-component',
 	templateUrl: './modal-container.component.html',
-	styleUrls: ['./modal-container.component.scss'],
+	// styleUrls: ['./modal-container.component.scss'],
 	encapsulation: ViewEncapsulation.Emulated,
 })
 

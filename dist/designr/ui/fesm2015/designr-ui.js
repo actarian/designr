@@ -1,8 +1,8 @@
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
 import { InjectionToken, Inject, Injectable, Component, Directive, ElementRef, EventEmitter, HostListener, Output, ViewEncapsulation, ComponentFactoryResolver, Input, ReflectiveInjector, ViewChild, ViewContainerRef, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, NgZone, Renderer2 } from '@angular/core';
 import { DisposableComponent, CoreModule } from '@designr/core';
+import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
@@ -13,7 +13,7 @@ class UIConfig {
      * @param {?=} options
      */
     constructor(options) {
-        console.log('UIConfig', options);
+        // console.log('UIConfig', options);
         if (options) {
             Object.assign(this, options);
         }
@@ -31,7 +31,7 @@ class UIService {
      * @param {?} options
      */
     constructor(options) {
-        console.log('UIService', options);
+        // console.log('UIService', options);
         options = options || {};
         this.options = new UIConfig(options);
     }
@@ -53,7 +53,7 @@ UIService.ctorParameters = () => [
  */
 class UIModuleComponent {
     constructor() {
-        this.version = '0.0.2';
+        this.version = '0.0.3';
     }
     /**
      * @return {?}
@@ -111,59 +111,6 @@ ClickOutsideDirective.ctorParameters = () => [
 ClickOutsideDirective.propDecorators = {
     clickOutside: [{ type: Output }],
     onClick: [{ type: HostListener, args: ['document:click', ['$event'],] }]
-};
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-// use $ for jquery // !!! rimuovere
-class FancyboxDirective {
-    /**
-     * @param {?} platformId
-     * @param {?} zone
-     * @param {?} element
-     */
-    constructor(platformId, zone, element) {
-        this.platformId = platformId;
-        this.zone = zone;
-        this.element = element;
-    }
-    /**
-     * @return {?}
-     */
-    ngAfterViewInit() {
-        if (isPlatformBrowser(this.platformId)) {
-            this.zone.runOutsideAngular(() => {
-                $(() => {
-                    // $(this.element.nativeElement).fancybox(this.fancybox);
-                    /** @type {?} */
-                    const group = Array.from($(this.element.nativeElement).find(this.target));
-                    group.forEach((item, i) => item.addEventListener('click', (e) => {
-                        $.fancybox.open(group, this.fancybox, i);
-                        e.preventDefault();
-                        e.stopImmediatePropagation();
-                    }));
-                    // console.log(group);
-                });
-            });
-        }
-    }
-}
-FancyboxDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[fancybox]',
-            },] }
-];
-/** @nocollapse */
-FancyboxDirective.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: NgZone },
-    { type: ElementRef }
-];
-FancyboxDirective.propDecorators = {
-    fancybox: [{ type: Input }],
-    target: [{ type: Input }]
 };
 
 /**
@@ -578,8 +525,8 @@ ModalContainerComponent.decorators = [
     { type: Component, args: [{
                 selector: 'core-modal-container-component',
                 template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal-bg\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal-page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal-header\">\r\n\t\t\t<button type=\"button\" class=\"modal-prev\" (click)=\"doPrev()\" title=\"Indietro\" *ngIf=\"modalCount > 1\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-prev\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t\tindietro\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"modal-close\" (click)=\"doClose()\" title=\"Chiudi finestra\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-close\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal-content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<core-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></core-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
-                encapsulation: ViewEncapsulation.Emulated,
-                styles: [".modal{position:fixed;display:flex;justify-content:center;align-items:center;top:0;left:0;width:100%;height:100%;z-index:10000;margin:0;padding:0;overflow:hidden;pointer-events:none;opacity:0;transition:opacity 250ms ease-in-out}.modal.active{opacity:1;pointer-events:all}.modal-bg{position:fixed;z-index:0;background:#1e1e1e;opacity:.87;top:0;left:0;bottom:0;right:0}.modal-page{position:relative;z-index:1;background:#fff;max-height:90vh;max-width:90vw;box-shadow:0 10px 40px -5px rgba(0,0,0,.5);overflow-y:auto}@media (max-width:500px){.modal-page{max-height:calc(100% - 80px);margin-top:40px;width:90%;max-width:none}}.modal-page .modal-header .modal-prev{padding:10px;z-index:1;color:#5f5d63;display:flex;font-size:11px;align-items:center;text-transform:uppercase;margin-left:4px}.modal-page .modal-header .modal-prev .ico{width:12px;height:12px;fill:#5f5d63;margin-right:4px}.modal-page .modal-header .modal-close{position:fixed;z-index:1;right:10px;top:10px}.modal-page .modal-header .modal-close .ico{fill:#fff;width:32px;height:32px}"]
+                // styleUrls: ['./modal-container.component.scss'],
+                encapsulation: ViewEncapsulation.Emulated
             }] }
 ];
 /** @nocollapse */
@@ -641,8 +588,8 @@ ModalViewComponent.decorators = [
     { type: Component, args: [{
                 selector: 'core-modal-view-component',
                 template: "<ng-container #modalContainer></ng-container>\r\n",
-                encapsulation: ViewEncapsulation.Emulated,
-                styles: [""]
+                // styleUrls: ['./modal-view.component.scss'],
+                encapsulation: ViewEncapsulation.Emulated
             }] }
 ];
 /** @nocollapse */
@@ -652,6 +599,72 @@ ModalViewComponent.ctorParameters = () => [
 ModalViewComponent.propDecorators = {
     modalContainer: [{ type: ViewChild, args: ['modalContainer', { read: ViewContainerRef },] }],
     modal: [{ type: Input }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ScrollDirective extends DisposableComponent {
+    /**
+     * @param {?} platformId
+     * @param {?} zone
+     * @param {?} elementRef
+     */
+    constructor(platformId, zone, elementRef) {
+        super();
+        this.platformId = platformId;
+        this.zone = zone;
+        this.elementRef = elementRef;
+        this.scroll = new EventEmitter();
+        this.scrollEvent = new Observable((observer) => {
+            return this.zone.runOutsideAngular(() => {
+                return fromEvent(this.elementRef.nativeElement, 'scroll')
+                    .pipe(takeUntil(this.unsubscribe))
+                    .subscribe(observer);
+            });
+        });
+        this.scrollDocumentEvent = new Observable((observer) => {
+            return this.zone.runOutsideAngular(() => {
+                return fromEvent(window.document, 'scroll')
+                    .pipe(takeUntil(this.unsubscribe))
+                    .subscribe(observer);
+            });
+        });
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
+        this.scrollDocumentEvent.subscribe(event => {
+            /** @type {?} */
+            const e = {
+                scrollHeight: document.scrollingElement.scrollHeight,
+                scrollLeft: document.scrollingElement.scrollLeft,
+                scrollTop: document.scrollingElement.scrollTop,
+                scrollWidth: document.scrollingElement.scrollWidth,
+                originalEvent: event,
+            };
+            this.scroll.emit(e);
+        });
+    }
+}
+ScrollDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[scroll]'
+            },] }
+];
+/** @nocollapse */
+ScrollDirective.ctorParameters = () => [
+    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
+    { type: NgZone },
+    { type: ElementRef }
+];
+ScrollDirective.propDecorators = {
+    scroll: [{ type: Output }]
 };
 
 /**
@@ -672,8 +685,8 @@ const components = [
 /** @type {?} */
 const directives = [
     ClickOutsideDirective,
-    FancyboxDirective,
     LazyImagesDirective,
+    ScrollDirective,
 ];
 class UIModule {
     /**
@@ -732,6 +745,6 @@ UIModule.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { UIConfig, UI_CONFIG, UIService, UIModuleComponent, UIModule, ClickOutsideDirective, FancyboxDirective, LazyImagesDirective, ModalContainerComponent, ModalViewComponent, ModalService };
+export { UIConfig, UI_CONFIG, UIService, UIModuleComponent, UIModule, ClickOutsideDirective, LazyImagesDirective, ModalCompleteEvent, ModalData, ModalContainerComponent, ModalViewComponent, ModalService, ScrollDirective };
 
 //# sourceMappingURL=designr-ui.js.map

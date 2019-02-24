@@ -12,11 +12,11 @@ export class MemoryService implements InMemoryDbService {
 		// @Inject(forwardRef(() => DataService)) public dataService: DataService
 		// private dataService: DataService,
 	) {
-		console.log('DatasService', config);
+		// console.log('DatasService', config);
 	}
 
 	createDb() {
-		console.log('MemoryService.createDb', this.config.datas);
+		// console.log('MemoryService.createDb', this.config.datas);
 		return this.config.datas || {};
 	}
 

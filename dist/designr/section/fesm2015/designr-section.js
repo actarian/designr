@@ -13,7 +13,7 @@ class SectionConfig {
      */
     constructor(options) {
         this.sections = {};
-        console.log('SectionConfig', options);
+        // console.log('SectionConfig', options);
         if (options) {
             this.sections = options.sections || {};
         }
@@ -28,7 +28,7 @@ const SECTION_CONFIG = new InjectionToken('section.config');
  */
 class SectionModuleComponent {
     constructor() {
-        this.version = '0.0.2';
+        this.version = '0.0.3';
     }
     /**
      * @return {?}
@@ -83,7 +83,7 @@ class SectionService {
      * @param {?} options
      */
     constructor(options) {
-        console.log('SectionService', options);
+        // console.log('SectionService', options);
         options = options || {};
         this.options = new SectionConfig(options);
     }
