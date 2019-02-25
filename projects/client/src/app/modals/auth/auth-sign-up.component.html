@@ -10,30 +10,31 @@
 	</div>
 	<form class="form" [ngClass]="{submitted: signUp.submitted}" name="signUp" role="form" novalidate autocomplete="off" (ngSubmit)="signUp.valid && onSubmit()" #signUp="ngForm">
 		<!-- [ngFormOptions]="{ updateOn: 'submit' }" -->
-		<div class="form-group">
-			<label>{{ 'signUp.firstName' | translate }}</label>
-			<input placeholder="{{ 'signUp.firstName' | translate }}" type="text" class="form-control" required [(ngModel)]="model.firstName" name="firstName" #firstName="ngModel" autocomplete="firstName">
-			<div *ngIf="firstName.invalid && (signUp.submitted || firstName.dirty || firstName.touched)" class="alert alert--danger">
-				<div *ngIf="firstName.errors.required">{{ 'errors.required' | translate }}</div>
+		<div class="fieldset">
+			<div class="form-group">
+				<label>{{ 'signUp.firstName' | translate }}</label>
+				<input placeholder="{{ 'signUp.firstName' | translate }}" type="text" class="form-control" required [(ngModel)]="model.firstName" name="firstName" #firstName="ngModel" autocomplete="firstName">
+				<div *ngIf="firstName.invalid && (signUp.submitted || firstName.dirty || firstName.touched)" class="alert alert--danger">
+					<div *ngIf="firstName.errors.required">{{ 'errors.required' | translate }}</div>
+				</div>
 			</div>
-		</div>
-		<div class="form-group">
-			<label>{{ 'signUp.lastName' | translate }}</label>
-			<input placeholder="{{ 'signUp.lastName' | translate }}" type="text" class="form-control" required [(ngModel)]="model.lastName" name="lastName" #lastName="ngModel" autocomplete="lastName">
-			<div *ngIf="lastName.invalid && (signUp.submitted || lastName.dirty || lastName.touched)" class="alert alert--danger">
-				<div *ngIf="lastName.errors.required">{{ 'errors.required' | translate }}</div>
+			<div class="form-group">
+				<label>{{ 'signUp.lastName' | translate }}</label>
+				<input placeholder="{{ 'signUp.lastName' | translate }}" type="text" class="form-control" required [(ngModel)]="model.lastName" name="lastName" #lastName="ngModel" autocomplete="lastName">
+				<div *ngIf="lastName.invalid && (signUp.submitted || lastName.dirty || lastName.touched)" class="alert alert--danger">
+					<div *ngIf="lastName.errors.required">{{ 'errors.required' | translate }}</div>
+				</div>
 			</div>
-		</div>
-		<div class="form-group form-group--errors">
-			<label>{{ 'signUp.email' | translate }}</label>
-			<input placeholder="{{ 'signUp.email' | translate }}" type="email" class="form-control" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" [(ngModel)]="model.email" name="email" #email="ngModel" autocomplete="email" [exists]="exists$"><!-- match="emailConfirm" reverse="true" -->
-			<div *ngIf="email.invalid && (signUp.submitted || email.dirty || email.touched)" class="alert alert--danger">
-				<div *ngIf="email.errors.required">{{ 'errors.required' | translate }}</div>
-				<div *ngIf="email.errors.pattern">{{ 'errors.email' | translate }}</div>
-				<div *ngIf="email.errors.exists">{{ 'errors.exists' | translate }}</div>
+			<div class="form-group form-group--errors">
+				<label>{{ 'signUp.email' | translate }}</label>
+				<input placeholder="{{ 'signUp.email' | translate }}" type="email" class="form-control" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" [(ngModel)]="model.email" name="email" #email="ngModel" autocomplete="email" [exists]="exists$"><!-- match="emailConfirm" reverse="true" -->
+				<div *ngIf="email.invalid && (signUp.submitted || email.dirty || email.touched)" class="alert alert--danger">
+					<div *ngIf="email.errors.required">{{ 'errors.required' | translate }}</div>
+					<div *ngIf="email.errors.pattern">{{ 'errors.email' | translate }}</div>
+					<div *ngIf="email.errors.exists">{{ 'errors.exists' | translate }}</div>
+				</div>
 			</div>
-		</div>
-		<!-- <div class="form-group">
+			<!-- <div class="form-group">
 			<label>{{ 'signUp.emailConfirm' | translate }}</label>
 			<input placeholder="{{ 'signUp.emailConfirm' | translate }}" type="email" class="form-control" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" match="email" [(ngModel)]="model.emailConfirm" name="emailConfirm" #emailConfirm="ngModel" autocomplete="emailConfirm">
 			<div *ngIf="emailConfirm.invalid && (signUp.submitted || emailConfirm.dirty || emailConfirm.touched)" class="alert alert--danger">
@@ -42,24 +43,23 @@
 				<div *ngIf="emailConfirm.errors.match">{{ 'errors.match' | translate }}</div>
 			</div>
 		</div> -->
-		<div class="form-group">
-			<label>{{ 'signUp.password' | translate }} <small class="text-muted"> ({{ 'signUp.passwordHint' | translate }})</small></label>
-			<div class="form-password-reveal">
-				<input placeholder="{{ 'signUp.password' | translate }}" [type]="passwordReveal.value ? 'text' : 'password'" class="form-control" required minlength="6" maxlength="10" [(ngModel)]="model.password" name="password" #password="ngModel" autocomplete="password">
-				<div class="checkbox">
-					<label class="form-check-label">
+			<div class="form-group">
+				<label>{{ 'signUp.password' | translate }} <small class="text-muted"> ({{ 'signUp.passwordHint' | translate }})</small></label>
+				<div class="form-password-reveal">
+					<input placeholder="{{ 'signUp.password' | translate }}" [type]="passwordReveal.value ? 'text' : 'password'" class="form-control" required minlength="6" maxlength="10" [(ngModel)]="model.password" name="password" #password="ngModel" autocomplete="password">
+					<div class="checkbox">
+						<label class="form-check-label">
 						<input type="checkbox" class="form-check-input" [(ngModel)]="model.passwordReveal" name="passwordReveal" #passwordReveal="ngModel" checked>
 						<span>{{ 'signUp.passwordReveal' | translate }}</span>
 					</label>
+					</div>
+				</div>
+				<div *ngIf="password.invalid && (signUp.submitted || password.dirty || password.touched)" class="alert alert--danger">
+					<div *ngIf="password.errors.required">{{ 'errors.required' | translate }}</div>
+					<div *ngIf="password.errors.minlength">{{ 'errors.minlength' | label : 'dev\'essere almeno @value caratteri' : { value: password.errors.minlength.requiredLength } }}</div>
+					<div *ngIf="password.errors.maxlength">{{ 'errors.maxlength' | label : 'dev\'essere massimo @value caratteri' : { value: password.errors.maxlength.requiredLength } }}</div>
 				</div>
 			</div>
-			<div *ngIf="password.invalid && (signUp.submitted || password.dirty || password.touched)" class="alert alert--danger">
-				<div *ngIf="password.errors.required">{{ 'errors.required' | translate }}</div>
-				<div *ngIf="password.errors.minlength">{{ 'errors.minlength' | label : 'dev\'essere almeno @value caratteri' : { value: password.errors.minlength.requiredLength } }}</div>
-				<div *ngIf="password.errors.maxlength">{{ 'errors.maxlength' | label : 'dev\'essere massimo @value caratteri' : { value: password.errors.maxlength.requiredLength } }}</div>
-			</div>
-		</div>
-		<div class="form-group">
 		</div>
 		<div class="form-group form-group--errors">
 			<h4><a href="/media/userfiles/files/20180522-Informativa_registrazione.pdf" target="_blank">Informativa Privacy</a></h4>
@@ -76,10 +76,11 @@
 				<div *ngIf="acceptPrivacyPolicies.errors.required">{{ 'errors.required' | translate }}</div>
 			</div>
 		</div>
-		<br>
-		<button type="submit" class="btn btn--primary" [ngClass]="{ disabled: submitted, invalid: !signUp.valid, 'btn--busy': busy }" title="{{ 'signUp.register' | translate }}">
-			<span>{{ 'signUp.register' | translate }}</span>
-		</button>
+		<div class="btn-group">
+			<button type="submit" class="btn btn--primary" [ngClass]="{ disabled: submitted, invalid: !signUp.valid, 'btn--busy': busy }" title="{{ 'signUp.register' | translate }}">
+				<span>{{ 'signUp.register' | translate }}</span>
+			</button>
+		</div>
 	</form>
 	<div class="alert alert--danger fade show" role="alert" *ngIf="error">
 		<ng-container [ngSwitch]="error.status">

@@ -14,4 +14,6 @@ export class EditorModuleComponent implements OnInit {
 	ngOnInit() {
 	}
 
+	// <ng-container loadModule="widgetSettings"></ng-container>
+
 }

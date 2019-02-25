@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@angular/core'), require('@designr/core'), require('rxjs'), require('rxjs/operators')) :
-    typeof define === 'function' && define.amd ? define('@designr/ui', ['exports', '@angular/common', '@angular/core', '@designr/core', 'rxjs', 'rxjs/operators'], factory) :
-    (factory((global.designr = global.designr || {}, global.designr.ui = {}),global.ng.common,global.ng.core,global.core,global.rxjs,global.rxjs.operators));
-}(this, (function (exports,common,i0,core,rxjs,operators) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@designr/core'), require('rxjs'), require('rxjs/operators'), require('@angular/core')) :
+    typeof define === 'function' && define.amd ? define('@designr/ui', ['exports', '@angular/common', '@designr/core', 'rxjs', 'rxjs/operators', '@angular/core'], factory) :
+    (factory((global.designr = global.designr || {}, global.designr.ui = {}),global.ng.common,global.core,global.rxjs,global.rxjs.operators,global.ng.core));
+}(this, (function (exports,common,core,rxjs,operators,i0) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -673,8 +673,7 @@
         ModalContainerComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'core-modal-container-component',
-                        template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal-bg\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal-page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal-header\">\r\n\t\t\t<button type=\"button\" class=\"modal-prev\" (click)=\"doPrev()\" title=\"Indietro\" *ngIf=\"modalCount > 1\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-prev\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t\tindietro\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"modal-close\" (click)=\"doClose()\" title=\"Chiudi finestra\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-close\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal-content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<core-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></core-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
-                        // styleUrls: ['./modal-container.component.scss'],
+                        template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal-bg\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal-page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal-header\">\r\n\t\t\t<button type=\"button\" class=\"btn btn--prev\" (click)=\"doPrev()\" *ngIf=\"modalCount > 1\" [title]=\"'modal.back' | label : 'back'\">\r\n\t\t\t\t<span sprite=\"ico-prev\"></span>\r\n\t\t\t\t<span>{{'modal.back' | label : 'back'}}</span>\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"btn btn--close\" (click)=\"doClose()\" title=\"'modal.close' | label : 'close'\">\r\n\t\t\t\t<span sprite=\"ico-close\"></span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal-content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<core-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></core-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
                         encapsulation: i0.ViewEncapsulation.Emulated
                     }] }
         ];
@@ -836,6 +835,25 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var SpriteComponent = /** @class */ (function () {
+        function SpriteComponent() {
+        }
+        SpriteComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: '[sprite]',
+                        template: "<ng-container *ngIf=\"sprite\">\n\t<svg class=\"sprite\"><use attr.xlink:href=\"#{{sprite}}\"></use></svg>\n</ng-container>"
+                    }] }
+        ];
+        SpriteComponent.propDecorators = {
+            sprite: [{ type: i0.Input }]
+        };
+        return SpriteComponent;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     /** @type {?} */
     var services = [
         UIService,
@@ -846,6 +864,7 @@
         UIModuleComponent,
         ModalContainerComponent,
         ModalViewComponent,
+        SpriteComponent,
     ];
     /** @type {?} */
     var directives = [
@@ -920,6 +939,7 @@
     exports.ModalViewComponent = ModalViewComponent;
     exports.ModalService = ModalService;
     exports.ScrollDirective = ScrollDirective;
+    exports.ɵa = SpriteComponent;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

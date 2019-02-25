@@ -2,16 +2,12 @@
 	<div class="modal-bg" (click)="doClose()"></div>
 	<div class="modal-page" [ngClass]="className">
 		<div class="modal-header">
-			<button type="button" class="modal-prev" (click)="doPrev()" title="Indietro" *ngIf="modalCount > 1">
-				<svg class="ico">
-					<use xlink:href="#ico-prev"></use>
-				</svg>
-				indietro
+			<button type="button" class="btn btn--prev" (click)="doPrev()" *ngIf="modalCount > 1" [title]="'modal.back' | label : 'back'">
+				<span sprite="ico-prev"></span>
+				<span>{{'modal.back' | label : 'back'}}</span>
 			</button>
-			<button type="button" class="modal-close" (click)="doClose()" title="Chiudi finestra">
-				<svg class="ico">
-					<use xlink:href="#ico-close"></use>
-				</svg>
+			<button type="button" class="btn btn--close" (click)="doClose()" title="'modal.close' | label : 'close'">
+				<span sprite="ico-close"></span>
 			</button>
 		</div>
 		<div class="modal-content">

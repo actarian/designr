@@ -1,12 +1,32 @@
 .form {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
+
+	.btn-group {
+		display: flex;
+		justify-content: space-between;
+	}
 }
 
-.form-group {
-	width: calc(50% - 10px);
-	flex: 0 0 calc(50% - 10px);
+.fieldset {
+	padding: 0;
+	margin: 0;
+	border: 0;
+	appearance: none;
+}
+
+@media (min-width:1024px) {
+
+	.fieldset {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		width: 100%;
+	}
+
+	.form-group {
+		width: calc(50% - 10px);
+		flex: 0 0 calc(50% - 10px);
+	}
+
 }
 
 label {

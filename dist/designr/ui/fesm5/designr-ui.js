@@ -1,9 +1,9 @@
 import { __spread, __extends } from 'tslib';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { InjectionToken, Inject, Injectable, Component, Directive, ElementRef, EventEmitter, HostListener, Output, NgModule, Optional, SkipSelf, defineInjectable, inject, ViewEncapsulation, ReflectiveInjector, ComponentFactoryResolver, ViewChild, ViewContainerRef, Input, PLATFORM_ID, Renderer2, NgZone } from '@angular/core';
 import { DisposableComponent, CoreModule } from '@designr/core';
 import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, HostListener, Output, NgModule, Optional, SkipSelf, defineInjectable, inject, ViewEncapsulation, ReflectiveInjector, ComponentFactoryResolver, ViewChild, ViewContainerRef, PLATFORM_ID, NgZone, Renderer2 } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -604,8 +604,7 @@ var ModalContainerComponent = /** @class */ (function (_super) {
     ModalContainerComponent.decorators = [
         { type: Component, args: [{
                     selector: 'core-modal-container-component',
-                    template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal-bg\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal-page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal-header\">\r\n\t\t\t<button type=\"button\" class=\"modal-prev\" (click)=\"doPrev()\" title=\"Indietro\" *ngIf=\"modalCount > 1\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-prev\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t\tindietro\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"modal-close\" (click)=\"doClose()\" title=\"Chiudi finestra\">\r\n\t\t\t\t<svg class=\"ico\">\r\n\t\t\t\t\t<use xlink:href=\"#ico-close\"></use>\r\n\t\t\t\t</svg>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal-content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<core-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></core-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
-                    // styleUrls: ['./modal-container.component.scss'],
+                    template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal-bg\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal-page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal-header\">\r\n\t\t\t<button type=\"button\" class=\"btn btn--prev\" (click)=\"doPrev()\" *ngIf=\"modalCount > 1\" [title]=\"'modal.back' | label : 'back'\">\r\n\t\t\t\t<span sprite=\"ico-prev\"></span>\r\n\t\t\t\t<span>{{'modal.back' | label : 'back'}}</span>\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"btn btn--close\" (click)=\"doClose()\" title=\"'modal.close' | label : 'close'\">\r\n\t\t\t\t<span sprite=\"ico-close\"></span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal-content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<core-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></core-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
                     encapsulation: ViewEncapsulation.Emulated
                 }] }
     ];
@@ -762,6 +761,25 @@ var ScrollDirective = /** @class */ (function (_super) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+var SpriteComponent = /** @class */ (function () {
+    function SpriteComponent() {
+    }
+    SpriteComponent.decorators = [
+        { type: Component, args: [{
+                    selector: '[sprite]',
+                    template: "<ng-container *ngIf=\"sprite\">\n\t<svg class=\"sprite\"><use attr.xlink:href=\"#{{sprite}}\"></use></svg>\n</ng-container>"
+                }] }
+    ];
+    SpriteComponent.propDecorators = {
+        sprite: [{ type: Input }]
+    };
+    return SpriteComponent;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 /** @type {?} */
 var services = [
     UIService,
@@ -772,6 +790,7 @@ var components = [
     UIModuleComponent,
     ModalContainerComponent,
     ModalViewComponent,
+    SpriteComponent,
 ];
 /** @type {?} */
 var directives = [
@@ -831,6 +850,6 @@ var UIModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { UIConfig, UI_CONFIG, UIService, UIModuleComponent, UIModule, ClickOutsideDirective, LazyImagesDirective, ModalCompleteEvent, ModalData, ModalContainerComponent, ModalViewComponent, ModalService, ScrollDirective };
+export { UIConfig, UI_CONFIG, UIService, UIModuleComponent, UIModule, ClickOutsideDirective, LazyImagesDirective, ModalCompleteEvent, ModalData, ModalContainerComponent, ModalViewComponent, ModalService, ScrollDirective, SpriteComponent as ɵa };
 
 //# sourceMappingURL=designr-ui.js.map

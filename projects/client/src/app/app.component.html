@@ -1,15 +1,22 @@
+<core-google-tag-manager (pageView)="onPageView($event)"></core-google-tag-manager>
 <div class="page" [ngClass]="{ 'page--editing': editor.editing }">
-	<core-google-tag-manager (pageView)="onPageView($event)"></core-google-tag-manager>
-	<div class="wrapper">
-		<!-- <section-shop-reminder></section-shop-reminder> -->
-		<header-component></header-component>
-		<router-outlet></router-outlet>
-		<core-logger></core-logger>
-		<footer-component></footer-component>
-		<!-- <section-svg></section-svg> -->
-	</div>
+	<!-- NOTIFICATIONS -->
+	<!-- <section-shop-reminder></section-shop-reminder> -->
+	<!-- HEADER -->
+	<header-component></header-component>
+	<!-- LOGGER -->
+	<core-logger></core-logger>
+	<!-- PAGE -->
+	<router-outlet></router-outlet>
+	<!-- FOOTER -->
+	<footer-component></footer-component>
+	<!-- COOKIES -->
 	<cookie-component></cookie-component>
+	<!-- MODALS -->
 	<core-modal-container-component></core-modal-container-component>
-	<!-- <loading-transition></loading-transition> -->
-	<core-editor #editor></core-editor>
+	<!-- PAGE LOADER -->
+	<loader-component></loader-component>
+	<!-- SVG SPRITES -->
+	<sprites-component></sprites-component>
 </div>
+<panel-component #editor></panel-component>

@@ -67,3 +67,11 @@ button,
 	background: $google;
 	color: white;
 }
+
+.btn-prev {
+	@extend .btn--primary;
+}
+
+.btn-close {
+	@extend .btn--secondary;
+}

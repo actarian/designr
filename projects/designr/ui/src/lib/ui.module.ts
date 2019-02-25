@@ -10,6 +10,7 @@ import { ModalContainerComponent } from './ui/modal/modal-container.component';
 import { ModalViewComponent } from './ui/modal/modal-view.component';
 import { ModalService } from './ui/modal/modal.service';
 import { ScrollDirective } from './ui/scroll/scroll.directive';
+import { SpriteComponent } from './ui/sprite/sprite.component';
 
 const services = [
 	UIService,
@@ -20,6 +21,7 @@ const components = [
 	UIModuleComponent,
 	ModalContainerComponent,
 	ModalViewComponent,
+	SpriteComponent,
 ];
 
 const directives = [

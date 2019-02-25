@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ControlModule } from '@designr/control';
+import { ModuleWithProviders, NgModule, NgModuleFactoryLoader, Optional, SkipSelf, SystemJsNgModuleLoader } from '@angular/core';
 import { CoreModule } from '@designr/core';
-import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { EditorConfig, EDITOR_CONFIG } from './config/editor.config';
 import { EditorService } from './config/editor.service';
+import { LazyModuleDirective } from './editor-lazy/lazy-module.directive';
 import { EditorModuleComponent } from './editor-module.component';
-import { EditorComponent } from './editor/editor.component';
+import { PanelComponent } from './panel/panel.component';
 
 const services = [
 	EditorService,
@@ -15,10 +13,11 @@ const services = [
 
 const components = [
 	EditorModuleComponent,
-	EditorComponent,
+	PanelComponent,
 ];
 
 const directives = [
+	LazyModuleDirective,
 ];
 
 const pipes = [
@@ -33,30 +32,15 @@ const guards = [
 @NgModule({
 	imports: [
 		CommonModule,
-		FormsModule,
-		ReactiveFormsModule,
-		MarkdownModule.forRoot({
-			markedOptions: {
-				provide: MarkedOptions,
-				useValue: {
-					// gfm: true,
-					// tables: true,
-					// breaks: true,
-					// pedantic: true,
-					// sanitize: true,
-					// smartLists: true,
-					// smartypants: true,
-				},
-			},
-		}),
 		CoreModule,
-		ControlModule,
 	],
 	providers: [
+		{ provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader },
 		...services,
 	],
 	declarations: [
 		...components,
+		...directives,
 	],
 	exports: [
 		CoreModule,

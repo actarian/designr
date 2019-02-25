@@ -4,10 +4,8 @@ import { ControlBase, ControlBaseOptions, FormService } from '@designr/control';
 import { DisposableComponent } from '@designr/core';
 import { Page, PageResolverService, PageService } from '@designr/page';
 import { MarkdownService } from 'ngx-markdown';
-import { EditorConfig } from '../config/editor.config';
-export declare class EditorComponent extends DisposableComponent implements AfterViewInit {
+export declare class EditorRootComponent extends DisposableComponent implements AfterViewInit {
     private platformId;
-    private config;
     private pageService;
     private markdownService;
     private formService;
@@ -16,15 +14,13 @@ export declare class EditorComponent extends DisposableComponent implements Afte
     private _page;
     controls: ControlBase<any>[];
     group: FormGroup;
-    editing: boolean;
     busy: boolean;
     submitted: boolean;
-    constructor(platformId: string, config: EditorConfig, pageService: PageService, markdownService: MarkdownService, formService: FormService, pageResolverService: PageResolverService);
+    constructor(platformId: string, pageService: PageService, markdownService: MarkdownService, formService: FormService, pageResolverService: PageResolverService);
     page: Page;
     readonly componentName: string;
     getControlsByPage(page: Page): ControlBaseOptions<any>[];
     ngAfterViewInit(): void;
-    onKeydown(e: KeyboardEvent): void;
     onReset(): void;
     onSubmit(model: any): void;
     onAssign(model: any): void;

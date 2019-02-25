@@ -10,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 import { EditorConfig, EDITOR_CONFIG } from '../config/editor.config';
 
 @Component({
-	selector: 'core-editor',
+	selector: 'editor-component',
 	templateUrl: './editor.component.html',
 	styleUrls: ['./editor.component.scss'],
 	animations: [

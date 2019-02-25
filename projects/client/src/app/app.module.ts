@@ -26,8 +26,10 @@ import { FeatureComponent } from './shared/feature/feature.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { HeroComponent } from './shared/hero/hero.component';
+import { LoaderComponent } from './shared/loader/loader.component';
 import { PictureComponent } from './shared/picture/picture.component';
 import { RelatedComponent } from './shared/related/related.component';
+import { SpritesComponent } from './shared/sprites/sprites.component';
 import { UserService } from './shared/user/user.service';
 
 const modules = [
@@ -58,8 +60,10 @@ const shared: Type<DisposableComponent>[] = [
 	FooterComponent,
 	HeaderComponent,
 	HeroComponent,
+	LoaderComponent,
 	PictureComponent,
 	RelatedComponent,
+	SpritesComponent,
 ];
 
 const auth = [

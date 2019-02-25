@@ -1,16 +1,20 @@
 <div class="container" [hidden]="sent">
 	<div class="headline">{{ 'signForgotten.title' | translate }}</div>
 	<form name="signForgotten" role="form" novalidate autocomplete="off" (ngSubmit)="signForgotten.valid && onSubmit()" #signForgotten="ngForm">
-		<div class="form-group">
-			<input placeholder="{{ 'signForgotten.email' | translate }}" type="email" class="form-control" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" [(ngModel)]="model.email" name="email" #email="ngModel">
-			<div *ngIf="email.invalid && (signForgotten.submitted || email.dirty || email.touched)" class="alert alert--danger">
-				<div *ngIf="email.errors.required">{{ 'errors.required' | translate }}</div>
-				<div *ngIf="email.errors.pattern">{{ 'errors.email' | translate }}</div>
+		<div class="fieldset">
+			<div class="form-group">
+				<input placeholder="{{ 'signForgotten.email' | translate }}" type="email" class="form-control" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" [(ngModel)]="model.email" name="email" #email="ngModel">
+				<div *ngIf="email.invalid && (signForgotten.submitted || email.dirty || email.touched)" class="alert alert--danger">
+					<div *ngIf="email.errors.required">{{ 'errors.required' | translate }}</div>
+					<div *ngIf="email.errors.pattern">{{ 'errors.email' | translate }}</div>
+				</div>
 			</div>
 		</div>
-		<button type="submit" class="btn btn--primary" [ngClass]="{ disabled: submitted, invalid: !signForgotten.valid, 'btn--busy': busy }" title="{{ 'signForgotten.send' | translate }}">
-			<span>{{ 'signForgotten.send' | translate }}</span>
-		</button>
+		<div class="btn-group">
+			<button type="submit" class="btn btn--primary" [ngClass]="{ disabled: submitted, invalid: !signForgotten.valid, 'btn--busy': busy }" title="{{ 'signForgotten.send' | translate }}">
+				<span>{{ 'signForgotten.send' | translate }}</span>
+			</button>
+		</div>
 	</form>
 </div>
 <div class="container" [hidden]="!sent">
