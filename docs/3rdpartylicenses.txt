@@ -385,6 +385,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+@designr/control
+
 intersection-observer
 W3C-20150513
 
@@ -450,8 +452,6 @@ MIT
 MIT
 
 @designr/section
-
-@designr/control
 
 @designr/core
 

@@ -5,5 +5,5 @@ export declare class PanelComponent extends DisposableComponent {
     private config;
     opened: boolean;
     constructor(platformId: string, config: EditorConfig);
-    onKeydown(e: KeyboardEvent): void;
+    onKeydown(event: KeyboardEvent): void;
 }

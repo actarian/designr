@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
+import { ModuleWithProviders, NgModule, NgModuleFactoryLoader, Optional, SkipSelf, SystemJsNgModuleLoader } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
 import { CoreConfig, CORE_CONFIG } from './config/core.config';
@@ -19,6 +19,8 @@ import { Logger } from './logger/logger';
 import { LoggerComponent } from './logger/logger.component';
 import { EventDispatcherService } from './models/event-dispatcher.service';
 import { MenuService } from './models/menu.service';
+import { CoreModules, CORE_MODULES } from './modules/core.modules';
+import { LazyModuleDirective } from './modules/lazy-module.directive';
 import { OnceService } from './once/once.service';
 import { AssetPipe } from './pipes/asset.pipe';
 import { CustomAsyncPipe } from './pipes/custom-async.pipe';
@@ -63,6 +65,7 @@ const components = [
 const directives = [
 	DefaultContentDirective,
 	LabelDirective,
+	LazyModuleDirective,
 	TranslateDirective,
 ];
 
@@ -99,6 +102,7 @@ const guards = [
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
+		{ provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader },
 		...services,
 		...pipes,
 		...validators,
@@ -122,18 +126,23 @@ export class CoreModule {
 	constructor(
 		@Optional() @SkipSelf() parentModule: CoreModule
 	) {
+		/*
 		if (parentModule) {
 			throw new Error('CoreModule is already loaded. Import it in the AppModule only');
 		}
+		*/
 	}
 
 	public static forRoot(
 		config?: CoreConfig,
+		modules?: CoreModules,
 	): ModuleWithProviders {
 		return {
 			ngModule: CoreModule,
 			providers: [{
 				provide: CORE_CONFIG, useValue: config
+			}, {
+				provide: CORE_MODULES, useValue: modules || {}
 			}]
 		};
 	}

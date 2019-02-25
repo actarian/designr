@@ -3349,6 +3349,73 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /** @type {?} */
+    var CORE_MODULES = new i0.InjectionToken('core.modules');
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var LazyModuleDirective = /** @class */ (function () {
+        function LazyModuleDirective(modules, injector, loader, container) {
+            this.modules = modules;
+            this.injector = injector;
+            this.loader = loader;
+            this.container = container;
+        }
+        /**
+         * @return {?}
+         */
+        LazyModuleDirective.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                this.loader.load(this.modules[this.lazyModule]).then(function (moduleFactory) {
+                    _this.moduleRef = moduleFactory.create(_this.injector);
+                    /** @type {?} */
+                    var rootComponentType = _this.moduleRef.injector.get('LAZY_ROOT_COMPONENT');
+                    console.log(rootComponentType);
+                    /** @type {?} */
+                    var factory = _this.moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
+                    _this.container.createComponent(factory);
+                });
+            };
+        /**
+         * @return {?}
+         */
+        LazyModuleDirective.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                if (this.moduleRef) {
+                    this.moduleRef.destroy();
+                }
+            };
+        LazyModuleDirective.decorators = [
+            { type: i0.Directive, args: [{
+                        selector: '[lazyModule]'
+                    },] }
+        ];
+        /** @nocollapse */
+        LazyModuleDirective.ctorParameters = function () {
+            return [
+                { type: undefined, decorators: [{ type: i0.Inject, args: [CORE_MODULES,] }] },
+                { type: i0.Injector },
+                { type: i0.NgModuleFactoryLoader },
+                { type: i0.ViewContainerRef }
+            ];
+        };
+        LazyModuleDirective.propDecorators = {
+            lazyModule: [{ type: i0.Input }]
+        };
+        return LazyModuleDirective;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     // export class OnceEvent extends Event { }
     var OnceService = /** @class */ (function () {
         function OnceService(platformId, zone) {
@@ -4115,6 +4182,7 @@
     var directives = [
         DefaultContentDirective,
         LabelDirective,
+        LazyModuleDirective,
         TranslateDirective,
     ];
     /** @type {?} */
@@ -4139,23 +4207,29 @@
     var validators = [];
     var CoreModule = /** @class */ (function () {
         function CoreModule(parentModule) {
+            /*
             if (parentModule) {
                 throw new Error('CoreModule is already loaded. Import it in the AppModule only');
             }
+            */
         }
         /**
          * @param {?=} config
+         * @param {?=} modules
          * @return {?}
          */
         CoreModule.forRoot = /**
          * @param {?=} config
+         * @param {?=} modules
          * @return {?}
          */
-            function (config) {
+            function (config, modules) {
                 return {
                     ngModule: CoreModule,
                     providers: [{
                             provide: CORE_CONFIG, useValue: config
+                        }, {
+                            provide: CORE_MODULES, useValue: modules || {}
                         }]
                 };
             };
@@ -4168,7 +4242,8 @@
                             forms.ReactiveFormsModule,
                         ],
                         providers: __spread([
-                            { provide: http.HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true }
+                            { provide: http.HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
+                            { provide: i0.NgModuleFactoryLoader, useClass: i0.SystemJsNgModuleLoader }
                         ], services, pipes, validators),
                         declarations: __spread(components, directives, pipes, validators),
                         exports: __spread(components, directives, pipes, validators),
@@ -4366,6 +4441,7 @@
     exports.MenuItem = MenuItem;
     exports.MenuService = MenuService;
     exports.Taxonomy = Taxonomy;
+    exports.CORE_MODULES = CORE_MODULES;
     exports.OnceService = OnceService;
     exports.AssetPipe = AssetPipe;
     exports.CustomAsyncPipe = CustomAsyncPipe;
@@ -4390,6 +4466,7 @@
     exports.SafeUrlPipe = SafeUrlPipe;
     exports.TrustPipe = TrustPipe;
     exports.ɵa = ApiService;
+    exports.ɵb = LazyModuleDirective;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -59,7 +59,6 @@ const guards = [
 		EditorRootComponent,
 	],
 	exports: [
-		CoreModule,
 		...components,
 	],
 })

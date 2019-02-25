@@ -37,7 +37,7 @@ export class LoaderComponent extends DisposableComponent implements AfterViewIni
 						this.renderer.removeClass(this.elementRef.nativeElement, 'active');
 						this.renderer.addClass(this.elementRef.nativeElement, 'finish');
 						setTimeout(() => {
-							this.renderer.removeClass(this.elementRef.nativeElement, 'active finish');
+							this.renderer.removeClass(this.elementRef.nativeElement, 'finish');
 						}, 600);
 					}
 				});

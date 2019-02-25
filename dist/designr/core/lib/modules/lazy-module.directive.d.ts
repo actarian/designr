@@ -1,16 +1,16 @@
 import { Injector, NgModuleFactoryLoader, OnDestroy, OnInit, Type, ViewContainerRef } from '@angular/core';
-import { Modules } from './editor-lazy';
+import { CoreModules } from './core.modules';
 export declare type ModuleWithRoot = Type<any> & {
     rootComponent: Type<any>;
 };
 export declare class LazyModuleDirective implements OnInit, OnDestroy {
-    private modulesMap;
+    private modules;
     private injector;
     private loader;
     private container;
-    lazyModule: keyof Modules;
+    lazyModule: keyof CoreModules;
     private moduleRef;
-    constructor(modulesMap: any, injector: Injector, loader: NgModuleFactoryLoader, container: ViewContainerRef);
+    constructor(modules: any, injector: Injector, loader: NgModuleFactoryLoader, container: ViewContainerRef);
     ngOnInit(): void;
     ngOnDestroy(): void;
 }

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { EditorModule } from '@designr/editor';
+import { EditorLazyModule } from '@designr/editor';
 
 @NgModule({
 	imports: [
-		EditorModule,
+		EditorLazyModule,
 	],
-	exports: [EditorModule]
+	exports: [EditorLazyModule]
 })
 
 export class AppEditorLazy { }

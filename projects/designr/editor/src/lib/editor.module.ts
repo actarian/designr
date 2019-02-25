@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ModuleWithProviders, NgModule, NgModuleFactoryLoader, Optional, SkipSelf, SystemJsNgModuleLoader } from '@angular/core';
+import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { CoreModule } from '@designr/core';
 import { EditorConfig, EDITOR_CONFIG } from './config/editor.config';
 import { EditorService } from './config/editor.service';
-import { LazyModuleDirective } from './editor-lazy/lazy-module.directive';
 import { EditorModuleComponent } from './editor-module.component';
 import { PanelComponent } from './panel/panel.component';
 
@@ -17,7 +16,6 @@ const components = [
 ];
 
 const directives = [
-	LazyModuleDirective,
 ];
 
 const pipes = [
@@ -35,7 +33,6 @@ const guards = [
 		CoreModule,
 	],
 	providers: [
-		{ provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader },
 		...services,
 	],
 	declarations: [

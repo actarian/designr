@@ -7,27 +7,23 @@
 
 	background: #fafafa;
 	color: #55555a;
+}
 
-	.h1 {
-		color: #55555a;
-	}
+.h1 {
+	color: #55555a;
+	font-size: 19px;
+}
 
-	form {
-		margin: 0;
-	}
+form {
+	margin: 0;
+}
 
-	label {
-		display: block;
-		width: 100%;
-		color: #55555a;
-		font-weight: 700;
-		font-size: 12px;
-	}
-
-	@media (max-width: 1024px) {
-		display: none;
-	}
-
+label {
+	display: block;
+	width: 100%;
+	color: #55555a;
+	font-weight: 700;
+	font-size: 12px;
 }
 
 .id {
@@ -61,20 +57,4 @@
 	display: inline-block;
 	font-size: 14px;
 	font-style: italic;
-}
-
-::-webkit-scrollbar {
-	width: 0;
-}
-
-::-webkit-scrollbar-track {
-	background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-	background: transparent;
-}
-
-::-webkit-scrollbar-thumb:hover {
-	background: transparent;
 }

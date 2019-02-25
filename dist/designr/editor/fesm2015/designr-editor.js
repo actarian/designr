@@ -6,7 +6,7 @@ export { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { takeUntil } from 'rxjs/operators';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { InjectionToken, Inject, Injectable, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, ViewEncapsulation, PLATFORM_ID, HostListener, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, ViewEncapsulation, PLATFORM_ID, HostListener, NgModule, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
 import { DisposableComponent, CoreModule } from '@designr/core';
 
 /**
@@ -131,7 +131,7 @@ class EditorRootComponent extends DisposableComponent {
     /**
      * @return {?}
      */
-    ngAfterViewInit() {
+    ngOnInit() {
         if (isPlatformBrowser(this.platformId)) {
             this.pageResolverService.events$.pipe(takeUntil(this.unsubscribe)).subscribe((resolver) => {
                 // console.log('EditorRootComponent.resolver', resolver);
@@ -185,7 +185,7 @@ EditorRootComponent.decorators = [
                 selector: 'editor-root-component',
                 template: "<ng-container *ngIf=\"page\">\n\t<form class=\"form\" name=\"group\" [formGroup]=\"group\" (ngSubmit)=\"group.valid && onSubmit(group.value)\" #form=\"ngForm\" role=\"form\" novalidate autocomplete=\"off\">\n\t\t<div class=\"info\">\n\t\t\t<span class=\"id\">{{page.id}}</span>\n\t\t\t<span class=\"status\" [ngClass]=\"{ active: page.active }\">{{page.active ? 'active' : 'inactive'}}</span>\n\t\t\t<span class=\"component\">{{componentName}}</span>\n\t\t</div>\n\t\t<hr>\n\t\t<h2 class=\"h1\" [innerHTML]=\"page.title\"></h2>\n\t\t<!--\n\t\t\t\t<p [innerHTML]=\"page.description\"></p>\n\t\t\t\t-->\n\t\t<hr>\n\t\t<!--\n\t\t\t\t<div class=\"fieldset\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label>Label</label>\n\t\t\t\t\t\t<input placeholder=\"placeholder\" type=\"text\" class=\"form-control\" required [(ngModel)]=\"model.title\" name=\"title\" #title=\"ngModel\" autocomplete=\"title\">\n\t\t\t\t\t\t<div *ngIf=\"title.invalid && (form.submitted || title.dirty || title.touched)\" class=\"alert alert--danger\">\n\t\t\t\t\t\t\t<div *ngIf=\"title.errors.required\">{{ 'errors.required' | translate }}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t-->\n\t\t<div *ngFor=\"let control of controls\">\n\t\t\t<core-control [control]=\"control\" [form]=\"group\"></core-control>\n\t\t</div>\n\t\t<!-- <control-editable formControlName=\"email\"></control-editable> -->\n\t\t<div class=\"action-bar\">\n\t\t\t<button type=\"text\" class=\"btn btn--secondary\" [disabled]=\"submitted || !group.valid\" (click)=\"onReset()\" title=\"Annulla\"><span>Annulla</span></button>\n\t\t\t<button type=\"submit\" class=\"btn btn--primary\" [disabled]=\"submitted || !group.valid\" [ngClass]=\"{ 'btn--busy': busy }\" title=\"Salva\"><span>Salva</span></button>\n\t\t</div>\n\t</form>\n</ng-container>\n",
                 encapsulation: ViewEncapsulation.Emulated,
-                styles: [":host{font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;background:#fafafa;color:#55555a}:host .h1{color:#55555a}:host form{margin:0}:host label{display:block;width:100%;color:#55555a;font-weight:700;font-size:12px}@media (max-width:1024px){:host{display:none}}.id{display:inline-block;padding:4px 6px;background:#0875c2;color:#fff;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status{display:inline-block;padding:4px 6px;background:#fff;color:#000;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status.active{background:green;color:#fff}.component{display:inline-block;font-size:14px;font-style:italic}::-webkit-scrollbar{width:0}::-webkit-scrollbar-track{background:0 0}::-webkit-scrollbar-thumb{background:0 0}::-webkit-scrollbar-thumb:hover{background:0 0}"]
+                styles: [":host{font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;background:#fafafa;color:#55555a}.h1{color:#55555a;font-size:19px}form{margin:0}label{display:block;width:100%;color:#55555a;font-weight:700;font-size:12px}.id{display:inline-block;padding:4px 6px;background:#0875c2;color:#fff;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status{display:inline-block;padding:4px 6px;background:#fff;color:#000;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status.active{background:green;color:#fff}.component{display:inline-block;font-size:14px;font-style:italic}"]
             }] }
 ];
 /** @nocollapse */
@@ -253,7 +253,6 @@ EditorLazyModule.decorators = [
                     EditorRootComponent,
                 ],
                 exports: [
-                    CoreModule,
                     ...components,
                 ],
             },] }
@@ -290,74 +289,6 @@ EditorModuleComponent.ctorParameters = () => [];
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-/** @type {?} */
-const LAZY_MODULES = {
-    editorLazyModule: 'src/lib/editor-lazy/editor-lazy.module#EditorLazyModule'
-};
-/** @type {?} */
-const EDITOR_MODULES_FACTORY = new InjectionToken('EDITOR_MODULES_FACTORY', {
-    factory: () => LAZY_MODULES
-});
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LazyModuleDirective {
-    /**
-     * @param {?} modulesMap
-     * @param {?} injector
-     * @param {?} loader
-     * @param {?} container
-     */
-    constructor(modulesMap, injector, loader, container) {
-        this.modulesMap = modulesMap;
-        this.injector = injector;
-        this.loader = loader;
-        this.container = container;
-    }
-    /**
-     * @return {?}
-     */
-    ngOnInit() {
-        this.loader.load(this.modulesMap[this.lazyModule]).then((moduleFactory) => {
-            this.moduleRef = moduleFactory.create(this.injector);
-            /** @type {?} */
-            const rootComponentType = this.moduleRef.injector.get('LAZY_ENTRY_COMPONENT');
-            /** @type {?} */
-            const factory = this.moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
-            this.container.createComponent(factory);
-        });
-    }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() {
-        if (this.moduleRef) {
-            this.moduleRef.destroy();
-        }
-    }
-}
-LazyModuleDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[lazyModule]'
-            },] }
-];
-/** @nocollapse */
-LazyModuleDirective.ctorParameters = () => [
-    { type: undefined, decorators: [{ type: Inject, args: [EDITOR_MODULES_FACTORY,] }] },
-    { type: Injector },
-    { type: NgModuleFactoryLoader },
-    { type: ViewContainerRef }
-];
-LazyModuleDirective.propDecorators = {
-    lazyModule: [{ type: Input }]
-};
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class PanelComponent extends DisposableComponent {
     /**
      * @param {?} platformId
@@ -370,21 +301,20 @@ class PanelComponent extends DisposableComponent {
         this.opened = false;
     }
     /**
-     * @param {?} e
+     * @param {?} event
      * @return {?}
      */
-    onKeydown(e) {
-        if (e.key === 'e' && e.ctrlKey) {
+    onKeydown(event) {
+        if (event.key === 'e' && event.ctrlKey) {
             this.opened = this.config.enabled && !this.opened;
-            this.opened = !this.opened;
-            console.log('AppComponent.document:keydown', e.key, e.ctrlKey, e.altKey, e.code);
+            console.log('PanelComponent.document:keydown', this.opened);
         }
     }
 }
 PanelComponent.decorators = [
     { type: Component, args: [{
                 selector: 'panel-component',
-                template: "<ng-container>\n\t<div class=\"panel\" [@openClose]=\"opened ? 'open' : 'closed'\" (clickOutside)=\"opened = false\">\n\t\t<ng-container *ngIf=\"opened\">\n\t\t\t<ng-container lazyModule=\"editorLazyModule\"></ng-container>\n\t\t</ng-container>\n\t</div>\n</ng-container>\n",
+                template: "<div class=\"panel\" [@openClose]=\"opened ? 'open' : 'closed'\" (clickOutside)=\"opened = false\">\n\t<ng-container *ngIf=\"opened\">\n\t\t<ng-container lazyModule=\"editorLazyModule\"></ng-container>\n\t</ng-container>\n</div>\n",
                 animations: [
                     trigger('openClose', [
                         state('open', style({
@@ -404,7 +334,7 @@ PanelComponent.decorators = [
                     ]),
                 ],
                 encapsulation: ViewEncapsulation.Emulated,
-                styles: [":host form{margin:0}:host label{display:block;width:100%;color:#55555a;font-weight:700;font-size:12px}.panel{position:fixed;top:0;right:0;width:320px;height:100vh;padding:15px;overflow-x:hidden;overflow-y:auto;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;background:#fafafa;color:#55555a}.panel .h1{color:#55555a}@media (max-width:1024px){.panel{display:none}}.id{display:inline-block;padding:4px 6px;background:#0875c2;color:#fff;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status{display:inline-block;padding:4px 6px;background:#fff;color:#000;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status.active{background:green;color:#fff}.component{display:inline-block;font-size:14px;font-style:italic}::-webkit-scrollbar{width:0}::-webkit-scrollbar-track{background:0 0}::-webkit-scrollbar-thumb{background:0 0}::-webkit-scrollbar-thumb:hover{background:0 0}"]
+                styles: [".panel{position:fixed;top:0;right:0;width:320px;height:100vh;padding:15px;overflow-x:hidden;overflow-y:auto;background:#fff;z-index:100000}::-webkit-scrollbar{width:0}::-webkit-scrollbar-track{background:0 0}::-webkit-scrollbar-thumb{background:0 0}::-webkit-scrollbar-thumb:hover{background:0 0}"]
             }] }
 ];
 /** @nocollapse */
@@ -430,9 +360,7 @@ const components$1 = [
     PanelComponent,
 ];
 /** @type {?} */
-const directives$1 = [
-    LazyModuleDirective,
-];
+const directives$1 = [];
 class EditorModule {
     /**
      * @param {?} parentModule
@@ -462,7 +390,6 @@ EditorModule.decorators = [
                     CoreModule,
                 ],
                 providers: [
-                    { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader },
                     ...services$1,
                 ],
                 declarations: [
@@ -490,6 +417,6 @@ EditorModule.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { EditorConfig, EDITOR_CONFIG, EditorService, EditorLazyModule, EditorRootComponent, EditorModuleComponent, EditorModule, EDITOR_MODULES_FACTORY as ɵc, LazyModuleDirective as ɵb, PanelComponent as ɵa };
+export { EditorConfig, EDITOR_CONFIG, EditorService, EditorLazyModule, EditorRootComponent, EditorModuleComponent, EditorModule, PanelComponent as ɵa };
 
 //# sourceMappingURL=designr-editor.js.map

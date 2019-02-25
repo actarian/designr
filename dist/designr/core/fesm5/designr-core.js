@@ -5,7 +5,7 @@ import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
 import { __extends, __spread } from 'tslib';
-import { Inject, Injectable, PLATFORM_ID, Component, InjectionToken, Directive, ElementRef, Input, Renderer2, ViewContainerRef, Pipe, ChangeDetectorRef, ViewEncapsulation, EventEmitter, Injector, WrappedValue, defineInjectable, inject, INJECTOR, ViewChild, NgModule, Optional, SkipSelf, NgZone } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ElementRef, Renderer2, Pipe, ChangeDetectorRef, ViewEncapsulation, EventEmitter, WrappedValue, defineInjectable, inject, INJECTOR, ViewChild, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf, NgZone } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
 import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, first, takeUntil } from 'rxjs/operators';
 
@@ -3271,6 +3271,71 @@ var MenuService = /** @class */ (function (_super) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+var CORE_MODULES = new InjectionToken('core.modules');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var LazyModuleDirective = /** @class */ (function () {
+    function LazyModuleDirective(modules, injector, loader, container) {
+        this.modules = modules;
+        this.injector = injector;
+        this.loader = loader;
+        this.container = container;
+    }
+    /**
+     * @return {?}
+     */
+    LazyModuleDirective.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this.loader.load(this.modules[this.lazyModule]).then(function (moduleFactory) {
+            _this.moduleRef = moduleFactory.create(_this.injector);
+            /** @type {?} */
+            var rootComponentType = _this.moduleRef.injector.get('LAZY_ROOT_COMPONENT');
+            console.log(rootComponentType);
+            /** @type {?} */
+            var factory = _this.moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
+            _this.container.createComponent(factory);
+        });
+    };
+    /**
+     * @return {?}
+     */
+    LazyModuleDirective.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        if (this.moduleRef) {
+            this.moduleRef.destroy();
+        }
+    };
+    LazyModuleDirective.decorators = [
+        { type: Directive, args: [{
+                    selector: '[lazyModule]'
+                },] }
+    ];
+    /** @nocollapse */
+    LazyModuleDirective.ctorParameters = function () { return [
+        { type: undefined, decorators: [{ type: Inject, args: [CORE_MODULES,] }] },
+        { type: Injector },
+        { type: NgModuleFactoryLoader },
+        { type: ViewContainerRef }
+    ]; };
+    LazyModuleDirective.propDecorators = {
+        lazyModule: [{ type: Input }]
+    };
+    return LazyModuleDirective;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 // export class OnceEvent extends Event { }
 var OnceService = /** @class */ (function () {
     function OnceService(platformId, zone) {
@@ -4016,6 +4081,7 @@ var components = [
 var directives = [
     DefaultContentDirective,
     LabelDirective,
+    LazyModuleDirective,
     TranslateDirective,
 ];
 /** @type {?} */
@@ -4040,23 +4106,29 @@ var pipes = [
 var validators = [];
 var CoreModule = /** @class */ (function () {
     function CoreModule(parentModule) {
+        /*
         if (parentModule) {
             throw new Error('CoreModule is already loaded. Import it in the AppModule only');
         }
+        */
     }
     /**
      * @param {?=} config
+     * @param {?=} modules
      * @return {?}
      */
     CoreModule.forRoot = /**
      * @param {?=} config
+     * @param {?=} modules
      * @return {?}
      */
-    function (config) {
+    function (config, modules) {
         return {
             ngModule: CoreModule,
             providers: [{
                     provide: CORE_CONFIG, useValue: config
+                }, {
+                    provide: CORE_MODULES, useValue: modules || {}
                 }]
         };
     };
@@ -4069,7 +4141,8 @@ var CoreModule = /** @class */ (function () {
                         ReactiveFormsModule,
                     ],
                     providers: __spread([
-                        { provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true }
+                        { provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
+                        { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader }
                     ], services, pipes, validators),
                     declarations: __spread(components, directives, pipes, validators),
                     exports: __spread(components, directives, pipes, validators),
@@ -4232,6 +4305,6 @@ var Translate = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { AuthService, AuthStrategy, AuthToken, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵa };
+export { AuthService, AuthStrategy, AuthToken, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, CORE_MODULES, OnceService, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵa, LazyModuleDirective as ɵb };
 
 //# sourceMappingURL=designr-core.js.map

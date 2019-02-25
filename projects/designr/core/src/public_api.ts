@@ -31,6 +31,7 @@ export { Image, ImageType } from './lib/models/image';
 export { MenuItem } from './lib/models/menu-item';
 export { MenuService } from './lib/models/menu.service';
 export { Taxonomy } from './lib/models/taxonomy';
+export { CoreModules, CORE_MODULES } from './lib/modules/core.modules';
 export { OnceService } from './lib/once/once.service';
 export { AssetPipe } from './lib/pipes/asset.pipe';
 export { CustomAsyncPipe } from './lib/pipes/custom-async.pipe';

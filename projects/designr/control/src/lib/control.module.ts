@@ -69,9 +69,11 @@ export class ControlModule {
 	constructor(
 		@Optional() @SkipSelf() parentModule: ControlModule
 	) {
+		/*
 		if (parentModule) {
 			throw new Error('ControlModule is already loaded. Import it in the AppModule only');
 		}
+		*/
 	}
 
 	public static forRoot(

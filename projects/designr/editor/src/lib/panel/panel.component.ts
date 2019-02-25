@@ -39,11 +39,10 @@ export class PanelComponent extends DisposableComponent {
 	}
 
 	@HostListener('document:keydown', ['$event'])
-	onKeydown(e: KeyboardEvent) {
-		if (e.key === 'e' && e.ctrlKey) {
+	onKeydown(event: KeyboardEvent) {
+		if (event.key === 'e' && event.ctrlKey) {
 			this.opened = this.config.enabled && !this.opened;
-			this.opened = !this.opened;
-			console.log('AppComponent.document:keydown', e.key, e.ctrlKey, e.altKey, e.code);
+			console.log('PanelComponent.document:keydown', this.opened);
 		}
 	}
 

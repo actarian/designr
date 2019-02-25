@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { AfterViewInit, Component, Inject, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ControlBase, ControlBaseOptions, FormService } from '@designr/control';
 import { DisposableComponent } from '@designr/core';
@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 	styleUrls: ['./editor-root.component.scss'],
 	encapsulation: ViewEncapsulation.Emulated,
 })
-export class EditorRootComponent extends DisposableComponent implements AfterViewInit {
+export class EditorRootComponent extends DisposableComponent implements OnInit {
 
 	private _pageCopy: Page;
 	private _page: Page;
@@ -76,7 +76,7 @@ export class EditorRootComponent extends DisposableComponent implements AfterVie
 		}) : [];
 	}
 
-	ngAfterViewInit() {
+	ngOnInit() {
 		if (isPlatformBrowser(this.platformId)) {
 			this.pageResolverService.events$.pipe(
 				takeUntil(this.unsubscribe)

@@ -1,10 +1,10 @@
-import { AfterViewInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ControlBase, ControlBaseOptions, FormService } from '@designr/control';
 import { DisposableComponent } from '@designr/core';
 import { Page, PageResolverService, PageService } from '@designr/page';
 import { MarkdownService } from 'ngx-markdown';
-export declare class EditorRootComponent extends DisposableComponent implements AfterViewInit {
+export declare class EditorRootComponent extends DisposableComponent implements OnInit {
     private platformId;
     private pageService;
     private markdownService;
@@ -20,7 +20,7 @@ export declare class EditorRootComponent extends DisposableComponent implements 
     page: Page;
     readonly componentName: string;
     getControlsByPage(page: Page): ControlBaseOptions<any>[];
-    ngAfterViewInit(): void;
+    ngOnInit(): void;
     onReset(): void;
     onSubmit(model: any): void;
     onAssign(model: any): void;

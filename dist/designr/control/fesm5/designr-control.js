@@ -880,9 +880,11 @@ var validators = [
 ];
 var ControlModule = /** @class */ (function () {
     function ControlModule(parentModule) {
+        /*
         if (parentModule) {
             throw new Error('ControlModule is already loaded. Import it in the AppModule only');
         }
+        */
     }
     /**
      * @param {?=} config

@@ -4,7 +4,7 @@ import { HttpErrorResponse, HttpClient, HttpHeaders, HttpParams, HttpClientModul
 import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
-import { Inject, Injectable, PLATFORM_ID, Component, Injector, InjectionToken, Directive, ElementRef, Input, Renderer2, ViewContainerRef, Pipe, ChangeDetectorRef, ViewEncapsulation, EventEmitter, WrappedValue, defineInjectable, inject, INJECTOR, ViewChild, NgModule, Optional, SkipSelf, NgZone } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ElementRef, Renderer2, Pipe, ChangeDetectorRef, ViewEncapsulation, EventEmitter, WrappedValue, defineInjectable, inject, INJECTOR, ViewChild, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf, NgZone } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
 import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, first, takeUntil } from 'rxjs/operators';
 
@@ -2680,6 +2680,69 @@ MenuService.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+const CORE_MODULES = new InjectionToken('core.modules');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class LazyModuleDirective {
+    /**
+     * @param {?} modules
+     * @param {?} injector
+     * @param {?} loader
+     * @param {?} container
+     */
+    constructor(modules, injector, loader, container) {
+        this.modules = modules;
+        this.injector = injector;
+        this.loader = loader;
+        this.container = container;
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        this.loader.load(this.modules[this.lazyModule]).then((moduleFactory) => {
+            this.moduleRef = moduleFactory.create(this.injector);
+            /** @type {?} */
+            const rootComponentType = this.moduleRef.injector.get('LAZY_ROOT_COMPONENT');
+            console.log(rootComponentType);
+            /** @type {?} */
+            const factory = this.moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
+            this.container.createComponent(factory);
+        });
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        if (this.moduleRef) {
+            this.moduleRef.destroy();
+        }
+    }
+}
+LazyModuleDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[lazyModule]'
+            },] }
+];
+/** @nocollapse */
+LazyModuleDirective.ctorParameters = () => [
+    { type: undefined, decorators: [{ type: Inject, args: [CORE_MODULES,] }] },
+    { type: Injector },
+    { type: NgModuleFactoryLoader },
+    { type: ViewContainerRef }
+];
+LazyModuleDirective.propDecorators = {
+    lazyModule: [{ type: Input }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 // export class OnceEvent extends Event { }
 class OnceService {
     /**
@@ -3352,6 +3415,7 @@ const components = [
 const directives = [
     DefaultContentDirective,
     LabelDirective,
+    LazyModuleDirective,
     TranslateDirective,
 ];
 /** @type {?} */
@@ -3379,19 +3443,24 @@ class CoreModule {
      * @param {?} parentModule
      */
     constructor(parentModule) {
+        /*
         if (parentModule) {
             throw new Error('CoreModule is already loaded. Import it in the AppModule only');
         }
+        */
     }
     /**
      * @param {?=} config
+     * @param {?=} modules
      * @return {?}
      */
-    static forRoot(config) {
+    static forRoot(config, modules) {
         return {
             ngModule: CoreModule,
             providers: [{
                     provide: CORE_CONFIG, useValue: config
+                }, {
+                    provide: CORE_MODULES, useValue: modules || {}
                 }]
         };
     }
@@ -3406,6 +3475,7 @@ CoreModule.decorators = [
                 ],
                 providers: [
                     { provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
+                    { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader },
                     ...services,
                     ...pipes,
                     ...validators,
@@ -3546,6 +3616,6 @@ class Translate {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { AuthService, AuthStrategy, AuthToken, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵa };
+export { AuthService, AuthStrategy, AuthToken, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, CORE_MODULES, OnceService, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵa, LazyModuleDirective as ɵb };
 
 //# sourceMappingURL=designr-core.js.map

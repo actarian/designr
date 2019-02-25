@@ -774,9 +774,11 @@ class ControlModule {
      * @param {?} parentModule
      */
     constructor(parentModule) {
+        /*
         if (parentModule) {
             throw new Error('ControlModule is already loaded. Import it in the AppModule only');
         }
+        */
     }
     /**
      * @param {?=} config
