@@ -8,4 +8,4 @@ import { EditorLazyModule } from '@designr/editor';
 	exports: [EditorLazyModule]
 })
 
-export class AppEditorLazy { }
+export class EditorBundle { }

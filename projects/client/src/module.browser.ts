@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { ORIGIN_URL, REQUEST } from '@nguniversal/aspnetcore-engine/tokens';
-import { environment } from '../environments/environment';
-import { AppComponent } from './app.component';
-import { AppModule } from './app.module';
+import { AppComponent } from './app/app.component';
+import { AppModule } from './app/app.module';
+import { environment } from './environments/environment';
 
 export function getOriginUrl() {
 	return window.location.origin;
@@ -31,4 +31,4 @@ export function getRequest() {
 	bootstrap: [AppComponent]
 })
 
-export class AppModuleBrowser { }
+export class ModuleBrowser { }

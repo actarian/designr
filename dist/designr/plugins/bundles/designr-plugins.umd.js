@@ -210,7 +210,8 @@
              */
             function () {
                 var _this = this;
-                if (common.isPlatformBrowser(this.platformId) && window.location.protocol.indexOf('https') !== -1) {
+                //  && window.location.protocol.indexOf('https') !== -1
+                if (common.isPlatformBrowser(this.platformId)) {
                     if (this.FB) {
                         return rxjs.of(this.FB);
                     }

@@ -45,14 +45,14 @@ export const environment = {
 	},
 	plugins: {
 		facebook: {
-			appId: 2044894462438447,
+			appId: 431784307363175,
 			fields: 'id,name,first_name,last_name,email,gender,picture,cover,link',
 			scope: 'public_profile, email',
-			tokenClient: 'f8cfcad4c81572987d21ecd4d115918f',
+			tokenClient: '5413d2e564a63859151298efaf16cec6',
 			version: 'v3.0',
 		},
 		google: {
-			clientId: '635556948154-k7fm0pvn6va39tap1ge4iq23ntd4hu37.apps.googleusercontent.com',
+			clientId: '196838761783-2faop0kmtoncjqju4n39pnrbkaoqdkq0.apps.googleusercontent.com',
 		},
 		googleTagManager: {
 			id: 'GTM-WXLDKZW',

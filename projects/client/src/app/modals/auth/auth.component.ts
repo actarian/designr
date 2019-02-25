@@ -52,6 +52,7 @@ export class AuthComponent extends DisposableComponent implements OnInit {
 			switchMap(me => this.userService.tryFacebook(me)),
 			finalize(() => this.facebookBusy = false),
 		).subscribe(user => {
+			console.log(user);
 			if (user) {
 				this.onAuth(user);
 			} else {

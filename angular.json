@@ -302,7 +302,7 @@
 						"styles": ["projects/client/src/styles.scss"],
 						"extractCss": true,
 						"lazyModules": [
-							"projects/client/src/app/app.editor-lazy"
+							"projects/client/src/app/bundles/editor.bundle"
 						],
 						"scripts": [
 							{ "input": "./node_modules/jquery/dist/jquery.js", "lazy": false },

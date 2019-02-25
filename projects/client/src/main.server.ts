@@ -8,8 +8,8 @@ import { BootFuncParams, createServerRenderer, RedirectResult, RenderResult, Ren
 import 'reflect-metadata';
 import { first } from 'rxjs/operators';
 import 'zone.js/dist/zone-node';
-import { AppModuleServer } from './app/app.module.server';
 import { environment } from './environments/environment';
+import { ModuleServer } from './module.server';
 
 if (environment.core.production) {
 	enableProdMode();
@@ -34,8 +34,8 @@ function createServerRendererModeA(params: BootFuncParams): Promise<RenderToStri
 		platformDynamicServer(
 			providers
 		).bootstrapModule(
-			AppModuleServer
-		).then((module: NgModuleRef<AppModuleServer>) => {
+			ModuleServer
+		).then((module: NgModuleRef<ModuleServer>) => {
 			const zone = module.injector.get(NgZone);
 			const application = module.injector.get(ApplicationRef);
 			zone.onError.subscribe((error) => {
@@ -122,9 +122,9 @@ function createServerRendererModeB_(params: BootFuncParams): Promise<RenderToStr
 
 	return new Promise<RenderResult>((resolve, reject) => {
 		const platform = platformDynamicServer(providers);
-		const promise = platform.bootstrapModule(AppModuleServer);
+		const promise = platform.bootstrapModule(ModuleServer);
 		return promise.then(
-			(module: NgModuleRef<AppModuleServer>) => {
+			(module: NgModuleRef<ModuleServer>) => {
 				const zone = module.injector.get(NgZone);
 				zone.onError.subscribe((error) => {
 					console.log('NgZone.error', error);
@@ -163,7 +163,7 @@ function createServerRendererModeC_(params: BootFuncParams): Promise<RenderToStr
 	];
 
 	return new Promise<RenderResult>((resolve, reject) => {
-		renderModule(AppModuleServer, {
+		renderModule(ModuleServer, {
 			document: params.data.originalHtml,
 			url: params.url,
 			extraProviders: [
