@@ -1,5 +1,5 @@
 <div class="panel" [@openClose]="opened ? 'open' : 'closed'" (clickOutside)="opened = false">
 	<ng-container *ngIf="opened">
-		<ng-container lazyModule="editorLazyModule"></ng-container>
+		<ng-container bundle="editor"></ng-container>
 	</ng-container>
 </div>

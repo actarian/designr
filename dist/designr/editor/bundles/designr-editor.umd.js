@@ -292,13 +292,13 @@
     // smartLists: true,
     // smartypants: true,
     }, ɵ1 = EditorRootComponent;
-    var EditorLazyModule = /** @class */ (function () {
-        function EditorLazyModule(parentModule) {
+    var EditorBundleModule = /** @class */ (function () {
+        function EditorBundleModule(parentModule) {
             if (parentModule) {
-                throw new Error('EditorLazyModule is already loaded. Import it in the AppModule only');
+                throw new Error('EditorBundleModule is already loaded. Import it in the AppModule only');
             }
         }
-        EditorLazyModule.decorators = [
+        EditorBundleModule.decorators = [
             { type: i0.NgModule, args: [{
                         imports: [
                             common.CommonModule,
@@ -326,12 +326,12 @@
                     },] }
         ];
         /** @nocollapse */
-        EditorLazyModule.ctorParameters = function () {
+        EditorBundleModule.ctorParameters = function () {
             return [
-                { type: EditorLazyModule, decorators: [{ type: i0.Optional }, { type: i0.SkipSelf }] }
+                { type: EditorBundleModule, decorators: [{ type: i0.Optional }, { type: i0.SkipSelf }] }
             ];
         };
-        return EditorLazyModule;
+        return EditorBundleModule;
     }());
 
     /**
@@ -391,7 +391,7 @@
         PanelComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'panel-component',
-                        template: "<div class=\"panel\" [@openClose]=\"opened ? 'open' : 'closed'\" (clickOutside)=\"opened = false\">\n\t<ng-container *ngIf=\"opened\">\n\t\t<ng-container lazyModule=\"editorLazyModule\"></ng-container>\n\t</ng-container>\n</div>\n",
+                        template: "<div class=\"panel\" [@openClose]=\"opened ? 'open' : 'closed'\" (clickOutside)=\"opened = false\">\n\t<ng-container *ngIf=\"opened\">\n\t\t<ng-container bundle=\"editor\"></ng-container>\n\t</ng-container>\n</div>\n",
                         animations: [
                             animations.trigger('openClose', [
                                 animations.state('open', animations.style({
@@ -501,7 +501,7 @@
     exports.EditorConfig = EditorConfig;
     exports.EDITOR_CONFIG = EDITOR_CONFIG;
     exports.EditorService = EditorService;
-    exports.EditorLazyModule = EditorLazyModule;
+    exports.EditorBundleModule = EditorBundleModule;
     exports.EditorRootComponent = EditorRootComponent;
     exports.EditorModuleComponent = EditorModuleComponent;
     exports.EditorModule = EditorModule;

@@ -1,18 +1,18 @@
 import { Directive, Inject, Injector, Input, NgModuleFactory, NgModuleFactoryLoader, NgModuleRef, OnDestroy, OnInit, Type, ViewContainerRef } from '@angular/core';
-import { CoreModules, CORE_MODULES } from './core.modules';
+import { Bundles, BUNDLES } from './bundle';
 
 export type ModuleWithRoot = Type<any> & { rootComponent: Type<any> };
 
 @Directive({
-	selector: '[lazyModule]'
+	selector: '[bundle]'
 })
-export class LazyModuleDirective implements OnInit, OnDestroy {
+export class BundleDirective implements OnInit, OnDestroy {
 
-	@Input() lazyModule: keyof CoreModules;
+	@Input() bundle: keyof Bundles;
 	private moduleRef: NgModuleRef<any>;
 
 	constructor(
-		@Inject(CORE_MODULES) private modules,
+		@Inject(BUNDLES) private bundles,
 		private injector: Injector,
 		private loader: NgModuleFactoryLoader,
 		private container: ViewContainerRef,
@@ -20,7 +20,7 @@ export class LazyModuleDirective implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		this.loader.load(this.modules[this.lazyModule]).then((moduleFactory: NgModuleFactory<any>) => {
+		this.loader.load(this.bundles[this.bundle]).then((moduleFactory: NgModuleFactory<any>) => {
 			this.moduleRef = moduleFactory.create(this.injector);
 			const rootComponentType = this.moduleRef.injector.get('LAZY_ROOT_COMPONENT');
 			console.log(rootComponentType);

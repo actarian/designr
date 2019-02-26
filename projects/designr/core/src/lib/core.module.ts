@@ -3,6 +3,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, NgModuleFactoryLoader, Optional, SkipSelf, SystemJsNgModuleLoader } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
+import { Bundles, BUNDLES } from './bundle/bundle';
+import { BundleDirective } from './bundle/bundle.directive';
 import { CoreConfig, CORE_CONFIG } from './config/core.config';
 import { CoreService } from './config/core.service';
 import { DefaultContentDirective } from './content/default-content.directive';
@@ -19,8 +21,6 @@ import { Logger } from './logger/logger';
 import { LoggerComponent } from './logger/logger.component';
 import { EventDispatcherService } from './models/event-dispatcher.service';
 import { MenuService } from './models/menu.service';
-import { CoreModules, CORE_MODULES } from './modules/core.modules';
-import { LazyModuleDirective } from './modules/lazy-module.directive';
 import { OnceService } from './once/once.service';
 import { AssetPipe } from './pipes/asset.pipe';
 import { CustomAsyncPipe } from './pipes/custom-async.pipe';
@@ -63,9 +63,9 @@ const components = [
 ];
 
 const directives = [
+	BundleDirective,
 	DefaultContentDirective,
 	LabelDirective,
-	LazyModuleDirective,
 	TranslateDirective,
 ];
 
@@ -134,15 +134,15 @@ export class CoreModule {
 	}
 
 	public static forRoot(
+		bundles?: Bundles,
 		config?: CoreConfig,
-		modules?: CoreModules,
 	): ModuleWithProviders {
 		return {
 			ngModule: CoreModule,
 			providers: [{
 				provide: CORE_CONFIG, useValue: config
 			}, {
-				provide: CORE_MODULES, useValue: modules || {}
+				provide: BUNDLES, useValue: bundles || {}
 			}]
 		};
 	}

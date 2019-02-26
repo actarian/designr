@@ -765,6 +765,13 @@ var AuthService = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+var BUNDLES = new InjectionToken('core.bundles');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var CoreTransitionConfig = /** @class */ (function () {
     function CoreTransitionConfig(options) {
         // console.log('CoreTransitionConfig', options);
@@ -909,6 +916,64 @@ var CoreModuleComponent = /** @class */ (function () {
     /** @nocollapse */
     CoreModuleComponent.ctorParameters = function () { return []; };
     return CoreModuleComponent;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var BundleDirective = /** @class */ (function () {
+    function BundleDirective(bundles, injector, loader, container) {
+        this.bundles = bundles;
+        this.injector = injector;
+        this.loader = loader;
+        this.container = container;
+    }
+    /**
+     * @return {?}
+     */
+    BundleDirective.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this.loader.load(this.bundles[this.bundle]).then(function (moduleFactory) {
+            _this.moduleRef = moduleFactory.create(_this.injector);
+            /** @type {?} */
+            var rootComponentType = _this.moduleRef.injector.get('LAZY_ROOT_COMPONENT');
+            console.log(rootComponentType);
+            /** @type {?} */
+            var factory = _this.moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
+            _this.container.createComponent(factory);
+        });
+    };
+    /**
+     * @return {?}
+     */
+    BundleDirective.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        if (this.moduleRef) {
+            this.moduleRef.destroy();
+        }
+    };
+    BundleDirective.decorators = [
+        { type: Directive, args: [{
+                    selector: '[bundle]'
+                },] }
+    ];
+    /** @nocollapse */
+    BundleDirective.ctorParameters = function () { return [
+        { type: undefined, decorators: [{ type: Inject, args: [BUNDLES,] }] },
+        { type: Injector },
+        { type: NgModuleFactoryLoader },
+        { type: ViewContainerRef }
+    ]; };
+    BundleDirective.propDecorators = {
+        bundle: [{ type: Input }]
+    };
+    return BundleDirective;
 }());
 
 /**
@@ -3271,71 +3336,6 @@ var MenuService = /** @class */ (function (_super) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-/** @type {?} */
-var CORE_MODULES = new InjectionToken('core.modules');
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-var LazyModuleDirective = /** @class */ (function () {
-    function LazyModuleDirective(modules, injector, loader, container) {
-        this.modules = modules;
-        this.injector = injector;
-        this.loader = loader;
-        this.container = container;
-    }
-    /**
-     * @return {?}
-     */
-    LazyModuleDirective.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
-        var _this = this;
-        this.loader.load(this.modules[this.lazyModule]).then(function (moduleFactory) {
-            _this.moduleRef = moduleFactory.create(_this.injector);
-            /** @type {?} */
-            var rootComponentType = _this.moduleRef.injector.get('LAZY_ROOT_COMPONENT');
-            console.log(rootComponentType);
-            /** @type {?} */
-            var factory = _this.moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
-            _this.container.createComponent(factory);
-        });
-    };
-    /**
-     * @return {?}
-     */
-    LazyModuleDirective.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
-        if (this.moduleRef) {
-            this.moduleRef.destroy();
-        }
-    };
-    LazyModuleDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: '[lazyModule]'
-                },] }
-    ];
-    /** @nocollapse */
-    LazyModuleDirective.ctorParameters = function () { return [
-        { type: undefined, decorators: [{ type: Inject, args: [CORE_MODULES,] }] },
-        { type: Injector },
-        { type: NgModuleFactoryLoader },
-        { type: ViewContainerRef }
-    ]; };
-    LazyModuleDirective.propDecorators = {
-        lazyModule: [{ type: Input }]
-    };
-    return LazyModuleDirective;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 // export class OnceEvent extends Event { }
 var OnceService = /** @class */ (function () {
     function OnceService(platformId, zone) {
@@ -4079,9 +4079,9 @@ var components = [
 ];
 /** @type {?} */
 var directives = [
+    BundleDirective,
     DefaultContentDirective,
     LabelDirective,
-    LazyModuleDirective,
     TranslateDirective,
 ];
 /** @type {?} */
@@ -4113,22 +4113,22 @@ var CoreModule = /** @class */ (function () {
         */
     }
     /**
+     * @param {?=} bundles
      * @param {?=} config
-     * @param {?=} modules
      * @return {?}
      */
     CoreModule.forRoot = /**
+     * @param {?=} bundles
      * @param {?=} config
-     * @param {?=} modules
      * @return {?}
      */
-    function (config, modules) {
+    function (bundles, config) {
         return {
             ngModule: CoreModule,
             providers: [{
                     provide: CORE_CONFIG, useValue: config
                 }, {
-                    provide: CORE_MODULES, useValue: modules || {}
+                    provide: BUNDLES, useValue: bundles || {}
                 }]
         };
     };
@@ -4305,6 +4305,6 @@ var Translate = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { AuthService, AuthStrategy, AuthToken, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, CORE_MODULES, OnceService, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵa, LazyModuleDirective as ɵb };
+export { AuthService, AuthStrategy, AuthToken, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵa, BundleDirective as ɵb };
 
 //# sourceMappingURL=designr-core.js.map

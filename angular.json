@@ -295,7 +295,7 @@
 					"options": {
 						"outputPath": "dist/development/browser",
 						"index": "projects/client/src/index.html",
-						"main": "projects/client/src/main.browser.ts",
+						"main": "projects/client/src/main/main-browser.bootstrap.ts",
 						"polyfills": "projects/client/src/polyfills.ts",
 						"tsConfig": "projects/client/tsconfig.browser.json",
 						"assets": ["projects/client/src/favicon.ico", "projects/client/src/assets"],
@@ -424,7 +424,7 @@
 					"builder": "@angular-devkit/build-angular:server",
 					"options": {
 						"outputPath": "dist/development/server",
-						"main": "projects/client/src/main.server.ts",
+						"main": "projects/client/src/main/main-server.bootstrap.ts",
 						"tsConfig": "projects/client/tsconfig.server.json",
 						"bundleDependencies": "none"
 					},

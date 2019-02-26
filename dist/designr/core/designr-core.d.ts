@@ -3,4 +3,4 @@
  */
 export * from './public_api';
 export { ApiService as ɵa } from './lib/api/api.service';
-export { LazyModuleDirective as ɵb } from './lib/modules/lazy-module.directive';
+export { BundleDirective as ɵb } from './lib/bundle/bundle.directive';

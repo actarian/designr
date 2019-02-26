@@ -63,13 +63,13 @@ const guards = [
 	],
 })
 
-export class EditorLazyModule {
+export class EditorBundleModule {
 
 	constructor(
-		@Optional() @SkipSelf() parentModule: EditorLazyModule
+		@Optional() @SkipSelf() parentModule: EditorBundleModule
 	) {
 		if (parentModule) {
-			throw new Error('EditorLazyModule is already loaded. Import it in the AppModule only');
+			throw new Error('EditorBundleModule is already loaded. Import it in the AppModule only');
 		}
 	}
 

@@ -216,17 +216,17 @@ const ɵ0 = {
 // smartLists: true,
 // smartypants: true,
 }, ɵ1 = EditorRootComponent;
-class EditorLazyModule {
+class EditorBundleModule {
     /**
      * @param {?} parentModule
      */
     constructor(parentModule) {
         if (parentModule) {
-            throw new Error('EditorLazyModule is already loaded. Import it in the AppModule only');
+            throw new Error('EditorBundleModule is already loaded. Import it in the AppModule only');
         }
     }
 }
-EditorLazyModule.decorators = [
+EditorBundleModule.decorators = [
     { type: NgModule, args: [{
                 imports: [
                     CommonModule,
@@ -258,8 +258,8 @@ EditorLazyModule.decorators = [
             },] }
 ];
 /** @nocollapse */
-EditorLazyModule.ctorParameters = () => [
-    { type: EditorLazyModule, decorators: [{ type: Optional }, { type: SkipSelf }] }
+EditorBundleModule.ctorParameters = () => [
+    { type: EditorBundleModule, decorators: [{ type: Optional }, { type: SkipSelf }] }
 ];
 
 /**
@@ -314,7 +314,7 @@ class PanelComponent extends DisposableComponent {
 PanelComponent.decorators = [
     { type: Component, args: [{
                 selector: 'panel-component',
-                template: "<div class=\"panel\" [@openClose]=\"opened ? 'open' : 'closed'\" (clickOutside)=\"opened = false\">\n\t<ng-container *ngIf=\"opened\">\n\t\t<ng-container lazyModule=\"editorLazyModule\"></ng-container>\n\t</ng-container>\n</div>\n",
+                template: "<div class=\"panel\" [@openClose]=\"opened ? 'open' : 'closed'\" (clickOutside)=\"opened = false\">\n\t<ng-container *ngIf=\"opened\">\n\t\t<ng-container bundle=\"editor\"></ng-container>\n\t</ng-container>\n</div>\n",
                 animations: [
                     trigger('openClose', [
                         state('open', style({
@@ -417,6 +417,6 @@ EditorModule.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { EditorConfig, EDITOR_CONFIG, EditorService, EditorLazyModule, EditorRootComponent, EditorModuleComponent, EditorModule, PanelComponent as ɵa };
+export { EditorConfig, EDITOR_CONFIG, EditorService, EditorBundleModule, EditorRootComponent, EditorModuleComponent, EditorModule, PanelComponent as ɵa };
 
 //# sourceMappingURL=designr-editor.js.map

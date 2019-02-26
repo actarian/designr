@@ -8,8 +8,8 @@ import { BootFuncParams, createServerRenderer, RedirectResult, RenderResult, Ren
 import 'reflect-metadata';
 import { first } from 'rxjs/operators';
 import 'zone.js/dist/zone-node';
-import { environment } from './environments/environment';
-import { ModuleServer } from './module.server';
+import { environment } from '../environments/environment';
+import { MainServerModule } from './main-server.module';
 
 if (environment.core.production) {
 	enableProdMode();
@@ -34,8 +34,9 @@ function createServerRendererModeA(params: BootFuncParams): Promise<RenderToStri
 		platformDynamicServer(
 			providers
 		).bootstrapModule(
-			ModuleServer
-		).then((module: NgModuleRef<ModuleServer>) => {
+			MainServerModule
+		).then((module: NgModuleRef<MainServerModule>) => {
+			// console.log('main-server.bootstrap.ts success');
 			const zone = module.injector.get(NgZone);
 			const application = module.injector.get(ApplicationRef);
 			zone.onError.subscribe((error) => {
@@ -66,7 +67,7 @@ function createServerRendererModeA(params: BootFuncParams): Promise<RenderToStri
 					redirectUrl: statusCodeService.getRedirectUrl(),
 				});
 			});
-		});
+		}).catch(error => console.log('main-server.bootstrap.ts ', error));
 	});
 }
 
@@ -122,9 +123,9 @@ function createServerRendererModeB_(params: BootFuncParams): Promise<RenderToStr
 
 	return new Promise<RenderResult>((resolve, reject) => {
 		const platform = platformDynamicServer(providers);
-		const promise = platform.bootstrapModule(ModuleServer);
+		const promise = platform.bootstrapModule(MainServerModule);
 		return promise.then(
-			(module: NgModuleRef<ModuleServer>) => {
+			(module: NgModuleRef<MainServerModule>) => {
 				const zone = module.injector.get(NgZone);
 				zone.onError.subscribe((error) => {
 					console.log('NgZone.error', error);
@@ -163,7 +164,7 @@ function createServerRendererModeC_(params: BootFuncParams): Promise<RenderToStr
 	];
 
 	return new Promise<RenderResult>((resolve, reject) => {
-		renderModule(ModuleServer, {
+		renderModule(MainServerModule, {
 			document: params.data.originalHtml,
 			url: params.url,
 			extraProviders: [

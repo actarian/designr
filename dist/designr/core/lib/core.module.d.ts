@@ -1,7 +1,7 @@
 import { ModuleWithProviders } from '@angular/core';
+import { Bundles } from './bundle/bundle';
 import { CoreConfig } from './config/core.config';
-import { CoreModules } from './modules/core.modules';
 export declare class CoreModule {
     constructor(parentModule: CoreModule);
-    static forRoot(config?: CoreConfig, modules?: CoreModules): ModuleWithProviders;
+    static forRoot(bundles?: Bundles, config?: CoreConfig): ModuleWithProviders;
 }
