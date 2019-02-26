@@ -3,7 +3,7 @@
 import { HttpBackend, XhrFactory } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { HttpClientBackendService } from './http-client-backend.service';
-import { MemoryBackendConfig, MemoryDataService } from './interfaces';
+import { MemoryBackendConfig, MemoryDataService } from './memory';
 
 // Internal - Creates the in-mem backend for the HttpClient module
 // AoT requires factory to be exported

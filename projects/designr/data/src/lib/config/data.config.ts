@@ -1,12 +1,13 @@
 import { InjectionToken } from '@angular/core';
-import { InMemoryBackendConfigArgs } from 'angular-in-memory-web-api';
-import { Datas } from '../data/datas';
+import { MemoryBackendConfig } from '../memory/memory';
 
 export const DATA_CONFIG = new InjectionToken<DataConfig>('data.config');
 
+export interface Datas { [key: string]: any[]; }
+
 export class DataConfig {
 	datas?: Datas = {};
-	memory?: InMemoryBackendConfigArgs;
+	memory?: MemoryBackendConfig;
 
 	constructor(options?: DataConfig) {
 		// console.log('DataConfig', options);

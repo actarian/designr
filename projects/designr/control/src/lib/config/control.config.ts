@@ -2,6 +2,7 @@ import { InjectionToken } from '@angular/core';
 import { Controls } from '../control/controls';
 
 export class ControlConfig {
+
 	controls?: Controls = {};
 
 	constructor(options?: ControlConfig) {

@@ -5,9 +5,7 @@ import { CoreModule } from '@designr/core';
 import { DataConfig, DATA_CONFIG } from './config/data.config';
 import { DataService } from './config/data.service';
 import { DataModuleComponent } from './data-module.component';
-import { MemoryService } from './memory/memory.service';
-// import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { HttpClientMemoryModule } from './memory_/http-client-memory.module';
+import { HttpClientMemoryModule } from './memory/http-client-memory.module';
 
 const services = [
 	DataService,
@@ -66,7 +64,7 @@ export class DataModule {
 			ngModule: DataModule,
 			providers: [
 				{ provide: DATA_CONFIG, useValue: config },
-				...HttpClientMemoryModule.forRoot(MemoryService, config.memory).providers
+				...HttpClientMemoryModule.forRoot(DataService, config.memory).providers
 			]
 		};
 	}

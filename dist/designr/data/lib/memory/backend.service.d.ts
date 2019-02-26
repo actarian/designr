@@ -1,21 +1,21 @@
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HeadersCore, MemoryBackendConfig, MemoryDataService, ParsedRequestUrl, PassThruBackend, RequestCore, RequestInfo, RequestInfoUtilities, ResponseOptions, UriInfo } from './interfaces';
+import { HeadersCore, MemoryBackendConfig, MemoryDataService, ParsedRequestUrl, PassThruBackend, RequestCore, RequestInfo, RequestInfoUtilities, ResponseOptions, UriInfo } from './memory';
 /**
  * Base class for in-memory web api back-ends
  * Simulate the behavior of a RESTy web api
- * backed by the simple in-memory data store provided by the injected `InMemoryDbService` service.
+ * backed by the simple in-memory data store provided by the injected `MemoryDataService` service.
  * Conforms mostly to behavior described here:
  * http://www.restapitutorial.com/lessons/httpmethods.html
  */
 export declare abstract class BackendService {
     protected dataService: MemoryDataService;
-    protected config: MemoryBackendConfig;
-    protected db: Object;
-    protected dbReadySubject: BehaviorSubject<boolean>;
     private passThruBackend;
+    protected config: MemoryBackendConfig;
+    protected database: Object;
+    protected databaseReadySubject: BehaviorSubject<boolean>;
     protected requestInfoUtils: RequestInfoUtilities;
     constructor(dataService: MemoryDataService, config?: MemoryBackendConfig);
-    protected readonly dbReady: Observable<boolean>;
+    protected readonly databaseReady: Observable<boolean>;
     /**
      * Process Request and return an Observable of Http Response object
      * in the manner of a RESTy web api.
@@ -40,8 +40,8 @@ export declare abstract class BackendService {
      *     which must return either an Observable of the response type
      *     for this http library or null|undefined (which means "keep processing").
      */
-    protected handleRequest(req: RequestCore): Observable<any>;
-    protected handleRequest_(req: RequestCore): Observable<any>;
+    protected handleRequest(request: RequestCore): Observable<any>;
+    protected handleRequest_(request: RequestCore): Observable<any>;
     /**
      * Add configured delay to response observable unless delay === 0
      */
@@ -53,12 +53,12 @@ export declare abstract class BackendService {
      */
     protected applyQuery(collection: any[], query: Map<string, string[]>): any[];
     /**
-     * Get a method from the `InMemoryDbService` (if it exists), bound to that service
+     * Get a method from the `MemoryDataService` (if it exists), bound to that service
      */
     protected bind<T extends Function>(methodName: string): T;
     protected bodify(data: any): any;
     protected clone(data: any): any;
-    protected collectionHandler(reqInfo: RequestInfo): ResponseOptions;
+    protected collectionHandler(requestInfo: RequestInfo): ResponseOptions;
     /**
      * Commands reconfigure the in-memory web api service or extract information from it.
      * Commands ignore the latency delay and respond ASAP.
@@ -76,7 +76,7 @@ export declare abstract class BackendService {
      *   http.get('commands/config');
      *   http.post('commands/config', '{"delay":1000}');
      */
-    protected commands(reqInfo: RequestInfo): Observable<any>;
+    protected commands(requestInfo: RequestInfo): Observable<any>;
     protected createErrorResponseOptions(url: string, status: number, message: string): ResponseOptions;
     /**
      * Create standard HTTP headers object from hash map of header strings
@@ -95,19 +95,19 @@ export declare abstract class BackendService {
     protected abstract createQueryMap(search: string): Map<string, string[]>;
     /**
      * Create a cold response Observable from a factory for ResponseOptions
-     * @param resOptionsFactory - creates ResponseOptions when observable is subscribed
+     * @param responseOptionsFactory - creates ResponseOptions when observable is subscribed
      * @param withDelay - if true (default), add simulated latency delay from configuration
      */
-    protected createResponse$(resOptionsFactory: () => ResponseOptions, withDelay?: boolean): Observable<any>;
+    protected createResponse$(responseOptionsFactory: () => ResponseOptions, withDelay?: boolean): Observable<any>;
     /**
      * Create a Response observable from ResponseOptions observable.
      */
-    protected abstract createResponse$fromResponseOptions$(resOptions$: Observable<ResponseOptions>): Observable<any>;
+    protected abstract createResponse$fromResponseOptions$(responseOptions$: Observable<ResponseOptions>): Observable<any>;
     /**
      * Create a cold Observable of ResponseOptions.
-     * @param resOptionsFactory - creates ResponseOptions when observable is subscribed
+     * @param responseOptionsFactory - creates ResponseOptions when observable is subscribed
      */
-    protected createResponseOptions$(resOptionsFactory: () => ResponseOptions): Observable<ResponseOptions>;
+    protected createResponseOptions$(responseOptionsFactory: () => ResponseOptions): Observable<ResponseOptions>;
     protected delete({ collection, collectionName, headers, id, url }: RequestInfo): ResponseOptions;
     /**
      * Find first instance of item in collection by `item.id`
@@ -137,7 +137,7 @@ export declare abstract class BackendService {
     }>(collection: T[], collectionName: string): any;
     protected get({ collection, collectionName, headers, id, query, url }: RequestInfo): ResponseOptions;
     /** Get JSON body from the request object */
-    protected abstract getJsonBody(req: any): any;
+    protected abstract getJsonBody(request: any): any;
     /**
      * Get location info from a url, even on server where `document` is not defined
      */
@@ -155,10 +155,10 @@ export declare abstract class BackendService {
     /**
      * return canonical HTTP method name (lowercase) from the request object
      * e.g. (req.method || 'get').toLowerCase();
-     * @param req - request object from the http call
+     * @param request - request object from the http call
      *
      */
-    protected abstract getRequestMethod(req: any): string;
+    protected abstract getRequestMethod(request: any): string;
     protected indexOf(collection: any[], id: number): number;
     /** Parse the id as a number. Return original value if not a number. */
     protected parseId(collection: any[], collectionName: string, id: string): any;
@@ -184,15 +184,15 @@ export declare abstract class BackendService {
      * The actual api base segment values are ignored. Only the number of segments matters.
      * The following api base strings are considered identical: 'a/b' ~ 'some/api/' ~ `two/segments'
      *
-     * To replace this default method, assign your alternative to your InMemDbService['parseRequestUrl']
+     * To replace this default method, assign your alternative to your MemoryDataService['parseRequestUrl']
      */
     protected parseRequestUrl(url: string): ParsedRequestUrl;
-    protected post({ collection, collectionName, headers, id, req, resourceUrl, url }: RequestInfo): ResponseOptions;
-    protected put({ collection, collectionName, headers, id, req, url }: RequestInfo): ResponseOptions;
+    protected post({ collection, collectionName, headers, id, request, resourceUrl, url }: RequestInfo): ResponseOptions;
+    protected put({ collection, collectionName, headers, id, request, url }: RequestInfo): ResponseOptions;
     protected removeById(collection: any[], id: number): boolean;
     /**
      * Tell your in-mem "database" to reset.
      * returns Observable of the database because resetting it could be async
      */
-    protected resetDb(reqInfo?: RequestInfo): Observable<boolean>;
+    protected resetDb(requestInfo?: RequestInfo): Observable<boolean>;
 }

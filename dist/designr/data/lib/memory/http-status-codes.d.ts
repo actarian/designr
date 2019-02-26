@@ -1,4 +1,4 @@
-export declare const STATUS: {
+export declare const STATUS_CODE: {
     CONTINUE: number;
     SWITCHING_PROTOCOLS: number;
     OK: number;

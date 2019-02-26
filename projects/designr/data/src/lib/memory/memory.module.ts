@@ -1,7 +1,7 @@
 import { HttpBackend, XhrFactory } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Type } from '@angular/core';
 import { httpClientBackendServiceFactory } from './http-client-memory.module';
-import { MemoryBackendConfig, MemoryDataService } from './interfaces';
+import { MemoryBackendConfig, MemoryDataService } from './memory';
 
 @NgModule({})
 export class MemoryModule {

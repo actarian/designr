@@ -3,8 +3,8 @@ import { Inject, Injectable, Optional } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { BackendService } from './backend.service';
-import { STATUS } from './http-status-codes';
-import { MemoryBackendConfig, MemoryDataService, ResponseOptions } from './interfaces';
+import { STATUS_CODE } from './http-status-codes';
+import { MemoryBackendConfig, MemoryDataService, ResponseOptions } from './memory';
 
 @Injectable()
 export class HttpClientBackendService extends BackendService implements HttpBackend {
@@ -21,7 +21,7 @@ export class HttpClientBackendService extends BackendService implements HttpBack
 		try {
 			return this.handleRequest(request);
 		} catch (error) {
-			const resOptions = this.createErrorResponseOptions(request.url, STATUS.INTERNAL_SERVER_ERROR, `${error.message || error}`);
+			const resOptions = this.createErrorResponseOptions(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, `${error.message || error}`);
 			return this.createResponse$(() => resOptions);
 		}
 	}
@@ -48,10 +48,9 @@ export class HttpClientBackendService extends BackendService implements HttpBack
 	}
 
 	protected createResponse$fromResponseOptions$(resOptions$: Observable<ResponseOptions>): Observable<HttpResponse<any>> {
-		return resOptions$
-			.pipe(
-				map((options: HttpResponseBase) => new HttpResponse<any>(options)),
-			);
+		return resOptions$.pipe(
+			map((options: HttpResponseBase) => new HttpResponse<any>(options)),
+		);
 	}
 
 	protected createPassThruBackend() {

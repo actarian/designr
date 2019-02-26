@@ -32,19 +32,19 @@ export abstract class MemoryDataService {
 	*
 	* The in-mem backend service calls this method without a value the first time.
 	* The service calls it with the `RequestInfo` when it receives a POST `commands/resetDb` request.
-	* Your InMemoryDbService can adjust its behavior accordingly.
+	* Your MemoryDataService can adjust its behavior accordingly.
 	*/
 	abstract createDb(reqInfo?: RequestInfo): {} | Observable<{}> | Promise<{}>;
 }
 
 /////////////////////////////////
 /**
-*  InMemoryBackendService configuration options
+*  MemoryBackendConfig configuration options
 *  Usage:
-*    InMemoryWebApiModule.forRoot(InMemHeroService, {delay: 600})
+*    MemoryModule.forRoot(InMemHeroService, {delay: 600})
 *
 *  or if providing separately:
-*    provide(InMemoryBackendConfig, {useValue: {delay: 600}}),
+*    provide(MemoryBackendConfig, {useValue: {delay: 600}}),
 */
 @Injectable()
 export class MemoryBackendConfig {
@@ -112,8 +112,8 @@ export class MemoryBackendConfig {
 			put204: true,  // don't return the item after a PUT
 			put404: false, // create new item if PUT item with that ID not found
 			apiBase: undefined, // assumed to be the first path segment
-			host: undefined,    // default value is actually set in InMemoryBackendService ctor
-			rootPath: undefined // default value is actually set in InMemoryBackendService ctor
+			host: undefined,    // default value is actually set in MemoryBackendConfig ctor
+			rootPath: undefined // default value is actually set in MemoryBackendConfig ctor
 		}, config);
 	}
 }
@@ -190,7 +190,7 @@ export interface RequestCore {
 * Also holds utility methods and configuration data from this service
 */
 export interface RequestInfo {
-	req: RequestCore; // concrete type depends upon the Http library
+	request: RequestCore; // concrete type depends upon the Http library
 	apiBase: string;
 	collectionName: string;
 	collection: any;

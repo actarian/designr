@@ -1,7 +1,7 @@
 import { HttpBackend, HttpEvent, HttpHeaders, HttpRequest, HttpResponse, HttpXhrBackend, XhrFactory } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BackendService } from './backend.service';
-import { MemoryBackendConfig, MemoryDataService, ResponseOptions } from './interfaces';
+import { MemoryBackendConfig, MemoryDataService, ResponseOptions } from './memory';
 export declare class HttpClientBackendService extends BackendService implements HttpBackend {
     private factory;
     constructor(dataService: MemoryDataService, config: MemoryBackendConfig, factory: XhrFactory);

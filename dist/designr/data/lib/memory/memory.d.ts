@@ -29,17 +29,17 @@ export declare abstract class MemoryDataService {
     *
     * The in-mem backend service calls this method without a value the first time.
     * The service calls it with the `RequestInfo` when it receives a POST `commands/resetDb` request.
-    * Your InMemoryDbService can adjust its behavior accordingly.
+    * Your MemoryDataService can adjust its behavior accordingly.
     */
     abstract createDb(reqInfo?: RequestInfo): {} | Observable<{}> | Promise<{}>;
 }
 /**
-*  InMemoryBackendService configuration options
+*  MemoryBackendConfig configuration options
 *  Usage:
-*    InMemoryWebApiModule.forRoot(InMemHeroService, {delay: 600})
+*    MemoryModule.forRoot(InMemHeroService, {delay: 600})
 *
 *  or if providing separately:
-*    provide(InMemoryBackendConfig, {useValue: {delay: 600}}),
+*    provide(MemoryBackendConfig, {useValue: {delay: 600}}),
 */
 export declare class MemoryBackendConfig {
     /**
@@ -134,7 +134,7 @@ export interface RequestCore {
 * Also holds utility methods and configuration data from this service
 */
 export interface RequestInfo {
-    req: RequestCore;
+    request: RequestCore;
     apiBase: string;
     collectionName: string;
     collection: any;

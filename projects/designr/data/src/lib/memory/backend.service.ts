@@ -1,41 +1,42 @@
 import { BehaviorSubject, from, Observable, Observer, of } from 'rxjs';
 import { concatMap, first } from 'rxjs/operators';
 import { delayResponse } from './delay-response';
-import { getStatusText, isSuccess, STATUS } from './http-status-codes';
-import { HeadersCore, MemoryBackendConfig, MemoryDataService, ParsedRequestUrl, parseUri, PassThruBackend, removeTrailingSlash, RequestCore, RequestInfo, RequestInfoUtilities, ResponseOptions, UriInfo } from './interfaces';
+import { getStatusText, isSuccess, STATUS_CODE } from './http-status-codes';
+import { HeadersCore, MemoryBackendConfig, MemoryDataService, ParsedRequestUrl, parseUri, PassThruBackend, removeTrailingSlash, RequestCore, RequestInfo, RequestInfoUtilities, ResponseOptions, UriInfo } from './memory';
 
 /**
  * Base class for in-memory web api back-ends
  * Simulate the behavior of a RESTy web api
- * backed by the simple in-memory data store provided by the injected `InMemoryDbService` service.
+ * backed by the simple in-memory data store provided by the injected `MemoryDataService` service.
  * Conforms mostly to behavior described here:
  * http://www.restapitutorial.com/lessons/httpmethods.html
  */
 export abstract class BackendService {
-	protected config: MemoryBackendConfig = new MemoryBackendConfig();
-	protected db: Object;
-	protected dbReadySubject: BehaviorSubject<boolean>;
 	private passThruBackend: PassThruBackend;
+	protected config: MemoryBackendConfig = new MemoryBackendConfig();
+	protected database: Object;
+	protected databaseReadySubject: BehaviorSubject<boolean>;
 	protected requestInfoUtils = this.getRequestInfoUtils();
 
 	constructor(
 		protected dataService: MemoryDataService,
 		config: MemoryBackendConfig = {}
 	) {
-		const loc = this.getLocation('/');
-		this.config.host = loc.host;     // default to app web server host
-		this.config.rootPath = loc.path; // default to path when app is served (e.g.'/')
+		const location = this.getLocation('/');
+		this.config.host = location.host; // default to app web server host
+		this.config.rootPath = location.path; // default to path when app is served (e.g.'/')
 		Object.assign(this.config, config);
 	}
 
-	////  protected /////
-	protected get dbReady(): Observable<boolean> {
-		if (!this.dbReadySubject) {
+	protected get databaseReady(): Observable<boolean> {
+		if (!this.databaseReadySubject) {
 			// first time the service is called.
-			this.dbReadySubject = new BehaviorSubject(false);
+			this.databaseReadySubject = new BehaviorSubject(false);
 			this.resetDb();
 		}
-		return this.dbReadySubject.asObservable().pipe(first((r: boolean) => r));
+		return this.databaseReadySubject.asObservable().pipe(
+			first((ready: boolean) => ready)
+		);
 	}
 
 	/**
@@ -62,81 +63,65 @@ export abstract class BackendService {
 	 *     which must return either an Observable of the response type
 	 *     for this http library or null|undefined (which means "keep processing").
 	 */
-	protected handleRequest(req: RequestCore): Observable<any> {
+	protected handleRequest(request: RequestCore): Observable<any> {
 		//  handle the request when there is an in-memory database
-		return this.dbReady.pipe(concatMap(() => this.handleRequest_(req)));
+		return this.databaseReady.pipe(concatMap(() => this.handleRequest_(request)));
 	}
 
-	protected handleRequest_(req: RequestCore): Observable<any> {
-
-		const url = req.urlWithParams ? req.urlWithParams : req.url;
-
+	protected handleRequest_(request: RequestCore): Observable<any> {
+		const url = request.urlWithParams ? request.urlWithParams : request.url;
 		// Try override parser
 		// If no override parser or it returns nothing, use default parser
 		const parser = this.bind('parseRequestUrl');
-		const parsed: ParsedRequestUrl =
-			(parser && parser(url, this.requestInfoUtils)) ||
-			this.parseRequestUrl(url);
-
+		const parsed: ParsedRequestUrl = (parser && parser(url, this.requestInfoUtils)) || this.parseRequestUrl(url);
 		const collectionName = parsed.collectionName;
-		const collection = this.db[collectionName];
-
-		const reqInfo: RequestInfo = {
-			req: req,
+		const collection = this.database[collectionName];
+		const requestInfo: RequestInfo = {
+			request: request,
 			apiBase: parsed.apiBase,
 			collection: collection,
 			collectionName: collectionName,
 			headers: this.createHeaders({ 'Content-Type': 'application/json' }),
 			id: this.parseId(collection, collectionName, parsed.id),
-			method: this.getRequestMethod(req),
+			method: this.getRequestMethod(request),
 			query: parsed.query,
 			resourceUrl: parsed.resourceUrl,
 			url: url,
 			utils: this.requestInfoUtils
 		};
-
-		let resOptions: ResponseOptions;
-
-		if (/commands\/?$/i.test(reqInfo.apiBase)) {
-			return this.commands(reqInfo);
+		let responseOptions: ResponseOptions;
+		if (/commands\/?$/i.test(requestInfo.apiBase)) {
+			return this.commands(requestInfo);
 		}
-
-		const methodInterceptor = this.bind(reqInfo.method);
+		const methodInterceptor = this.bind(requestInfo.method);
 		if (methodInterceptor) {
-			// InMemoryDbService intercepts this HTTP method.
+			// MemoryDataService intercepts this HTTP method.
 			// if interceptor produced a response, return it.
-			// else InMemoryDbService chose not to intercept; continue processing.
-			const interceptorResponse = methodInterceptor(reqInfo);
+			// else MemoryDataService chose not to intercept; continue processing.
+			const interceptorResponse = methodInterceptor(requestInfo);
 			if (interceptorResponse) {
 				return interceptorResponse;
-			};
+			}
 		}
-
-		if (this.db[collectionName]) {
-			// request is for a known collection of the InMemoryDbService
-			return this.createResponse$(() => this.collectionHandler(reqInfo));
+		if (this.database[collectionName]) {
+			// request is for a known collection of the MemoryDataService
+			return this.createResponse$(() => this.collectionHandler(requestInfo));
 		}
-
 		if (this.config.passThruUnknownUrl) {
 			// unknown collection; pass request thru to a "real" backend.
-			return this.getPassThruBackend().handle(req);
+			return this.getPassThruBackend().handle(request);
 		}
-
 		// 404 - can't handle this request
-		resOptions = this.createErrorResponseOptions(
-			url,
-			STATUS.NOT_FOUND,
-			`Collection '${collectionName}' not found`
-		);
-		return this.createResponse$(() => resOptions);
+		responseOptions = this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, `Collection '${collectionName}' not found`);
+		return this.createResponse$(() => responseOptions);
 	}
 
 	/**
 	 * Add configured delay to response observable unless delay === 0
 	 */
 	protected addDelay(response: Observable<any>): Observable<any> {
-		const d = this.config.delay;
-		return d === 0 ? response : delayResponse(response, d || 500);
+		const delay = this.config.delay;
+		return delay === 0 ? response : delayResponse(response, delay || 500);
 	}
 
 	/**
@@ -146,34 +131,37 @@ export abstract class BackendService {
 	 */
 	protected applyQuery(collection: any[], query: Map<string, string[]>): any[] {
 		// extract filtering conditions - {propertyName, RegExps) - from query/search parameters
-		const conditions: { name: string, rx: RegExp }[] = [];
+		const conditions: { name: string, regexp: RegExp }[] = [];
 		const caseSensitive = this.config.caseSensitiveSearch ? undefined : 'i';
 		query.forEach((value: string[], name: string) => {
-			value.forEach(v => conditions.push({ name, rx: new RegExp(decodeURI(v), caseSensitive) }));
+			value.forEach(x => conditions.push({
+				name,
+				regexp: new RegExp(decodeURI(x), caseSensitive)
+			}));
 		});
-
-		const len = conditions.length;
-		if (!len) { return collection; }
-
+		const length = conditions.length;
+		if (!length) {
+			return collection;
+		}
 		// AND the RegExp conditions
 		return collection.filter(row => {
-			let ok = true;
-			let i = len;
-			while (ok && i) {
+			let has = true;
+			let i = length;
+			while (has && i) {
 				i -= 1;
 				const cond = conditions[i];
-				ok = cond.rx.test(row[cond.name]);
+				has = cond.regexp.test(row[cond.name]);
 			}
-			return ok;
+			return has;
 		});
 	}
 
 	/**
-	 * Get a method from the `InMemoryDbService` (if it exists), bound to that service
+	 * Get a method from the `MemoryDataService` (if it exists), bound to that service
 	 */
 	protected bind<T extends Function>(methodName: string) {
-		const fn = this.dataService[methodName] as T;
-		return fn ? <T>fn.bind(this.dataService) : undefined;
+		const method = this.dataService[methodName] as T;
+		return method ? <T>method.bind(this.dataService) : undefined;
 	}
 
 	protected bodify(data: any) {
@@ -184,30 +172,29 @@ export abstract class BackendService {
 		return JSON.parse(JSON.stringify(data));
 	}
 
-	protected collectionHandler(reqInfo: RequestInfo): ResponseOptions {
-		// const req = reqInfo.req;
-		let resOptions: ResponseOptions;
-		switch (reqInfo.method) {
+	protected collectionHandler(requestInfo: RequestInfo): ResponseOptions {
+		// const request = requestInfo.request;
+		let responseOptions: ResponseOptions;
+		switch (requestInfo.method) {
 			case 'get':
-				resOptions = this.get(reqInfo);
+				responseOptions = this.get(requestInfo);
 				break;
 			case 'post':
-				resOptions = this.post(reqInfo);
+				responseOptions = this.post(requestInfo);
 				break;
 			case 'put':
-				resOptions = this.put(reqInfo);
+				responseOptions = this.put(requestInfo);
 				break;
 			case 'delete':
-				resOptions = this.delete(reqInfo);
+				responseOptions = this.delete(requestInfo);
 				break;
 			default:
-				resOptions = this.createErrorResponseOptions(reqInfo.url, STATUS.METHOD_NOT_ALLOWED, 'Method not allowed');
+				responseOptions = this.createErrorResponseOptions(requestInfo.url, STATUS_CODE.METHOD_NOT_ALLOWED, 'Method not allowed');
 				break;
 		}
-
 		// If `dataService.responseInterceptor` exists, let it morph the response options
 		const interceptor = this.bind('responseInterceptor');
-		return interceptor ? interceptor(resOptions, reqInfo) : resOptions;
+		return interceptor ? interceptor(responseOptions, requestInfo) : responseOptions;
 	}
 
 	/**
@@ -227,52 +214,53 @@ export abstract class BackendService {
 	 *   http.get('commands/config');
 	 *   http.post('commands/config', '{"delay":1000}');
 	 */
-	protected commands(reqInfo: RequestInfo): Observable<any> {
-		const command = reqInfo.collectionName.toLowerCase();
-		const method = reqInfo.method;
-
-		let resOptions: ResponseOptions = {
-			url: reqInfo.url
+	protected commands(requestInfo: RequestInfo): Observable<any> {
+		const command = requestInfo.collectionName.toLowerCase();
+		const method = requestInfo.method;
+		let responseOptions: ResponseOptions = {
+			url: requestInfo.url
 		};
-
 		switch (command) {
 			case 'resetdb':
-				resOptions.status = STATUS.NO_CONTENT;
-				return this.resetDb(reqInfo).pipe(
-					concatMap(() => this.createResponse$(() => resOptions, false /* no latency delay */))
+				responseOptions.status = STATUS_CODE.NO_CONTENT;
+				return this.resetDb(requestInfo).pipe(
+					concatMap(() => this.createResponse$(() => responseOptions, false /* no latency delay */))
 				);
 
 			case 'config':
 				if (method === 'get') {
-					resOptions.status = STATUS.OK;
-					resOptions.body = this.clone(this.config);
+					responseOptions.status = STATUS_CODE.OK;
+					responseOptions.body = this.clone(this.config);
 
 					// any other HTTP method is assumed to be a config update
 				} else {
-					const body = this.getJsonBody(reqInfo.req);
+					const body = this.getJsonBody(requestInfo.request);
 					Object.assign(this.config, body);
 					this.passThruBackend = undefined; // re-create when needed
-
-					resOptions.status = STATUS.NO_CONTENT;
+					responseOptions.status = STATUS_CODE.NO_CONTENT;
 				}
 				break;
 
 			default:
-				resOptions = this.createErrorResponseOptions(
-					reqInfo.url,
-					STATUS.INTERNAL_SERVER_ERROR,
+				responseOptions = this.createErrorResponseOptions(
+					requestInfo.url,
+					STATUS_CODE.INTERNAL_SERVER_ERROR,
 					`Unknown command "${command}"`
 				);
 		}
 
-		return this.createResponse$(() => resOptions, false /* no latency delay */);
+		return this.createResponse$(() => responseOptions, false /* no latency delay */);
 	}
 
 	protected createErrorResponseOptions(url: string, status: number, message: string): ResponseOptions {
 		return {
-			body: { error: `${message}` },
+			body: {
+				error: `${message}`,
+			},
 			url: url,
-			headers: this.createHeaders({ 'Content-Type': 'application/json' }),
+			headers: this.createHeaders({
+				'Content-Type': 'application/json'
+			}),
 			status: status
 		};
 	}
@@ -295,44 +283,43 @@ export abstract class BackendService {
 
 	/**
 	 * Create a cold response Observable from a factory for ResponseOptions
-	 * @param resOptionsFactory - creates ResponseOptions when observable is subscribed
+	 * @param responseOptionsFactory - creates ResponseOptions when observable is subscribed
 	 * @param withDelay - if true (default), add simulated latency delay from configuration
 	 */
-	protected createResponse$(resOptionsFactory: () => ResponseOptions, withDelay = true): Observable<any> {
-		const resOptions$ = this.createResponseOptions$(resOptionsFactory);
-		let resp$ = this.createResponse$fromResponseOptions$(resOptions$);
-		return withDelay ? this.addDelay(resp$) : resp$;
+	protected createResponse$(responseOptionsFactory: () => ResponseOptions, withDelay = true): Observable<any> {
+		const responseOptions$ = this.createResponseOptions$(responseOptionsFactory);
+		const response$ = this.createResponse$fromResponseOptions$(responseOptions$);
+		return withDelay ? this.addDelay(response$) : response$;
 	}
 
 	/**
 	 * Create a Response observable from ResponseOptions observable.
 	 */
-	protected abstract createResponse$fromResponseOptions$(resOptions$: Observable<ResponseOptions>): Observable<any>;
+	protected abstract createResponse$fromResponseOptions$(responseOptions$: Observable<ResponseOptions>): Observable<any>;
 
 	/**
 	 * Create a cold Observable of ResponseOptions.
-	 * @param resOptionsFactory - creates ResponseOptions when observable is subscribed
+	 * @param responseOptionsFactory - creates ResponseOptions when observable is subscribed
 	 */
-	protected createResponseOptions$(resOptionsFactory: () => ResponseOptions): Observable<ResponseOptions> {
-
+	protected createResponseOptions$(responseOptionsFactory: () => ResponseOptions): Observable<ResponseOptions> {
 		return new Observable<ResponseOptions>((responseObserver: Observer<ResponseOptions>) => {
-			let resOptions: ResponseOptions;
+			let responseOptions: ResponseOptions;
 			try {
-				resOptions = resOptionsFactory();
+				responseOptions = responseOptionsFactory();
 			} catch (error) {
-				const err = error.message || error;
-				resOptions = this.createErrorResponseOptions('', STATUS.INTERNAL_SERVER_ERROR, `${err}`);
+				error = error.message || error;
+				responseOptions = this.createErrorResponseOptions('', STATUS_CODE.INTERNAL_SERVER_ERROR, `${error}`);
 			}
 
-			const status = resOptions.status;
+			const status = responseOptions.status;
 			try {
-				resOptions.statusText = getStatusText(status);
-			} catch (e) { /* ignore failure */ }
+				responseOptions.statusText = getStatusText(status);
+			} catch (error) { /* ignore failure */ }
 			if (isSuccess(status)) {
-				responseObserver.next(resOptions);
+				responseObserver.next(responseOptions);
 				responseObserver.complete();
 			} else {
-				responseObserver.error(resOptions);
+				responseObserver.error(responseOptions);
 			}
 			return () => { }; // unsubscribe function
 		});
@@ -341,12 +328,12 @@ export abstract class BackendService {
 	protected delete({ collection, collectionName, headers, id, url }: RequestInfo): ResponseOptions {
 		// tslint:disable-next-line:triple-equals
 		if (id == undefined) {
-			return this.createErrorResponseOptions(url, STATUS.NOT_FOUND, `Missing "${collectionName}" id`);
+			return this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, `Missing "${collectionName}" id`);
 		}
 		const exists = this.removeById(collection, id);
 		return {
 			headers: headers,
-			status: (exists || !this.config.delete404) ? STATUS.NO_CONTENT : STATUS.NOT_FOUND
+			status: (exists || !this.config.delete404) ? STATUS_CODE.NO_CONTENT : STATUS_CODE.NOT_FOUND
 		};
 	}
 
@@ -370,7 +357,9 @@ export abstract class BackendService {
 		if (genId) {
 			const id = genId(collection, collectionName);
 			// tslint:disable-next-line:triple-equals
-			if (id != undefined) { return id; }
+			if (id != undefined) {
+				return id;
+			}
 		}
 		return this.genIdDefault(collection, collectionName);
 	}
@@ -383,10 +372,8 @@ export abstract class BackendService {
 	 */
 	protected genIdDefault<T extends { id: any }>(collection: T[], collectionName: string): any {
 		if (!this.isCollectionIdNumeric(collection, collectionName)) {
-			throw new Error(
-				`Collection '${collectionName}' id type is non-numeric or unknown. Can only generate numeric ids.`);
+			throw new Error(`Collection '${collectionName}' id type is non-numeric or unknown. Can only generate numeric ids.`);
 		}
-
 		let maxId = 0;
 		collection.reduce((prev: any, item: any) => {
 			maxId = Math.max(maxId, typeof item.id === 'number' ? item.id : maxId);
@@ -396,49 +383,45 @@ export abstract class BackendService {
 
 	protected get({ collection, collectionName, headers, id, query, url }: RequestInfo): ResponseOptions {
 		let data = collection;
-
 		// tslint:disable-next-line:triple-equals
 		if (id != undefined && id !== '') {
 			data = this.findById(collection, id);
 		} else if (query) {
 			data = this.applyQuery(collection, query);
 		}
-
 		if (!data) {
-			return this.createErrorResponseOptions(url, STATUS.NOT_FOUND, `'${collectionName}' with id='${id}' not found`);
+			return this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, `'${collectionName}' with id='${id}' not found`);
 		}
 		return {
 			body: this.bodify(this.clone(data)),
 			headers: headers,
-			status: STATUS.OK
+			status: STATUS_CODE.OK
 		};
 	}
 
 	/** Get JSON body from the request object */
-	protected abstract getJsonBody(req: any): any;
+	protected abstract getJsonBody(request: any): any;
 
 	/**
 	 * Get location info from a url, even on server where `document` is not defined
 	 */
 	protected getLocation(url: string): UriInfo {
 		if (!url.startsWith('http')) {
-			// get the document iff running in browser
-			const doc: Document = (typeof document === 'undefined') ? undefined : document;
+			// get the document if running in browser
+			const document_: Document = (typeof document === 'undefined') ? undefined : document;
 			// add host info to url before parsing.  Use a fake host when not in browser.
-			const base = doc ? doc.location.protocol + '//' + doc.location.host : 'http://fake';
+			const base = document_ ? document_.location.protocol + '//' + document_.location.host : 'http://fake';
 			url = url.startsWith('/') ? base + url : base + '/' + url;
 		}
 		return parseUri(url);
-	};
+	}
 
 	/**
 	 * get or create the function that passes unhandled requests
 	 * through to the "real" backend.
 	 */
 	protected getPassThruBackend(): PassThruBackend {
-		return this.passThruBackend ?
-			this.passThruBackend :
-			this.passThruBackend = this.createPassThruBackend();
+		return this.passThruBackend ? this.passThruBackend : this.passThruBackend = this.createPassThruBackend();
 	}
 
 	/**
@@ -451,7 +434,7 @@ export abstract class BackendService {
 			findById: this.findById.bind(this),
 			isCollectionIdNumeric: this.isCollectionIdNumeric.bind(this),
 			getConfig: () => this.config,
-			getDb: () => this.db,
+			getDb: () => this.database,
 			getJsonBody: this.getJsonBody.bind(this),
 			getLocation: this.getLocation.bind(this),
 			getPassThruBackend: this.getPassThruBackend.bind(this),
@@ -462,10 +445,10 @@ export abstract class BackendService {
 	/**
 	 * return canonical HTTP method name (lowercase) from the request object
 	 * e.g. (req.method || 'get').toLowerCase();
-	 * @param req - request object from the http call
+	 * @param request - request object from the http call
 	 *
 	 */
-	protected abstract getRequestMethod(req: any): string;
+	protected abstract getRequestMethod(request: any): string;
 
 	protected indexOf(collection: any[], id: number) {
 		return collection.findIndex((item: any) => item.id === id);
@@ -508,23 +491,22 @@ export abstract class BackendService {
 	 * The actual api base segment values are ignored. Only the number of segments matters.
 	 * The following api base strings are considered identical: 'a/b' ~ 'some/api/' ~ `two/segments'
 	 *
-	 * To replace this default method, assign your alternative to your InMemDbService['parseRequestUrl']
+	 * To replace this default method, assign your alternative to your MemoryDataService['parseRequestUrl']
 	 */
 	protected parseRequestUrl(url: string): ParsedRequestUrl {
 		try {
-			const loc = this.getLocation(url);
+			const location = this.getLocation(url);
 			let drop = this.config.rootPath.length;
 			let urlRoot = '';
-			if (loc.host !== this.config.host) {
+			if (location.host !== this.config.host) {
 				// url for a server on a different host!
 				// assume it's collection is actually here too.
 				drop = 1; // the leading slash
-				urlRoot = loc.protocol + '//' + loc.host + '/';
+				urlRoot = location.protocol + '//' + location.host + '/';
 			}
-			const path = loc.path.substring(drop);
+			const path = location.path.substring(drop);
 			const pathSegments = path.split('/');
 			let segmentIx = 0;
-
 			// apiBase: the front part of the path devoted to getting to the api route
 			// Assumes first path segment if no config.apiBase
 			// else ignores as many path segments as are in config.apiBase
@@ -542,103 +524,92 @@ export abstract class BackendService {
 				}
 			}
 			apiBase += '/';
-
 			let collectionName = pathSegments[segmentIx++];
 			// ignore anything after a '.' (e.g.,the "json" in "customers.json")
 			collectionName = collectionName && collectionName.split('.')[0];
-
 			const id = pathSegments[segmentIx++];
-			const query = this.createQueryMap(loc.query);
+			const query = this.createQueryMap(location.query);
 			const resourceUrl = urlRoot + apiBase + collectionName + '/';
 			return { apiBase, collectionName, id, query, resourceUrl };
-
-		} catch (err) {
-			const msg = `unable to parse url '${url}'; original error: ${err.message}`;
-			throw new Error(msg);
+		} catch (error) {
+			const message = `unable to parse url '${url}'; original error: ${error.message}`;
+			throw new Error(message);
 		}
 	}
 
 	// Create entity
 	// Can update an existing entity too if post409 is false.
-	protected post({ collection, collectionName, headers, id, req, resourceUrl, url }: RequestInfo): ResponseOptions {
-		const item = this.clone(this.getJsonBody(req));
-
+	protected post({ collection, collectionName, headers, id, request, resourceUrl, url }: RequestInfo): ResponseOptions {
+		const item = this.clone(this.getJsonBody(request));
 		// tslint:disable-next-line:triple-equals
 		if (item.id == undefined) {
 			try {
 				item.id = id || this.genId(collection, collectionName);
-			} catch (err) {
-				const emsg: string = err.message || '';
-				if (/id type is non-numeric/.test(emsg)) {
-					return this.createErrorResponseOptions(url, STATUS.UNPROCESSABLE_ENTRY, emsg);
+			} catch (error) {
+				const message: string = error.message || '';
+				if (/id type is non-numeric/.test(message)) {
+					return this.createErrorResponseOptions(url, STATUS_CODE.UNPROCESSABLE_ENTRY, message);
 				} else {
-					console.error(err);
-					return this.createErrorResponseOptions(url, STATUS.INTERNAL_SERVER_ERROR,
-						`Failed to generate new id for '${collectionName}'`);
+					console.error(error);
+					return this.createErrorResponseOptions(url, STATUS_CODE.INTERNAL_SERVER_ERROR, `Failed to generate new id for '${collectionName}'`);
 				}
 			}
 		}
-
 		if (id && id !== item.id) {
-			return this.createErrorResponseOptions(url, STATUS.BAD_REQUEST, `Request id does not match item.id`);
+			return this.createErrorResponseOptions(url, STATUS_CODE.BAD_REQUEST, `Request id does not match item.id`);
 		} else {
 			id = item.id;
 		}
 		const existingIx = this.indexOf(collection, id);
 		const body = this.bodify(item);
-
 		if (existingIx === -1) {
 			collection.push(item);
 			headers.set('Location', resourceUrl + '/' + id);
-			return { headers, body, status: STATUS.CREATED };
+			return { headers, body, status: STATUS_CODE.CREATED };
 		} else if (this.config.post409) {
-			return this.createErrorResponseOptions(url, STATUS.CONFLICT,
-				`'${collectionName}' item with id='${id} exists and may not be updated with POST; use PUT instead.`);
+			return this.createErrorResponseOptions(url, STATUS_CODE.CONFLICT, `'${collectionName}' item with id='${id} exists and may not be updated with POST; use PUT instead.`);
 		} else {
 			collection[existingIx] = item;
 			return this.config.post204 ?
-				{ headers, status: STATUS.NO_CONTENT } : // successful; no content
-				{ headers, body, status: STATUS.OK }; // successful; return entity
+				{ headers, status: STATUS_CODE.NO_CONTENT } : // successful; no content
+				{ headers, body, status: STATUS_CODE.OK }; // successful; return entity
 		}
 	}
 
 	// Update existing entity
 	// Can create an entity too if put404 is false.
-	protected put({ collection, collectionName, headers, id, req, url }: RequestInfo): ResponseOptions {
-		const item = this.clone(this.getJsonBody(req));
+	protected put({ collection, collectionName, headers, id, request, url }: RequestInfo): ResponseOptions {
+		const item = this.clone(this.getJsonBody(request));
 		// tslint:disable-next-line:triple-equals
 		if (item.id == undefined) {
-			return this.createErrorResponseOptions(url, STATUS.NOT_FOUND, `Missing '${collectionName}' id`);
+			return this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, `Missing '${collectionName}' id`);
 		}
 		if (id && id !== item.id) {
-			return this.createErrorResponseOptions(url, STATUS.BAD_REQUEST,
-				`Request for '${collectionName}' id does not match item.id`);
+			return this.createErrorResponseOptions(url, STATUS_CODE.BAD_REQUEST, `Request for '${collectionName}' id does not match item.id`);
 		} else {
 			id = item.id;
 		}
 		const existingIx = this.indexOf(collection, id);
 		const body = this.bodify(item);
-
 		if (existingIx > -1) {
 			collection[existingIx] = item;
 			return this.config.put204 ?
-				{ headers, status: STATUS.NO_CONTENT } : // successful; no content
-				{ headers, body, status: STATUS.OK }; // successful; return entity
+				{ headers, status: STATUS_CODE.NO_CONTENT } : // successful; no content
+				{ headers, body, status: STATUS_CODE.OK }; // successful; return entity
 		} else if (this.config.put404) {
 			// item to update not found; use POST to create new item for this id.
-			return this.createErrorResponseOptions(url, STATUS.NOT_FOUND,
-				`'${collectionName}' item with id='${id} not found and may not be created with PUT; use POST instead.`);
+			return this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, `'${collectionName}' item with id='${id} not found and may not be created with PUT; use POST instead.`);
 		} else {
 			// create new item for id not found
 			collection.push(item);
-			return { headers, body, status: STATUS.CREATED };
+			return { headers, body, status: STATUS_CODE.CREATED };
 		}
 	}
 
 	protected removeById(collection: any[], id: number) {
-		const ix = this.indexOf(collection, id);
-		if (ix > -1) {
-			collection.splice(ix, 1);
+		const index = this.indexOf(collection, id);
+		if (index > -1) {
+			collection.splice(index, 1);
 			return true;
 		}
 		return false;
@@ -648,17 +619,17 @@ export abstract class BackendService {
 	 * Tell your in-mem "database" to reset.
 	 * returns Observable of the database because resetting it could be async
 	 */
-	protected resetDb(reqInfo?: RequestInfo): Observable<boolean> {
-		this.dbReadySubject.next(false);
-		const db = this.dataService.createDb(reqInfo);
-		const db$ = db instanceof Observable ? db :
-			typeof (db as any).then === 'function' ? from(db as Promise<any>) :
-				of(db);
-		db$.pipe(first()).subscribe((d: {}) => {
-			this.db = d;
-			this.dbReadySubject.next(true);
+	protected resetDb(requestInfo?: RequestInfo): Observable<boolean> {
+		this.databaseReadySubject.next(false);
+		const database = this.dataService.createDb(requestInfo);
+		const database$ = database instanceof Observable ? database :
+			typeof (database as any).then === 'function' ? from(database as Promise<any>) :
+				of(database);
+		database$.pipe(first()).subscribe((database: {}) => {
+			this.database = database;
+			this.databaseReadySubject.next(true);
 		});
-		return this.dbReady;
+		return this.databaseReady;
 	}
 
 }

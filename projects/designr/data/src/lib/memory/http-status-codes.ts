@@ -1,4 +1,4 @@
-export const STATUS = {
+export const STATUS_CODE = {
 	CONTINUE: 100,
 	SWITCHING_PROTOCOLS: 101,
 	OK: 200,

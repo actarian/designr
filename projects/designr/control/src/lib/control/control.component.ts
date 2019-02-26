@@ -12,6 +12,7 @@ import { ControlBase } from './control-base';
 	}],
 })
 export class ControlComponent implements ControlValueAccessor {
+
 	@Input() control: ControlBase<any>;
 	@Input() form: FormGroup;
 
@@ -32,39 +33,6 @@ export class ControlComponent implements ControlValueAccessor {
 
 	get isValid() { return this.controlRef.valid; }
 
-	// ControlValueAccessor
-
-	getFormattedValue(): any {
-		// console.log('ControlComponent.getFormattedValue', this.controlRef.value);
-		return this.controlRef.value;
-	}
-
-	onInput($event): void {
-		this.element = $event.target;
-		this.onChange(this.element.value);
-	}
-
-	onFocus($event): void {
-		this.blurred = false;
-		this.element = $event.target;
-		// this.element.value = this.controlRef.value;
-		this.renderer.setProperty(this.element, 'value', this.controlRef.value);
-		// console.log('ControlComponent.onFocus', this.controlRef);
-	}
-
-	onBlur($event): void {
-		this.blurred = true;
-		this.element = $event.target;
-		// this.element.value = this.controlRef.value;
-		this.renderer.setProperty(this.element, 'value', this.controlRef.value);
-		// console.log('ControlComponent.onBlur', this.controlRef);
-		/*
-		if (this.innervalue) {
-			this.control.patchValue(this.innervalue + ' H', { emitEvent: false });
-		}
-		*/
-	}
-
 	private onChange = (value: any) => { };
 
 	private onTouched = () => { };
@@ -81,17 +49,50 @@ export class ControlComponent implements ControlValueAccessor {
 		this.onChange(parsed);
 	}
 
+	onInput(event: Event): void {
+		this.element = event.target;
+		this.onChange(this.element.value);
+	}
+
+	onFocus(event: Event): void {
+		this.blurred = false;
+		this.element = event.target;
+		// this.element.value = this.controlRef.value;
+		this.renderer.setProperty(this.element, 'value', this.controlRef.value);
+		// console.log('ControlComponent.onFocus', this.controlRef);
+	}
+
+	onBlur(event: Event): void {
+		this.blurred = true;
+		this.element = event.target;
+		// this.element.value = this.controlRef.value;
+		this.renderer.setProperty(this.element, 'value', this.controlRef.value);
+		// console.log('ControlComponent.onBlur', this.controlRef);
+		/*
+		if (this.innervalue) {
+			this.control.patchValue(this.innervalue + ' H', { emitEvent: false });
+		}
+		*/
+	}
+
+	getFormattedValue(): any {
+		// console.log('ControlComponent.getFormattedValue', this.controlRef.value);
+		return this.controlRef.value;
+	}
+
+	// ControlValueAccessor
+
 	writeValue(value: any): void {
 		this.formatValue(value);
 	}
 
-	registerOnChange(fn: any): void {
-		this.onChange = fn;
+	registerOnChange(method: any): void {
+		this.onChange = method;
 		// console.log('ControlEditableComponent.registerOnChange');
 	}
 
-	registerOnTouched(fn: any): void {
-		this.onTouched = fn;
+	registerOnTouched(method: any): void {
+		this.onTouched = method;
 		// console.log('ControlEditableComponent.registerOnTouched');
 	}
 

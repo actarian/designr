@@ -4,8 +4,7 @@
   "peerDependencies": {
     "@angular/common": "~7.2.4",
     "@angular/core": "~7.2.4",
-    "@designr/core": "~0.0.1",
-    "angular-in-memory-web-api": "~0.8.0"
+    "@designr/core": "~0.0.1"
   },
   "main": "bundles/designr-data.umd.js",
   "module": "fesm5/designr-data.js",
