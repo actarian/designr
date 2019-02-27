@@ -69,7 +69,14 @@ export class LazyImagesDirective implements OnInit, OnDestroy {
 	}
 
 	onAppearsInViewport(image: any) {
-		if (image.dataset.src) {
+		if (image.dataset.srcset) {
+			this.renderer.setAttribute(image, 'srcset', image.dataset.srcset);
+			this.renderer.removeAttribute(image, 'data-srcset');
+			if (image.dataset.src) {
+				this.renderer.setAttribute(image, 'src', image.dataset.src);
+				this.renderer.removeAttribute(image, 'data-src');
+			}
+		} else if (image.dataset.src) {
 			const input = image.dataset.src;
 			this.onImagePreload(input, (output) => {
 				this.renderer.setAttribute(image, 'src', output);
@@ -80,10 +87,6 @@ export class LazyImagesDirective implements OnInit, OnDestroy {
 					}, 1);
 				});
 			});
-		}
-		if (image.dataset.srcset) {
-			this.renderer.setAttribute(image, 'srcset', image.dataset.srcset);
-			this.renderer.removeAttribute(image, 'data-srcset');
 		}
 		if (image.dataset.backgroundSrc) {
 			this.renderer.setStyle(image, 'background-image', `url(${image.dataset.backgroundSrc})`);
