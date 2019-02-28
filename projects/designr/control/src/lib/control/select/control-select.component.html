@@ -1,0 +1,9 @@
+<div class="form-select" [formGroup]="form">
+	<label class="form-label" [attr.for]="control.key">{{ control.label | label }}</label>
+	<select class="form-select__select" [id]="control.key" [formControlName]="control.key">
+		<option *ngFor="let opt of control.options" [value]="opt.key">{{opt.value}}</option>
+	</select>
+	<div class="alert alert--danger" *ngIf="controlRef.invalid && (controlRef.dirty || controlRef.touched)">
+		<div *ngIf="controlRef.errors.required">{{ 'errors.required' | label }}</div>
+	</div>
+</div>

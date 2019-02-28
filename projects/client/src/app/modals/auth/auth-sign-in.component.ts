@@ -60,7 +60,7 @@ export class AuthSignInComponent extends DisposableComponent implements OnInit {
 			label: 'signIn.password',
 			placeholder: 'signIn.password',
 			required: true,
-			minLength: 6,
+			minlength: 6,
 			order: 3
 		}, {
 			key: 'hours',

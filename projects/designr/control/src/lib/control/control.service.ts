@@ -1,8 +1,9 @@
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, Type } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ControlConfig, CONTROL_CONFIG } from '../config/control.config';
 import { matchValidator } from '../directives/match.validator';
-import { ControlBase } from './control-base';
+import { ControlBase } from './base/control-base';
+import { ControlBaseComponent } from './base/control-base.component';
 
 @Injectable({
 	providedIn: 'root'
@@ -17,6 +18,16 @@ export class ControlService {
 		// console.log('ControlService', options);
 		options = options || {};
 		this.options = new ControlConfig(options);
+	}
+
+	resolve(control: ControlBase<any>): Type<ControlBaseComponent> {
+		let component: Type<ControlBaseComponent>;
+		if (control) {
+			component = this.options.controls[control.schema] || ControlBaseComponent;
+		} else {
+			component = ControlBaseComponent;
+		}
+		return component;
 	}
 
 	getValidators(control: ControlBase<any>, group: FormGroup): ValidatorFn[] {
@@ -36,11 +47,11 @@ export class ControlService {
 		if (control.email) {
 			validators.push(Validators.email);
 		}
-		if (control.minLength) {
-			validators.push(Validators.minLength(control.minLength));
+		if (control.minlength) {
+			validators.push(Validators.minLength(control.minlength));
 		}
-		if (control.maxLength) {
-			validators.push(Validators.maxLength(control.maxLength));
+		if (control.maxlength) {
+			validators.push(Validators.maxLength(control.maxlength));
 		}
 		if (control.pattern) {
 			validators.push(Validators.pattern(control.pattern));

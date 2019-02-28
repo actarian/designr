@@ -5,7 +5,7 @@ import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
 import { __extends, __spread } from 'tslib';
-import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ElementRef, Renderer2, Pipe, ChangeDetectorRef, ViewEncapsulation, EventEmitter, WrappedValue, defineInjectable, inject, INJECTOR, ViewChild, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf, NgZone } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ElementRef, Renderer2, Pipe, ChangeDetectorRef, ViewEncapsulation, EventEmitter, WrappedValue, defineInjectable, inject, INJECTOR, ComponentFactoryResolver, ViewChild, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
 import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, first, takeUntil } from 'rxjs/operators';
 
@@ -3421,6 +3421,161 @@ var OnceService = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/** @type {?} */
+var OUTLETS = new InjectionToken('core.outlets');
+var Outlet = /** @class */ (function () {
+    function Outlet() {
+    }
+    return Outlet;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var OutletDefaultComponent = /** @class */ (function (_super) {
+    __extends(OutletDefaultComponent, _super);
+    function OutletDefaultComponent() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    OutletDefaultComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'outlet-content-component',
+                    template: "<div class=\"outlet\">Outlet not found!</div>"
+                }] }
+    ];
+    OutletDefaultComponent.propDecorators = {
+        outlet: [{ type: Input }]
+    };
+    return OutletDefaultComponent;
+}(DisposableComponent));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var OutletRepeaterComponent = /** @class */ (function (_super) {
+    __extends(OutletRepeaterComponent, _super);
+    function OutletRepeaterComponent() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    OutletRepeaterComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'outlet-repeater-component',
+                    template: "<ng-container *ngFor=\"let outlet of outlets\"><outlet-component [outlet]=\"outlet\"></outlet-component></ng-container>"
+                }] }
+    ];
+    OutletRepeaterComponent.propDecorators = {
+        outlets: [{ type: Input }]
+    };
+    return OutletRepeaterComponent;
+}(DisposableComponent));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var OutletResolverService = /** @class */ (function () {
+    function OutletResolverService(outlets) {
+        outlets = outlets || {};
+    }
+    /**
+     * @param {?} outlet
+     * @return {?}
+     */
+    OutletResolverService.prototype.resolve = /**
+     * @param {?} outlet
+     * @return {?}
+     */
+    function (outlet) {
+        /** @type {?} */
+        var component;
+        if (outlet) {
+            component = this.outlets[outlet.component] || OutletDefaultComponent;
+        }
+        else {
+            component = OutletDefaultComponent;
+        }
+        return component;
+    };
+    OutletResolverService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */
+    OutletResolverService.ctorParameters = function () { return [
+        { type: undefined, decorators: [{ type: Inject, args: [OUTLETS,] }] }
+    ]; };
+    /** @nocollapse */ OutletResolverService.ngInjectableDef = defineInjectable({ factory: function OutletResolverService_Factory() { return new OutletResolverService(inject(OUTLETS)); }, token: OutletResolverService, providedIn: "root" });
+    return OutletResolverService;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var OutletComponent = /** @class */ (function (_super) {
+    __extends(OutletComponent, _super);
+    function OutletComponent(componentFactoryResolver, outletResolverService) {
+        var _this = _super.call(this) || this;
+        _this.componentFactoryResolver = componentFactoryResolver;
+        _this.outletResolverService = outletResolverService;
+        return _this;
+    }
+    /**
+     * @return {?}
+     */
+    OutletComponent.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var component = this.outletResolverService.resolve(this.outlet);
+        /** @type {?} */
+        var factory = this.componentFactoryResolver.resolveComponentFactory(component);
+        this.viewContainerRef.clear();
+        /** @type {?} */
+        var componentRef = this.viewContainerRef.createComponent(factory);
+        /** @type {?} */
+        var instance = componentRef.instance;
+        instance.outlet = this.outlet;
+        if (typeof instance['OutletInit'] === 'function') {
+            instance['OutletInit']();
+        }
+        this.componentRef = componentRef;
+    };
+    /**
+     * @return {?}
+     */
+    OutletComponent.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this.componentRef.destroy();
+    };
+    OutletComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'outlet-component',
+                    template: ''
+                }] }
+    ];
+    /** @nocollapse */
+    OutletComponent.ctorParameters = function () { return [
+        { type: ComponentFactoryResolver },
+        { type: OutletResolverService }
+    ]; };
+    OutletComponent.propDecorators = {
+        outlet: [{ type: Input }],
+        viewContainerRef: [{ type: ViewChild, args: ['outlet', { read: ViewContainerRef },] }]
+    };
+    return OutletComponent;
+}(DisposableComponent));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var AssetPipe = /** @class */ (function () {
     function AssetPipe(coreService, segment) {
         this.coreService = coreService;
@@ -4076,6 +4231,9 @@ var components = [
     DisposableComponent,
     JsonFormatterComponent,
     LoggerComponent,
+    OutletComponent,
+    OutletDefaultComponent,
+    OutletRepeaterComponent,
 ];
 /** @type {?} */
 var directives = [
@@ -4145,6 +4303,7 @@ var CoreModule = /** @class */ (function () {
                         { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader }
                     ], services, pipes, validators),
                     declarations: __spread(components, directives, pipes, validators),
+                    entryComponents: __spread(components),
                     exports: __spread(components, directives, pipes, validators),
                 },] }
     ];
@@ -4305,6 +4464,6 @@ var Translate = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { AuthService, AuthStrategy, AuthToken, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵa, BundleDirective as ɵb };
+export { AuthService, AuthStrategy, AuthToken, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Outlet, OUTLETS, OutletDefaultComponent, OutletRepeaterComponent, OutletComponent, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵb, BundleDirective as ɵd, OutletResolverService as ɵc };
 
 //# sourceMappingURL=designr-core.js.map

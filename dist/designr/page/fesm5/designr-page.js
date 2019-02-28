@@ -5,7 +5,7 @@ import { isPlatformBrowser, DOCUMENT, CommonModule } from '@angular/common';
 import { DisposableComponent, RouteService, EntityService, HttpStatusCodeService, ImageType, CoreModule } from '@designr/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { InjectionToken, Component, Injector, Input, PLATFORM_ID, ViewEncapsulation, Inject, Injectable, NgModule, defineInjectable, inject, Optional, SkipSelf, ViewContainerRef, ComponentFactoryResolver, INJECTOR } from '@angular/core';
+import { InjectionToken, Component, Injector, Input, PLATFORM_ID, ViewEncapsulation, Inject, Injectable, NgModule, defineInjectable, inject, Optional, SkipSelf, ComponentFactoryResolver, ViewChild, ViewContainerRef, INJECTOR } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -637,9 +637,8 @@ var PageService = /** @class */ (function (_super) {
  */
 var PageOutletComponent = /** @class */ (function (_super) {
     __extends(PageOutletComponent, _super);
-    function PageOutletComponent(viewContainerRef, router, route, componentFactoryResolver, routeService, pageService) {
+    function PageOutletComponent(router, route, componentFactoryResolver, routeService, pageService) {
         var _this = _super.call(this) || this;
-        _this.viewContainerRef = viewContainerRef;
         _this.router = router;
         _this.route = route;
         _this.componentFactoryResolver = componentFactoryResolver;
@@ -649,9 +648,17 @@ var PageOutletComponent = /** @class */ (function (_super) {
         _this.router.routeReuseStrategy.shouldReuseRoute = function () {
             return false;
         };
-        _this.setSnapshot(_this.route.snapshot);
         return _this;
     }
+    /**
+     * @return {?}
+     */
+    PageOutletComponent.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        this.setSnapshot(this.route.snapshot);
+    };
     /**
      * @param {?} snapshot
      * @return {?}
@@ -688,6 +695,7 @@ var PageOutletComponent = /** @class */ (function (_super) {
             if (typeof instance['PageInit'] === 'function') {
                 instance['PageInit']();
             }
+            this.componentRef = componentRef;
             if (page) {
                 /** @type {?} */
                 var config = this.router.config.slice();
@@ -705,21 +713,32 @@ var PageOutletComponent = /** @class */ (function (_super) {
             // console.log('PageOutletComponent.setSnapshot 404', data);
         }*/
     };
+    /**
+     * @return {?}
+     */
+    PageOutletComponent.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this.componentRef.destroy();
+    };
     PageOutletComponent.decorators = [
         { type: Component, args: [{
                     selector: 'page-outlet',
-                    template: ''
+                    template: '<ng-template #outlet></ng-template>'
                 }] }
     ];
     /** @nocollapse */
     PageOutletComponent.ctorParameters = function () { return [
-        { type: ViewContainerRef, decorators: [{ type: Inject, args: [ViewContainerRef,] }] },
         { type: Router },
         { type: ActivatedRoute },
         { type: ComponentFactoryResolver },
         { type: RouteService },
         { type: PageService }
     ]; };
+    PageOutletComponent.propDecorators = {
+        viewContainerRef: [{ type: ViewChild, args: ['outlet', { read: ViewContainerRef },] }]
+    };
     return PageOutletComponent;
 }(DisposableComponent));
 

@@ -4,7 +4,7 @@ import { isPlatformBrowser, DOCUMENT, CommonModule } from '@angular/common';
 import { DisposableComponent, RouteService, EntityService, HttpStatusCodeService, ImageType, CoreModule } from '@designr/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { InjectionToken, Component, Injector, Input, PLATFORM_ID, ViewEncapsulation, Inject, Injectable, NgModule, ComponentFactoryResolver, ViewContainerRef, defineInjectable, inject, Optional, SkipSelf, INJECTOR } from '@angular/core';
+import { InjectionToken, Component, Injector, Input, PLATFORM_ID, ViewEncapsulation, Inject, Injectable, NgModule, ComponentFactoryResolver, ViewChild, ViewContainerRef, defineInjectable, inject, Optional, SkipSelf, INJECTOR } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -528,16 +528,14 @@ PageService.ctorParameters = () => [
  */
 class PageOutletComponent extends DisposableComponent {
     /**
-     * @param {?} viewContainerRef
      * @param {?} router
      * @param {?} route
      * @param {?} componentFactoryResolver
      * @param {?} routeService
      * @param {?} pageService
      */
-    constructor(viewContainerRef, router, route, componentFactoryResolver, routeService, pageService) {
+    constructor(router, route, componentFactoryResolver, routeService, pageService) {
         super();
-        this.viewContainerRef = viewContainerRef;
         this.router = router;
         this.route = route;
         this.componentFactoryResolver = componentFactoryResolver;
@@ -547,6 +545,11 @@ class PageOutletComponent extends DisposableComponent {
         this.router.routeReuseStrategy.shouldReuseRoute = () => {
             return false;
         };
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
         this.setSnapshot(this.route.snapshot);
     }
     /**
@@ -581,6 +584,7 @@ class PageOutletComponent extends DisposableComponent {
             if (typeof instance['PageInit'] === 'function') {
                 instance['PageInit']();
             }
+            this.componentRef = componentRef;
             if (page) {
                 /** @type {?} */
                 const config = this.router.config.slice();
@@ -598,22 +602,30 @@ class PageOutletComponent extends DisposableComponent {
             // console.log('PageOutletComponent.setSnapshot 404', data);
         }*/
     }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this.componentRef.destroy();
+    }
 }
 PageOutletComponent.decorators = [
     { type: Component, args: [{
                 selector: 'page-outlet',
-                template: ''
+                template: '<ng-template #outlet></ng-template>'
             }] }
 ];
 /** @nocollapse */
 PageOutletComponent.ctorParameters = () => [
-    { type: ViewContainerRef, decorators: [{ type: Inject, args: [ViewContainerRef,] }] },
     { type: Router },
     { type: ActivatedRoute },
     { type: ComponentFactoryResolver },
     { type: RouteService },
     { type: PageService }
 ];
+PageOutletComponent.propDecorators = {
+    viewContainerRef: [{ type: ViewChild, args: ['outlet', { read: ViewContainerRef },] }]
+};
 
 /**
  * @fileoverview added by tsickle

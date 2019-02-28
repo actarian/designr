@@ -22,6 +22,9 @@ import { LoggerComponent } from './logger/logger.component';
 import { EventDispatcherService } from './models/event-dispatcher.service';
 import { MenuService } from './models/menu.service';
 import { OnceService } from './once/once.service';
+import { OutletDefaultComponent } from './outlet/outlet-default.component';
+import { OutletRepeaterComponent } from './outlet/outlet-repeater.component';
+import { OutletComponent } from './outlet/outlet.component';
 import { AssetPipe } from './pipes/asset.pipe';
 import { CustomAsyncPipe } from './pipes/custom-async.pipe';
 import { ImageUrlPipe } from './pipes/image-url.pipe';
@@ -60,6 +63,9 @@ const components = [
 	DisposableComponent,
 	JsonFormatterComponent,
 	LoggerComponent,
+	OutletComponent,
+	OutletDefaultComponent,
+	OutletRepeaterComponent,
 ];
 
 const directives = [
@@ -112,6 +118,9 @@ const guards = [
 		...directives,
 		...pipes,
 		...validators,
+	],
+	entryComponents: [
+		...components
 	],
 	exports: [
 		...components,

@@ -3503,6 +3503,165 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var OutletDefaultComponent = /** @class */ (function (_super) {
+        __extends(OutletDefaultComponent, _super);
+        function OutletDefaultComponent() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        OutletDefaultComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'outlet-content-component',
+                        template: "<div class=\"outlet\">Outlet not found!</div>"
+                    }] }
+        ];
+        OutletDefaultComponent.propDecorators = {
+            outlet: [{ type: i0.Input }]
+        };
+        return OutletDefaultComponent;
+    }(DisposableComponent));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var OutletRepeaterComponent = /** @class */ (function (_super) {
+        __extends(OutletRepeaterComponent, _super);
+        function OutletRepeaterComponent() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        OutletRepeaterComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'outlet-repeater-component',
+                        template: "<ng-container *ngFor=\"let outlet of outlets\"><outlet-component [outlet]=\"outlet\"></outlet-component></ng-container>"
+                    }] }
+        ];
+        OutletRepeaterComponent.propDecorators = {
+            outlets: [{ type: i0.Input }]
+        };
+        return OutletRepeaterComponent;
+    }(DisposableComponent));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /** @type {?} */
+    var OUTLETS = new i0.InjectionToken('core.outlets');
+    var Outlet = /** @class */ (function () {
+        function Outlet() {
+        }
+        return Outlet;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var OutletResolverService = /** @class */ (function () {
+        function OutletResolverService(outlets) {
+            outlets = outlets || {};
+        }
+        /**
+         * @param {?} outlet
+         * @return {?}
+         */
+        OutletResolverService.prototype.resolve = /**
+         * @param {?} outlet
+         * @return {?}
+         */
+            function (outlet) {
+                /** @type {?} */
+                var component;
+                if (outlet) {
+                    component = this.outlets[outlet.component] || OutletDefaultComponent;
+                }
+                else {
+                    component = OutletDefaultComponent;
+                }
+                return component;
+            };
+        OutletResolverService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */
+        OutletResolverService.ctorParameters = function () {
+            return [
+                { type: undefined, decorators: [{ type: i0.Inject, args: [OUTLETS,] }] }
+            ];
+        };
+        /** @nocollapse */ OutletResolverService.ngInjectableDef = i0.defineInjectable({ factory: function OutletResolverService_Factory() { return new OutletResolverService(i0.inject(OUTLETS)); }, token: OutletResolverService, providedIn: "root" });
+        return OutletResolverService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var OutletComponent = /** @class */ (function (_super) {
+        __extends(OutletComponent, _super);
+        function OutletComponent(componentFactoryResolver, outletResolverService) {
+            var _this = _super.call(this) || this;
+            _this.componentFactoryResolver = componentFactoryResolver;
+            _this.outletResolverService = outletResolverService;
+            return _this;
+        }
+        /**
+         * @return {?}
+         */
+        OutletComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+                /** @type {?} */
+                var component = this.outletResolverService.resolve(this.outlet);
+                /** @type {?} */
+                var factory = this.componentFactoryResolver.resolveComponentFactory(component);
+                this.viewContainerRef.clear();
+                /** @type {?} */
+                var componentRef = this.viewContainerRef.createComponent(factory);
+                /** @type {?} */
+                var instance = componentRef.instance;
+                instance.outlet = this.outlet;
+                if (typeof instance['OutletInit'] === 'function') {
+                    instance['OutletInit']();
+                }
+                this.componentRef = componentRef;
+            };
+        /**
+         * @return {?}
+         */
+        OutletComponent.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this.componentRef.destroy();
+            };
+        OutletComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'outlet-component',
+                        template: ''
+                    }] }
+        ];
+        /** @nocollapse */
+        OutletComponent.ctorParameters = function () {
+            return [
+                { type: i0.ComponentFactoryResolver },
+                { type: OutletResolverService }
+            ];
+        };
+        OutletComponent.propDecorators = {
+            outlet: [{ type: i0.Input }],
+            viewContainerRef: [{ type: i0.ViewChild, args: ['outlet', { read: i0.ViewContainerRef },] }]
+        };
+        return OutletComponent;
+    }(DisposableComponent));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var AssetPipe = /** @class */ (function () {
         function AssetPipe(coreService, segment) {
             this.coreService = coreService;
@@ -4177,6 +4336,9 @@
         DisposableComponent,
         JsonFormatterComponent,
         LoggerComponent,
+        OutletComponent,
+        OutletDefaultComponent,
+        OutletRepeaterComponent,
     ];
     /** @type {?} */
     var directives = [
@@ -4246,6 +4408,7 @@
                             { provide: i0.NgModuleFactoryLoader, useClass: i0.SystemJsNgModuleLoader }
                         ], services, pipes, validators),
                         declarations: __spread(components, directives, pipes, validators),
+                        entryComponents: __spread(components),
                         exports: __spread(components, directives, pipes, validators),
                     },] }
         ];
@@ -4443,6 +4606,11 @@
     exports.MenuService = MenuService;
     exports.Taxonomy = Taxonomy;
     exports.OnceService = OnceService;
+    exports.Outlet = Outlet;
+    exports.OUTLETS = OUTLETS;
+    exports.OutletDefaultComponent = OutletDefaultComponent;
+    exports.OutletRepeaterComponent = OutletRepeaterComponent;
+    exports.OutletComponent = OutletComponent;
     exports.AssetPipe = AssetPipe;
     exports.CustomAsyncPipe = CustomAsyncPipe;
     exports.ImageUrlPipe = ImageUrlPipe;
@@ -4465,8 +4633,9 @@
     exports.SafeStylePipe = SafeStylePipe;
     exports.SafeUrlPipe = SafeUrlPipe;
     exports.TrustPipe = TrustPipe;
-    exports.ɵa = ApiService;
-    exports.ɵb = BundleDirective;
+    exports.ɵb = ApiService;
+    exports.ɵd = BundleDirective;
+    exports.ɵc = OutletResolverService;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
-import { ControlModule, Controls } from '@designr/control';
+import { ControlCheckboxComponent, ControlModule, Controls } from '@designr/control';
 
 export const controls = [
+	ControlCheckboxComponent,
 ];
 
 export const CONTROLS: Controls = {
+	// 'checkbox': ControlCheckboxComponent,
 };
 
 @NgModule({

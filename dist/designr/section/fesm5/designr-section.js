@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { PageIndex } from '@designr/page';
 import { __extends, __spread } from 'tslib';
-import { InjectionToken, Component, Input, Inject, Injectable, ViewContainerRef, ComponentFactoryResolver, defineInjectable, inject, NgModule, Optional, SkipSelf } from '@angular/core';
+import { InjectionToken, Component, Input, Inject, Injectable, NgModule, Optional, SkipSelf, ComponentFactoryResolver, ViewChild, ViewContainerRef, defineInjectable, inject } from '@angular/core';
 import { DisposableComponent, CoreModule } from '@designr/core';
 
 /**
@@ -13,6 +13,7 @@ var SectionConfig = /** @class */ (function () {
         this.sections = {};
         // console.log('SectionConfig', options);
         if (options) {
+            Object.assign(this, options);
             this.sections = options.sections || {};
         }
     }
@@ -130,9 +131,8 @@ var SectionService = /** @class */ (function () {
  */
 var SectionOutletComponent = /** @class */ (function (_super) {
     __extends(SectionOutletComponent, _super);
-    function SectionOutletComponent(viewContainerRef, componentFactoryResolver, sectionService) {
+    function SectionOutletComponent(componentFactoryResolver, sectionService) {
         var _this = _super.call(this) || this;
-        _this.viewContainerRef = viewContainerRef;
         _this.componentFactoryResolver = componentFactoryResolver;
         _this.sectionService = sectionService;
         return _this;
@@ -157,21 +157,31 @@ var SectionOutletComponent = /** @class */ (function (_super) {
         if (typeof instance['SectionInit'] === 'function') {
             instance['SectionInit']();
         }
+        this.componentRef = componentRef;
+    };
+    /**
+     * @return {?}
+     */
+    SectionOutletComponent.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this.componentRef.destroy();
     };
     SectionOutletComponent.decorators = [
         { type: Component, args: [{
                     selector: 'section-outlet',
-                    template: ''
+                    template: '<ng-template #outlet></ng-template>'
                 }] }
     ];
     /** @nocollapse */
     SectionOutletComponent.ctorParameters = function () { return [
-        { type: ViewContainerRef, decorators: [{ type: Inject, args: [ViewContainerRef,] }] },
         { type: ComponentFactoryResolver },
         { type: SectionService }
     ]; };
     SectionOutletComponent.propDecorators = {
-        section: [{ type: Input }]
+        section: [{ type: Input }],
+        viewContainerRef: [{ type: ViewChild, args: ['outlet', { read: ViewContainerRef },] }]
     };
     return SectionOutletComponent;
 }(DisposableComponent));

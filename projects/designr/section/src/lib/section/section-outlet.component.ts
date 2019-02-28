@@ -1,4 +1,4 @@
-import { Component, ComponentFactory, ComponentFactoryResolver, Inject, Input, OnInit, Type, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { DisposableComponent } from '@designr/core';
 import { Section } from './section';
 import { SectionComponent } from './section.component';
@@ -6,14 +6,16 @@ import { SectionService } from './section.service';
 
 @Component({
 	selector: 'section-outlet',
-	template: '',
+	template: '<ng-template #outlet></ng-template>',
 })
-export class SectionOutletComponent extends DisposableComponent implements OnInit {
+export class SectionOutletComponent extends DisposableComponent implements OnInit, OnDestroy {
 
 	@Input() section: Section;
 
+	@ViewChild('outlet', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+	private componentRef: ComponentRef<SectionComponent>;
+
 	constructor(
-		@Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
 		private componentFactoryResolver: ComponentFactoryResolver,
 		private sectionService: SectionService,
 	) {
@@ -30,6 +32,11 @@ export class SectionOutletComponent extends DisposableComponent implements OnIni
 		if (typeof instance['SectionInit'] === 'function') {
 			instance['SectionInit']();
 		}
+		this.componentRef = componentRef;
+	}
+
+	ngOnDestroy() {
+		this.componentRef.destroy();
 	}
 
 }

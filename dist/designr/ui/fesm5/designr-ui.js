@@ -223,7 +223,15 @@ var LazyImagesDirective = /** @class */ (function () {
      */
     function (image) {
         var _this = this;
-        if (image.dataset.src) {
+        if (image.dataset.srcset) {
+            this.renderer.setAttribute(image, 'srcset', image.dataset.srcset);
+            this.renderer.removeAttribute(image, 'data-srcset');
+            if (image.dataset.src) {
+                this.renderer.setAttribute(image, 'src', image.dataset.src);
+                this.renderer.removeAttribute(image, 'data-src');
+            }
+        }
+        else if (image.dataset.src) {
             /** @type {?} */
             var input = image.dataset.src;
             this.onImagePreload(input, function (output) {
@@ -235,10 +243,6 @@ var LazyImagesDirective = /** @class */ (function () {
                     }, 1);
                 });
             });
-        }
-        if (image.dataset.srcset) {
-            this.renderer.setAttribute(image, 'srcset', image.dataset.srcset);
-            this.renderer.removeAttribute(image, 'data-srcset');
         }
         if (image.dataset.backgroundSrc) {
             this.renderer.setStyle(image, 'background-image', "url(" + image.dataset.backgroundSrc + ")");
@@ -767,7 +771,7 @@ var SpriteComponent = /** @class */ (function () {
     SpriteComponent.decorators = [
         { type: Component, args: [{
                     selector: '[sprite]',
-                    template: "<ng-container *ngIf=\"sprite\">\n\t<svg class=\"sprite\"><use attr.xlink:href=\"#{{sprite}}\"></use></svg>\n</ng-container>"
+                    template: "<ng-container *ngIf=\"sprite\">\n\t<svg class=\"sprite\">\n\t\t<use attr.xlink:href=\"#{{sprite}}\"></use>\n\t</svg>\n</ng-container>"
                 }] }
     ];
     SpriteComponent.propDecorators = {

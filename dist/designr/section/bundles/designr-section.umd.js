@@ -13,6 +13,7 @@
             this.sections = {};
             // console.log('SectionConfig', options);
             if (options) {
+                Object.assign(this, options);
                 this.sections = options.sections || {};
             }
         }
@@ -178,9 +179,8 @@
      */
     var SectionOutletComponent = /** @class */ (function (_super) {
         __extends(SectionOutletComponent, _super);
-        function SectionOutletComponent(viewContainerRef, componentFactoryResolver, sectionService) {
+        function SectionOutletComponent(componentFactoryResolver, sectionService) {
             var _this = _super.call(this) || this;
-            _this.viewContainerRef = viewContainerRef;
             _this.componentFactoryResolver = componentFactoryResolver;
             _this.sectionService = sectionService;
             return _this;
@@ -205,23 +205,33 @@
                 if (typeof instance['SectionInit'] === 'function') {
                     instance['SectionInit']();
                 }
+                this.componentRef = componentRef;
+            };
+        /**
+         * @return {?}
+         */
+        SectionOutletComponent.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this.componentRef.destroy();
             };
         SectionOutletComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'section-outlet',
-                        template: ''
+                        template: '<ng-template #outlet></ng-template>'
                     }] }
         ];
         /** @nocollapse */
         SectionOutletComponent.ctorParameters = function () {
             return [
-                { type: i0.ViewContainerRef, decorators: [{ type: i0.Inject, args: [i0.ViewContainerRef,] }] },
                 { type: i0.ComponentFactoryResolver },
                 { type: SectionService }
             ];
         };
         SectionOutletComponent.propDecorators = {
-            section: [{ type: i0.Input }]
+            section: [{ type: i0.Input }],
+            viewContainerRef: [{ type: i0.ViewChild, args: ['outlet', { read: i0.ViewContainerRef },] }]
         };
         return SectionOutletComponent;
     }(core.DisposableComponent));

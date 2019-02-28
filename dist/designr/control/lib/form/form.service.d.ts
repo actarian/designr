@@ -1,5 +1,5 @@
 import { FormGroup } from '@angular/forms';
-import { ControlBase, ControlBaseOptions } from '../control/control-base';
+import { ControlBase, ControlBaseOptions } from '../control/base/control-base';
 import { ControlService } from '../control/control.service';
 export declare class FormService {
     private controlService;

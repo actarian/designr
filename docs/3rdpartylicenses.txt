@@ -22,9 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-@angular/common
-MIT
-
 rxjs
 Apache-2.0
                                Apache License
@@ -273,6 +270,9 @@ PERFORMANCE OF THIS SOFTWARE.
 
 
 
+@angular/common
+MIT
+
 tslib
 Apache-2.0
 Apache License
@@ -385,6 +385,8 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+@designr/core
+
 @designr/control
 
 intersection-observer
@@ -452,8 +454,6 @@ MIT
 MIT
 
 @designr/section
-
-@designr/core
 
 @designr/ui
 

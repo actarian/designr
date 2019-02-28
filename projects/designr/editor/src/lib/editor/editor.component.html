@@ -25,7 +25,7 @@
 				</div>
 				-->
 				<div *ngFor="let control of controls">
-					<core-control [control]="control" [form]="group"></core-control>
+					<control-outlet [control]="control" [form]="group"></control-outlet>
 				</div>
 				<!-- <control-editable formControlName="email"></control-editable> -->
 				<div class="action-bar">

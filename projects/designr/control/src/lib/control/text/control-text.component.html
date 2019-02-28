@@ -1,0 +1,11 @@
+<ng-container [formGroup]="form">
+	<label class="form-label" [attr.for]="control.key">{{ control.label | label }}</label>
+	<input class="form-control" placeholder="{{ control.placeholder | label }}" [id]="control.key" [formControlName]="control.key" [type]="control.type">
+	<div class="alert alert--danger" *ngIf="controlRef.invalid && (controlRef.dirty || controlRef.touched)">
+		<div *ngIf="controlRef.errors.required">{{ 'errors.required' | label }}</div>
+		<div *ngIf="controlRef.errors.minlength">{{ 'errors.minlength' | label : null : { minlength: control.minlength } }}</div>
+		<div *ngIf="controlRef.errors.maxlength">{{ 'errors.maxlength' | label : null : { maxlength: control.maxlength } }}</div>
+		<div *ngIf="controlRef.errors.pattern">{{ 'errors.pattern' | label }}</div>
+		<div *ngIf="controlRef.errors.match">{{ 'errors.match' | label }}</div>
+	</div>
+</ng-container>

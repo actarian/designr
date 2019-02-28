@@ -1,35 +1,35 @@
-import { ApplicationRef, ComponentFactoryResolver, EmbeddedViewRef, Injectable, Injector } from '@angular/core';
+import { ApplicationRef, Component, ComponentFactoryResolver, ComponentRef, EmbeddedViewRef, Injectable, Injector } from '@angular/core';
 
 @Injectable({
 	providedIn: 'root'
 })
 export class DomService {
 
-	private childComponentRef: any;
+	private componentRef: ComponentRef<Component>;
 
 	constructor(
 		private componentFactoryResolver: ComponentFactoryResolver,
-		private appRef: ApplicationRef,
+		private applicationRef: ApplicationRef,
 		private injector: Injector
 	) { }
 
 	public appendComponentTo(parentId: string, child: any, config?: ChildConfiguration) {
 		// Create a component reference from the component
-		const childComponentRef = this.componentFactoryResolver.resolveComponentFactory(child).create(this.injector);
+		const componentRef = this.componentFactoryResolver.resolveComponentFactory(child).create(this.injector);
 		// Attach the config to the child (inputs and outputs)
-		this.attachConfig(config, childComponentRef);
-		this.childComponentRef = childComponentRef;
-		// Attach component to the appRef so that it's inside the ng component tree
-		this.appRef.attachView(childComponentRef.hostView);
+		this.attachConfig(config, componentRef);
+		this.componentRef = componentRef;
+		// Attach component to the applicationRef so that it's inside the ng component tree
+		this.applicationRef.attachView(componentRef.hostView);
 		// Get DOM element from component
-		const childDomElem = (childComponentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+		const node = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 		// Append DOM element to the body
-		document.getElementById(parentId).appendChild(childDomElem);
+		document.getElementById(parentId).appendChild(node);
 	}
 
 	public removeComponent() {
-		this.appRef.detachView(this.childComponentRef.hostView);
-		this.childComponentRef.destroy();
+		this.applicationRef.detachView(this.componentRef.hostView);
+		this.componentRef.destroy();
 	}
 
 	private attachConfig(config, componentRef) {

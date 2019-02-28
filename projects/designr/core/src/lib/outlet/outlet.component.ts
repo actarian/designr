@@ -1,5 +1,5 @@
-import { Component, ComponentFactory, ComponentFactoryResolver, Inject, Input, OnInit, Type, ViewContainerRef } from '@angular/core';
-import { DisposableComponent } from '@designr/core';
+import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { DisposableComponent } from '../disposable/disposable.component';
 import { Outlet } from './outlet';
 import { OutletDefaultComponent } from './outlet-default.component';
 import { OutletResolverService } from './outlet-resolver.service';
@@ -8,12 +8,14 @@ import { OutletResolverService } from './outlet-resolver.service';
 	selector: 'outlet-component',
 	template: '',
 })
-export class OutletComponent extends DisposableComponent implements OnInit {
+export class OutletComponent extends DisposableComponent implements OnInit, OnDestroy {
 
 	@Input() outlet: Outlet;
 
+	@ViewChild('outlet', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+	private componentRef: ComponentRef<DisposableComponent>;
+
 	constructor(
-		@Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
 		private componentFactoryResolver: ComponentFactoryResolver,
 		private outletResolverService: OutletResolverService,
 	) {
@@ -30,6 +32,11 @@ export class OutletComponent extends DisposableComponent implements OnInit {
 		if (typeof instance['OutletInit'] === 'function') {
 			instance['OutletInit']();
 		}
+		this.componentRef = componentRef;
+	}
+
+	ngOnDestroy() {
+		this.componentRef.destroy();
 	}
 
 }

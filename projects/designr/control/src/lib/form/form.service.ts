@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ControlBase, ControlBaseOptions } from '../control/control-base';
-import { ControlCheckbox } from '../control/control-checkbox';
-import { ControlEmail } from '../control/control-email';
-import { ControlMarkdown } from '../control/control-markdown';
-import { ControlNumber } from '../control/control-number';
-import { ControlPassword } from '../control/control-password';
-import { ControlRadio } from '../control/control-radio';
-import { ControlSelect } from '../control/control-select';
-import { ControlText } from '../control/control-text';
+import { ControlBase, ControlBaseOptions } from '../control/base/control-base';
+import { ControlCheckbox } from '../control/checkbox/control-checkbox';
 import { ControlService } from '../control/control.service';
+import { ControlEmail } from '../control/email/control-email';
+import { ControlMarkdown } from '../control/markdown/control-markdown';
+import { ControlNumber } from '../control/number/control-number';
+import { ControlPassword } from '../control/password/control-password';
+import { ControlRadio } from '../control/radio/control-radio';
+import { ControlSelect } from '../control/select/control-select';
+import { ControlText } from '../control/text/control-text';
 
 @Injectable({
 	providedIn: 'root'

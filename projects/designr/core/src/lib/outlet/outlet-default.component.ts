@@ -1,6 +1,6 @@
 
 import { Component, Input } from '@angular/core';
-import { DisposableComponent } from '@designr/core';
+import { DisposableComponent } from '../disposable/disposable.component';
 import { Outlet } from './outlet';
 
 @Component({

@@ -696,9 +696,8 @@
      */
     var PageOutletComponent = /** @class */ (function (_super) {
         __extends(PageOutletComponent, _super);
-        function PageOutletComponent(viewContainerRef, router$$1, route, componentFactoryResolver, routeService, pageService) {
+        function PageOutletComponent(router$$1, route, componentFactoryResolver, routeService, pageService) {
             var _this = _super.call(this) || this;
-            _this.viewContainerRef = viewContainerRef;
             _this.router = router$$1;
             _this.route = route;
             _this.componentFactoryResolver = componentFactoryResolver;
@@ -708,9 +707,17 @@
             _this.router.routeReuseStrategy.shouldReuseRoute = function () {
                 return false;
             };
-            _this.setSnapshot(_this.route.snapshot);
             return _this;
         }
+        /**
+         * @return {?}
+         */
+        PageOutletComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+                this.setSnapshot(this.route.snapshot);
+            };
         /**
          * @param {?} snapshot
          * @return {?}
@@ -747,6 +754,7 @@
                     if (typeof instance['PageInit'] === 'function') {
                         instance['PageInit']();
                     }
+                    this.componentRef = componentRef;
                     if (page) {
                         /** @type {?} */
                         var config = this.router.config.slice();
@@ -764,22 +772,33 @@
                     // console.log('PageOutletComponent.setSnapshot 404', data);
                 }*/
             };
+        /**
+         * @return {?}
+         */
+        PageOutletComponent.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this.componentRef.destroy();
+            };
         PageOutletComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'page-outlet',
-                        template: ''
+                        template: '<ng-template #outlet></ng-template>'
                     }] }
         ];
         /** @nocollapse */
         PageOutletComponent.ctorParameters = function () {
             return [
-                { type: i0.ViewContainerRef, decorators: [{ type: i0.Inject, args: [i0.ViewContainerRef,] }] },
                 { type: router.Router },
                 { type: router.ActivatedRoute },
                 { type: i0.ComponentFactoryResolver },
                 { type: i2$1.RouteService },
                 { type: PageService }
             ];
+        };
+        PageOutletComponent.propDecorators = {
+            viewContainerRef: [{ type: i0.ViewChild, args: ['outlet', { read: i0.ViewContainerRef },] }]
         };
         return PageOutletComponent;
     }(i2$1.DisposableComponent));

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { PageIndex } from '@designr/page';
-import { InjectionToken, Component, Input, Inject, Injectable, ComponentFactoryResolver, ViewContainerRef, NgModule, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
+import { InjectionToken, Component, Input, Inject, Injectable, ComponentFactoryResolver, ViewChild, ViewContainerRef, NgModule, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
 import { DisposableComponent, CoreModule } from '@designr/core';
 
 /**
@@ -15,6 +15,7 @@ class SectionConfig {
         this.sections = {};
         // console.log('SectionConfig', options);
         if (options) {
+            Object.assign(this, options);
             this.sections = options.sections || {};
         }
     }
@@ -121,13 +122,11 @@ SectionService.ctorParameters = () => [
  */
 class SectionOutletComponent extends DisposableComponent {
     /**
-     * @param {?} viewContainerRef
      * @param {?} componentFactoryResolver
      * @param {?} sectionService
      */
-    constructor(viewContainerRef, componentFactoryResolver, sectionService) {
+    constructor(componentFactoryResolver, sectionService) {
         super();
-        this.viewContainerRef = viewContainerRef;
         this.componentFactoryResolver = componentFactoryResolver;
         this.sectionService = sectionService;
     }
@@ -148,22 +147,29 @@ class SectionOutletComponent extends DisposableComponent {
         if (typeof instance['SectionInit'] === 'function') {
             instance['SectionInit']();
         }
+        this.componentRef = componentRef;
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this.componentRef.destroy();
     }
 }
 SectionOutletComponent.decorators = [
     { type: Component, args: [{
                 selector: 'section-outlet',
-                template: ''
+                template: '<ng-template #outlet></ng-template>'
             }] }
 ];
 /** @nocollapse */
 SectionOutletComponent.ctorParameters = () => [
-    { type: ViewContainerRef, decorators: [{ type: Inject, args: [ViewContainerRef,] }] },
     { type: ComponentFactoryResolver },
     { type: SectionService }
 ];
 SectionOutletComponent.propDecorators = {
-    section: [{ type: Input }]
+    section: [{ type: Input }],
+    viewContainerRef: [{ type: ViewChild, args: ['outlet', { read: ViewContainerRef },] }]
 };
 
 /**

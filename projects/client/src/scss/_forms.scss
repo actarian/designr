@@ -13,8 +13,7 @@
 	appearance: none;
 }
 
-@media (min-width:1024px) {
-
+@media (min-width:768px) {
 	.fieldset {
 		display: flex;
 		flex-wrap: wrap;
@@ -26,13 +25,18 @@
 		width: calc(50% - 10px);
 		flex: 0 0 calc(50% - 10px);
 	}
-
 }
 
 label {
 	color: #55555a;
 	font-weight: 700;
 	font-size: 12px;
+}
+
+.input-group {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .form-control {

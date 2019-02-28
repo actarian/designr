@@ -1,4 +1,4 @@
-import { Component, ComponentFactory, ComponentFactoryResolver, Inject, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { DisposableComponent, RouteService } from '@designr/core';
 import { PageNotFoundComponent } from './page-not-found.component';
@@ -7,13 +7,15 @@ import { PageService } from './page.service';
 
 @Component({
 	selector: 'page-outlet',
-	template: '',
+	template: '<ng-template #outlet></ng-template>',
 })
 
-export class PageOutletComponent extends DisposableComponent {
+export class PageOutletComponent extends DisposableComponent implements OnInit, OnDestroy {
+
+	@ViewChild('outlet', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+	private componentRef: ComponentRef<PageComponent>;
 
 	constructor(
-		@Inject(ViewContainerRef) private viewContainerRef: ViewContainerRef,
 		private router: Router,
 		private route: ActivatedRoute,
 		private componentFactoryResolver: ComponentFactoryResolver,
@@ -25,6 +27,9 @@ export class PageOutletComponent extends DisposableComponent {
 		this.router.routeReuseStrategy.shouldReuseRoute = () => {
 			return false;
 		};
+	}
+
+	ngOnInit() {
 		this.setSnapshot(this.route.snapshot);
 	}
 
@@ -48,6 +53,7 @@ export class PageOutletComponent extends DisposableComponent {
 			if (typeof instance['PageInit'] === 'function') {
 				instance['PageInit']();
 			}
+			this.componentRef = componentRef;
 			if (page) {
 				const config = this.router.config.slice();
 				const slug = page.slug;
@@ -62,6 +68,10 @@ export class PageOutletComponent extends DisposableComponent {
 		}/* else {
 			// console.log('PageOutletComponent.setSnapshot 404', data);
 		}*/
+	}
+
+	ngOnDestroy() {
+		this.componentRef.destroy();
 	}
 
 }

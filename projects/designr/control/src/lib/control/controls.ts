@@ -1,4 +1,4 @@
 import { Type } from '@angular/core';
-import { ControlComponent } from './control.component';
+import { ControlBaseComponent } from './base/control-base.component';
 
-export interface Controls { [key: string]: Type<ControlComponent>; }
+export interface Controls { [key: string]: Type<ControlBaseComponent>; }

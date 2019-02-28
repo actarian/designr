@@ -2,7 +2,7 @@ import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { DisposableComponent, CoreModule } from '@designr/core';
 import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, HostListener, Output, ViewEncapsulation, ComponentFactoryResolver, ReflectiveInjector, ViewChild, ViewContainerRef, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, Renderer2, NgZone } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, HostListener, Output, ViewEncapsulation, ComponentFactoryResolver, ReflectiveInjector, ViewChild, ViewContainerRef, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, NgZone, Renderer2 } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -197,7 +197,15 @@ class LazyImagesDirective {
      * @return {?}
      */
     onAppearsInViewport(image) {
-        if (image.dataset.src) {
+        if (image.dataset.srcset) {
+            this.renderer.setAttribute(image, 'srcset', image.dataset.srcset);
+            this.renderer.removeAttribute(image, 'data-srcset');
+            if (image.dataset.src) {
+                this.renderer.setAttribute(image, 'src', image.dataset.src);
+                this.renderer.removeAttribute(image, 'data-src');
+            }
+        }
+        else if (image.dataset.src) {
             /** @type {?} */
             const input = image.dataset.src;
             this.onImagePreload(input, (output) => {
@@ -209,10 +217,6 @@ class LazyImagesDirective {
                     }, 1);
                 });
             });
-        }
-        if (image.dataset.srcset) {
-            this.renderer.setAttribute(image, 'srcset', image.dataset.srcset);
-            this.renderer.removeAttribute(image, 'data-srcset');
         }
         if (image.dataset.backgroundSrc) {
             this.renderer.setStyle(image, 'background-image', `url(${image.dataset.backgroundSrc})`);
@@ -676,7 +680,9 @@ SpriteComponent.decorators = [
     { type: Component, args: [{
                 selector: '[sprite]',
                 template: `<ng-container *ngIf="sprite">
-	<svg class="sprite"><use attr.xlink:href="#{{sprite}}"></use></svg>
+	<svg class="sprite">
+		<use attr.xlink:href="#{{sprite}}"></use>
+	</svg>
 </ng-container>`
             }] }
 ];
