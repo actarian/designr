@@ -1,0 +1,20 @@
+<section class="section section--cards">
+	<div class="container">
+		<div class="group group--headline">
+			<div class="title" [innerHTML]="section.title"></div>
+			<div class="abstract" [innerHTML]="section.abstract"></div>
+		</div>
+		<div class="cards cards--3">
+			<div class="card" *ngFor="let item of [1,2,3]">
+				<picture-component class="picture" [image]="section.images | image : 'Default'" breakpoints="600x300"></picture-component>
+				<div class="container">
+					<div class="title" [innerHTML]="section.title"></div>
+					<div class="abstract" [innerHTML]="section.abstract"></div>
+					<div class="group group--btn">
+						<a class="btn btn--cta" [routerLink]="section.slug" [innerHTML]="section.title"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

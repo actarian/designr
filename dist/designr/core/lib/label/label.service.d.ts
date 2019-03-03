@@ -13,6 +13,7 @@ export declare class LabelService<T extends Label> extends ApiService<T> {
     private collectedKeys;
     missingHandler?: Function;
     cache: {};
+    parsers: {};
     private labels$;
     private emitter;
     constructor(injector: Injector);

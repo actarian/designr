@@ -1,7 +1,20 @@
+////// HttpClient-Only version ////
+
 import { HttpBackend, XhrFactory } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, Type } from '@angular/core';
-import { httpClientBackendServiceFactory } from './http-client-memory.module';
+import { BackendService } from './backend.service';
 import { MemoryBackendConfig, MemoryDataService } from './memory';
+
+// Internal - Creates the in-mem backend for the HttpClient module
+// AoT requires factory to be exported
+export function BackendServiceFactory(
+	dataService: MemoryDataService,
+	config: MemoryBackendConfig,
+	factory: XhrFactory,
+): HttpBackend {
+	const backend: any = new BackendService(dataService, config, factory);
+	return backend;
+}
 
 @NgModule({})
 export class MemoryModule {
@@ -15,7 +28,7 @@ export class MemoryModule {
 			providers: [
 				{ provide: MemoryDataService, useClass: dataService },
 				{ provide: MemoryBackendConfig, useValue: config },
-				{ provide: HttpBackend, useFactory: httpClientBackendServiceFactory, deps: [MemoryDataService, MemoryBackendConfig, XhrFactory] }
+				{ provide: HttpBackend, useFactory: BackendServiceFactory, deps: [MemoryDataService, MemoryBackendConfig, XhrFactory] }
 			]
 		};
 	}

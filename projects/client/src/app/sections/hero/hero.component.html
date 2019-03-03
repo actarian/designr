@@ -1,0 +1,35 @@
+<section class="section section--background">
+	<div class="swiper-container">
+		<div class="swiper-wrapper">
+			<div class="swiper-slide" *ngFor="let item of [1,2,3]">
+				<picture-component class="picture picture--background" [image]="section.images | image : 'Default'" breakpoints="991x558, 1199x675, 1520x855, 1800x1012"></picture-component>
+				<div class="container">
+					<div class="inner">
+						<div class="group group--headline">
+							<div class="title" [innerHTML]="section.title"></div>
+							<div class="abstract" [innerHTML]="section.abstract"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="swiper-pagination"></div>
+		<div class="swiper-button-prev"></div>
+		<div class="swiper-button-next"></div>
+	</div>
+	<!--
+	<swiper [config]="config" [(index)]="index">
+		<picture-component class="picture picture--background" [image]="section.images | image : 'Default'" breakpoints="991x558, 1199x675, 1520x855, 1800x1012"></picture-component>
+		<picture-component class="picture picture--background" [image]="section.images | image : 'Default'" breakpoints="991x558, 1199x675, 1520x855, 1800x1012"></picture-component>
+		<picture-component class="picture picture--background" [image]="section.images | image : 'Default'" breakpoints="991x558, 1199x675, 1520x855, 1800x1012"></picture-component>
+	</swiper>
+	<div class="inner">
+		<div class="container">
+			<div class="group group--headline">
+				<div class="title" [innerHTML]="section.title"></div>
+				<div class="abstract" [innerHTML]="section.abstract"></div>
+			</div>
+		</div>
+	</div>
+	-->
+</section>

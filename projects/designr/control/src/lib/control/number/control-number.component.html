@@ -1,6 +1,6 @@
 <ng-container [formGroup]="form">
 	<label class="form-label" [attr.for]="control.key">{{ control.label | label }}</label>
-	<input class="form-control" placeholder="{{ control.placeholder | label }}" [id]="control.key" [type]="control.type" [attr.step]="control.step" (input)="onInput($event)" (focus)="onFocus($event)" (blur)="onBlur($event)" [value]="getFormattedValue()">
+	<input class="form-control" placeholder="{{ control.placeholder | label }}" [id]="control.key" [formControlName]="control.key" [type]="control.type" [attr.step]="control.step" (input)="onInput($event)" (focus)="onFocus($event)" (blur)="onBlur($event)" [value]="getFormattedValue()">
 	<div class="alert alert--danger" *ngIf="controlRef.invalid && (controlRef.dirty || controlRef.touched)">
 		<div *ngIf="controlRef.errors.required">{{ 'errors.required' | label }}</div>
 		<div *ngIf="controlRef.errors.min">{{ 'errors.min' | label : null : { min: control.min } }}</div>

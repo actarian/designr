@@ -1,0 +1,16 @@
+<ng-container *ngFor="let feature of page.features">
+	<section class="section section--feature">
+		<div class="container">
+			<div class="group group--headline">
+				<div class="title" [innerHTML]="feature.title"></div>
+				<div class="abstract" [innerHTML]="feature.abstract"></div>
+			</div>
+			<div class="group group--content">
+				<p [innerHTML]="feature.description"></p>
+			</div>
+			<div class="group group--btn">
+				<a class="btn btn--cta" [routerLink]="feature.slug">{{feature.title}}</a>
+			</div>
+		</div>
+	</section>
+</ng-container>

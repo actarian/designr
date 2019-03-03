@@ -78,6 +78,85 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    /**
+     * @template T
+     */
+    var /**
+     * @template T
+     */ ControlBaseOptions = /** @class */ (function () {
+        function ControlBaseOptions() {
+        }
+        return ControlBaseOptions;
+    }());
+    /**
+     * @template T
+     */
+    var ControlBase = /** @class */ (function () {
+        function ControlBase(options) {
+            if (options === void 0) {
+                options = {};
+            }
+            this.component = 'ControlBaseComponent';
+            this.schema = 'base';
+            this._originalValue = options.value;
+            this.value = options.value;
+            this.key = options.key;
+            //
+            /** @type {?} */
+            var name = (options.key || 'Control') + " " + ++ControlBase.uid;
+            this.label = options.label || name;
+            this.placeholder = options.placeholder || name;
+            // order
+            this.order = options.order === undefined ? 1 : options.order;
+            this.schema = options.schema || 'text';
+            this.type = options.type || this.schema;
+            // validators
+            this.min = options.min || null;
+            this.max = options.max || null;
+            this.required = !!options.required;
+            this.requiredTrue = !!options.requiredTrue;
+            this.email = !!options.email;
+            this.minlength = options.minlength || null;
+            this.maxlength = options.maxlength || null;
+            this.pattern = options.pattern || null;
+            this.match = options.match || null;
+            // options
+            this.reverse = !!options.reverse;
+            this.options = options.options || [];
+            // state
+            this.disabled = !!options.disabled;
+            // formatters
+            this.step = options.step || null;
+            this.format = options.format || null;
+        }
+        // export class ControlBase<T> implements ControlValueAccessor {
+        ControlBase.uid = 0;
+        return ControlBase;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var ControlCheckbox = /** @class */ (function (_super) {
+        __extends(ControlCheckbox, _super);
+        function ControlCheckbox(options) {
+            if (options === void 0) {
+                options = {};
+            }
+            var _this = _super.call(this, options) || this;
+            _this.component = 'ControlCheckboxComponent';
+            _this.schema = 'checkbox';
+            _this.type = options.type || _this.type;
+            return _this;
+        }
+        return ControlCheckbox;
+    }(ControlBase));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var ControlBaseComponent = /** @class */ (function () {
         function ControlBaseComponent(renderer) {
             this.renderer = renderer;
@@ -310,6 +389,27 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var ControlEmail = /** @class */ (function (_super) {
+        __extends(ControlEmail, _super);
+        function ControlEmail(options) {
+            if (options === void 0) {
+                options = {};
+            }
+            var _this = _super.call(this, options) || this;
+            _this.component = 'ControlEmailComponent';
+            _this.schema = 'email';
+            _this.type = options.type || _this.type;
+            _this.email = true;
+            _this.pattern = options.pattern || '[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
+            return _this;
+        }
+        return ControlEmail;
+    }(ControlBase));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var ControlEmailComponent = /** @class */ (function (_super) {
         __extends(ControlEmailComponent, _super);
         function ControlEmailComponent(renderer) {
@@ -339,6 +439,25 @@
         };
         return ControlEmailComponent;
     }(ControlBaseComponent));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var ControlMarkdown = /** @class */ (function (_super) {
+        __extends(ControlMarkdown, _super);
+        function ControlMarkdown(options) {
+            if (options === void 0) {
+                options = {};
+            }
+            var _this = _super.call(this, options) || this;
+            _this.component = 'ControlMarkdownComponent';
+            _this.schema = 'markdown';
+            _this.type = options.type || _this.type;
+            return _this;
+        }
+        return ControlMarkdown;
+    }(ControlBase));
 
     /**
      * @fileoverview added by tsickle
@@ -378,6 +497,25 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var ControlNumber = /** @class */ (function (_super) {
+        __extends(ControlNumber, _super);
+        function ControlNumber(options) {
+            if (options === void 0) {
+                options = {};
+            }
+            var _this = _super.call(this, options) || this;
+            _this.component = 'ControlNumberComponent';
+            _this.schema = 'number';
+            _this.type = options.type || _this.type;
+            return _this;
+        }
+        return ControlNumber;
+    }(ControlBase));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var ControlNumberComponent = /** @class */ (function (_super) {
         __extends(ControlNumberComponent, _super);
         function ControlNumberComponent(renderer) {
@@ -388,7 +526,7 @@
         ControlNumberComponent.decorators = [
             { type: i0.Component, args: [{
                         selector: 'control-number-component',
-                        template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<input class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [type]=\"control.type\" [attr.step]=\"control.step\" (input)=\"onInput($event)\" (focus)=\"onFocus($event)\" (blur)=\"onBlur($event)\" [value]=\"getFormattedValue()\">\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.min\">{{ 'errors.min' | label : null : { min: control.min } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.max\">{{ 'errors.max' | label : null : { max: control.max } }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
+                        template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<input class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\" [attr.step]=\"control.step\" (input)=\"onInput($event)\" (focus)=\"onFocus($event)\" (blur)=\"onBlur($event)\" [value]=\"getFormattedValue()\">\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.min\">{{ 'errors.min' | label : null : { min: control.min } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.max\">{{ 'errors.max' | label : null : { max: control.max } }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
                         providers: [{
                                 provide: forms.NG_VALUE_ACCESSOR,
                                 useExisting: i0.forwardRef(function () { return ControlNumberComponent; }),
@@ -407,6 +545,25 @@
         };
         return ControlNumberComponent;
     }(ControlBaseComponent));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var ControlPassword = /** @class */ (function (_super) {
+        __extends(ControlPassword, _super);
+        function ControlPassword(options) {
+            if (options === void 0) {
+                options = {};
+            }
+            var _this = _super.call(this, options) || this;
+            _this.component = 'ControlPasswordComponent';
+            _this.schema = 'password';
+            _this.type = options.type || _this.type;
+            return _this;
+        }
+        return ControlPassword;
+    }(ControlBase));
 
     /**
      * @fileoverview added by tsickle
@@ -446,6 +603,25 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var ControlRadio = /** @class */ (function (_super) {
+        __extends(ControlRadio, _super);
+        function ControlRadio(options) {
+            if (options === void 0) {
+                options = {};
+            }
+            var _this = _super.call(this, options) || this;
+            _this.component = 'ControlRadioComponent';
+            _this.schema = 'radio';
+            _this.type = options.type || _this.type;
+            return _this;
+        }
+        return ControlRadio;
+    }(ControlBase));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var ControlRadioComponent = /** @class */ (function (_super) {
         __extends(ControlRadioComponent, _super);
         function ControlRadioComponent(renderer) {
@@ -475,6 +651,26 @@
         };
         return ControlRadioComponent;
     }(ControlBaseComponent));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var ControlSelect = /** @class */ (function (_super) {
+        __extends(ControlSelect, _super);
+        function ControlSelect(options) {
+            if (options === void 0) {
+                options = {};
+            }
+            var _this = _super.call(this, options) || this;
+            _this.component = 'ControlSelectComponent';
+            _this.schema = 'select';
+            _this.options = [];
+            _this.options = options.options || [];
+            return _this;
+        }
+        return ControlSelect;
+    }(ControlBase));
 
     /**
      * @fileoverview added by tsickle
@@ -514,6 +710,25 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var ControlText = /** @class */ (function (_super) {
+        __extends(ControlText, _super);
+        function ControlText(options) {
+            if (options === void 0) {
+                options = {};
+            }
+            var _this = _super.call(this, options) || this;
+            _this.component = 'ControlTextComponent';
+            _this.schema = 'text';
+            _this.type = options.type || _this.type;
+            return _this;
+        }
+        return ControlText;
+    }(ControlBase));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var ControlTextComponent = /** @class */ (function (_super) {
         __extends(ControlTextComponent, _super);
         function ControlTextComponent(renderer) {
@@ -543,6 +758,25 @@
         };
         return ControlTextComponent;
     }(ControlBaseComponent));
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var ControlTextarea = /** @class */ (function (_super) {
+        __extends(ControlTextarea, _super);
+        function ControlTextarea(options) {
+            if (options === void 0) {
+                options = {};
+            }
+            var _this = _super.call(this, options) || this;
+            _this.component = 'ControlTextareaComponent';
+            _this.schema = 'textarea';
+            _this.type = options.type || _this.type;
+            return _this;
+        }
+        return ControlTextarea;
+    }(ControlBase));
 
     /**
      * @fileoverview added by tsickle
@@ -583,16 +817,55 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
+    var entryComponents = [
+        ControlCheckboxComponent,
+        ControlEmailComponent,
+        ControlMarkdownComponent,
+        ControlNumberComponent,
+        ControlPasswordComponent,
+        ControlRadioComponent,
+        ControlSelectComponent,
+        ControlTextComponent,
+        ControlTextareaComponent,
+    ];
+    /** @type {?} */
     var BaseControls = {
-        'checkbox': ControlCheckboxComponent,
-        'email': ControlEmailComponent,
-        'markdown': ControlMarkdownComponent,
-        'number': ControlNumberComponent,
-        'password': ControlPasswordComponent,
-        'radio': ControlRadioComponent,
-        'select': ControlSelectComponent,
-        'text': ControlTextComponent,
-        'textarea': ControlTextareaComponent,
+        'checkbox': {
+            component: ControlCheckboxComponent,
+            model: ControlCheckbox
+        },
+        'email': {
+            component: ControlEmailComponent,
+            model: ControlEmail
+        },
+        'markdown': {
+            component: ControlMarkdownComponent,
+            model: ControlMarkdown
+        },
+        'number': {
+            component: ControlNumberComponent,
+            model: ControlNumber
+        },
+        'password': {
+            component: ControlPasswordComponent,
+            model: ControlPassword
+        },
+        'radio': {
+            component: ControlRadioComponent,
+            model: ControlRadio
+        },
+        'select': {
+            component: ControlSelectComponent,
+            model: ControlSelect
+        },
+        'text': {
+            component: ControlTextComponent,
+            model: ControlText
+        },
+        'textarea': {
+            component: ControlTextareaComponent,
+            model: ControlTextarea
+        },
     };
     var ControlConfig = /** @class */ (function () {
         function ControlConfig(options) {
@@ -701,7 +974,7 @@
                 /** @type {?} */
                 var component;
                 if (control) {
-                    component = this.options.controls[control.schema] || ControlBaseComponent;
+                    component = this.options.controls[control.schema].component || ControlBaseComponent;
                 }
                 else {
                     component = ControlBaseComponent;
@@ -1080,221 +1353,6 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    /**
-     * @template T
-     */
-    var /**
-     * @template T
-     */ ControlBaseOptions = /** @class */ (function () {
-        function ControlBaseOptions() {
-        }
-        return ControlBaseOptions;
-    }());
-    /**
-     * @template T
-     */
-    var ControlBase = /** @class */ (function () {
-        function ControlBase(options) {
-            if (options === void 0) {
-                options = {};
-            }
-            this.component = 'ControlBaseComponent';
-            this.schema = 'base';
-            this._originalValue = options.value;
-            this.value = options.value;
-            this.key = options.key;
-            //
-            /** @type {?} */
-            var name = (options.key || 'Control') + " " + ++ControlBase.uid;
-            this.label = options.label || name;
-            this.placeholder = options.placeholder || name;
-            // order
-            this.order = options.order === undefined ? 1 : options.order;
-            this.schema = options.schema || 'text';
-            this.type = options.type || this.schema;
-            // validators
-            this.min = options.min || null;
-            this.max = options.max || null;
-            this.required = !!options.required;
-            this.requiredTrue = !!options.requiredTrue;
-            this.email = !!options.email;
-            this.minlength = options.minlength || null;
-            this.maxlength = options.maxlength || null;
-            this.pattern = options.pattern || null;
-            this.match = options.match || null;
-            // options
-            this.reverse = !!options.reverse;
-            this.options = options.options || [];
-            // state
-            this.disabled = !!options.disabled;
-            // formatters
-            this.step = options.step || null;
-            this.format = options.format || null;
-        }
-        // export class ControlBase<T> implements ControlValueAccessor {
-        ControlBase.uid = 0;
-        return ControlBase;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var ControlCheckbox = /** @class */ (function (_super) {
-        __extends(ControlCheckbox, _super);
-        function ControlCheckbox(options) {
-            if (options === void 0) {
-                options = {};
-            }
-            var _this = _super.call(this, options) || this;
-            _this.component = 'ControlCheckboxComponent';
-            _this.schema = 'checkbox';
-            _this.type = options.type || _this.type;
-            return _this;
-        }
-        return ControlCheckbox;
-    }(ControlBase));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var ControlEmail = /** @class */ (function (_super) {
-        __extends(ControlEmail, _super);
-        function ControlEmail(options) {
-            if (options === void 0) {
-                options = {};
-            }
-            var _this = _super.call(this, options) || this;
-            _this.component = 'ControlEmailComponent';
-            _this.schema = 'email';
-            _this.type = options.type || _this.type;
-            _this.email = true;
-            _this.pattern = options.pattern || '[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
-            return _this;
-        }
-        return ControlEmail;
-    }(ControlBase));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var ControlMarkdown = /** @class */ (function (_super) {
-        __extends(ControlMarkdown, _super);
-        function ControlMarkdown(options) {
-            if (options === void 0) {
-                options = {};
-            }
-            var _this = _super.call(this, options) || this;
-            _this.component = 'ControlMarkdownComponent';
-            _this.schema = 'markdown';
-            _this.type = options.type || _this.type;
-            return _this;
-        }
-        return ControlMarkdown;
-    }(ControlBase));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var ControlNumber = /** @class */ (function (_super) {
-        __extends(ControlNumber, _super);
-        function ControlNumber(options) {
-            if (options === void 0) {
-                options = {};
-            }
-            var _this = _super.call(this, options) || this;
-            _this.component = 'ControlNumberComponent';
-            _this.schema = 'number';
-            _this.type = options.type || _this.type;
-            return _this;
-        }
-        return ControlNumber;
-    }(ControlBase));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var ControlPassword = /** @class */ (function (_super) {
-        __extends(ControlPassword, _super);
-        function ControlPassword(options) {
-            if (options === void 0) {
-                options = {};
-            }
-            var _this = _super.call(this, options) || this;
-            _this.component = 'ControlPasswordComponent';
-            _this.schema = 'password';
-            _this.type = options.type || _this.type;
-            return _this;
-        }
-        return ControlPassword;
-    }(ControlBase));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var ControlRadio = /** @class */ (function (_super) {
-        __extends(ControlRadio, _super);
-        function ControlRadio(options) {
-            if (options === void 0) {
-                options = {};
-            }
-            var _this = _super.call(this, options) || this;
-            _this.component = 'ControlRadioComponent';
-            _this.schema = 'radio';
-            _this.type = options.type || _this.type;
-            return _this;
-        }
-        return ControlRadio;
-    }(ControlBase));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var ControlSelect = /** @class */ (function (_super) {
-        __extends(ControlSelect, _super);
-        function ControlSelect(options) {
-            if (options === void 0) {
-                options = {};
-            }
-            var _this = _super.call(this, options) || this;
-            _this.component = 'ControlSelectComponent';
-            _this.schema = 'select';
-            _this.options = [];
-            _this.options = options.options || [];
-            return _this;
-        }
-        return ControlSelect;
-    }(ControlBase));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var ControlText = /** @class */ (function (_super) {
-        __extends(ControlText, _super);
-        function ControlText(options) {
-            if (options === void 0) {
-                options = {};
-            }
-            var _this = _super.call(this, options) || this;
-            _this.component = 'ControlTextComponent';
-            _this.schema = 'text';
-            _this.type = options.type || _this.type;
-            return _this;
-        }
-        return ControlText;
-    }(ControlBase));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var FormService = /** @class */ (function () {
         function FormService(controlService) {
             this.controlService = controlService;
@@ -1308,29 +1366,21 @@
          * @return {?}
          */
             function (options) {
+                var _this = this;
                 /** @type {?} */
                 var controls = options.map(function (o) {
-                    switch (o.schema) {
-                        case 'checkbox':
-                            return new ControlCheckbox(o);
-                        case 'email':
-                            return new ControlEmail(o);
-                        case 'number':
-                            return new ControlNumber(o);
-                        case 'password':
-                            return new ControlPassword(o);
-                        case 'radio':
-                            return new ControlRadio(o);
-                        case 'select':
-                            return new ControlSelect(o);
-                        case 'markdown':
-                            return new ControlMarkdown(o);
-                        case 'text':
-                            return new ControlText(o);
-                        default:
-                            return new ControlText(o);
+                    /** @type {?} */
+                    var control = _this.controlService.options.controls[o.schema];
+                    if (control) {
+                        /** @type {?} */
+                        var controlBase = control.model;
+                        return new controlBase(o);
                     }
-                });
+                    else {
+                        console.error("missing control for key " + o.schema);
+                        return null;
+                    }
+                }).filter(function (x) { return x; });
                 controls.sort(function (a, b) { return a.order - b.order; });
                 return controls;
             };
@@ -1387,21 +1437,12 @@
         FormService,
     ];
     /** @type {?} */
-    var components = [
+    var components = __spread([
         ControlsComponent,
         ControlModuleComponent,
         ControlOutletComponent,
-        ControlBaseComponent,
-        ControlCheckboxComponent,
-        ControlEmailComponent,
-        ControlMarkdownComponent,
-        ControlNumberComponent,
-        ControlPasswordComponent,
-        ControlRadioComponent,
-        ControlSelectComponent,
-        ControlTextComponent,
-        ControlTextareaComponent,
-    ];
+        ControlBaseComponent
+    ], entryComponents);
     /** @type {?} */
     var directives = [
         UppercaseDirective,
@@ -1448,7 +1489,7 @@
                         ],
                         providers: __spread(services, pipes, validators),
                         declarations: __spread(components, directives, pipes, validators),
-                        entryComponents: __spread(components),
+                        entryComponents: __spread(entryComponents),
                         exports: __spread(components, directives, pipes, validators),
                     },] }
         ];
@@ -1542,25 +1583,6 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var ControlTextarea = /** @class */ (function (_super) {
-        __extends(ControlTextarea, _super);
-        function ControlTextarea(options) {
-            if (options === void 0) {
-                options = {};
-            }
-            var _this = _super.call(this, options) || this;
-            _this.component = 'ControlTextareaComponent';
-            _this.schema = 'textarea';
-            _this.type = options.type || _this.type;
-            return _this;
-        }
-        return ControlTextarea;
-    }(ControlBase));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
 
     /**
      * @fileoverview added by tsickle
@@ -1601,6 +1623,7 @@
     exports.matchValidator = matchValidator;
     exports.UppercaseDirective = UppercaseDirective;
     exports.FormService = FormService;
+    exports.ɵa = entryComponents;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

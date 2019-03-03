@@ -83,5 +83,8 @@ export const environment = {
 			businessunitName: 'eurospin-viaggi.wslabs.it',
 			minimumReviews: 1000,
 		},
+	},
+	picture: {
+		placeholder: 'https://dummyimage.com/${w}x${h}/000000/222222/'
 	}
 };

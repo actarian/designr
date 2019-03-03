@@ -28,123 +28,6 @@ class DataConfig {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class DataService {
-    /**
-     * @param {?} config
-     */
-    constructor(config
-    // @Inject(forwardRef(() => DataService)) public dataService: DataService
-    // private dataService: DataService,
-    ) {
-        // console.log('DataService', config);
-        config = config || {};
-        this.config = new DataConfig(config);
-    }
-    /**
-     * @return {?}
-     */
-    createDb() {
-        // console.log('DataService.createDb', this.config.datas);
-        return this.config.datas || {};
-    }
-    /**
-     * @param {?} url
-     * @param {?} service
-     * @return {?}
-     */
-    parseRequestUrl(url, service) {
-        // !!! REMAPPING
-        /*
-                if (this.dataService.config.memory && this.dataService.config.memory.remap) {
-                    Object.keys(this.dataService.config.memory.remap).forEach((k: string) => {
-                        url = url.replace(k, this.dataService.config.memory.remap[k]);
-                    });
-                }
-                */
-        /** @type {?} */
-        const parsed = service.parseRequestUrl(url);
-        return parsed;
-    }
-}
-DataService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root',
-            },] }
-];
-/** @nocollapse */
-DataService.ctorParameters = () => [
-    { type: DataConfig, decorators: [{ type: Inject, args: [DATA_CONFIG,] }] }
-];
-/** @nocollapse */ DataService.ngInjectableDef = defineInjectable({ factory: function DataService_Factory() { return new DataService(inject(DATA_CONFIG)); }, token: DataService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class DataModuleComponent {
-    constructor() {
-        this.version = '0.0.3';
-    }
-    /**
-     * @return {?}
-     */
-    ngOnInit() {
-    }
-}
-DataModuleComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'data-module',
-                template: `<span class="data-module">data {{version}}</span>`
-            }] }
-];
-/** @nocollapse */
-DataModuleComponent.ctorParameters = () => [];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} response$
- * @param {?} ms
- * @return {?}
- */
-function delayResponse(response$, ms) {
-    return new Observable(observer => {
-        /** @type {?} */
-        let complete = false;
-        /** @type {?} */
-        let next = false;
-        /** @type {?} */
-        const subscription = response$.subscribe(value => {
-            next = true;
-            setTimeout(() => {
-                observer.next(value);
-                if (complete) {
-                    observer.complete();
-                }
-            }, ms);
-        }, error => {
-            setTimeout(() => {
-                observer.error(error);
-            }, ms);
-        }, () => {
-            complete = true;
-            if (!next) {
-                observer.complete();
-            }
-        });
-        return () => {
-            return subscription.unsubscribe();
-        };
-    });
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 /** @type {?} */
 const STATUS_CODE = {
     CONTINUE: 100,
@@ -621,6 +504,197 @@ function isSuccess(status) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class DataService {
+    /**
+     * @param {?} config
+     */
+    constructor(config
+    // @Inject(forwardRef(() => DataService)) public dataService: DataService
+    // private dataService: DataService,
+    ) {
+        // console.log('DataService', config);
+        config = config || {};
+        this.config = new DataConfig(config);
+    }
+    /**
+     * @return {?}
+     */
+    createDb() {
+        // console.log('DataService.createDb', this.config.datas);
+        return this.config.datas || {};
+    }
+    /**
+     * @param {?} url
+     * @param {?} service
+     * @return {?}
+     */
+    parseRequestUrl(url, service) {
+        // !!! REMAPPING
+        /*
+                if (this.dataService.config.memory && this.dataService.config.memory.remap) {
+                    Object.keys(this.dataService.config.memory.remap).forEach((k: string) => {
+                        url = url.replace(k, this.dataService.config.memory.remap[k]);
+                    });
+                }
+                */
+        /** @type {?} */
+        const parsed = service.parseRequestUrl(url);
+        return parsed;
+    }
+    /**
+     * @param {?} request
+     * @param {?} service
+     * @return {?}
+     */
+    requestInterceptor(request, service) {
+        // console.log('requestInterceptor', request);
+        /** @type {?} */
+        let body;
+        if (request.method === 'post') {
+            switch (request.collectionName) {
+                case 'slug':
+                    /** @type {?} */
+                    const mnemonics = request.body;
+                    body = request.body.map(x => request.collection.find(c => c.mnemonic === x) || null).filter(x => x);
+                    // console.log(item);
+                    return { headers: request.headers, body: service.bodify(body), status: STATUS_CODE.OK };
+                    break;
+                case 'label':
+                    /** @type {?} */
+                    const ids = request.body.map(x => x.id);
+                    body = request.body.map(x => request.collection.find(c => c.id === x.id) || x);
+                    // console.log(item);
+                    return { headers: request.headers, body: service.bodify(body), status: STATUS_CODE.OK };
+                    break;
+            }
+        }
+        return null;
+    }
+}
+DataService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root',
+            },] }
+];
+/** @nocollapse */
+DataService.ctorParameters = () => [
+    { type: DataConfig, decorators: [{ type: Inject, args: [DATA_CONFIG,] }] }
+];
+/** @nocollapse */ DataService.ngInjectableDef = defineInjectable({ factory: function DataService_Factory() { return new DataService(inject(DATA_CONFIG)); }, token: DataService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class DataModuleComponent {
+    constructor() {
+        this.version = '0.0.3';
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+    }
+}
+DataModuleComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'data-module',
+                template: `<span class="data-module">data {{version}}</span>`
+            }] }
+];
+/** @nocollapse */
+DataModuleComponent.ctorParameters = () => [];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @template T
+ * @param {?} response$
+ * @param {?} ms
+ * @return {?}
+ */
+function delayResponse(response$, ms) {
+    return new Observable(observer => {
+        /** @type {?} */
+        let complete = false;
+        /** @type {?} */
+        let next = false;
+        /** @type {?} */
+        const subscription = response$.subscribe(value => {
+            next = true;
+            setTimeout(() => {
+                observer.next(value);
+                if (complete) {
+                    observer.complete();
+                }
+            }, ms);
+        }, error => {
+            setTimeout(() => {
+                observer.error(error);
+            }, ms);
+        }, () => {
+            complete = true;
+            if (!next) {
+                observer.complete();
+            }
+        });
+        return () => {
+            return subscription.unsubscribe();
+        };
+    });
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * Return information (UriInfo) about a URI
+ * @param {?} str
+ * @return {?}
+ */
+function parseUri(str) {
+    // Adapted from parseuri package - http://blog.stevenlevithan.com/archives/parseuri
+    // tslint:disable-next-line:max-line-length
+    /** @type {?} */
+    const URL_REGEX = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/;
+    /** @type {?} */
+    const m = URL_REGEX.exec(str);
+    /** @type {?} */
+    const uri = {
+        source: '',
+        protocol: '',
+        authority: '',
+        userInfo: '',
+        user: '',
+        password: '',
+        host: '',
+        port: '',
+        relative: '',
+        path: '',
+        directory: '',
+        file: '',
+        query: '',
+        anchor: ''
+    };
+    /** @type {?} */
+    const keys = Object.keys(uri);
+    /** @type {?} */
+    let i = keys.length;
+    while (i--) {
+        uri[keys[i]] = m[i] || '';
+    }
+    return uri;
+}
+/**
+ * @param {?} path
+ * @return {?}
+ */
+function removeTrailingSlash(path) {
+    return path.replace(/\/$/, '');
+}
 /**
  * Interface for a class that creates an in-memory database
  *
@@ -682,73 +756,21 @@ MemoryBackendConfig.decorators = [
 MemoryBackendConfig.ctorParameters = () => [
     { type: MemoryBackendConfig }
 ];
-/**
- * Return information (UriInfo) about a URI
- * @param {?} str
- * @return {?}
- */
-function parseUri(str) {
-    // Adapted from parseuri package - http://blog.stevenlevithan.com/archives/parseuri
-    // tslint:disable-next-line:max-line-length
-    /** @type {?} */
-    const URL_REGEX = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/;
-    /** @type {?} */
-    const m = URL_REGEX.exec(str);
-    /** @type {?} */
-    const uri = {
-        source: '',
-        protocol: '',
-        authority: '',
-        userInfo: '',
-        user: '',
-        password: '',
-        host: '',
-        port: '',
-        relative: '',
-        path: '',
-        directory: '',
-        file: '',
-        query: '',
-        anchor: ''
-    };
-    /** @type {?} */
-    const keys = Object.keys(uri);
-    /** @type {?} */
-    let i = keys.length;
-    while (i--) {
-        uri[keys[i]] = m[i] || '';
-    }
-    return uri;
-}
-/**
- * @param {?} path
- * @return {?}
- */
-function removeTrailingSlash(path) {
-    return path.replace(/\/$/, '');
-}
 
 /**
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-/**
- * Base class for in-memory web api back-ends
- * Simulate the behavior of a RESTy web api
- * backed by the simple in-memory data store provided by the injected `MemoryDataService` service.
- * Conforms mostly to behavior described here:
- * http://www.restapitutorial.com/lessons/httpmethods.html
- * @abstract
- */
 class BackendService {
     /**
      * @param {?} dataService
      * @param {?=} config
+     * @param {?=} factory
      */
-    constructor(dataService, config = {}) {
+    constructor(dataService, config = {}, factory) {
         this.dataService = dataService;
+        this.factory = factory;
         this.config = new MemoryBackendConfig();
-        this.requestInfoUtils = this.getRequestInfoUtils();
         /** @type {?} */
         const location = this.getLocation('/');
         this.config.host = location.host; // default to app web server host
@@ -765,7 +787,7 @@ class BackendService {
             this.databaseReadySubject = new BehaviorSubject(false);
             this.resetDb();
         }
-        return this.databaseReadySubject.asObservable().pipe(first((r) => r));
+        return this.databaseReadySubject.asObservable().pipe(first((ready) => ready));
     }
     /**
      * Process Request and return an Observable of Http Response object
@@ -787,7 +809,7 @@ class BackendService {
      *   HTTP overrides:
      *     If the injected dataService defines an HTTP method (lowercase)
      *     The request is forwarded to that method as in
-     *     `dataService.get(requestInfo)`
+     *     `dataService.get(memoryRequest)`
      *     which must return either an Observable of the response type
      *     for this http library or null|undefined (which means "keep processing").
      * @protected
@@ -808,469 +830,63 @@ class BackendService {
         const url = request.urlWithParams ? request.urlWithParams : request.url;
         // Try override parser
         // If no override parser or it returns nothing, use default parser
+        // const parser = this.bind('parseRequestUrl');
+        // const parsed: ParsedRequestUrl = (parser && parser(url, this)) || this.parseRequestUrl(url);
         /** @type {?} */
-        const parser = this.bind('parseRequestUrl');
-        /** @type {?} */
-        const parsed = (parser && parser(url, this.requestInfoUtils)) || this.parseRequestUrl(url);
+        const parsed = this.parseRequestUrl(url);
         /** @type {?} */
         const collectionName = parsed.collectionName;
         /** @type {?} */
         const collection = this.database[collectionName];
         /** @type {?} */
-        const requestInfo = {
+        const memoryRequest = {
             request: request,
+            body: request.body,
             apiBase: parsed.apiBase,
             collection: collection,
             collectionName: collectionName,
-            headers: this.createHeaders({ 'Content-Type': 'application/json' }),
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
             id: this.parseId(collection, collectionName, parsed.id),
-            method: this.getRequestMethod(request),
+            method: (request.method || 'get').toLowerCase(),
             query: parsed.query,
             resourceUrl: parsed.resourceUrl,
             url: url,
-            utils: this.requestInfoUtils
         };
+        // If `dataService.requestInterceptor` exists, let it morph the response options
         /** @type {?} */
-        let responseOptions;
-        if (/commands\/?$/i.test(requestInfo.apiBase)) {
-            return this.commands(requestInfo);
+        const interceptor = this.bind('requestInterceptor');
+        if (/commands\/?$/i.test(memoryRequest.apiBase)) {
+            return this.commands(memoryRequest);
         }
         /** @type {?} */
-        const methodInterceptor = this.bind(requestInfo.method);
+        const methodInterceptor = this.bind(memoryRequest.method);
         if (methodInterceptor) {
             // MemoryDataService intercepts this HTTP method.
             // if interceptor produced a response, return it.
             // else MemoryDataService chose not to intercept; continue processing.
             /** @type {?} */
-            const interceptorResponse = methodInterceptor(requestInfo);
+            const interceptorResponse = methodInterceptor(memoryRequest);
             if (interceptorResponse) {
                 return interceptorResponse;
             }
         }
+        // !!!
+        /** @type {?} */
+        let response = interceptor ? interceptor(memoryRequest, this) : null;
+        if (response) {
+            return this.createResponse$(() => response);
+        }
         if (this.database[collectionName]) {
             // request is for a known collection of the MemoryDataService
-            return this.createResponse$(() => this.collectionHandler(requestInfo));
+            return this.createResponse$(() => this.collectionHandler(memoryRequest));
         }
         if (this.config.passThruUnknownUrl) {
             // unknown collection; pass request thru to a "real" backend.
             return this.getPassThruBackend().handle(request);
         }
         // 404 - can't handle this request
-        responseOptions = this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, `Collection '${collectionName}' not found`);
-        return this.createResponse$(() => responseOptions);
-    }
-    /**
-     * Add configured delay to response observable unless delay === 0
-     * @protected
-     * @param {?} response
-     * @return {?}
-     */
-    addDelay(response) {
-        /** @type {?} */
-        const delay = this.config.delay;
-        return delay === 0 ? response : delayResponse(response, delay || 500);
-    }
-    /**
-     * Apply query/search parameters as a filter over the collection
-     * This impl only supports RegExp queries on string properties of the collection
-     * ANDs the conditions together
-     * @protected
-     * @param {?} collection
-     * @param {?} query
-     * @return {?}
-     */
-    applyQuery(collection, query) {
-        // extract filtering conditions - {propertyName, RegExps) - from query/search parameters
-        /** @type {?} */
-        const conditions = [];
-        /** @type {?} */
-        const caseSensitive = this.config.caseSensitiveSearch ? undefined : 'i';
-        query.forEach((value, name) => {
-            value.forEach(x => conditions.push({
-                name,
-                regexp: new RegExp(decodeURI(x), caseSensitive)
-            }));
-        });
-        /** @type {?} */
-        const length = conditions.length;
-        if (!length) {
-            return collection;
-        }
-        // AND the RegExp conditions
-        return collection.filter(row => {
-            /** @type {?} */
-            let has = true;
-            /** @type {?} */
-            let i = length;
-            while (has && i) {
-                i -= 1;
-                /** @type {?} */
-                const cond = conditions[i];
-                has = cond.regexp.test(row[cond.name]);
-            }
-            return has;
-        });
-    }
-    /**
-     * Get a method from the `MemoryDataService` (if it exists), bound to that service
-     * @protected
-     * @template T
-     * @param {?} methodName
-     * @return {?}
-     */
-    bind(methodName) {
-        /** @type {?} */
-        const method = (/** @type {?} */ (this.dataService[methodName]));
-        return method ? (/** @type {?} */ (method.bind(this.dataService))) : undefined;
-    }
-    /**
-     * @protected
-     * @param {?} data
-     * @return {?}
-     */
-    bodify(data) {
-        return this.config.dataEncapsulation ? { data } : data;
-    }
-    /**
-     * @protected
-     * @param {?} data
-     * @return {?}
-     */
-    clone(data) {
-        return JSON.parse(JSON.stringify(data));
-    }
-    /**
-     * @protected
-     * @param {?} requestInfo
-     * @return {?}
-     */
-    collectionHandler(requestInfo) {
-        // const request = requestInfo.request;
-        /** @type {?} */
-        let responseOptions;
-        switch (requestInfo.method) {
-            case 'get':
-                responseOptions = this.get(requestInfo);
-                break;
-            case 'post':
-                responseOptions = this.post(requestInfo);
-                break;
-            case 'put':
-                responseOptions = this.put(requestInfo);
-                break;
-            case 'delete':
-                responseOptions = this.delete(requestInfo);
-                break;
-            default:
-                responseOptions = this.createErrorResponseOptions(requestInfo.url, STATUS_CODE.METHOD_NOT_ALLOWED, 'Method not allowed');
-                break;
-        }
-        // If `dataService.responseInterceptor` exists, let it morph the response options
-        /** @type {?} */
-        const interceptor = this.bind('responseInterceptor');
-        return interceptor ? interceptor(responseOptions, requestInfo) : responseOptions;
-    }
-    /**
-     * Commands reconfigure the in-memory web api service or extract information from it.
-     * Commands ignore the latency delay and respond ASAP.
-     *
-     * When the last segment of the `apiBase` path is "commands",
-     * the `collectionName` is the command.
-     *
-     * Example URLs:
-     *   commands/resetdb (POST) // Reset the "database" to its original state
-     *   commands/config (GET)   // Return this service's config object
-     *   commands/config (POST)  // Update the config (e.g. the delay)
-     *
-     * Usage:
-     *   http.post('commands/resetdb', undefined);
-     *   http.get('commands/config');
-     *   http.post('commands/config', '{"delay":1000}');
-     * @protected
-     * @param {?} requestInfo
-     * @return {?}
-     */
-    commands(requestInfo) {
-        /** @type {?} */
-        const command = requestInfo.collectionName.toLowerCase();
-        /** @type {?} */
-        const method = requestInfo.method;
-        /** @type {?} */
-        let responseOptions = {
-            url: requestInfo.url
-        };
-        switch (command) {
-            case 'resetdb':
-                responseOptions.status = STATUS_CODE.NO_CONTENT;
-                return this.resetDb(requestInfo).pipe(concatMap(() => this.createResponse$(() => responseOptions, false /* no latency delay */)));
-            case 'config':
-                if (method === 'get') {
-                    responseOptions.status = STATUS_CODE.OK;
-                    responseOptions.body = this.clone(this.config);
-                    // any other HTTP method is assumed to be a config update
-                }
-                else {
-                    /** @type {?} */
-                    const body = this.getJsonBody(requestInfo.request);
-                    Object.assign(this.config, body);
-                    this.passThruBackend = undefined; // re-create when needed
-                    responseOptions.status = STATUS_CODE.NO_CONTENT;
-                }
-                break;
-            default:
-                responseOptions = this.createErrorResponseOptions(requestInfo.url, STATUS_CODE.INTERNAL_SERVER_ERROR, `Unknown command "${command}"`);
-        }
-        return this.createResponse$(() => responseOptions, false /* no latency delay */);
-    }
-    /**
-     * @protected
-     * @param {?} url
-     * @param {?} status
-     * @param {?} message
-     * @return {?}
-     */
-    createErrorResponseOptions(url, status, message) {
-        return {
-            body: {
-                error: `${message}`,
-            },
-            url: url,
-            headers: this.createHeaders({
-                'Content-Type': 'application/json'
-            }),
-            status: status
-        };
-    }
-    /**
-     * Create a cold response Observable from a factory for ResponseOptions
-     * @protected
-     * @param {?} responseOptionsFactory - creates ResponseOptions when observable is subscribed
-     * @param {?=} withDelay - if true (default), add simulated latency delay from configuration
-     * @return {?}
-     */
-    createResponse$(responseOptionsFactory, withDelay = true) {
-        /** @type {?} */
-        const responseOptions$ = this.createResponseOptions$(responseOptionsFactory);
-        /** @type {?} */
-        const response$ = this.createResponse$fromResponseOptions$(responseOptions$);
-        return withDelay ? this.addDelay(response$) : response$;
-    }
-    /**
-     * Create a cold Observable of ResponseOptions.
-     * @protected
-     * @param {?} responseOptionsFactory - creates ResponseOptions when observable is subscribed
-     * @return {?}
-     */
-    createResponseOptions$(responseOptionsFactory) {
-        return new Observable((responseObserver) => {
-            /** @type {?} */
-            let responseOptions;
-            try {
-                responseOptions = responseOptionsFactory();
-            }
-            catch (error) {
-                error = error.message || error;
-                responseOptions = this.createErrorResponseOptions('', STATUS_CODE.INTERNAL_SERVER_ERROR, `${error}`);
-            }
-            /** @type {?} */
-            const status = responseOptions.status;
-            try {
-                responseOptions.statusText = getStatusText(status);
-            }
-            catch (error) { /* ignore failure */ }
-            if (isSuccess(status)) {
-                responseObserver.next(responseOptions);
-                responseObserver.complete();
-            }
-            else {
-                responseObserver.error(responseOptions);
-            }
-            return () => { }; // unsubscribe function
-        });
-    }
-    /**
-     * @protected
-     * @param {?} __0
-     * @return {?}
-     */
-    delete({ collection, collectionName, headers, id, url }) {
-        // tslint:disable-next-line:triple-equals
-        if (id == undefined) {
-            return this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, `Missing "${collectionName}" id`);
-        }
-        /** @type {?} */
-        const exists = this.removeById(collection, id);
-        return {
-            headers: headers,
-            status: (exists || !this.config.delete404) ? STATUS_CODE.NO_CONTENT : STATUS_CODE.NOT_FOUND
-        };
-    }
-    /**
-     * Find first instance of item in collection by `item.id`
-     * @protected
-     * @template T
-     * @param {?} collection
-     * @param {?} id
-     * @return {?}
-     */
-    findById(collection, id) {
-        return collection.find((item) => item.id === id);
-    }
-    /**
-     * Generate the next available id for item in this collection
-     * Use method from `dataService` if it exists and returns a value,
-     * else delegates to `genIdDefault`.
-     * @protected
-     * @template T
-     * @param {?} collection - collection of items with `id` key property
-     * @param {?} collectionName
-     * @return {?}
-     */
-    genId(collection, collectionName) {
-        /** @type {?} */
-        const genId = this.bind('genId');
-        if (genId) {
-            /** @type {?} */
-            const id = genId(collection, collectionName);
-            // tslint:disable-next-line:triple-equals
-            if (id != undefined) {
-                return id;
-            }
-        }
-        return this.genIdDefault(collection, collectionName);
-    }
-    /**
-     * Default generator of the next available id for item in this collection
-     * This default implementation works only for numeric ids.
-     * @protected
-     * @template T
-     * @param {?} collection - collection of items with `id` key property
-     * @param {?} collectionName - name of the collection
-     * @return {?}
-     */
-    genIdDefault(collection, collectionName) {
-        if (!this.isCollectionIdNumeric(collection, collectionName)) {
-            throw new Error(`Collection '${collectionName}' id type is non-numeric or unknown. Can only generate numeric ids.`);
-        }
-        /** @type {?} */
-        let maxId = 0;
-        collection.reduce((prev, item) => {
-            maxId = Math.max(maxId, typeof item.id === 'number' ? item.id : maxId);
-        }, undefined);
-        return maxId + 1;
-    }
-    /**
-     * @protected
-     * @param {?} __0
-     * @return {?}
-     */
-    get({ collection, collectionName, headers, id, query, url }) {
-        /** @type {?} */
-        let data = collection;
-        // tslint:disable-next-line:triple-equals
-        if (id != undefined && id !== '') {
-            data = this.findById(collection, id);
-        }
-        else if (query) {
-            data = this.applyQuery(collection, query);
-        }
-        if (!data) {
-            return this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, `'${collectionName}' with id='${id}' not found`);
-        }
-        return {
-            body: this.bodify(this.clone(data)),
-            headers: headers,
-            status: STATUS_CODE.OK
-        };
-    }
-    /**
-     * Get location info from a url, even on server where `document` is not defined
-     * @protected
-     * @param {?} url
-     * @return {?}
-     */
-    getLocation(url) {
-        if (!url.startsWith('http')) {
-            // get the document if running in browser
-            /** @type {?} */
-            const document_ = (typeof document === 'undefined') ? undefined : document;
-            // add host info to url before parsing.  Use a fake host when not in browser.
-            /** @type {?} */
-            const base = document_ ? document_.location.protocol + '//' + document_.location.host : 'http://fake';
-            url = url.startsWith('/') ? base + url : base + '/' + url;
-        }
-        return parseUri(url);
-    }
-    /**
-     * get or create the function that passes unhandled requests
-     * through to the "real" backend.
-     * @protected
-     * @return {?}
-     */
-    getPassThruBackend() {
-        return this.passThruBackend ? this.passThruBackend : this.passThruBackend = this.createPassThruBackend();
-    }
-    /**
-     * Get utility methods from this service instance.
-     * Useful within an HTTP method override
-     * @protected
-     * @return {?}
-     */
-    getRequestInfoUtils() {
-        return {
-            createResponse$: this.createResponse$.bind(this),
-            findById: this.findById.bind(this),
-            isCollectionIdNumeric: this.isCollectionIdNumeric.bind(this),
-            getConfig: () => this.config,
-            getDb: () => this.database,
-            getJsonBody: this.getJsonBody.bind(this),
-            getLocation: this.getLocation.bind(this),
-            getPassThruBackend: this.getPassThruBackend.bind(this),
-            parseRequestUrl: this.parseRequestUrl.bind(this),
-        };
-    }
-    /**
-     * @protected
-     * @param {?} collection
-     * @param {?} id
-     * @return {?}
-     */
-    indexOf(collection, id) {
-        return collection.findIndex((item) => item.id === id);
-    }
-    /**
-     * Parse the id as a number. Return original value if not a number.
-     * @protected
-     * @param {?} collection
-     * @param {?} collectionName
-     * @param {?} id
-     * @return {?}
-     */
-    parseId(collection, collectionName, id) {
-        if (!this.isCollectionIdNumeric(collection, collectionName)) {
-            // Can't confirm that `id` is a numeric type; don't parse as a number
-            // or else `'42'` -> `42` and _get by id_ fails.
-            return id;
-        }
-        /** @type {?} */
-        const idNum = parseFloat(id);
-        return isNaN(idNum) ? id : idNum;
-    }
-    /**
-     * return true if can determine that the collection's `item.id` is a number
-     * This implementation can't tell if the collection is empty so it assumes NO
-     *
-     * @protected
-     * @template T
-     * @param {?} collection
-     * @param {?} collectionName
-     * @return {?}
-     */
-    isCollectionIdNumeric(collection, collectionName) {
-        // collectionName not used now but override might maintain collection type information
-        // so that it could know the type of the `id` even when the collection is empty.
-        // return !!(collection && collection[0]) && typeof collection[0].id === 'number';
-        return !!(collection && collection[0]);
+        response = this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, `Collection '${collectionName}' not found`);
+        return this.createResponse$(() => response);
     }
     /**
      * Parses the request URL into a `ParsedRequestUrl` object.
@@ -1350,97 +966,305 @@ class BackendService {
             throw new Error(message);
         }
     }
-    // Create entity
-    // Can update an existing entity too if post409 is false.
     /**
+     * Parse the id as a number. Return original value if not a number.
      * @protected
-     * @param {?} __0
+     * @param {?} collection
+     * @param {?} collectionName
+     * @param {?} id
      * @return {?}
      */
-    post({ collection, collectionName, headers, id, request, resourceUrl, url }) {
+    parseId(collection, collectionName, id) {
+        if (!this.isCollectionIdNumeric(collection, collectionName)) {
+            // Can't confirm that `id` is a numeric type; don't parse as a number
+            // or else `'42'` -> `42` and _get by id_ fails.
+            return id;
+        }
         /** @type {?} */
-        const item = this.clone(this.getJsonBody(request));
-        // tslint:disable-next-line:triple-equals
-        if (item.id == undefined) {
+        const idNum = parseFloat(id);
+        return isNaN(idNum) ? id : idNum;
+    }
+    /**
+     * Add configured delay to response observable unless delay === 0
+     * @protected
+     * @param {?} response
+     * @return {?}
+     */
+    addDelay(response) {
+        /** @type {?} */
+        const delay = this.config.delay;
+        return delay === 0 ? response : delayResponse(response, delay || 500);
+    }
+    /**
+     * Apply query/search parameters as a filter over the collection
+     * This impl only supports RegExp queries on string properties of the collection
+     * ANDs the conditions together
+     * @protected
+     * @param {?} collection
+     * @param {?} query
+     * @return {?}
+     */
+    applyQuery(collection, query) {
+        // extract filtering conditions - {propertyName, RegExps) - from query/search parameters
+        /** @type {?} */
+        const conditions = [];
+        /** @type {?} */
+        const caseSensitive = this.config.caseSensitiveSearch ? undefined : 'i';
+        query.forEach((value, name) => {
+            value.forEach(x => conditions.push({
+                name,
+                regexp: new RegExp(decodeURI(x), caseSensitive)
+            }));
+        });
+        /** @type {?} */
+        const length = conditions.length;
+        if (!length) {
+            return collection;
+        }
+        // AND the RegExp conditions
+        return collection.filter(row => {
+            /** @type {?} */
+            let has = true;
+            /** @type {?} */
+            let i = length;
+            while (has && i) {
+                i -= 1;
+                /** @type {?} */
+                const cond = conditions[i];
+                has = cond.regexp.test(row[cond.name]);
+            }
+            return has;
+        });
+    }
+    /**
+     * Get a method from the `MemoryDataService` (if it exists), bound to that service
+     * @protected
+     * @template T
+     * @param {?} methodName
+     * @return {?}
+     */
+    bind(methodName) {
+        /** @type {?} */
+        const method = (/** @type {?} */ (this.dataService[methodName]));
+        return method ? (/** @type {?} */ (method.bind(this.dataService))) : undefined;
+    }
+    /**
+     * @param {?} data
+     * @return {?}
+     */
+    bodify(data) {
+        return this.config.dataEncapsulation ? { data } : data;
+    }
+    /**
+     * @protected
+     * @param {?} data
+     * @return {?}
+     */
+    clone(data) {
+        return JSON.parse(JSON.stringify(data));
+    }
+    /**
+     * @protected
+     * @param {?} request
+     * @return {?}
+     */
+    collectionHandler(request) {
+        // const request = request.request;
+        /** @type {?} */
+        let response;
+        switch (request.method) {
+            case 'get':
+                response = this.get(request);
+                break;
+            case 'post':
+                response = this.post(request);
+                break;
+            case 'put':
+                response = this.put(request);
+                break;
+            case 'delete':
+                response = this.delete(request);
+                break;
+            default:
+                response = this.createErrorResponse(request.url, STATUS_CODE.METHOD_NOT_ALLOWED, 'Method not allowed');
+                break;
+        }
+        // If `dataService.responseInterceptor` exists, let it morph the response options
+        /** @type {?} */
+        const interceptor = this.bind('responseInterceptor');
+        // !!!
+        return interceptor ? interceptor(response, request) : response;
+    }
+    /**
+     * @param {?} url
+     * @param {?} status
+     * @param {?} message
+     * @return {?}
+     */
+    createErrorResponse(url, status, message) {
+        return {
+            body: {
+                error: `${message}`,
+            },
+            url: url,
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            }),
+            status: status
+        };
+    }
+    /**
+     * Create a cold response Observable from a factory for MemoryResponse
+     * @protected
+     * @param {?} memoryResponseFactory - creates MemoryResponse when observable is subscribed
+     * @param {?=} withDelay - if true (default), add simulated latency delay from configuration
+     * @return {?}
+     */
+    createResponse$(memoryResponseFactory, withDelay = true) {
+        /** @type {?} */
+        const memoryResponse$ = this.createMemoryResponse$(memoryResponseFactory);
+        /** @type {?} */
+        const response$ = this.createResponse$fromMemoryResponse$(memoryResponse$);
+        return withDelay ? this.addDelay(response$) : response$;
+    }
+    /**
+     * Create a cold Observable of MemoryResponse.
+     * @protected
+     * @param {?} memoryResponseFactory - creates MemoryResponse when observable is subscribed
+     * @return {?}
+     */
+    createMemoryResponse$(memoryResponseFactory) {
+        return new Observable((observer) => {
+            /** @type {?} */
+            let response;
             try {
-                item.id = id || this.genId(collection, collectionName);
+                response = memoryResponseFactory();
             }
             catch (error) {
-                /** @type {?} */
-                const message = error.message || '';
-                if (/id type is non-numeric/.test(message)) {
-                    return this.createErrorResponseOptions(url, STATUS_CODE.UNPROCESSABLE_ENTRY, message);
-                }
-                else {
-                    console.error(error);
-                    return this.createErrorResponseOptions(url, STATUS_CODE.INTERNAL_SERVER_ERROR, `Failed to generate new id for '${collectionName}'`);
-                }
+                error = error.message || error;
+                response = this.createErrorResponse('', STATUS_CODE.INTERNAL_SERVER_ERROR, `${error}`);
             }
-        }
-        if (id && id !== item.id) {
-            return this.createErrorResponseOptions(url, STATUS_CODE.BAD_REQUEST, `Request id does not match item.id`);
-        }
-        else {
-            id = item.id;
-        }
-        /** @type {?} */
-        const existingIx = this.indexOf(collection, id);
-        /** @type {?} */
-        const body = this.bodify(item);
-        if (existingIx === -1) {
-            collection.push(item);
-            headers.set('Location', resourceUrl + '/' + id);
-            return { headers, body, status: STATUS_CODE.CREATED };
-        }
-        else if (this.config.post409) {
-            return this.createErrorResponseOptions(url, STATUS_CODE.CONFLICT, `'${collectionName}' item with id='${id} exists and may not be updated with POST; use PUT instead.`);
-        }
-        else {
-            collection[existingIx] = item;
-            return this.config.post204 ?
-                { headers, status: STATUS_CODE.NO_CONTENT } : // successful; no content
-                { headers, body, status: STATUS_CODE.OK }; // successful; return entity
-        }
+            /** @type {?} */
+            const status = response.status;
+            try {
+                response.statusText = getStatusText(status);
+            }
+            catch (error) { /* ignore failure */ }
+            if (isSuccess(status)) {
+                observer.next(response);
+                observer.complete();
+            }
+            else {
+                observer.error(response);
+            }
+            return () => { }; // unsubscribe function
+        });
     }
-    // Update existing entity
-    // Can create an entity too if put404 is false.
     /**
+     * Find first instance of item in collection by `item.id`
      * @protected
-     * @param {?} __0
+     * @template T
+     * @param {?} collection
+     * @param {?} id
      * @return {?}
      */
-    put({ collection, collectionName, headers, id, request, url }) {
+    findById(collection, id) {
+        return collection.find((item) => item.id === id);
+    }
+    /**
+     * Generate the next available id for item in this collection
+     * Use method from `dataService` if it exists and returns a value,
+     * else delegates to `genIdDefault`.
+     * @protected
+     * @template T
+     * @param {?} collection - collection of items with `id` key property
+     * @param {?} collectionName
+     * @return {?}
+     */
+    genId(collection, collectionName) {
         /** @type {?} */
-        const item = this.clone(this.getJsonBody(request));
-        // tslint:disable-next-line:triple-equals
-        if (item.id == undefined) {
-            return this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, `Missing '${collectionName}' id`);
+        const genId = this.bind('genId');
+        if (genId) {
+            /** @type {?} */
+            const id = genId(collection, collectionName);
+            // tslint:disable-next-line:triple-equals
+            if (id != undefined) {
+                return id;
+            }
         }
-        if (id && id !== item.id) {
-            return this.createErrorResponseOptions(url, STATUS_CODE.BAD_REQUEST, `Request for '${collectionName}' id does not match item.id`);
-        }
-        else {
-            id = item.id;
+        return this.genIdDefault(collection, collectionName);
+    }
+    /**
+     * Default generator of the next available id for item in this collection
+     * This default implementation works only for numeric ids.
+     * @protected
+     * @template T
+     * @param {?} collection - collection of items with `id` key property
+     * @param {?} collectionName - name of the collection
+     * @return {?}
+     */
+    genIdDefault(collection, collectionName) {
+        if (!this.isCollectionIdNumeric(collection, collectionName)) {
+            throw new Error(`Collection '${collectionName}' id type is non-numeric or unknown. Can only generate numeric ids.`);
         }
         /** @type {?} */
-        const existingIx = this.indexOf(collection, id);
-        /** @type {?} */
-        const body = this.bodify(item);
-        if (existingIx > -1) {
-            collection[existingIx] = item;
-            return this.config.put204 ?
-                { headers, status: STATUS_CODE.NO_CONTENT } : // successful; no content
-                { headers, body, status: STATUS_CODE.OK }; // successful; return entity
+        let maxId = 0;
+        collection.reduce((prev, item) => {
+            maxId = Math.max(maxId, typeof item.id === 'number' ? item.id : maxId);
+        }, undefined);
+        return maxId + 1;
+    }
+    /**
+     * Get location info from a url, even on server where `document` is not defined
+     * @protected
+     * @param {?} url
+     * @return {?}
+     */
+    getLocation(url) {
+        if (!url.startsWith('http')) {
+            // get the document if running in browser
+            /** @type {?} */
+            const document_ = (typeof document === 'undefined') ? undefined : document;
+            // add host info to url before parsing.  Use a fake host when not in browser.
+            /** @type {?} */
+            const base = document_ ? document_.location.protocol + '//' + document_.location.host : 'http://fake';
+            url = url.startsWith('/') ? base + url : base + '/' + url;
         }
-        else if (this.config.put404) {
-            // item to update not found; use POST to create new item for this id.
-            return this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, `'${collectionName}' item with id='${id} not found and may not be created with PUT; use POST instead.`);
-        }
-        else {
-            // create new item for id not found
-            collection.push(item);
-            return { headers, body, status: STATUS_CODE.CREATED };
-        }
+        return parseUri(url);
+    }
+    /**
+     * get or create the function that passes unhandled requests
+     * through to the "real" backend.
+     * @protected
+     * @return {?}
+     */
+    getPassThruBackend() {
+        return this.passThruBackend ? this.passThruBackend : this.passThruBackend = this.createPassThruBackend();
+    }
+    /**
+     * @protected
+     * @param {?} collection
+     * @param {?} id
+     * @return {?}
+     */
+    indexOf(collection, id) {
+        return collection.findIndex((item) => item.id === id);
+    }
+    /**
+     * return true if can determine that the collection's `item.id` is a number
+     * This implementation can't tell if the collection is empty so it assumes NO
+     *
+     * @protected
+     * @template T
+     * @param {?} collection
+     * @param {?} collectionName
+     * @return {?}
+     */
+    isCollectionIdNumeric(collection, collectionName) {
+        // collectionName not used now but override might maintain collection type information
+        // so that it could know the type of the `id` even when the collection is empty.
+        // return !!(collection && collection[0]) && typeof collection[0].id === 'number';
+        return !!(collection && collection[0]);
     }
     /**
      * @protected
@@ -1461,13 +1285,13 @@ class BackendService {
      * Tell your in-mem "database" to reset.
      * returns Observable of the database because resetting it could be async
      * @protected
-     * @param {?=} requestInfo
+     * @param {?=} request
      * @return {?}
      */
-    resetDb(requestInfo) {
+    resetDb(request) {
         this.databaseReadySubject.next(false);
         /** @type {?} */
-        const database = this.dataService.createDb(requestInfo);
+        const database = this.dataService.createDb(request);
         /** @type {?} */
         const database$ = database instanceof Observable ? database :
             typeof ((/** @type {?} */ (database))).then === 'function' ? from((/** @type {?} */ (database))) :
@@ -1478,22 +1302,197 @@ class BackendService {
         });
         return this.databaseReady;
     }
-}
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class HttpClientBackendService extends BackendService {
     /**
-     * @param {?} dataService
-     * @param {?} config
-     * @param {?} factory
+     * Commands reconfigure the in-memory web api service or extract information from it.
+     * Commands ignore the latency delay and respond ASAP.
+     *
+     * When the last segment of the `apiBase` path is "commands",
+     * the `collectionName` is the command.
+     *
+     * Example URLs:
+     *   commands/resetdb (POST) // Reset the "database" to its original state
+     *   commands/config (GET)   // Return this service's config object
+     *   commands/config (POST)  // Update the config (e.g. the delay)
+     *
+     * Usage:
+     *   http.post('commands/resetdb', undefined);
+     *   http.get('commands/config');
+     *   http.post('commands/config', '{"delay":1000}');
+     * @protected
+     * @param {?} request
+     * @return {?}
      */
-    constructor(dataService, config, factory) {
-        super(dataService, config);
-        this.factory = factory;
+    commands(request) {
+        /** @type {?} */
+        const command = request.collectionName.toLowerCase();
+        /** @type {?} */
+        const method = request.method;
+        /** @type {?} */
+        let response = {
+            url: request.url
+        };
+        switch (command) {
+            case 'resetdb':
+                response.status = STATUS_CODE.NO_CONTENT;
+                return this.resetDb(request).pipe(concatMap(() => this.createResponse$(() => response, false /* no latency delay */)));
+            case 'config':
+                if (method === 'get') {
+                    response.status = STATUS_CODE.OK;
+                    response.body = this.clone(this.config);
+                    // any other HTTP method is assumed to be a config update
+                }
+                else {
+                    /** @type {?} */
+                    const body = request.request.body;
+                    Object.assign(this.config, body);
+                    this.passThruBackend = undefined; // re-create when needed
+                    response.status = STATUS_CODE.NO_CONTENT;
+                }
+                break;
+            default:
+                response = this.createErrorResponse(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, `Unknown command "${command}"`);
+        }
+        return this.createResponse$(() => response, false /* no latency delay */);
     }
+    /**
+     * @protected
+     * @param {?} __0
+     * @return {?}
+     */
+    get({ collection, collectionName, headers, id, query, url }) {
+        /** @type {?} */
+        let data = collection;
+        // tslint:disable-next-line:triple-equals
+        if (id != undefined && id !== '') {
+            data = this.findById(collection, id);
+            if (!data) {
+                return this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, `'${collectionName}' with id='${id}' not found`);
+            }
+        }
+        else if (query) {
+            data = this.applyQuery(collection, query);
+            if (!data.length) {
+                return this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, `'${collectionName}' with id='${id}' not found`);
+            }
+        }
+        return {
+            body: this.bodify(this.clone(data)),
+            headers: headers,
+            status: STATUS_CODE.OK
+        };
+    }
+    // Create entity
+    // Can update an existing entity too if post409 is false.
+    /**
+     * @protected
+     * @param {?} __0
+     * @return {?}
+     */
+    post({ collection, collectionName, headers, id, request, resourceUrl, url }) {
+        /** @type {?} */
+        const requestBody = request.body;
+        /** @type {?} */
+        const item = this.clone(requestBody);
+        // tslint:disable-next-line:triple-equals
+        if (item.id == undefined) {
+            try {
+                item.id = id || this.genId(collection, collectionName);
+            }
+            catch (error) {
+                /** @type {?} */
+                const message = error.message || '';
+                if (/id type is non-numeric/.test(message)) {
+                    return this.createErrorResponse(url, STATUS_CODE.UNPROCESSABLE_ENTRY, message);
+                }
+                else {
+                    console.error(error);
+                    return this.createErrorResponse(url, STATUS_CODE.INTERNAL_SERVER_ERROR, `Failed to generate new id for '${collectionName}'`);
+                }
+            }
+        }
+        if (id && id !== item.id) {
+            return this.createErrorResponse(url, STATUS_CODE.BAD_REQUEST, `Request id does not match item.id`);
+        }
+        else {
+            id = item.id;
+        }
+        /** @type {?} */
+        const existingIx = this.indexOf(collection, id);
+        /** @type {?} */
+        const body = this.bodify(item);
+        if (existingIx === -1) {
+            collection.push(item);
+            headers.set('Location', resourceUrl + '/' + id);
+            return { headers, body, status: STATUS_CODE.CREATED };
+        }
+        else if (this.config.post409) {
+            return this.createErrorResponse(url, STATUS_CODE.CONFLICT, `'${collectionName}' item with id='${id} exists and may not be updated with POST; use PUT instead.`);
+        }
+        else {
+            collection[existingIx] = item;
+            return this.config.post204 ?
+                { headers, status: STATUS_CODE.NO_CONTENT } : // successful; no content
+                { headers, body, status: STATUS_CODE.OK }; // successful; return entity
+        }
+    }
+    // Update existing entity
+    // Can create an entity too if put404 is false.
+    /**
+     * @protected
+     * @param {?} __0
+     * @return {?}
+     */
+    put({ collection, collectionName, headers, id, request, url }) {
+        /** @type {?} */
+        const item = this.clone(request.body);
+        // tslint:disable-next-line:triple-equals
+        if (item.id == undefined) {
+            return this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, `Missing '${collectionName}' id`);
+        }
+        if (id && id !== item.id) {
+            return this.createErrorResponse(url, STATUS_CODE.BAD_REQUEST, `Request for '${collectionName}' id does not match item.id`);
+        }
+        else {
+            id = item.id;
+        }
+        /** @type {?} */
+        const existingIx = this.indexOf(collection, id);
+        /** @type {?} */
+        const body = this.bodify(item);
+        if (existingIx > -1) {
+            collection[existingIx] = item;
+            return this.config.put204 ?
+                { headers, status: STATUS_CODE.NO_CONTENT } : // successful; no content
+                { headers, body, status: STATUS_CODE.OK }; // successful; return entity
+        }
+        else if (this.config.put404) {
+            // item to update not found; use POST to create new item for this id.
+            return this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, `'${collectionName}' item with id='${id} not found and may not be created with PUT; use POST instead.`);
+        }
+        else {
+            // create new item for id not found
+            collection.push(item);
+            return { headers, body, status: STATUS_CODE.CREATED };
+        }
+    }
+    /**
+     * @protected
+     * @param {?} __0
+     * @return {?}
+     */
+    delete({ collection, collectionName, headers, id, url }) {
+        // tslint:disable-next-line:triple-equals
+        if (id == undefined) {
+            return this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, `Missing "${collectionName}" id`);
+        }
+        /** @type {?} */
+        const exists = this.removeById(collection, id);
+        return {
+            headers: headers,
+            status: (exists || !this.config.delete404) ? STATUS_CODE.NO_CONTENT : STATUS_CODE.NOT_FOUND
+        };
+    }
+    ///////
     /**
      * @param {?} request
      * @return {?}
@@ -1504,33 +1503,9 @@ class HttpClientBackendService extends BackendService {
         }
         catch (error) {
             /** @type {?} */
-            const resOptions = this.createErrorResponseOptions(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, `${error.message || error}`);
-            return this.createResponse$(() => resOptions);
+            const response = this.createErrorResponse(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, `${error.message || error}`);
+            return this.createResponse$(() => response);
         }
-    }
-    /**
-     * @protected
-     * @param {?} request
-     * @return {?}
-     */
-    getJsonBody(request) {
-        return request.body;
-    }
-    /**
-     * @protected
-     * @param {?} request
-     * @return {?}
-     */
-    getRequestMethod(request) {
-        return (request.method || 'get').toLowerCase();
-    }
-    /**
-     * @protected
-     * @param {?} headers
-     * @return {?}
-     */
-    createHeaders(headers) {
-        return new HttpHeaders(headers);
     }
     /**
      * @protected
@@ -1549,11 +1524,11 @@ class HttpClientBackendService extends BackendService {
     }
     /**
      * @protected
-     * @param {?} resOptions$
+     * @param {?} response$
      * @return {?}
      */
-    createResponse$fromResponseOptions$(resOptions$) {
-        return resOptions$.pipe(map((options) => new HttpResponse(options)));
+    createResponse$fromMemoryResponse$(response$) {
+        return response$.pipe(map((options) => new HttpResponse(options)));
     }
     /**
      * @protected
@@ -1569,13 +1544,13 @@ class HttpClientBackendService extends BackendService {
         }
     }
 }
-HttpClientBackendService.decorators = [
+BackendService.decorators = [
     { type: Injectable }
 ];
 /** @nocollapse */
-HttpClientBackendService.ctorParameters = () => [
+BackendService.ctorParameters = () => [
     { type: MemoryDataService },
-    { type: MemoryBackendConfig, decorators: [{ type: Inject, args: [MemoryBackendConfig,] }, { type: Optional }] },
+    { type: MemoryBackendConfig },
     { type: XhrFactory }
 ];
 
@@ -1591,12 +1566,12 @@ HttpClientBackendService.ctorParameters = () => [
  * @param {?} factory
  * @return {?}
  */
-function httpClientBackendServiceFactory(dataService, config, factory) {
+function BackendServiceFactory(dataService, config, factory) {
     /** @type {?} */
-    const backend = new HttpClientBackendService(dataService, config, factory);
+    const backend = new BackendService(dataService, config, factory);
     return backend;
 }
-class HttpClientMemoryModule {
+class MemoryModule {
     /**
      * @param {?} dataService
      * @param {?=} config
@@ -1604,11 +1579,11 @@ class HttpClientMemoryModule {
      */
     static forRoot(dataService, config) {
         return {
-            ngModule: HttpClientMemoryModule,
+            ngModule: MemoryModule,
             providers: [
                 { provide: MemoryDataService, useClass: dataService },
                 { provide: MemoryBackendConfig, useValue: config },
-                { provide: HttpBackend, useFactory: httpClientBackendServiceFactory, deps: [MemoryDataService, MemoryBackendConfig, XhrFactory] }
+                { provide: HttpBackend, useFactory: BackendServiceFactory, deps: [MemoryDataService, MemoryBackendConfig, XhrFactory] }
             ]
         };
     }
@@ -1618,10 +1593,10 @@ class HttpClientMemoryModule {
      * @return {?}
      */
     static forFeature(dataService, config) {
-        return HttpClientMemoryModule.forRoot(dataService, config);
+        return MemoryModule.forRoot(dataService, config);
     }
 }
-HttpClientMemoryModule.decorators = [
+MemoryModule.decorators = [
     { type: NgModule, args: [{},] }
 ];
 
@@ -1655,7 +1630,7 @@ class DataModule {
             ngModule: DataModule,
             providers: [
                 { provide: DATA_CONFIG, useValue: config },
-                ...HttpClientMemoryModule.forRoot(DataService, config.memory).providers
+                ...MemoryModule.forRoot(DataService, config.memory).providers
             ]
         };
     }
@@ -1665,7 +1640,7 @@ DataModule.decorators = [
                 imports: [
                     CommonModule,
                     HttpClientModule,
-                    HttpClientMemoryModule,
+                    MemoryModule,
                     CoreModule,
                 ],
                 providers: [
@@ -1675,7 +1650,7 @@ DataModule.decorators = [
                     ...components,
                 ],
                 exports: [
-                    HttpClientMemoryModule,
+                    MemoryModule,
                     CoreModule,
                     ...components,
                 ],
@@ -1696,6 +1671,6 @@ DataModule.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { DataConfig, DATA_CONFIG, DataService, DataModuleComponent, DataModule, HttpClientMemoryModule as ɵb, httpClientBackendServiceFactory as ɵa, MemoryBackendConfig as ɵd, MemoryDataService as ɵc };
+export { DataConfig, DATA_CONFIG, DataService, DataModuleComponent, DataModule, MemoryBackendConfig as ɵd, MemoryDataService as ɵc, BackendServiceFactory as ɵa, MemoryModule as ɵb };
 
 //# sourceMappingURL=designr-data.js.map

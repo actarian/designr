@@ -33,24 +33,30 @@ button,
 
 .btn--primary {
 	padding: 8px 13px;
-	border-radius: 4px;
+	border-radius: $btn-radius;
 	background: $primary;
 	font-size: 16px;
 
 	&,
-	&:hover {
-		color: #fff;
+	&:hover,
+	&:active,
+	&:focus,
+	&:visited {
+		color: $foreground-secondary;
 	}
 }
 
 .btn--secondary {
 	padding: 8px 13px;
-	border-radius: 4px;
+	border-radius: $btn-radius;
 	background: $background;
 
 	&,
-	&:hover {
-		color: #000;
+	&:hover,
+	&:active,
+	&:focus,
+	&:visited {
+		color: $foreground;
 	}
 }
 
@@ -60,12 +66,12 @@ button,
 
 .btn--facebook {
 	background: $facebook;
-	color: white;
+	color: $foreground-secondary;
 }
 
 .btn--google {
 	background: $google;
-	color: white;
+	color: $foreground-secondary;
 }
 
 .btn-prev {
@@ -74,4 +80,18 @@ button,
 
 .btn-close {
 	@extend .btn--secondary;
+}
+
+.btn--close,
+.btn--prev {
+	padding: 0;
+	width: 40px;
+	height: 40px;
+	font-size: 0;
+
+	[sprite],
+	.sprite {
+		width: 20px;
+		height: 20px;
+	}
 }

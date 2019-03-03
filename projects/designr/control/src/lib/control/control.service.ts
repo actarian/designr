@@ -23,7 +23,7 @@ export class ControlService {
 	resolve(control: ControlBase<any>): Type<ControlBaseComponent> {
 		let component: Type<ControlBaseComponent>;
 		if (control) {
-			component = this.options.controls[control.schema] || ControlBaseComponent;
+			component = this.options.controls[control.schema].component || ControlBaseComponent;
 		} else {
 			component = ControlBaseComponent;
 		}

@@ -1,14 +1,20 @@
 import { Component, DoCheck, Inject, PLATFORM_ID } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { DisposableComponent, Label, LabelService, SlugService } from '@designr/core';
 import { GoogleTagManagerPageViewEvent } from '@designr/plugins';
 // import { SwUpdate } from '@angular/service-worker';
 import { takeUntil } from 'rxjs/operators';
+import { pageTransitions } from './app.animations';
 // import { GtmService } from '@designr/plugins';
 
 @Component({
 	selector: 'app-component',
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss']
+	styleUrls: ['./app.component.scss'],
+	animations: [
+		pageTransitions
+		// animation triggers go here
+	]
 })
 
 export class AppComponent extends DisposableComponent implements DoCheck {
@@ -36,6 +42,14 @@ export class AppComponent extends DisposableComponent implements DoCheck {
 		// console.log('AppComponent.ngDoCheck');
 		this.slugService.collect();
 		this.labelService.collect();
+	}
+
+	prepareRoute(outlet: RouterOutlet) {
+		const snapshot = outlet.isActivated && outlet.activatedRoute && outlet.activatedRoute.snapshot;
+		const data = snapshot && snapshot.data;
+		const page = data && snapshot.data.pageResolver && snapshot.data.pageResolver.page;
+		const component = page && page.component;
+		return component; // outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
 	}
 
 	onPageView(e: GoogleTagManagerPageViewEvent) {

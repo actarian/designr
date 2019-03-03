@@ -5,7 +5,7 @@ import { CoreModule } from '@designr/core';
 import { DataConfig, DATA_CONFIG } from './config/data.config';
 import { DataService } from './config/data.service';
 import { DataModuleComponent } from './data-module.component';
-import { HttpClientMemoryModule } from './memory/http-client-memory.module';
+import { MemoryModule } from './memory/memory.module';
 
 const services = [
 	DataService,
@@ -31,7 +31,7 @@ const guards = [
 	imports: [
 		CommonModule,
 		HttpClientModule,
-		HttpClientMemoryModule,
+		MemoryModule,
 		CoreModule,
 	],
 	providers: [
@@ -41,7 +41,7 @@ const guards = [
 		...components,
 	],
 	exports: [
-		HttpClientMemoryModule,
+		MemoryModule,
 		CoreModule,
 		...components,
 	],
@@ -64,7 +64,7 @@ export class DataModule {
 			ngModule: DataModule,
 			providers: [
 				{ provide: DATA_CONFIG, useValue: config },
-				...HttpClientMemoryModule.forRoot(DataService, config.memory).providers
+				...MemoryModule.forRoot(DataService, config.memory).providers
 			]
 		};
 	}

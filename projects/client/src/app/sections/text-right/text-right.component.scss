@@ -1,3 +1,12 @@
+@import '../../../scss/mixins';
+
 .container {
+	@include aspect-grid(2, 1);
+	align-items: center;
+	justify-content: flex-end;
 	text-align: right;
+}
+
+.inner {
+	max-width: 600px;
 }

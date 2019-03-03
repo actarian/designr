@@ -1,0 +1,16 @@
+<ng-container *ngFor="let item of relatedItems">
+	<section class="section section--background">
+		<picture-component class="picture picture--background" [image]="page.images | image : 'Default'"></picture-component>
+		<div class="inner">
+			<div class="container">
+				<div class="group group--headline">
+					<div class="title" [innerHTML]="page.title"></div>
+					<div class="abstract" [innerHTML]="page.abstract"></div>
+				</div>
+				<div class="group group--btn">
+					<a class="btn btn--cta" [routerLink]="page.slug">{{page.title}}</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</ng-container>

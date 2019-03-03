@@ -19,16 +19,9 @@ import { AuthForgottenComponent } from './modals/auth/auth-forgotten.component';
 import { AuthSignInComponent } from './modals/auth/auth-sign-in.component';
 import { AuthSignUpComponent } from './modals/auth/auth-sign-up.component';
 import { AuthComponent } from './modals/auth/auth.component';
-import { ContentComponent } from './shared/content/content.component';
-import { CookieComponent } from './shared/cookie/cookie.component';
 import { DebugComponent } from './shared/debug/debug.component';
-import { FeatureComponent } from './shared/feature/feature.component';
-import { FooterComponent } from './shared/footer/footer.component';
-import { HeaderComponent } from './shared/header/header.component';
-import { HeroComponent } from './shared/hero/hero.component';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { PictureComponent } from './shared/picture/picture.component';
-import { RelatedComponent } from './shared/related/related.component';
 import { SpritesComponent } from './shared/sprites/sprites.component';
 import { UserService } from './shared/user/user.service';
 
@@ -53,16 +46,9 @@ const services = [
 ];
 
 const shared: Type<DisposableComponent>[] = [
-	ContentComponent,
-	CookieComponent,
 	DebugComponent,
-	FeatureComponent,
-	FooterComponent,
-	HeaderComponent,
-	HeroComponent,
 	LoaderComponent,
 	PictureComponent,
-	RelatedComponent,
 	SpritesComponent,
 ];
 

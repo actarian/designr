@@ -1,12 +1,12 @@
 <div class="container">
-	<div class="headline">Sign in your account</div>
-	<div class="btn-group">
+	<div class="group group--headline">Sign in your account</div>
+	<div class="group group--stack">
 		<button type="button" class="btn btn--cta btn--facebook" [ngClass]="{ 'btn--busy': facebookBusy }" (click)="onFacebook()">Facebook SignIn</button>
 		<button type="button" class="btn btn--cta btn--google" [ngClass]="{ 'btn--busy': googleBusy }" (click)="onGoogle()">Google SignIn</button>
 		<button type="button" class="btn btn--cta" (click)="onSignIn()">SignIn</button>
 	</div>
-	<div class="headline">Don't have an account? Register</div>
-	<div class="btn-group">
+	<div class="group group--headline">Don't have an account? Register</div>
+	<div class="group group--stack">
 		<button type="button" class="btn btn--cta" (click)="onSignUp()">Register</button>
 	</div>
 </div>

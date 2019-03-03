@@ -5,7 +5,7 @@ import { DisposableComponent, CoreModule } from '@designr/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { catchError, debounceTime, switchMap, take } from 'rxjs/operators';
 import { FormGroup, NG_VALUE_ACCESSOR, FormControl, Validators, NG_ASYNC_VALIDATORS, NG_VALIDATORS, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Component, forwardRef, Input, Renderer2, InjectionToken, Inject, Injectable, Directive, Attribute, EventEmitter, HostListener, Output, ComponentFactoryResolver, ViewChild, ViewContainerRef, NgModule, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
+import { Component, forwardRef, Input, Renderer2, InjectionToken, Inject, Injectable, Directive, Attribute, EventEmitter, HostListener, Output, ComponentFactoryResolver, ViewChild, ViewContainerRef, defineInjectable, inject, NgModule, Optional, SkipSelf } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -65,6 +65,23 @@ var ControlBase = /** @class */ (function () {
     ControlBase.uid = 0;
     return ControlBase;
 }());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var ControlCheckbox = /** @class */ (function (_super) {
+    __extends(ControlCheckbox, _super);
+    function ControlCheckbox(options) {
+        if (options === void 0) { options = {}; }
+        var _this = _super.call(this, options) || this;
+        _this.component = 'ControlCheckboxComponent';
+        _this.schema = 'checkbox';
+        _this.type = options.type || _this.type;
+        return _this;
+    }
+    return ControlCheckbox;
+}(ControlBase));
 
 /**
  * @fileoverview added by tsickle
@@ -268,23 +285,6 @@ var ControlBaseComponent = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-var ControlCheckbox = /** @class */ (function (_super) {
-    __extends(ControlCheckbox, _super);
-    function ControlCheckbox(options) {
-        if (options === void 0) { options = {}; }
-        var _this = _super.call(this, options) || this;
-        _this.component = 'ControlCheckboxComponent';
-        _this.schema = 'checkbox';
-        _this.type = options.type || _this.type;
-        return _this;
-    }
-    return ControlCheckbox;
-}(ControlBase));
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var ControlCheckboxComponent = /** @class */ (function (_super) {
     __extends(ControlCheckboxComponent, _super);
     function ControlCheckboxComponent(renderer) {
@@ -444,7 +444,7 @@ var ControlNumberComponent = /** @class */ (function (_super) {
     ControlNumberComponent.decorators = [
         { type: Component, args: [{
                     selector: 'control-number-component',
-                    template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<input class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [type]=\"control.type\" [attr.step]=\"control.step\" (input)=\"onInput($event)\" (focus)=\"onFocus($event)\" (blur)=\"onBlur($event)\" [value]=\"getFormattedValue()\">\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.min\">{{ 'errors.min' | label : null : { min: control.min } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.max\">{{ 'errors.max' | label : null : { max: control.max } }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
+                    template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<input class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\" [attr.step]=\"control.step\" (input)=\"onInput($event)\" (focus)=\"onFocus($event)\" (blur)=\"onBlur($event)\" [value]=\"getFormattedValue()\">\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.min\">{{ 'errors.min' | label : null : { min: control.min } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.max\">{{ 'errors.max' | label : null : { max: control.max } }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
                     providers: [{
                             provide: NG_VALUE_ACCESSOR,
                             useExisting: forwardRef(function () { return ControlNumberComponent; }),
@@ -713,16 +713,55 @@ var ControlTextareaComponent = /** @class */ (function (_super) {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
+var entryComponents = [
+    ControlCheckboxComponent,
+    ControlEmailComponent,
+    ControlMarkdownComponent,
+    ControlNumberComponent,
+    ControlPasswordComponent,
+    ControlRadioComponent,
+    ControlSelectComponent,
+    ControlTextComponent,
+    ControlTextareaComponent,
+];
+/** @type {?} */
 var BaseControls = {
-    'checkbox': ControlCheckboxComponent,
-    'email': ControlEmailComponent,
-    'markdown': ControlMarkdownComponent,
-    'number': ControlNumberComponent,
-    'password': ControlPasswordComponent,
-    'radio': ControlRadioComponent,
-    'select': ControlSelectComponent,
-    'text': ControlTextComponent,
-    'textarea': ControlTextareaComponent,
+    'checkbox': {
+        component: ControlCheckboxComponent,
+        model: ControlCheckbox
+    },
+    'email': {
+        component: ControlEmailComponent,
+        model: ControlEmail
+    },
+    'markdown': {
+        component: ControlMarkdownComponent,
+        model: ControlMarkdown
+    },
+    'number': {
+        component: ControlNumberComponent,
+        model: ControlNumber
+    },
+    'password': {
+        component: ControlPasswordComponent,
+        model: ControlPassword
+    },
+    'radio': {
+        component: ControlRadioComponent,
+        model: ControlRadio
+    },
+    'select': {
+        component: ControlSelectComponent,
+        model: ControlSelect
+    },
+    'text': {
+        component: ControlTextComponent,
+        model: ControlText
+    },
+    'textarea': {
+        component: ControlTextareaComponent,
+        model: ControlTextarea
+    },
 };
 var ControlConfig = /** @class */ (function () {
     function ControlConfig(options) {
@@ -829,7 +868,7 @@ var ControlService = /** @class */ (function () {
         /** @type {?} */
         var component;
         if (control) {
-            component = this.options.controls[control.schema] || ControlBaseComponent;
+            component = this.options.controls[control.schema].component || ControlBaseComponent;
         }
         else {
             component = ControlBaseComponent;
@@ -1217,29 +1256,21 @@ var FormService = /** @class */ (function () {
      * @return {?}
      */
     function (options) {
+        var _this = this;
         /** @type {?} */
         var controls = options.map(function (o) {
-            switch (o.schema) {
-                case 'checkbox':
-                    return new ControlCheckbox(o);
-                case 'email':
-                    return new ControlEmail(o);
-                case 'number':
-                    return new ControlNumber(o);
-                case 'password':
-                    return new ControlPassword(o);
-                case 'radio':
-                    return new ControlRadio(o);
-                case 'select':
-                    return new ControlSelect(o);
-                case 'markdown':
-                    return new ControlMarkdown(o);
-                case 'text':
-                    return new ControlText(o);
-                default:
-                    return new ControlText(o);
+            /** @type {?} */
+            var control = _this.controlService.options.controls[o.schema];
+            if (control) {
+                /** @type {?} */
+                var controlBase = control.model;
+                return new controlBase(o);
             }
-        });
+            else {
+                console.error("missing control for key " + o.schema);
+                return null;
+            }
+        }).filter(function (x) { return x; });
         controls.sort(function (a, b) { return a.order - b.order; });
         return controls;
     };
@@ -1294,21 +1325,12 @@ var services = [
     FormService,
 ];
 /** @type {?} */
-var components = [
+var components = __spread([
     ControlsComponent,
     ControlModuleComponent,
     ControlOutletComponent,
-    ControlBaseComponent,
-    ControlCheckboxComponent,
-    ControlEmailComponent,
-    ControlMarkdownComponent,
-    ControlNumberComponent,
-    ControlPasswordComponent,
-    ControlRadioComponent,
-    ControlSelectComponent,
-    ControlTextComponent,
-    ControlTextareaComponent,
-];
+    ControlBaseComponent
+], entryComponents);
 /** @type {?} */
 var directives = [
     UppercaseDirective,
@@ -1355,7 +1377,7 @@ var ControlModule = /** @class */ (function () {
                     ],
                     providers: __spread(services, pipes, validators),
                     declarations: __spread(components, directives, pipes, validators),
-                    entryComponents: __spread(components),
+                    entryComponents: __spread(entryComponents),
                     exports: __spread(components, directives, pipes, validators),
                 },] }
     ];
@@ -1456,6 +1478,6 @@ ValueAccessorBase = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { ControlConfig, CONTROL_CONFIG, ControlModuleComponent, ControlModule, ControlBase, ControlBaseOptions, ControlBaseComponent, ControlCheckbox, ControlCheckboxComponent, ControlOutletComponent, ValueAccessorBase, ControlService, ControlsComponent, ControlEmail, ControlEmailComponent, ControlMarkdown, ControlMarkdownComponent, ControlNumber, ControlNumberComponent, ControlPassword, ControlPasswordComponent, ControlRadio, ControlRadioComponent, ControlSelect, ControlSelectComponent, ControlText, ControlTextComponent, ControlTextarea, ControlTextareaComponent, ExistsValidator, MatchValidator, matchValidator, UppercaseDirective, FormService };
+export { ControlConfig, CONTROL_CONFIG, ControlModuleComponent, ControlModule, ControlBase, ControlBaseOptions, ControlBaseComponent, ControlCheckbox, ControlCheckboxComponent, ControlOutletComponent, ValueAccessorBase, ControlService, ControlsComponent, ControlEmail, ControlEmailComponent, ControlMarkdown, ControlMarkdownComponent, ControlNumber, ControlNumberComponent, ControlPassword, ControlPasswordComponent, ControlRadio, ControlRadioComponent, ControlSelect, ControlSelectComponent, ControlText, ControlTextComponent, ControlTextarea, ControlTextareaComponent, ExistsValidator, MatchValidator, matchValidator, UppercaseDirective, FormService, entryComponents as ɵa };
 
 //# sourceMappingURL=designr-control.js.map

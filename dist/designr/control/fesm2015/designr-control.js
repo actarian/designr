@@ -4,7 +4,7 @@ import { DisposableComponent, CoreModule } from '@designr/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { catchError, debounceTime, switchMap, take } from 'rxjs/operators';
 import { FormGroup, NG_VALUE_ACCESSOR, FormControl, Validators, NG_ASYNC_VALIDATORS, NG_VALIDATORS, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Component, forwardRef, Input, Renderer2, InjectionToken, Inject, Injectable, ComponentFactoryResolver, ViewChild, ViewContainerRef, Directive, Attribute, EventEmitter, HostListener, Output, NgModule, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
+import { Component, forwardRef, Input, Renderer2, InjectionToken, Inject, Injectable, ComponentFactoryResolver, ViewChild, ViewContainerRef, Directive, Attribute, EventEmitter, HostListener, Output, defineInjectable, inject, NgModule, Optional, SkipSelf } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -59,6 +59,22 @@ class ControlBase {
 }
 // export class ControlBase<T> implements ControlValueAccessor {
 ControlBase.uid = 0;
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlCheckbox extends ControlBase {
+    /**
+     * @param {?=} options
+     */
+    constructor(options = {}) {
+        super(options);
+        this.component = 'ControlCheckboxComponent';
+        this.schema = 'checkbox';
+        this.type = options.type || this.type;
+    }
+}
 
 /**
  * @fileoverview added by tsickle
@@ -207,22 +223,6 @@ ControlBaseComponent.propDecorators = {
     control: [{ type: Input }],
     form: [{ type: Input }]
 };
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ControlCheckbox extends ControlBase {
-    /**
-     * @param {?=} options
-     */
-    constructor(options = {}) {
-        super(options);
-        this.component = 'ControlCheckboxComponent';
-        this.schema = 'checkbox';
-        this.type = options.type || this.type;
-    }
-}
 
 /**
  * @fileoverview added by tsickle
@@ -386,7 +386,7 @@ class ControlNumberComponent extends ControlBaseComponent {
 ControlNumberComponent.decorators = [
     { type: Component, args: [{
                 selector: 'control-number-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<input class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [type]=\"control.type\" [attr.step]=\"control.step\" (input)=\"onInput($event)\" (focus)=\"onFocus($event)\" (blur)=\"onBlur($event)\" [value]=\"getFormattedValue()\">\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.min\">{{ 'errors.min' | label : null : { min: control.min } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.max\">{{ 'errors.max' | label : null : { max: control.max } }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
+                template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<input class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\" [attr.step]=\"control.step\" (input)=\"onInput($event)\" (focus)=\"onFocus($event)\" (blur)=\"onBlur($event)\" [value]=\"getFormattedValue()\">\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.min\">{{ 'errors.min' | label : null : { min: control.min } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.max\">{{ 'errors.max' | label : null : { max: control.max } }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
                 providers: [{
                         provide: NG_VALUE_ACCESSOR,
                         useExisting: forwardRef(() => ControlNumberComponent),
@@ -648,16 +648,55 @@ ControlTextareaComponent.propDecorators = {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
+const entryComponents = [
+    ControlCheckboxComponent,
+    ControlEmailComponent,
+    ControlMarkdownComponent,
+    ControlNumberComponent,
+    ControlPasswordComponent,
+    ControlRadioComponent,
+    ControlSelectComponent,
+    ControlTextComponent,
+    ControlTextareaComponent,
+];
+/** @type {?} */
 const BaseControls = {
-    'checkbox': ControlCheckboxComponent,
-    'email': ControlEmailComponent,
-    'markdown': ControlMarkdownComponent,
-    'number': ControlNumberComponent,
-    'password': ControlPasswordComponent,
-    'radio': ControlRadioComponent,
-    'select': ControlSelectComponent,
-    'text': ControlTextComponent,
-    'textarea': ControlTextareaComponent,
+    'checkbox': {
+        component: ControlCheckboxComponent,
+        model: ControlCheckbox
+    },
+    'email': {
+        component: ControlEmailComponent,
+        model: ControlEmail
+    },
+    'markdown': {
+        component: ControlMarkdownComponent,
+        model: ControlMarkdown
+    },
+    'number': {
+        component: ControlNumberComponent,
+        model: ControlNumber
+    },
+    'password': {
+        component: ControlPasswordComponent,
+        model: ControlPassword
+    },
+    'radio': {
+        component: ControlRadioComponent,
+        model: ControlRadio
+    },
+    'select': {
+        component: ControlSelectComponent,
+        model: ControlSelect
+    },
+    'text': {
+        component: ControlTextComponent,
+        model: ControlText
+    },
+    'textarea': {
+        component: ControlTextareaComponent,
+        model: ControlTextarea
+    },
 };
 class ControlConfig {
     /**
@@ -760,7 +799,7 @@ class ControlService {
         /** @type {?} */
         let component;
         if (control) {
-            component = this.options.controls[control.schema] || ControlBaseComponent;
+            component = this.options.controls[control.schema].component || ControlBaseComponent;
         }
         else {
             component = ControlBaseComponent;
@@ -1106,27 +1145,18 @@ class FormService {
     getControlsFromOptions(options) {
         /** @type {?} */
         const controls = options.map(o => {
-            switch (o.schema) {
-                case 'checkbox':
-                    return new ControlCheckbox(o);
-                case 'email':
-                    return new ControlEmail(o);
-                case 'number':
-                    return new ControlNumber(o);
-                case 'password':
-                    return new ControlPassword(o);
-                case 'radio':
-                    return new ControlRadio(o);
-                case 'select':
-                    return new ControlSelect(o);
-                case 'markdown':
-                    return new ControlMarkdown(o);
-                case 'text':
-                    return new ControlText(o);
-                default:
-                    return new ControlText(o);
+            /** @type {?} */
+            const control = this.controlService.options.controls[o.schema];
+            if (control) {
+                /** @type {?} */
+                const controlBase = control.model;
+                return new controlBase(o);
             }
-        });
+            else {
+                console.error(`missing control for key ${o.schema}`);
+                return null;
+            }
+        }).filter(x => x);
         controls.sort((a, b) => a.order - b.order);
         return controls;
     }
@@ -1177,15 +1207,7 @@ const components = [
     ControlModuleComponent,
     ControlOutletComponent,
     ControlBaseComponent,
-    ControlCheckboxComponent,
-    ControlEmailComponent,
-    ControlMarkdownComponent,
-    ControlNumberComponent,
-    ControlPasswordComponent,
-    ControlRadioComponent,
-    ControlSelectComponent,
-    ControlTextComponent,
-    ControlTextareaComponent,
+    ...entryComponents,
 ];
 /** @type {?} */
 const directives = [
@@ -1243,7 +1265,7 @@ ControlModule.decorators = [
                     ...validators,
                 ],
                 entryComponents: [
-                    ...components,
+                    ...entryComponents,
                 ],
                 exports: [
                     ...components,
@@ -1325,6 +1347,6 @@ class ValueAccessorBase {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { ControlConfig, CONTROL_CONFIG, ControlModuleComponent, ControlModule, ControlBase, ControlBaseOptions, ControlBaseComponent, ControlCheckbox, ControlCheckboxComponent, ControlOutletComponent, ValueAccessorBase, ControlService, ControlsComponent, ControlEmail, ControlEmailComponent, ControlMarkdown, ControlMarkdownComponent, ControlNumber, ControlNumberComponent, ControlPassword, ControlPasswordComponent, ControlRadio, ControlRadioComponent, ControlSelect, ControlSelectComponent, ControlText, ControlTextComponent, ControlTextarea, ControlTextareaComponent, ExistsValidator, MatchValidator, matchValidator, UppercaseDirective, FormService };
+export { ControlConfig, CONTROL_CONFIG, ControlModuleComponent, ControlModule, ControlBase, ControlBaseOptions, ControlBaseComponent, ControlCheckbox, ControlCheckboxComponent, ControlOutletComponent, ValueAccessorBase, ControlService, ControlsComponent, ControlEmail, ControlEmailComponent, ControlMarkdown, ControlMarkdownComponent, ControlNumber, ControlNumberComponent, ControlPassword, ControlPasswordComponent, ControlRadio, ControlRadioComponent, ControlSelect, ControlSelectComponent, ControlText, ControlTextComponent, ControlTextarea, ControlTextareaComponent, ExistsValidator, MatchValidator, matchValidator, UppercaseDirective, FormService, entryComponents as ɵa };
 
 //# sourceMappingURL=designr-control.js.map

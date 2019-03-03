@@ -1,16 +1,15 @@
 <div class="modal" [ngClass]="{ active: modalCount > 0 }">
-	<div class="modal-bg" (click)="doClose()"></div>
-	<div class="modal-page" [ngClass]="className">
-		<div class="modal-header">
+	<div class="modal__background" (click)="doClose()"></div>
+	<div class="modal__page" [ngClass]="className">
+		<div class="modal__header">
 			<button type="button" class="btn btn--prev" (click)="doPrev()" *ngIf="modalCount > 1" [title]="'modal.back' | label : 'back'">
-				<span sprite="ico-prev"></span>
-				<span>{{'modal.back' | label : 'back'}}</span>
+				<span sprite="ico-prev"></span> <span>{{'modal.back' | label : 'back'}}</span>
 			</button>
 			<button type="button" class="btn btn--close" (click)="doClose()" title="'modal.close' | label : 'close'">
-				<span sprite="ico-close"></span>
+				<span sprite="ico-close"></span> <span>{{'modal.close' | label : 'close'}}</span>
 			</button>
 		</div>
-		<div class="modal-content">
+		<div class="modal__content">
 			<ng-container *ngFor="let modal of (modalService.modals$ | async); let last = last;">
 				<core-modal-view-component [modal]="modal" [hidden]="!last"></core-modal-view-component>
 			</ng-container>

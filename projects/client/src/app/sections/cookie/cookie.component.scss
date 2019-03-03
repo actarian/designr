@@ -1,0 +1,14 @@
+@import "../../../scss/variables";
+
+.section--cookie {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background: $background-secondary;
+	color: $foreground-secondary;
+	padding: 0;
+	margin: 0;
+	min-height: 0;
+	text-align: center;
+	font-size: 0.8rem;
+}

@@ -2,28 +2,9 @@
 
 section {
 	position: relative;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	justify-content: center;
-	min-height: 200px;
-}
-
-section+section {
-	border-bottom: 1px solid #eee;
 }
 
 .section--background {
-	background: $background-dark;
-	color: white;
-	margin-bottom: 10px;
-
-	&>.inner {
-		position: relative;
-		width: 100%;
-		max-width: 1040px;
-		margin: 0 auto;
-		@include aspect(5, 2);
-		align-items: center;
-	}
+	background: $background-secondary;
+	color: $foreground-secondary;
 }

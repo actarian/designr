@@ -1,0 +1,44 @@
+@import './mixins';
+
+.cards {
+	display: flex;
+	flex-wrap: wrap;
+	width: calc(100% + 30px);
+}
+
+.card {
+	margin-right: 30px;
+	margin-bottom: 30px;
+	border-radius: $card-radius;
+	overflow: hidden;
+	box-shadow: 0 30px 30px -5px rgba(0, 0, 0, 0.15);
+
+	.picture {
+		@include aspect-clip(3, 2);
+	}
+}
+
+.cards--3 {
+	width: calc(100% + 30px);
+
+	&>.card {
+		width: calc(100% / 3 - 30px);
+		flex: 1 0 calc(100% / 3 - 30px);
+	}
+
+	@media (max-width: 767px) {
+		&>.card {
+			width: calc(100% / 2 - 30px);
+			flex: 1 0 calc(100% / 2 - 30px);
+		}
+	}
+
+	@media (max-width: 479px) {
+		width: calc(100%);
+
+		&>.card {
+			width: 100%;
+			flex: 1 0 100%;
+		}
+	}
+}

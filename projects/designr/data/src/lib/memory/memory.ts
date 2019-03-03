@@ -1,11 +1,38 @@
+import { HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BackendService } from './backend.service';
 
-/**
- *  Minimum definition needed by base class
- */
-export interface HeadersCore {
-	set(name: string, value: string): void | any;
+/** Return information (UriInfo) about a URI  */
+export function parseUri(str: string): UriInfo {
+	// Adapted from parseuri package - http://blog.stevenlevithan.com/archives/parseuri
+	// tslint:disable-next-line:max-line-length
+	const URL_REGEX = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/;
+	const m = URL_REGEX.exec(str);
+	const uri: UriInfo = {
+		source: '',
+		protocol: '',
+		authority: '',
+		userInfo: '',
+		user: '',
+		password: '',
+		host: '',
+		port: '',
+		relative: '',
+		path: '',
+		directory: '',
+		file: '',
+		query: '',
+		anchor: ''
+	};
+	const keys = Object.keys(uri);
+	let i = keys.length;
+	while (i--) { uri[keys[i]] = m[i] || ''; }
+	return uri;
+}
+
+export function removeTrailingSlash(path: string) {
+	return path.replace(/\/$/, '');
 }
 
 /**
@@ -31,10 +58,10 @@ export abstract class MemoryDataService {
 	* and their items without touching the original source data.
 	*
 	* The in-mem backend service calls this method without a value the first time.
-	* The service calls it with the `RequestInfo` when it receives a POST `commands/resetDb` request.
+	* The service calls it with the `MemoryRequest` when it receives a POST `commands/resetDb` request.
 	* Your MemoryDataService can adjust its behavior accordingly.
 	*/
-	abstract createDb(reqInfo?: RequestInfo): {} | Observable<{}> | Promise<{}>;
+	abstract createDb(reqInfo?: MemoryRequest): {} | Observable<{}> | Promise<{}>;
 }
 
 /////////////////////////////////
@@ -118,34 +145,6 @@ export class MemoryBackendConfig {
 	}
 }
 
-/** Return information (UriInfo) about a URI  */
-export function parseUri(str: string): UriInfo {
-	// Adapted from parseuri package - http://blog.stevenlevithan.com/archives/parseuri
-	// tslint:disable-next-line:max-line-length
-	const URL_REGEX = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/;
-	const m = URL_REGEX.exec(str);
-	const uri: UriInfo = {
-		source: '',
-		protocol: '',
-		authority: '',
-		userInfo: '',
-		user: '',
-		password: '',
-		host: '',
-		port: '',
-		relative: '',
-		path: '',
-		directory: '',
-		file: '',
-		query: '',
-		anchor: ''
-	};
-	const keys = Object.keys(uri);
-	let i = keys.length;
-	while (i--) { uri[keys[i]] = m[i] || ''; }
-	return uri;
-}
-
 /**
  *
  * Interface for the result of the `parseRequestUrl` method:
@@ -172,117 +171,6 @@ export interface PassThruBackend {
 	handle(req: any): Observable<any>;
 }
 
-export function removeTrailingSlash(path: string) {
-	return path.replace(/\/$/, '');
-}
-
-/**
- *  Minimum definition needed by base class
- */
-export interface RequestCore {
-	url: string; // request URL
-	urlWithParams?: string; // request URL with query parameters added by `HttpParams`
-}
-
-/**
-* Interface for object w/ info about the current request url
-* extracted from an Http Request.
-* Also holds utility methods and configuration data from this service
-*/
-export interface RequestInfo {
-	request: RequestCore; // concrete type depends upon the Http library
-	apiBase: string;
-	collectionName: string;
-	collection: any;
-	headers: HeadersCore;
-	method: string;
-	id: any;
-	query: Map<string, string[]>;
-	resourceUrl: string;
-	url: string; // request URL
-	utils: RequestInfoUtilities;
-}
-
-/**
- * Interface for utility methods from this service instance.
- * Useful within an HTTP method override
- */
-export interface RequestInfoUtilities {
-	/**
-	 * Create a cold response Observable from a factory for ResponseOptions
-	 * the same way that the in-mem backend service does.
-	 * @param resOptionsFactory - creates ResponseOptions when observable is subscribed
-	 * @param withDelay - if true (default), add simulated latency delay from configuration
-	 */
-	createResponse$: (resOptionsFactory: () => ResponseOptions) => Observable<any>;
-
-	/**
-	 * Find first instance of item in collection by `item.id`
-	 * @param collection
-	 * @param id
-	 */
-	findById<T extends { id: any }>(collection: T[], id: any): T;
-
-	/** return the current, active configuration which is a blend of defaults and overrides */
-	getConfig(): MemoryBackendConfig;
-
-	/** Get the in-mem service's copy of the "database" */
-	getDb(): {};
-
-	/** Get JSON body from the request object */
-	getJsonBody(req: any): any;
-
-	/** Get location info from a url, even on server where `document` is not defined */
-	getLocation(url: string): UriInfo;
-
-	/** Get (or create) the "real" backend */
-	getPassThruBackend(): PassThruBackend;
-
-	/**
-	 * return true if can determine that the collection's `item.id` is a number
-	 * */
-	isCollectionIdNumeric<T extends { id: any }>(collection: T[], collectionName: string): boolean;
-
-	/**
-	 * Parses the request URL into a `ParsedRequestUrl` object.
-	 * Parsing depends upon certain values of `config`: `apiBase`, `host`, and `urlRoot`.
-	 */
-	parseRequestUrl(url: string): ParsedRequestUrl;
-}
-
-/**
- * Provide a `responseInterceptor` method of this type in your `inMemDbService` to
- * morph the response options created in the `collectionHandler`.
- */
-export type ResponseInterceptor = (res: ResponseOptions, ri: RequestInfo) => ResponseOptions;
-
-export interface ResponseOptions {
-	/**
-	 * String, Object, ArrayBuffer or Blob representing the body of the {@link Response}.
-	 */
-	body?: string | Object | ArrayBuffer | Blob;
-
-	/**
-	 * Response headers
-	 */
-	headers?: HeadersCore;
-
-	/**
-	 * Http {@link http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html status code}
-	 * associated with the response.
-	 */
-	status?: number;
-
-	/**
-	 * Status text for the status code
-	 */
-	statusText?: string;
-	/**
-	 * request url
-	 */
-	url?: string;
-}
-
 /** Interface of information about a Uri  */
 export interface UriInfo {
 	source: string;
@@ -300,3 +188,61 @@ export interface UriInfo {
 	query: string;
 	anchor: string;
 }
+
+/**
+* Interface for object w/ info about the current request url
+* extracted from an Http Request.
+* Also holds utility methods and configuration data from this service
+*/
+export interface MemoryRequest {
+	request: HttpRequest<any>; // concrete type depends upon the Http library
+	body: any;
+	apiBase: string;
+	collectionName: string;
+	collection: any;
+	headers: HttpHeaders;
+	method: string;
+	id: any;
+	query: Map<string, string[]>;
+	resourceUrl: string;
+	url: string; // request URL
+}
+
+export interface MemoryResponse {
+	/**
+	 * String, Object, ArrayBuffer or Blob representing the body of the {@link Response}.
+	 */
+	body?: string | Object | ArrayBuffer | Blob;
+
+	/**
+	 * Response headers
+	 */
+	headers?: HttpHeaders;
+
+	/**
+	 * Http {@link http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html status code}
+	 * associated with the response.
+	 */
+	status?: number;
+
+	/**
+	 * Status text for the status code
+	 */
+	statusText?: string;
+	/**
+	 * request url
+	 */
+	url?: string;
+}
+
+/**
+ * Provide a `requestInterceptor` method of this type in your `MemoryDataService` to
+ * intercept the created MemoryRequest.
+ */
+export type RequestInterceptor = (request: MemoryRequest, service: BackendService) => MemoryResponse | undefined;
+
+/**
+ * Provide a `responseInterceptor` method of this type in your `MemoryDataService` to
+ * morph the response options created in the `collectionHandler`.
+ */
+export type ResponseInterceptor = (response: MemoryResponse, request: MemoryRequest) => MemoryResponse;

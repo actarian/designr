@@ -9,17 +9,8 @@ import { ControlRadioComponent } from '../control/radio/control-radio.component'
 import { ControlSelectComponent } from '../control/select/control-select.component';
 import { ControlTextComponent } from '../control/text/control-text.component';
 import { ControlTextareaComponent } from '../control/textarea/control-textarea.component';
-export declare const BaseControls: {
-    'checkbox': typeof ControlCheckboxComponent;
-    'email': typeof ControlEmailComponent;
-    'markdown': typeof ControlMarkdownComponent;
-    'number': typeof ControlNumberComponent;
-    'password': typeof ControlPasswordComponent;
-    'radio': typeof ControlRadioComponent;
-    'select': typeof ControlSelectComponent;
-    'text': typeof ControlTextComponent;
-    'textarea': typeof ControlTextareaComponent;
-};
+export declare const entryComponents: (typeof ControlCheckboxComponent | typeof ControlEmailComponent | typeof ControlMarkdownComponent | typeof ControlNumberComponent | typeof ControlPasswordComponent | typeof ControlRadioComponent | typeof ControlSelectComponent | typeof ControlTextComponent | typeof ControlTextareaComponent)[];
+export declare const BaseControls: Controls;
 export declare class ControlConfig {
     controls?: Controls;
     constructor(options?: ControlConfig);

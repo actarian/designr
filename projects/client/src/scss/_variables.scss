@@ -1,14 +1,37 @@
-$font-sans: 'Roboto',
-Geneva,
-Verdana,
-sans-serif;
+body {
+	--color-background: #ffffff;
+	--color-background-secondary: #000000;
+	--color-foreground: #52555a;
+	--color-foreground-secondary: #ffffff;
+	--color-primary: #007aff;
+	--color-facebook: #3B5998;
+	--color-google: #dd4b39;
+	--font-primary: 'MaisonNeue', sans-serif;
+	--font-secondary: 'Roboto', sans-serif;
+	--font-size: 16px;
+	--btn-radius: 20px;
+	--card-radius: 30px;
+	--bullet-size: 12px;
+}
 
-$font-serif: 'Judson',
-serif;
+$background: var(--color-background);
+$background-secondary: var(--color-background-secondary);
+$foreground: var(--color-foreground);
+$foreground-secondary: var(--color-foreground-secondary);
+$primary: var(--color-primary);
+$facebook: var(--color-facebook);
+$google: var(--color-google);
+$font-primary: var(--font-primary);
+$font-secondary: var(--font-secondary);
+$font-size: var(--font-size);
+$btn-radius: var(--btn-radius);
+$card-radius: var(--card-radius);
+$bullet-size: var(--bullet-size);
 
-$background: #fff;
-$background-dark: #083b6b;
-$primary: #007aff;
-
-$facebook: #5e77aa;
-$google: #ea4335;
+$grid-columns: 12 !default;
+$grid-gutter-width: 30px !default;
+$grid-breakpoints: (xs: 0, sm: 768px, md: 1024px, lg: 1440px, xl: 1920px) !default;
+$container-max-widths: (sm: calc(100vw - 120px),
+md: calc(100vw - 180px),
+lg: calc(100vw - 240px),
+xl: calc(100vw - 300px)) !default;

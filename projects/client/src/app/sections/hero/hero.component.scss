@@ -1,0 +1,29 @@
+@import '../../../scss/mixins';
+
+.swiper-container {
+	width: 100%;
+	height: auto;
+	z-index: 0;
+}
+
+.container {
+	@include aspect-grid(3, 2);
+	justify-content: flex-start;
+	align-items: center;
+
+}
+
+.inner {
+	padding-top: 60px;
+}
+
+.title {
+	font-size: 4rem;
+	font-weight: 600;
+	line-height: 1;
+	margin-bottom: 20px;
+}
+
+.abstract {
+	font-size: 1.5rem;
+}

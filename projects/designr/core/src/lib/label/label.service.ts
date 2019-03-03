@@ -26,6 +26,7 @@ export class LabelService<T extends Label> extends ApiService<T> {
 	public missingHandler?: Function;
 
 	public cache: {} = {};
+	public parsers: {} = {};
 	private labels$: Subject<{ [key: string]: string; }> = new Subject();
 	private emitter: EventEmitter<any> = new EventEmitter();
 
@@ -36,7 +37,6 @@ export class LabelService<T extends Label> extends ApiService<T> {
 	}
 
 	private parseLabel(value: string | null, key: string, defaultValue?: string, params?: any): string | any {
-		console.log('parseLabel', value, key, defaultValue, params);
 		if (value == null) {
 			value = defaultValue;
 		}
@@ -60,7 +60,7 @@ export class LabelService<T extends Label> extends ApiService<T> {
 	}
 
 	private parseParams(value: string, params: any): string {
-		const TEMPLATE_REGEXP: RegExp = /@\s?([^{}\s]*)\s?/g; // /{{\s?([^{}\s]*)\s?}}/g;
+		const TEMPLATE_REGEXP: RegExp = /@([^{}\s]*)/g; // /{{\@\s?([^{}\s]*)\s?/g;
 		return value.replace(TEMPLATE_REGEXP, (text: string, key: string) => {
 			const replacer: string = params[key] as string;
 			return typeof replacer !== 'undefined' ? replacer : text;
@@ -69,7 +69,8 @@ export class LabelService<T extends Label> extends ApiService<T> {
 
 	getKey(key: string, defaultValue?: string, params?: any): Observable<string> {
 		if (this.cache.hasOwnProperty(key)) {
-			return of(this.cache[key]);
+			const label = this.cache[key];
+			return of(label);
 		} else {
 			Object.defineProperty(this.collectedKeys, key, {
 				value: { id: key, defaultValue: defaultValue },
@@ -78,11 +79,14 @@ export class LabelService<T extends Label> extends ApiService<T> {
 			});
 			this.cache[key] = null;
 		}
+		this.parsers[key] = (label) => this.parseLabel(label, key, defaultValue, params);
+		// !!! never reach this, return of(null) ?
 		return this.labels$.pipe(
 			map(items => items[key] || null),
 			filter(label => label !== null),
 			// tap(label => console.log('getKey', key, label)),
 			map(label => this.parseLabel(label, key, defaultValue, params)),
+			tap(label => this.cache[key] = label),
 		);
 	}
 
@@ -113,7 +117,7 @@ export class LabelService<T extends Label> extends ApiService<T> {
 				map((keys: LabelKey[]) => {
 					// console.log('LabelService.collectKeys', JSON.stringify(keys));
 					const items = {};
-					keys.forEach(x => items[x.id] = x.value || x.defaultValue || x.id);
+					keys.forEach(x => items[x.id] = this.parsers[x.id](x.value || x.defaultValue || x.id));
 					return items;
 				}),
 				tap((items: { [key: string]: string; }) => {

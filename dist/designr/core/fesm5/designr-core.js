@@ -1870,7 +1870,7 @@ var TranslateService = /** @class */ (function (_super) {
      */
     function (value, params) {
         /** @type {?} */
-        var TEMPLATE_REGEXP = /@\s?([^{}\s]*)\s?/g;
+        var TEMPLATE_REGEXP = /@([^{}\s]*)/g;
         return value.replace(TEMPLATE_REGEXP, function (text, key) {
             /** @type {?} */
             var replacer = (/** @type {?} */ (params[key]));
@@ -2668,6 +2668,7 @@ var LabelService = /** @class */ (function (_super) {
         // !!! new async pipe
         _this.collectedKeys = {};
         _this.cache = {};
+        _this.parsers = {};
         _this.labels$ = new Subject();
         _this.emitter = new EventEmitter();
         return _this;
@@ -2699,7 +2700,6 @@ var LabelService = /** @class */ (function (_super) {
      * @return {?}
      */
     function (value, key, defaultValue, params) {
-        console.log('parseLabel', value, key, defaultValue, params);
         if (value == null) {
             value = defaultValue;
         }
@@ -2745,7 +2745,7 @@ var LabelService = /** @class */ (function (_super) {
      */
     function (value, params) {
         /** @type {?} */
-        var TEMPLATE_REGEXP = /@\s?([^{}\s]*)\s?/g;
+        var TEMPLATE_REGEXP = /@([^{}\s]*)/g;
         return value.replace(TEMPLATE_REGEXP, function (text, key) {
             /** @type {?} */
             var replacer = (/** @type {?} */ (params[key]));
@@ -2767,7 +2767,9 @@ var LabelService = /** @class */ (function (_super) {
     function (key, defaultValue, params) {
         var _this = this;
         if (this.cache.hasOwnProperty(key)) {
-            return of(this.cache[key]);
+            /** @type {?} */
+            var label = this.cache[key];
+            return of(label);
         }
         else {
             Object.defineProperty(this.collectedKeys, key, {
@@ -2777,9 +2779,11 @@ var LabelService = /** @class */ (function (_super) {
             });
             this.cache[key] = null;
         }
+        this.parsers[key] = function (label) { return _this.parseLabel(label, key, defaultValue, params); };
+        // !!! never reach this, return of(null) ?
         return this.labels$.pipe(map(function (items) { return items[key] || null; }), filter(function (label) { return label !== null; }), 
         // tap(label => console.log('getKey', key, label)),
-        map(function (label) { return _this.parseLabel(label, key, defaultValue, params); }));
+        map(function (label) { return _this.parseLabel(label, key, defaultValue, params); }), tap(function (label) { return _this.cache[key] = label; }));
     };
     /**
      * @return {?}
@@ -2826,7 +2830,7 @@ var LabelService = /** @class */ (function (_super) {
                 // console.log('LabelService.collectKeys', JSON.stringify(keys));
                 /** @type {?} */
                 var items = {};
-                keys.forEach(function (x) { return items[x.id] = x.value || x.defaultValue || x.id; });
+                keys.forEach(function (x) { return items[x.id] = _this.parsers[x.id](x.value || x.defaultValue || x.id); });
                 return items;
             }), tap(function (items) {
                 Object.assign(_this.cache, items);

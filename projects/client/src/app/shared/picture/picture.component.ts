@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { DisposableComponent, Image } from '@designr/core';
+import { environment } from '../../../environments/environment';
+
+// background: string = '083b6b', foreground: string = '053461'
 
 @Component({
 	selector: 'picture-component',
@@ -13,13 +16,13 @@ export class PictureComponent extends DisposableComponent {
 	private getUrl(w: number, h: number): string {
 		w = Math.round(w);
 		h = Math.round(h);
-		if (this.image.url.indexOf('https://dummyimage.com/') === 0) {
-			const segments = this.image.url.split('/');
-			segments[3] = `${w}x${h}`;
-			return segments.join('/');
+		let url = this.image.url;
+		if (!url || url === '' || url.indexOf('placeholder') === 0) {
+			url = this.getPlaceholder(w, h);
 		} else {
-			return `${this.image.url}?width=${w}&height=${h}&rmode=crop`;
+			url = `${this.image.url}?width=${w}&height=${h}&rmode=crop`;
 		}
+		return url;
 	}
 
 	get srcset(): string {
@@ -41,6 +44,10 @@ export class PictureComponent extends DisposableComponent {
 	get src(): string {
 		const breakpoints = this.breakpoints.split(',').map(wh => wh.split('x').map(n => parseInt(n, 0)));
 		return this.getUrl(breakpoints[0][0], breakpoints[0][1]);
+	}
+
+	protected getPlaceholder(w: number = 1920, h: number = 1080) {
+		return environment.picture.placeholder.replace('${w}', w.toFixed()).replace('${h}', h.toFixed());
 	}
 
 }

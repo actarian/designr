@@ -7,9 +7,9 @@
 	<!-- LOGGER -->
 	<core-logger></core-logger>
 	<!-- PAGE -->
-	<router-outlet></router-outlet>
-	<!-- FOOTER -->
-	<footer-component></footer-component>
+	<div [@routeAnimations]="prepareRoute(outlet)">
+		<router-outlet #outlet="outlet"></router-outlet>
+	</div>
 	<!-- COOKIES -->
 	<cookie-component></cookie-component>
 	<!-- MODALS -->

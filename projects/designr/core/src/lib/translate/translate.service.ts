@@ -114,7 +114,7 @@ export class TranslateService<T extends Translate> extends ApiService<T> {
 	}
 
 	private parseParams(value: string, params: any): string {
-		const TEMPLATE_REGEXP: RegExp = /@\s?([^{}\s]*)\s?/g; // /{{\s?([^{}\s]*)\s?}}/g;
+		const TEMPLATE_REGEXP: RegExp = /@([^{}\s]*)/g; // /{{\s?([^{}\s]*)\s?}}/g;
 		return value.replace(TEMPLATE_REGEXP, (text: string, key: string) => {
 			const replacer: string = params[key] as string;
 			return typeof replacer !== 'undefined' ? replacer : text;

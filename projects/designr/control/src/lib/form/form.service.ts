@@ -1,15 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ControlBase, ControlBaseOptions } from '../control/base/control-base';
-import { ControlCheckbox } from '../control/checkbox/control-checkbox';
 import { ControlService } from '../control/control.service';
-import { ControlEmail } from '../control/email/control-email';
-import { ControlMarkdown } from '../control/markdown/control-markdown';
-import { ControlNumber } from '../control/number/control-number';
-import { ControlPassword } from '../control/password/control-password';
-import { ControlRadio } from '../control/radio/control-radio';
-import { ControlSelect } from '../control/select/control-select';
-import { ControlText } from '../control/text/control-text';
+import { ControlInterface } from '../control/controls';
 
 @Injectable({
 	providedIn: 'root'
@@ -22,27 +15,15 @@ export class FormService {
 
 	getControlsFromOptions(options: ControlBaseOptions<any>[]): ControlBase<any>[] {
 		const controls: ControlBase<any>[] = options.map(o => {
-			switch (o.schema) {
-				case 'checkbox':
-					return new ControlCheckbox(o);
-				case 'email':
-					return new ControlEmail(o);
-				case 'number':
-					return new ControlNumber(o);
-				case 'password':
-					return new ControlPassword(o);
-				case 'radio':
-					return new ControlRadio(o);
-				case 'select':
-					return new ControlSelect(o);
-				case 'markdown':
-					return new ControlMarkdown(o);
-				case 'text':
-					return new ControlText(o);
-				default:
-					return new ControlText(o);
+			const control: ControlInterface = this.controlService.options.controls[o.schema];
+			if (control) {
+				const controlBase: Type<ControlBase<any>> = control.model;
+				return new controlBase(o);
+			} else {
+				console.error(`missing control for key ${o.schema}`);
+				return null;
 			}
-		});
+		}).filter(x => x);
 		controls.sort((a, b) => a.order - b.order);
 		return controls;
 	}

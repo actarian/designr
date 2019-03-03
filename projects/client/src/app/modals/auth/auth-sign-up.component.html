@@ -76,7 +76,7 @@
 				<div *ngIf="acceptPrivacyPolicies.errors.required">{{ 'errors.required' | translate }}</div>
 			</div>
 		</div>
-		<div class="btn-group">
+		<div class="group group--stack">
 			<button type="submit" class="btn btn--primary" [ngClass]="{ disabled: submitted, invalid: !signUp.valid, 'btn--busy': busy }" title="{{ 'signUp.register' | translate }}">
 				<span>{{ 'signUp.register' | translate }}</span>
 			</button>

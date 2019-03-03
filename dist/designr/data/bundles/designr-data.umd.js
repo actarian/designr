@@ -25,193 +25,6 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var DataService = /** @class */ (function () {
-        function DataService(config
-        // @Inject(forwardRef(() => DataService)) public dataService: DataService
-        // private dataService: DataService,
-        ) {
-            // console.log('DataService', config);
-            config = config || {};
-            this.config = new DataConfig(config);
-        }
-        /**
-         * @return {?}
-         */
-        DataService.prototype.createDb = /**
-         * @return {?}
-         */
-            function () {
-                // console.log('DataService.createDb', this.config.datas);
-                return this.config.datas || {};
-            };
-        /**
-         * @param {?} url
-         * @param {?} service
-         * @return {?}
-         */
-        DataService.prototype.parseRequestUrl = /**
-         * @param {?} url
-         * @param {?} service
-         * @return {?}
-         */
-            function (url, service) {
-                // !!! REMAPPING
-                /*
-                        if (this.dataService.config.memory && this.dataService.config.memory.remap) {
-                            Object.keys(this.dataService.config.memory.remap).forEach((k: string) => {
-                                url = url.replace(k, this.dataService.config.memory.remap[k]);
-                            });
-                        }
-                        */
-                /** @type {?} */
-                var parsed = service.parseRequestUrl(url);
-                return parsed;
-            };
-        DataService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root',
-                    },] }
-        ];
-        /** @nocollapse */
-        DataService.ctorParameters = function () {
-            return [
-                { type: DataConfig, decorators: [{ type: i0.Inject, args: [DATA_CONFIG,] }] }
-            ];
-        };
-        /** @nocollapse */ DataService.ngInjectableDef = i0.defineInjectable({ factory: function DataService_Factory() { return new DataService(i0.inject(DATA_CONFIG)); }, token: DataService, providedIn: "root" });
-        return DataService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var DataModuleComponent = /** @class */ (function () {
-        function DataModuleComponent() {
-            this.version = '0.0.3';
-        }
-        /**
-         * @return {?}
-         */
-        DataModuleComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-            };
-        DataModuleComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'data-module',
-                        template: "<span class=\"data-module\">data {{version}}</span>"
-                    }] }
-        ];
-        /** @nocollapse */
-        DataModuleComponent.ctorParameters = function () { return []; };
-        return DataModuleComponent;
-    }());
-
-    /*! *****************************************************************************
-    Copyright (c) Microsoft Corporation. All rights reserved.
-    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-    this file except in compliance with the License. You may obtain a copy of the
-    License at http://www.apache.org/licenses/LICENSE-2.0
-
-    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
-    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
-    MERCHANTABLITY OR NON-INFRINGEMENT.
-
-    See the Apache Version 2.0 License for specific language governing permissions
-    and limitations under the License.
-    ***************************************************************************** */
-    /* global Reflect, Promise */
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
-                    d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    function __extends(d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    }
-    function __read(o, n) {
-        var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m)
-            return o;
-        var i = m.call(o), r, ar = [], e;
-        try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-                ar.push(r.value);
-        }
-        catch (error) {
-            e = { error: error };
-        }
-        finally {
-            try {
-                if (r && !r.done && (m = i["return"]))
-                    m.call(i);
-            }
-            finally {
-                if (e)
-                    throw e.error;
-            }
-        }
-        return ar;
-    }
-    function __spread() {
-        for (var ar = [], i = 0; i < arguments.length; i++)
-            ar = ar.concat(__read(arguments[i]));
-        return ar;
-    }
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @template T
-     * @param {?} response$
-     * @param {?} ms
-     * @return {?}
-     */
-    function delayResponse(response$, ms) {
-        return new rxjs.Observable(function (observer) {
-            /** @type {?} */
-            var complete = false;
-            /** @type {?} */
-            var next = false;
-            /** @type {?} */
-            var subscription = response$.subscribe(function (value) {
-                next = true;
-                setTimeout(function () {
-                    observer.next(value);
-                    if (complete) {
-                        observer.complete();
-                    }
-                }, ms);
-            }, function (error) {
-                setTimeout(function () {
-                    observer.error(error);
-                }, ms);
-            }, function () {
-                complete = true;
-                if (!next) {
-                    observer.complete();
-                }
-            });
-            return function () {
-                return subscription.unsubscribe();
-            };
-        });
-    }
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     /** @type {?} */
     var STATUS_CODE = {
         CONTINUE: 100,
@@ -688,6 +501,258 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var DataService = /** @class */ (function () {
+        function DataService(config
+        // @Inject(forwardRef(() => DataService)) public dataService: DataService
+        // private dataService: DataService,
+        ) {
+            // console.log('DataService', config);
+            config = config || {};
+            this.config = new DataConfig(config);
+        }
+        /**
+         * @return {?}
+         */
+        DataService.prototype.createDb = /**
+         * @return {?}
+         */
+            function () {
+                // console.log('DataService.createDb', this.config.datas);
+                return this.config.datas || {};
+            };
+        /**
+         * @param {?} url
+         * @param {?} service
+         * @return {?}
+         */
+        DataService.prototype.parseRequestUrl = /**
+         * @param {?} url
+         * @param {?} service
+         * @return {?}
+         */
+            function (url, service) {
+                // !!! REMAPPING
+                /*
+                        if (this.dataService.config.memory && this.dataService.config.memory.remap) {
+                            Object.keys(this.dataService.config.memory.remap).forEach((k: string) => {
+                                url = url.replace(k, this.dataService.config.memory.remap[k]);
+                            });
+                        }
+                        */
+                /** @type {?} */
+                var parsed = service.parseRequestUrl(url);
+                return parsed;
+            };
+        /**
+         * @param {?} request
+         * @param {?} service
+         * @return {?}
+         */
+        DataService.prototype.requestInterceptor = /**
+         * @param {?} request
+         * @param {?} service
+         * @return {?}
+         */
+            function (request, service) {
+                // console.log('requestInterceptor', request);
+                /** @type {?} */
+                var body;
+                if (request.method === 'post') {
+                    switch (request.collectionName) {
+                        case 'slug':
+                            /** @type {?} */
+                            var mnemonics = request.body;
+                            body = request.body.map(function (x) { return request.collection.find(function (c) { return c.mnemonic === x; }) || null; }).filter(function (x) { return x; });
+                            // console.log(item);
+                            return { headers: request.headers, body: service.bodify(body), status: STATUS_CODE.OK };
+                            break;
+                        case 'label':
+                            /** @type {?} */
+                            var ids = request.body.map(function (x) { return x.id; });
+                            body = request.body.map(function (x) { return request.collection.find(function (c) { return c.id === x.id; }) || x; });
+                            // console.log(item);
+                            return { headers: request.headers, body: service.bodify(body), status: STATUS_CODE.OK };
+                            break;
+                    }
+                }
+                return null;
+            };
+        DataService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root',
+                    },] }
+        ];
+        /** @nocollapse */
+        DataService.ctorParameters = function () {
+            return [
+                { type: DataConfig, decorators: [{ type: i0.Inject, args: [DATA_CONFIG,] }] }
+            ];
+        };
+        /** @nocollapse */ DataService.ngInjectableDef = i0.defineInjectable({ factory: function DataService_Factory() { return new DataService(i0.inject(DATA_CONFIG)); }, token: DataService, providedIn: "root" });
+        return DataService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    var DataModuleComponent = /** @class */ (function () {
+        function DataModuleComponent() {
+            this.version = '0.0.3';
+        }
+        /**
+         * @return {?}
+         */
+        DataModuleComponent.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+            };
+        DataModuleComponent.decorators = [
+            { type: i0.Component, args: [{
+                        selector: 'data-module',
+                        template: "<span class=\"data-module\">data {{version}}</span>"
+                    }] }
+        ];
+        /** @nocollapse */
+        DataModuleComponent.ctorParameters = function () { return []; };
+        return DataModuleComponent;
+    }());
+
+    /*! *****************************************************************************
+    Copyright (c) Microsoft Corporation. All rights reserved.
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+    this file except in compliance with the License. You may obtain a copy of the
+    License at http://www.apache.org/licenses/LICENSE-2.0
+
+    THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+    WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+    MERCHANTABLITY OR NON-INFRINGEMENT.
+
+    See the Apache Version 2.0 License for specific language governing permissions
+    and limitations under the License.
+    ***************************************************************************** */
+    function __read(o, n) {
+        var m = typeof Symbol === "function" && o[Symbol.iterator];
+        if (!m)
+            return o;
+        var i = m.call(o), r, ar = [], e;
+        try {
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
+                ar.push(r.value);
+        }
+        catch (error) {
+            e = { error: error };
+        }
+        finally {
+            try {
+                if (r && !r.done && (m = i["return"]))
+                    m.call(i);
+            }
+            finally {
+                if (e)
+                    throw e.error;
+            }
+        }
+        return ar;
+    }
+    function __spread() {
+        for (var ar = [], i = 0; i < arguments.length; i++)
+            ar = ar.concat(__read(arguments[i]));
+        return ar;
+    }
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /**
+     * @template T
+     * @param {?} response$
+     * @param {?} ms
+     * @return {?}
+     */
+    function delayResponse(response$, ms) {
+        return new rxjs.Observable(function (observer) {
+            /** @type {?} */
+            var complete = false;
+            /** @type {?} */
+            var next = false;
+            /** @type {?} */
+            var subscription = response$.subscribe(function (value) {
+                next = true;
+                setTimeout(function () {
+                    observer.next(value);
+                    if (complete) {
+                        observer.complete();
+                    }
+                }, ms);
+            }, function (error) {
+                setTimeout(function () {
+                    observer.error(error);
+                }, ms);
+            }, function () {
+                complete = true;
+                if (!next) {
+                    observer.complete();
+                }
+            });
+            return function () {
+                return subscription.unsubscribe();
+            };
+        });
+    }
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
+    /**
+     * Return information (UriInfo) about a URI
+     * @param {?} str
+     * @return {?}
+     */
+    function parseUri(str) {
+        // Adapted from parseuri package - http://blog.stevenlevithan.com/archives/parseuri
+        // tslint:disable-next-line:max-line-length
+        /** @type {?} */
+        var URL_REGEX = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/;
+        /** @type {?} */
+        var m = URL_REGEX.exec(str);
+        /** @type {?} */
+        var uri = {
+            source: '',
+            protocol: '',
+            authority: '',
+            userInfo: '',
+            user: '',
+            password: '',
+            host: '',
+            port: '',
+            relative: '',
+            path: '',
+            directory: '',
+            file: '',
+            query: '',
+            anchor: ''
+        };
+        /** @type {?} */
+        var keys = Object.keys(uri);
+        /** @type {?} */
+        var i = keys.length;
+        while (i--) {
+            uri[keys[i]] = m[i] || '';
+        }
+        return uri;
+    }
+    /**
+     * @param {?} path
+     * @return {?}
+     */
+    function removeTrailingSlash(path) {
+        return path.replace(/\/$/, '');
+    }
     /**
      * Interface for a class that creates an in-memory database
      *
@@ -765,79 +830,19 @@
         };
         return MemoryBackendConfig;
     }());
-    /**
-     * Return information (UriInfo) about a URI
-     * @param {?} str
-     * @return {?}
-     */
-    function parseUri(str) {
-        // Adapted from parseuri package - http://blog.stevenlevithan.com/archives/parseuri
-        // tslint:disable-next-line:max-line-length
-        /** @type {?} */
-        var URL_REGEX = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/;
-        /** @type {?} */
-        var m = URL_REGEX.exec(str);
-        /** @type {?} */
-        var uri = {
-            source: '',
-            protocol: '',
-            authority: '',
-            userInfo: '',
-            user: '',
-            password: '',
-            host: '',
-            port: '',
-            relative: '',
-            path: '',
-            directory: '',
-            file: '',
-            query: '',
-            anchor: ''
-        };
-        /** @type {?} */
-        var keys = Object.keys(uri);
-        /** @type {?} */
-        var i = keys.length;
-        while (i--) {
-            uri[keys[i]] = m[i] || '';
-        }
-        return uri;
-    }
-    /**
-     * @param {?} path
-     * @return {?}
-     */
-    function removeTrailingSlash(path) {
-        return path.replace(/\/$/, '');
-    }
 
     /**
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    /**
-     * Base class for in-memory web api back-ends
-     * Simulate the behavior of a RESTy web api
-     * backed by the simple in-memory data store provided by the injected `MemoryDataService` service.
-     * Conforms mostly to behavior described here:
-     * http://www.restapitutorial.com/lessons/httpmethods.html
-     * @abstract
-     */
-    var /**
-     * Base class for in-memory web api back-ends
-     * Simulate the behavior of a RESTy web api
-     * backed by the simple in-memory data store provided by the injected `MemoryDataService` service.
-     * Conforms mostly to behavior described here:
-     * http://www.restapitutorial.com/lessons/httpmethods.html
-     * @abstract
-     */ BackendService = /** @class */ (function () {
-        function BackendService(dataService, config) {
+    var BackendService = /** @class */ (function () {
+        function BackendService(dataService, config, factory) {
             if (config === void 0) {
                 config = {};
             }
             this.dataService = dataService;
+            this.factory = factory;
             this.config = new MemoryBackendConfig();
-            this.requestInfoUtils = this.getRequestInfoUtils();
             /** @type {?} */
             var location = this.getLocation('/');
             this.config.host = location.host; // default to app web server host
@@ -854,7 +859,7 @@
                     this.databaseReadySubject = new rxjs.BehaviorSubject(false);
                     this.resetDb();
                 }
-                return this.databaseReadySubject.asObservable().pipe(operators.first(function (r) { return r; }));
+                return this.databaseReadySubject.asObservable().pipe(operators.first(function (ready) { return ready; }));
             },
             enumerable: true,
             configurable: true
@@ -879,7 +884,7 @@
          *   HTTP overrides:
          *     If the injected dataService defines an HTTP method (lowercase)
          *     The request is forwarded to that method as in
-         *     `dataService.get(requestInfo)`
+         *     `dataService.get(memoryRequest)`
          *     which must return either an Observable of the response type
          *     for this http library or null|undefined (which means "keep processing").
          */
@@ -903,7 +908,7 @@
          *   HTTP overrides:
          *     If the injected dataService defines an HTTP method (lowercase)
          *     The request is forwarded to that method as in
-         *     `dataService.get(requestInfo)`
+         *     `dataService.get(memoryRequest)`
          *     which must return either an Observable of the response type
          *     for this http library or null|undefined (which means "keep processing").
          * @protected
@@ -930,7 +935,7 @@
          *   HTTP overrides:
          *     If the injected dataService defines an HTTP method (lowercase)
          *     The request is forwarded to that method as in
-         *     `dataService.get(requestInfo)`
+         *     `dataService.get(memoryRequest)`
          *     which must return either an Observable of the response type
          *     for this http library or null|undefined (which means "keep processing").
          * @protected
@@ -958,705 +963,63 @@
                 var url = request.urlWithParams ? request.urlWithParams : request.url;
                 // Try override parser
                 // If no override parser or it returns nothing, use default parser
+                // const parser = this.bind('parseRequestUrl');
+                // const parsed: ParsedRequestUrl = (parser && parser(url, this)) || this.parseRequestUrl(url);
                 /** @type {?} */
-                var parser = this.bind('parseRequestUrl');
-                /** @type {?} */
-                var parsed = (parser && parser(url, this.requestInfoUtils)) || this.parseRequestUrl(url);
+                var parsed = this.parseRequestUrl(url);
                 /** @type {?} */
                 var collectionName = parsed.collectionName;
                 /** @type {?} */
                 var collection = this.database[collectionName];
                 /** @type {?} */
-                var requestInfo = {
+                var memoryRequest = {
                     request: request,
+                    body: request.body,
                     apiBase: parsed.apiBase,
                     collection: collection,
                     collectionName: collectionName,
-                    headers: this.createHeaders({ 'Content-Type': 'application/json' }),
+                    headers: new http.HttpHeaders({ 'Content-Type': 'application/json' }),
                     id: this.parseId(collection, collectionName, parsed.id),
-                    method: this.getRequestMethod(request),
+                    method: (request.method || 'get').toLowerCase(),
                     query: parsed.query,
                     resourceUrl: parsed.resourceUrl,
                     url: url,
-                    utils: this.requestInfoUtils
                 };
+                // If `dataService.requestInterceptor` exists, let it morph the response options
                 /** @type {?} */
-                var responseOptions;
-                if (/commands\/?$/i.test(requestInfo.apiBase)) {
-                    return this.commands(requestInfo);
+                var interceptor = this.bind('requestInterceptor');
+                if (/commands\/?$/i.test(memoryRequest.apiBase)) {
+                    return this.commands(memoryRequest);
                 }
                 /** @type {?} */
-                var methodInterceptor = this.bind(requestInfo.method);
+                var methodInterceptor = this.bind(memoryRequest.method);
                 if (methodInterceptor) {
                     // MemoryDataService intercepts this HTTP method.
                     // if interceptor produced a response, return it.
                     // else MemoryDataService chose not to intercept; continue processing.
                     /** @type {?} */
-                    var interceptorResponse = methodInterceptor(requestInfo);
+                    var interceptorResponse = methodInterceptor(memoryRequest);
                     if (interceptorResponse) {
                         return interceptorResponse;
                     }
                 }
+                // !!!
+                /** @type {?} */
+                var response = interceptor ? interceptor(memoryRequest, this) : null;
+                if (response) {
+                    return this.createResponse$(function () { return response; });
+                }
                 if (this.database[collectionName]) {
                     // request is for a known collection of the MemoryDataService
-                    return this.createResponse$(function () { return _this.collectionHandler(requestInfo); });
+                    return this.createResponse$(function () { return _this.collectionHandler(memoryRequest); });
                 }
                 if (this.config.passThruUnknownUrl) {
                     // unknown collection; pass request thru to a "real" backend.
                     return this.getPassThruBackend().handle(request);
                 }
                 // 404 - can't handle this request
-                responseOptions = this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, "Collection '" + collectionName + "' not found");
-                return this.createResponse$(function () { return responseOptions; });
-            };
-        /**
-         * Add configured delay to response observable unless delay === 0
-         */
-        /**
-         * Add configured delay to response observable unless delay === 0
-         * @protected
-         * @param {?} response
-         * @return {?}
-         */
-        BackendService.prototype.addDelay = /**
-         * Add configured delay to response observable unless delay === 0
-         * @protected
-         * @param {?} response
-         * @return {?}
-         */
-            function (response) {
-                /** @type {?} */
-                var delay = this.config.delay;
-                return delay === 0 ? response : delayResponse(response, delay || 500);
-            };
-        /**
-         * Apply query/search parameters as a filter over the collection
-         * This impl only supports RegExp queries on string properties of the collection
-         * ANDs the conditions together
-         */
-        /**
-         * Apply query/search parameters as a filter over the collection
-         * This impl only supports RegExp queries on string properties of the collection
-         * ANDs the conditions together
-         * @protected
-         * @param {?} collection
-         * @param {?} query
-         * @return {?}
-         */
-        BackendService.prototype.applyQuery = /**
-         * Apply query/search parameters as a filter over the collection
-         * This impl only supports RegExp queries on string properties of the collection
-         * ANDs the conditions together
-         * @protected
-         * @param {?} collection
-         * @param {?} query
-         * @return {?}
-         */
-            function (collection, query) {
-                // extract filtering conditions - {propertyName, RegExps) - from query/search parameters
-                /** @type {?} */
-                var conditions = [];
-                /** @type {?} */
-                var caseSensitive = this.config.caseSensitiveSearch ? undefined : 'i';
-                query.forEach(function (value, name) {
-                    value.forEach(function (x) {
-                        return conditions.push({
-                            name: name,
-                            regexp: new RegExp(decodeURI(x), caseSensitive)
-                        });
-                    });
-                });
-                /** @type {?} */
-                var length = conditions.length;
-                if (!length) {
-                    return collection;
-                }
-                // AND the RegExp conditions
-                return collection.filter(function (row) {
-                    /** @type {?} */
-                    var has = true;
-                    /** @type {?} */
-                    var i = length;
-                    while (has && i) {
-                        i -= 1;
-                        /** @type {?} */
-                        var cond = conditions[i];
-                        has = cond.regexp.test(row[cond.name]);
-                    }
-                    return has;
-                });
-            };
-        /**
-         * Get a method from the `MemoryDataService` (if it exists), bound to that service
-         */
-        /**
-         * Get a method from the `MemoryDataService` (if it exists), bound to that service
-         * @protected
-         * @template T
-         * @param {?} methodName
-         * @return {?}
-         */
-        BackendService.prototype.bind = /**
-         * Get a method from the `MemoryDataService` (if it exists), bound to that service
-         * @protected
-         * @template T
-         * @param {?} methodName
-         * @return {?}
-         */
-            function (methodName) {
-                /** @type {?} */
-                var method = ( /** @type {?} */(this.dataService[methodName]));
-                return method ? ( /** @type {?} */(method.bind(this.dataService))) : undefined;
-            };
-        /**
-         * @protected
-         * @param {?} data
-         * @return {?}
-         */
-        BackendService.prototype.bodify = /**
-         * @protected
-         * @param {?} data
-         * @return {?}
-         */
-            function (data) {
-                return this.config.dataEncapsulation ? { data: data } : data;
-            };
-        /**
-         * @protected
-         * @param {?} data
-         * @return {?}
-         */
-        BackendService.prototype.clone = /**
-         * @protected
-         * @param {?} data
-         * @return {?}
-         */
-            function (data) {
-                return JSON.parse(JSON.stringify(data));
-            };
-        /**
-         * @protected
-         * @param {?} requestInfo
-         * @return {?}
-         */
-        BackendService.prototype.collectionHandler = /**
-         * @protected
-         * @param {?} requestInfo
-         * @return {?}
-         */
-            function (requestInfo) {
-                // const request = requestInfo.request;
-                /** @type {?} */
-                var responseOptions;
-                switch (requestInfo.method) {
-                    case 'get':
-                        responseOptions = this.get(requestInfo);
-                        break;
-                    case 'post':
-                        responseOptions = this.post(requestInfo);
-                        break;
-                    case 'put':
-                        responseOptions = this.put(requestInfo);
-                        break;
-                    case 'delete':
-                        responseOptions = this.delete(requestInfo);
-                        break;
-                    default:
-                        responseOptions = this.createErrorResponseOptions(requestInfo.url, STATUS_CODE.METHOD_NOT_ALLOWED, 'Method not allowed');
-                        break;
-                }
-                // If `dataService.responseInterceptor` exists, let it morph the response options
-                /** @type {?} */
-                var interceptor = this.bind('responseInterceptor');
-                return interceptor ? interceptor(responseOptions, requestInfo) : responseOptions;
-            };
-        /**
-         * Commands reconfigure the in-memory web api service or extract information from it.
-         * Commands ignore the latency delay and respond ASAP.
-         *
-         * When the last segment of the `apiBase` path is "commands",
-         * the `collectionName` is the command.
-         *
-         * Example URLs:
-         *   commands/resetdb (POST) // Reset the "database" to its original state
-         *   commands/config (GET)   // Return this service's config object
-         *   commands/config (POST)  // Update the config (e.g. the delay)
-         *
-         * Usage:
-         *   http.post('commands/resetdb', undefined);
-         *   http.get('commands/config');
-         *   http.post('commands/config', '{"delay":1000}');
-         */
-        /**
-         * Commands reconfigure the in-memory web api service or extract information from it.
-         * Commands ignore the latency delay and respond ASAP.
-         *
-         * When the last segment of the `apiBase` path is "commands",
-         * the `collectionName` is the command.
-         *
-         * Example URLs:
-         *   commands/resetdb (POST) // Reset the "database" to its original state
-         *   commands/config (GET)   // Return this service's config object
-         *   commands/config (POST)  // Update the config (e.g. the delay)
-         *
-         * Usage:
-         *   http.post('commands/resetdb', undefined);
-         *   http.get('commands/config');
-         *   http.post('commands/config', '{"delay":1000}');
-         * @protected
-         * @param {?} requestInfo
-         * @return {?}
-         */
-        BackendService.prototype.commands = /**
-         * Commands reconfigure the in-memory web api service or extract information from it.
-         * Commands ignore the latency delay and respond ASAP.
-         *
-         * When the last segment of the `apiBase` path is "commands",
-         * the `collectionName` is the command.
-         *
-         * Example URLs:
-         *   commands/resetdb (POST) // Reset the "database" to its original state
-         *   commands/config (GET)   // Return this service's config object
-         *   commands/config (POST)  // Update the config (e.g. the delay)
-         *
-         * Usage:
-         *   http.post('commands/resetdb', undefined);
-         *   http.get('commands/config');
-         *   http.post('commands/config', '{"delay":1000}');
-         * @protected
-         * @param {?} requestInfo
-         * @return {?}
-         */
-            function (requestInfo) {
-                var _this = this;
-                /** @type {?} */
-                var command = requestInfo.collectionName.toLowerCase();
-                /** @type {?} */
-                var method = requestInfo.method;
-                /** @type {?} */
-                var responseOptions = {
-                    url: requestInfo.url
-                };
-                switch (command) {
-                    case 'resetdb':
-                        responseOptions.status = STATUS_CODE.NO_CONTENT;
-                        return this.resetDb(requestInfo).pipe(operators.concatMap(function () { return _this.createResponse$(function () { return responseOptions; }, false /* no latency delay */); }));
-                    case 'config':
-                        if (method === 'get') {
-                            responseOptions.status = STATUS_CODE.OK;
-                            responseOptions.body = this.clone(this.config);
-                            // any other HTTP method is assumed to be a config update
-                        }
-                        else {
-                            /** @type {?} */
-                            var body = this.getJsonBody(requestInfo.request);
-                            Object.assign(this.config, body);
-                            this.passThruBackend = undefined; // re-create when needed
-                            responseOptions.status = STATUS_CODE.NO_CONTENT;
-                        }
-                        break;
-                    default:
-                        responseOptions = this.createErrorResponseOptions(requestInfo.url, STATUS_CODE.INTERNAL_SERVER_ERROR, "Unknown command \"" + command + "\"");
-                }
-                return this.createResponse$(function () { return responseOptions; }, false /* no latency delay */);
-            };
-        /**
-         * @protected
-         * @param {?} url
-         * @param {?} status
-         * @param {?} message
-         * @return {?}
-         */
-        BackendService.prototype.createErrorResponseOptions = /**
-         * @protected
-         * @param {?} url
-         * @param {?} status
-         * @param {?} message
-         * @return {?}
-         */
-            function (url, status, message) {
-                return {
-                    body: {
-                        error: "" + message,
-                    },
-                    url: url,
-                    headers: this.createHeaders({
-                        'Content-Type': 'application/json'
-                    }),
-                    status: status
-                };
-            };
-        /**
-         * Create a cold response Observable from a factory for ResponseOptions
-         * @param responseOptionsFactory - creates ResponseOptions when observable is subscribed
-         * @param withDelay - if true (default), add simulated latency delay from configuration
-         */
-        /**
-         * Create a cold response Observable from a factory for ResponseOptions
-         * @protected
-         * @param {?} responseOptionsFactory - creates ResponseOptions when observable is subscribed
-         * @param {?=} withDelay - if true (default), add simulated latency delay from configuration
-         * @return {?}
-         */
-        BackendService.prototype.createResponse$ = /**
-         * Create a cold response Observable from a factory for ResponseOptions
-         * @protected
-         * @param {?} responseOptionsFactory - creates ResponseOptions when observable is subscribed
-         * @param {?=} withDelay - if true (default), add simulated latency delay from configuration
-         * @return {?}
-         */
-            function (responseOptionsFactory, withDelay) {
-                if (withDelay === void 0) {
-                    withDelay = true;
-                }
-                /** @type {?} */
-                var responseOptions$ = this.createResponseOptions$(responseOptionsFactory);
-                /** @type {?} */
-                var response$ = this.createResponse$fromResponseOptions$(responseOptions$);
-                return withDelay ? this.addDelay(response$) : response$;
-            };
-        /**
-         * Create a cold Observable of ResponseOptions.
-         * @param responseOptionsFactory - creates ResponseOptions when observable is subscribed
-         */
-        /**
-         * Create a cold Observable of ResponseOptions.
-         * @protected
-         * @param {?} responseOptionsFactory - creates ResponseOptions when observable is subscribed
-         * @return {?}
-         */
-        BackendService.prototype.createResponseOptions$ = /**
-         * Create a cold Observable of ResponseOptions.
-         * @protected
-         * @param {?} responseOptionsFactory - creates ResponseOptions when observable is subscribed
-         * @return {?}
-         */
-            function (responseOptionsFactory) {
-                var _this = this;
-                return new rxjs.Observable(function (responseObserver) {
-                    /** @type {?} */
-                    var responseOptions;
-                    try {
-                        responseOptions = responseOptionsFactory();
-                    }
-                    catch (error) {
-                        error = error.message || error;
-                        responseOptions = _this.createErrorResponseOptions('', STATUS_CODE.INTERNAL_SERVER_ERROR, "" + error);
-                    }
-                    /** @type {?} */
-                    var status = responseOptions.status;
-                    try {
-                        responseOptions.statusText = getStatusText(status);
-                    }
-                    catch (error) { /* ignore failure */ }
-                    if (isSuccess(status)) {
-                        responseObserver.next(responseOptions);
-                        responseObserver.complete();
-                    }
-                    else {
-                        responseObserver.error(responseOptions);
-                    }
-                    return function () { }; // unsubscribe function
-                });
-            };
-        /**
-         * @protected
-         * @param {?} __0
-         * @return {?}
-         */
-        BackendService.prototype.delete = /**
-         * @protected
-         * @param {?} __0
-         * @return {?}
-         */
-            function (_a) {
-                var collection = _a.collection, collectionName = _a.collectionName, headers = _a.headers, id = _a.id, url = _a.url;
-                // tslint:disable-next-line:triple-equals
-                if (id == undefined) {
-                    return this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, "Missing \"" + collectionName + "\" id");
-                }
-                /** @type {?} */
-                var exists = this.removeById(collection, id);
-                return {
-                    headers: headers,
-                    status: (exists || !this.config.delete404) ? STATUS_CODE.NO_CONTENT : STATUS_CODE.NOT_FOUND
-                };
-            };
-        /**
-         * Find first instance of item in collection by `item.id`
-         * @param collection
-         * @param id
-         */
-        /**
-         * Find first instance of item in collection by `item.id`
-         * @protected
-         * @template T
-         * @param {?} collection
-         * @param {?} id
-         * @return {?}
-         */
-        BackendService.prototype.findById = /**
-         * Find first instance of item in collection by `item.id`
-         * @protected
-         * @template T
-         * @param {?} collection
-         * @param {?} id
-         * @return {?}
-         */
-            function (collection, id) {
-                return collection.find(function (item) { return item.id === id; });
-            };
-        /**
-         * Generate the next available id for item in this collection
-         * Use method from `dataService` if it exists and returns a value,
-         * else delegates to `genIdDefault`.
-         * @param collection - collection of items with `id` key property
-         */
-        /**
-         * Generate the next available id for item in this collection
-         * Use method from `dataService` if it exists and returns a value,
-         * else delegates to `genIdDefault`.
-         * @protected
-         * @template T
-         * @param {?} collection - collection of items with `id` key property
-         * @param {?} collectionName
-         * @return {?}
-         */
-        BackendService.prototype.genId = /**
-         * Generate the next available id for item in this collection
-         * Use method from `dataService` if it exists and returns a value,
-         * else delegates to `genIdDefault`.
-         * @protected
-         * @template T
-         * @param {?} collection - collection of items with `id` key property
-         * @param {?} collectionName
-         * @return {?}
-         */
-            function (collection, collectionName) {
-                /** @type {?} */
-                var genId = this.bind('genId');
-                if (genId) {
-                    /** @type {?} */
-                    var id = genId(collection, collectionName);
-                    // tslint:disable-next-line:triple-equals
-                    if (id != undefined) {
-                        return id;
-                    }
-                }
-                return this.genIdDefault(collection, collectionName);
-            };
-        /**
-         * Default generator of the next available id for item in this collection
-         * This default implementation works only for numeric ids.
-         * @param collection - collection of items with `id` key property
-         * @param collectionName - name of the collection
-         */
-        /**
-         * Default generator of the next available id for item in this collection
-         * This default implementation works only for numeric ids.
-         * @protected
-         * @template T
-         * @param {?} collection - collection of items with `id` key property
-         * @param {?} collectionName - name of the collection
-         * @return {?}
-         */
-        BackendService.prototype.genIdDefault = /**
-         * Default generator of the next available id for item in this collection
-         * This default implementation works only for numeric ids.
-         * @protected
-         * @template T
-         * @param {?} collection - collection of items with `id` key property
-         * @param {?} collectionName - name of the collection
-         * @return {?}
-         */
-            function (collection, collectionName) {
-                if (!this.isCollectionIdNumeric(collection, collectionName)) {
-                    throw new Error("Collection '" + collectionName + "' id type is non-numeric or unknown. Can only generate numeric ids.");
-                }
-                /** @type {?} */
-                var maxId = 0;
-                collection.reduce(function (prev, item) {
-                    maxId = Math.max(maxId, typeof item.id === 'number' ? item.id : maxId);
-                }, undefined);
-                return maxId + 1;
-            };
-        /**
-         * @protected
-         * @param {?} __0
-         * @return {?}
-         */
-        BackendService.prototype.get = /**
-         * @protected
-         * @param {?} __0
-         * @return {?}
-         */
-            function (_a) {
-                var collection = _a.collection, collectionName = _a.collectionName, headers = _a.headers, id = _a.id, query = _a.query, url = _a.url;
-                /** @type {?} */
-                var data = collection;
-                // tslint:disable-next-line:triple-equals
-                if (id != undefined && id !== '') {
-                    data = this.findById(collection, id);
-                }
-                else if (query) {
-                    data = this.applyQuery(collection, query);
-                }
-                if (!data) {
-                    return this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, "'" + collectionName + "' with id='" + id + "' not found");
-                }
-                return {
-                    body: this.bodify(this.clone(data)),
-                    headers: headers,
-                    status: STATUS_CODE.OK
-                };
-            };
-        /**
-         * Get location info from a url, even on server where `document` is not defined
-         */
-        /**
-         * Get location info from a url, even on server where `document` is not defined
-         * @protected
-         * @param {?} url
-         * @return {?}
-         */
-        BackendService.prototype.getLocation = /**
-         * Get location info from a url, even on server where `document` is not defined
-         * @protected
-         * @param {?} url
-         * @return {?}
-         */
-            function (url) {
-                if (!url.startsWith('http')) {
-                    // get the document if running in browser
-                    /** @type {?} */
-                    var document_ = (typeof document === 'undefined') ? undefined : document;
-                    // add host info to url before parsing.  Use a fake host when not in browser.
-                    /** @type {?} */
-                    var base = document_ ? document_.location.protocol + '//' + document_.location.host : 'http://fake';
-                    url = url.startsWith('/') ? base + url : base + '/' + url;
-                }
-                return parseUri(url);
-            };
-        /**
-         * get or create the function that passes unhandled requests
-         * through to the "real" backend.
-         */
-        /**
-         * get or create the function that passes unhandled requests
-         * through to the "real" backend.
-         * @protected
-         * @return {?}
-         */
-        BackendService.prototype.getPassThruBackend = /**
-         * get or create the function that passes unhandled requests
-         * through to the "real" backend.
-         * @protected
-         * @return {?}
-         */
-            function () {
-                return this.passThruBackend ? this.passThruBackend : this.passThruBackend = this.createPassThruBackend();
-            };
-        /**
-         * Get utility methods from this service instance.
-         * Useful within an HTTP method override
-         */
-        /**
-         * Get utility methods from this service instance.
-         * Useful within an HTTP method override
-         * @protected
-         * @return {?}
-         */
-        BackendService.prototype.getRequestInfoUtils = /**
-         * Get utility methods from this service instance.
-         * Useful within an HTTP method override
-         * @protected
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return {
-                    createResponse$: this.createResponse$.bind(this),
-                    findById: this.findById.bind(this),
-                    isCollectionIdNumeric: this.isCollectionIdNumeric.bind(this),
-                    getConfig: function () { return _this.config; },
-                    getDb: function () { return _this.database; },
-                    getJsonBody: this.getJsonBody.bind(this),
-                    getLocation: this.getLocation.bind(this),
-                    getPassThruBackend: this.getPassThruBackend.bind(this),
-                    parseRequestUrl: this.parseRequestUrl.bind(this),
-                };
-            };
-        /**
-         * @protected
-         * @param {?} collection
-         * @param {?} id
-         * @return {?}
-         */
-        BackendService.prototype.indexOf = /**
-         * @protected
-         * @param {?} collection
-         * @param {?} id
-         * @return {?}
-         */
-            function (collection, id) {
-                return collection.findIndex(function (item) { return item.id === id; });
-            };
-        /** Parse the id as a number. Return original value if not a number. */
-        /**
-         * Parse the id as a number. Return original value if not a number.
-         * @protected
-         * @param {?} collection
-         * @param {?} collectionName
-         * @param {?} id
-         * @return {?}
-         */
-        BackendService.prototype.parseId = /**
-         * Parse the id as a number. Return original value if not a number.
-         * @protected
-         * @param {?} collection
-         * @param {?} collectionName
-         * @param {?} id
-         * @return {?}
-         */
-            function (collection, collectionName, id) {
-                if (!this.isCollectionIdNumeric(collection, collectionName)) {
-                    // Can't confirm that `id` is a numeric type; don't parse as a number
-                    // or else `'42'` -> `42` and _get by id_ fails.
-                    return id;
-                }
-                /** @type {?} */
-                var idNum = parseFloat(id);
-                return isNaN(idNum) ? id : idNum;
-            };
-        /**
-         * return true if can determine that the collection's `item.id` is a number
-         * This implementation can't tell if the collection is empty so it assumes NO
-         * */
-        /**
-         * return true if can determine that the collection's `item.id` is a number
-         * This implementation can't tell if the collection is empty so it assumes NO
-         *
-         * @protected
-         * @template T
-         * @param {?} collection
-         * @param {?} collectionName
-         * @return {?}
-         */
-        BackendService.prototype.isCollectionIdNumeric = /**
-         * return true if can determine that the collection's `item.id` is a number
-         * This implementation can't tell if the collection is empty so it assumes NO
-         *
-         * @protected
-         * @template T
-         * @param {?} collection
-         * @param {?} collectionName
-         * @return {?}
-         */
-            function (collection, collectionName) {
-                // collectionName not used now but override might maintain collection type information
-                // so that it could know the type of the `id` even when the collection is empty.
-                // return !!(collection && collection[0]) && typeof collection[0].id === 'number';
-                return !!(collection && collection[0]);
+                response = this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, "Collection '" + collectionName + "' not found");
+                return this.createResponse$(function () { return response; });
             };
         /**
          * Parses the request URL into a `ParsedRequestUrl` object.
@@ -1773,119 +1136,478 @@
                     throw new Error(message);
                 }
             };
-        // Create entity
-        // Can update an existing entity too if post409 is false.
-        // Create entity
-        // Can update an existing entity too if post409 is false.
+        /** Parse the id as a number. Return original value if not a number. */
         /**
+         * Parse the id as a number. Return original value if not a number.
          * @protected
-         * @param {?} __0
+         * @param {?} collection
+         * @param {?} collectionName
+         * @param {?} id
          * @return {?}
          */
-        BackendService.prototype.post =
-            // Create entity
-            // Can update an existing entity too if post409 is false.
-            /**
-             * @protected
-             * @param {?} __0
-             * @return {?}
-             */
-            function (_a) {
-                var collection = _a.collection, collectionName = _a.collectionName, headers = _a.headers, id = _a.id, request = _a.request, resourceUrl = _a.resourceUrl, url = _a.url;
+        BackendService.prototype.parseId = /**
+         * Parse the id as a number. Return original value if not a number.
+         * @protected
+         * @param {?} collection
+         * @param {?} collectionName
+         * @param {?} id
+         * @return {?}
+         */
+            function (collection, collectionName, id) {
+                if (!this.isCollectionIdNumeric(collection, collectionName)) {
+                    // Can't confirm that `id` is a numeric type; don't parse as a number
+                    // or else `'42'` -> `42` and _get by id_ fails.
+                    return id;
+                }
                 /** @type {?} */
-                var item = this.clone(this.getJsonBody(request));
-                // tslint:disable-next-line:triple-equals
-                if (item.id == undefined) {
+                var idNum = parseFloat(id);
+                return isNaN(idNum) ? id : idNum;
+            };
+        /**
+         * Add configured delay to response observable unless delay === 0
+         */
+        /**
+         * Add configured delay to response observable unless delay === 0
+         * @protected
+         * @param {?} response
+         * @return {?}
+         */
+        BackendService.prototype.addDelay = /**
+         * Add configured delay to response observable unless delay === 0
+         * @protected
+         * @param {?} response
+         * @return {?}
+         */
+            function (response) {
+                /** @type {?} */
+                var delay = this.config.delay;
+                return delay === 0 ? response : delayResponse(response, delay || 500);
+            };
+        /**
+         * Apply query/search parameters as a filter over the collection
+         * This impl only supports RegExp queries on string properties of the collection
+         * ANDs the conditions together
+         */
+        /**
+         * Apply query/search parameters as a filter over the collection
+         * This impl only supports RegExp queries on string properties of the collection
+         * ANDs the conditions together
+         * @protected
+         * @param {?} collection
+         * @param {?} query
+         * @return {?}
+         */
+        BackendService.prototype.applyQuery = /**
+         * Apply query/search parameters as a filter over the collection
+         * This impl only supports RegExp queries on string properties of the collection
+         * ANDs the conditions together
+         * @protected
+         * @param {?} collection
+         * @param {?} query
+         * @return {?}
+         */
+            function (collection, query) {
+                // extract filtering conditions - {propertyName, RegExps) - from query/search parameters
+                /** @type {?} */
+                var conditions = [];
+                /** @type {?} */
+                var caseSensitive = this.config.caseSensitiveSearch ? undefined : 'i';
+                query.forEach(function (value, name) {
+                    value.forEach(function (x) {
+                        return conditions.push({
+                            name: name,
+                            regexp: new RegExp(decodeURI(x), caseSensitive)
+                        });
+                    });
+                });
+                /** @type {?} */
+                var length = conditions.length;
+                if (!length) {
+                    return collection;
+                }
+                // AND the RegExp conditions
+                return collection.filter(function (row) {
+                    /** @type {?} */
+                    var has = true;
+                    /** @type {?} */
+                    var i = length;
+                    while (has && i) {
+                        i -= 1;
+                        /** @type {?} */
+                        var cond = conditions[i];
+                        has = cond.regexp.test(row[cond.name]);
+                    }
+                    return has;
+                });
+            };
+        /**
+         * Get a method from the `MemoryDataService` (if it exists), bound to that service
+         */
+        /**
+         * Get a method from the `MemoryDataService` (if it exists), bound to that service
+         * @protected
+         * @template T
+         * @param {?} methodName
+         * @return {?}
+         */
+        BackendService.prototype.bind = /**
+         * Get a method from the `MemoryDataService` (if it exists), bound to that service
+         * @protected
+         * @template T
+         * @param {?} methodName
+         * @return {?}
+         */
+            function (methodName) {
+                /** @type {?} */
+                var method = ( /** @type {?} */(this.dataService[methodName]));
+                return method ? ( /** @type {?} */(method.bind(this.dataService))) : undefined;
+            };
+        /**
+         * @param {?} data
+         * @return {?}
+         */
+        BackendService.prototype.bodify = /**
+         * @param {?} data
+         * @return {?}
+         */
+            function (data) {
+                return this.config.dataEncapsulation ? { data: data } : data;
+            };
+        /**
+         * @protected
+         * @param {?} data
+         * @return {?}
+         */
+        BackendService.prototype.clone = /**
+         * @protected
+         * @param {?} data
+         * @return {?}
+         */
+            function (data) {
+                return JSON.parse(JSON.stringify(data));
+            };
+        /**
+         * @protected
+         * @param {?} request
+         * @return {?}
+         */
+        BackendService.prototype.collectionHandler = /**
+         * @protected
+         * @param {?} request
+         * @return {?}
+         */
+            function (request) {
+                // const request = request.request;
+                /** @type {?} */
+                var response;
+                switch (request.method) {
+                    case 'get':
+                        response = this.get(request);
+                        break;
+                    case 'post':
+                        response = this.post(request);
+                        break;
+                    case 'put':
+                        response = this.put(request);
+                        break;
+                    case 'delete':
+                        response = this.delete(request);
+                        break;
+                    default:
+                        response = this.createErrorResponse(request.url, STATUS_CODE.METHOD_NOT_ALLOWED, 'Method not allowed');
+                        break;
+                }
+                // If `dataService.responseInterceptor` exists, let it morph the response options
+                /** @type {?} */
+                var interceptor = this.bind('responseInterceptor');
+                // !!!
+                return interceptor ? interceptor(response, request) : response;
+            };
+        /**
+         * @param {?} url
+         * @param {?} status
+         * @param {?} message
+         * @return {?}
+         */
+        BackendService.prototype.createErrorResponse = /**
+         * @param {?} url
+         * @param {?} status
+         * @param {?} message
+         * @return {?}
+         */
+            function (url, status, message) {
+                return {
+                    body: {
+                        error: "" + message,
+                    },
+                    url: url,
+                    headers: new http.HttpHeaders({
+                        'Content-Type': 'application/json'
+                    }),
+                    status: status
+                };
+            };
+        /**
+         * Create a cold response Observable from a factory for MemoryResponse
+         * @param memoryResponseFactory - creates MemoryResponse when observable is subscribed
+         * @param withDelay - if true (default), add simulated latency delay from configuration
+         */
+        /**
+         * Create a cold response Observable from a factory for MemoryResponse
+         * @protected
+         * @param {?} memoryResponseFactory - creates MemoryResponse when observable is subscribed
+         * @param {?=} withDelay - if true (default), add simulated latency delay from configuration
+         * @return {?}
+         */
+        BackendService.prototype.createResponse$ = /**
+         * Create a cold response Observable from a factory for MemoryResponse
+         * @protected
+         * @param {?} memoryResponseFactory - creates MemoryResponse when observable is subscribed
+         * @param {?=} withDelay - if true (default), add simulated latency delay from configuration
+         * @return {?}
+         */
+            function (memoryResponseFactory, withDelay) {
+                if (withDelay === void 0) {
+                    withDelay = true;
+                }
+                /** @type {?} */
+                var memoryResponse$ = this.createMemoryResponse$(memoryResponseFactory);
+                /** @type {?} */
+                var response$ = this.createResponse$fromMemoryResponse$(memoryResponse$);
+                return withDelay ? this.addDelay(response$) : response$;
+            };
+        /**
+         * Create a cold Observable of MemoryResponse.
+         * @param memoryResponseFactory - creates MemoryResponse when observable is subscribed
+         */
+        /**
+         * Create a cold Observable of MemoryResponse.
+         * @protected
+         * @param {?} memoryResponseFactory - creates MemoryResponse when observable is subscribed
+         * @return {?}
+         */
+        BackendService.prototype.createMemoryResponse$ = /**
+         * Create a cold Observable of MemoryResponse.
+         * @protected
+         * @param {?} memoryResponseFactory - creates MemoryResponse when observable is subscribed
+         * @return {?}
+         */
+            function (memoryResponseFactory) {
+                var _this = this;
+                return new rxjs.Observable(function (observer) {
+                    /** @type {?} */
+                    var response;
                     try {
-                        item.id = id || this.genId(collection, collectionName);
+                        response = memoryResponseFactory();
                     }
                     catch (error) {
-                        /** @type {?} */
-                        var message = error.message || '';
-                        if (/id type is non-numeric/.test(message)) {
-                            return this.createErrorResponseOptions(url, STATUS_CODE.UNPROCESSABLE_ENTRY, message);
-                        }
-                        else {
-                            console.error(error);
-                            return this.createErrorResponseOptions(url, STATUS_CODE.INTERNAL_SERVER_ERROR, "Failed to generate new id for '" + collectionName + "'");
-                        }
+                        error = error.message || error;
+                        response = _this.createErrorResponse('', STATUS_CODE.INTERNAL_SERVER_ERROR, "" + error);
                     }
-                }
-                if (id && id !== item.id) {
-                    return this.createErrorResponseOptions(url, STATUS_CODE.BAD_REQUEST, "Request id does not match item.id");
-                }
-                else {
-                    id = item.id;
-                }
-                /** @type {?} */
-                var existingIx = this.indexOf(collection, id);
-                /** @type {?} */
-                var body = this.bodify(item);
-                if (existingIx === -1) {
-                    collection.push(item);
-                    headers.set('Location', resourceUrl + '/' + id);
-                    return { headers: headers, body: body, status: STATUS_CODE.CREATED };
-                }
-                else if (this.config.post409) {
-                    return this.createErrorResponseOptions(url, STATUS_CODE.CONFLICT, "'" + collectionName + "' item with id='" + id + " exists and may not be updated with POST; use PUT instead.");
-                }
-                else {
-                    collection[existingIx] = item;
-                    return this.config.post204 ?
-                        { headers: headers, status: STATUS_CODE.NO_CONTENT } : // successful; no content
-                        { headers: headers, body: body, status: STATUS_CODE.OK }; // successful; return entity
-                }
+                    /** @type {?} */
+                    var status = response.status;
+                    try {
+                        response.statusText = getStatusText(status);
+                    }
+                    catch (error) { /* ignore failure */ }
+                    if (isSuccess(status)) {
+                        observer.next(response);
+                        observer.complete();
+                    }
+                    else {
+                        observer.error(response);
+                    }
+                    return function () { }; // unsubscribe function
+                });
             };
-        // Update existing entity
-        // Can create an entity too if put404 is false.
-        // Update existing entity
-        // Can create an entity too if put404 is false.
         /**
+         * Find first instance of item in collection by `item.id`
+         * @param collection
+         * @param id
+         */
+        /**
+         * Find first instance of item in collection by `item.id`
          * @protected
-         * @param {?} __0
+         * @template T
+         * @param {?} collection
+         * @param {?} id
          * @return {?}
          */
-        BackendService.prototype.put =
-            // Update existing entity
-            // Can create an entity too if put404 is false.
-            /**
-             * @protected
-             * @param {?} __0
-             * @return {?}
-             */
-            function (_a) {
-                var collection = _a.collection, collectionName = _a.collectionName, headers = _a.headers, id = _a.id, request = _a.request, url = _a.url;
+        BackendService.prototype.findById = /**
+         * Find first instance of item in collection by `item.id`
+         * @protected
+         * @template T
+         * @param {?} collection
+         * @param {?} id
+         * @return {?}
+         */
+            function (collection, id) {
+                return collection.find(function (item) { return item.id === id; });
+            };
+        /**
+         * Generate the next available id for item in this collection
+         * Use method from `dataService` if it exists and returns a value,
+         * else delegates to `genIdDefault`.
+         * @param collection - collection of items with `id` key property
+         */
+        /**
+         * Generate the next available id for item in this collection
+         * Use method from `dataService` if it exists and returns a value,
+         * else delegates to `genIdDefault`.
+         * @protected
+         * @template T
+         * @param {?} collection - collection of items with `id` key property
+         * @param {?} collectionName
+         * @return {?}
+         */
+        BackendService.prototype.genId = /**
+         * Generate the next available id for item in this collection
+         * Use method from `dataService` if it exists and returns a value,
+         * else delegates to `genIdDefault`.
+         * @protected
+         * @template T
+         * @param {?} collection - collection of items with `id` key property
+         * @param {?} collectionName
+         * @return {?}
+         */
+            function (collection, collectionName) {
                 /** @type {?} */
-                var item = this.clone(this.getJsonBody(request));
-                // tslint:disable-next-line:triple-equals
-                if (item.id == undefined) {
-                    return this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, "Missing '" + collectionName + "' id");
+                var genId = this.bind('genId');
+                if (genId) {
+                    /** @type {?} */
+                    var id = genId(collection, collectionName);
+                    // tslint:disable-next-line:triple-equals
+                    if (id != undefined) {
+                        return id;
+                    }
                 }
-                if (id && id !== item.id) {
-                    return this.createErrorResponseOptions(url, STATUS_CODE.BAD_REQUEST, "Request for '" + collectionName + "' id does not match item.id");
-                }
-                else {
-                    id = item.id;
+                return this.genIdDefault(collection, collectionName);
+            };
+        /**
+         * Default generator of the next available id for item in this collection
+         * This default implementation works only for numeric ids.
+         * @param collection - collection of items with `id` key property
+         * @param collectionName - name of the collection
+         */
+        /**
+         * Default generator of the next available id for item in this collection
+         * This default implementation works only for numeric ids.
+         * @protected
+         * @template T
+         * @param {?} collection - collection of items with `id` key property
+         * @param {?} collectionName - name of the collection
+         * @return {?}
+         */
+        BackendService.prototype.genIdDefault = /**
+         * Default generator of the next available id for item in this collection
+         * This default implementation works only for numeric ids.
+         * @protected
+         * @template T
+         * @param {?} collection - collection of items with `id` key property
+         * @param {?} collectionName - name of the collection
+         * @return {?}
+         */
+            function (collection, collectionName) {
+                if (!this.isCollectionIdNumeric(collection, collectionName)) {
+                    throw new Error("Collection '" + collectionName + "' id type is non-numeric or unknown. Can only generate numeric ids.");
                 }
                 /** @type {?} */
-                var existingIx = this.indexOf(collection, id);
-                /** @type {?} */
-                var body = this.bodify(item);
-                if (existingIx > -1) {
-                    collection[existingIx] = item;
-                    return this.config.put204 ?
-                        { headers: headers, status: STATUS_CODE.NO_CONTENT } : // successful; no content
-                        { headers: headers, body: body, status: STATUS_CODE.OK }; // successful; return entity
+                var maxId = 0;
+                collection.reduce(function (prev, item) {
+                    maxId = Math.max(maxId, typeof item.id === 'number' ? item.id : maxId);
+                }, undefined);
+                return maxId + 1;
+            };
+        /**
+         * Get location info from a url, even on server where `document` is not defined
+         */
+        /**
+         * Get location info from a url, even on server where `document` is not defined
+         * @protected
+         * @param {?} url
+         * @return {?}
+         */
+        BackendService.prototype.getLocation = /**
+         * Get location info from a url, even on server where `document` is not defined
+         * @protected
+         * @param {?} url
+         * @return {?}
+         */
+            function (url) {
+                if (!url.startsWith('http')) {
+                    // get the document if running in browser
+                    /** @type {?} */
+                    var document_ = (typeof document === 'undefined') ? undefined : document;
+                    // add host info to url before parsing.  Use a fake host when not in browser.
+                    /** @type {?} */
+                    var base = document_ ? document_.location.protocol + '//' + document_.location.host : 'http://fake';
+                    url = url.startsWith('/') ? base + url : base + '/' + url;
                 }
-                else if (this.config.put404) {
-                    // item to update not found; use POST to create new item for this id.
-                    return this.createErrorResponseOptions(url, STATUS_CODE.NOT_FOUND, "'" + collectionName + "' item with id='" + id + " not found and may not be created with PUT; use POST instead.");
-                }
-                else {
-                    // create new item for id not found
-                    collection.push(item);
-                    return { headers: headers, body: body, status: STATUS_CODE.CREATED };
-                }
+                return parseUri(url);
+            };
+        /**
+         * get or create the function that passes unhandled requests
+         * through to the "real" backend.
+         */
+        /**
+         * get or create the function that passes unhandled requests
+         * through to the "real" backend.
+         * @protected
+         * @return {?}
+         */
+        BackendService.prototype.getPassThruBackend = /**
+         * get or create the function that passes unhandled requests
+         * through to the "real" backend.
+         * @protected
+         * @return {?}
+         */
+            function () {
+                return this.passThruBackend ? this.passThruBackend : this.passThruBackend = this.createPassThruBackend();
+            };
+        /**
+         * @protected
+         * @param {?} collection
+         * @param {?} id
+         * @return {?}
+         */
+        BackendService.prototype.indexOf = /**
+         * @protected
+         * @param {?} collection
+         * @param {?} id
+         * @return {?}
+         */
+            function (collection, id) {
+                return collection.findIndex(function (item) { return item.id === id; });
+            };
+        /**
+         * return true if can determine that the collection's `item.id` is a number
+         * This implementation can't tell if the collection is empty so it assumes NO
+         * */
+        /**
+         * return true if can determine that the collection's `item.id` is a number
+         * This implementation can't tell if the collection is empty so it assumes NO
+         *
+         * @protected
+         * @template T
+         * @param {?} collection
+         * @param {?} collectionName
+         * @return {?}
+         */
+        BackendService.prototype.isCollectionIdNumeric = /**
+         * return true if can determine that the collection's `item.id` is a number
+         * This implementation can't tell if the collection is empty so it assumes NO
+         *
+         * @protected
+         * @template T
+         * @param {?} collection
+         * @param {?} collectionName
+         * @return {?}
+         */
+            function (collection, collectionName) {
+                // collectionName not used now but override might maintain collection type information
+                // so that it could know the type of the `id` even when the collection is empty.
+                // return !!(collection && collection[0]) && typeof collection[0].id === 'number';
+                return !!(collection && collection[0]);
             };
         /**
          * @protected
@@ -1916,21 +1638,21 @@
          * Tell your in-mem "database" to reset.
          * returns Observable of the database because resetting it could be async
          * @protected
-         * @param {?=} requestInfo
+         * @param {?=} request
          * @return {?}
          */
         BackendService.prototype.resetDb = /**
          * Tell your in-mem "database" to reset.
          * returns Observable of the database because resetting it could be async
          * @protected
-         * @param {?=} requestInfo
+         * @param {?=} request
          * @return {?}
          */
-            function (requestInfo) {
+            function (request) {
                 var _this = this;
                 this.databaseReadySubject.next(false);
                 /** @type {?} */
-                var database = this.dataService.createDb(requestInfo);
+                var database = this.dataService.createDb(request);
                 /** @type {?} */
                 var database$ = database instanceof rxjs.Observable ? database :
                     typeof (( /** @type {?} */(database))).then === 'function' ? rxjs.from(( /** @type {?} */(database))) :
@@ -1941,83 +1663,296 @@
                 });
                 return this.databaseReady;
             };
-        return BackendService;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var HttpClientBackendService = /** @class */ (function (_super) {
-        __extends(HttpClientBackendService, _super);
-        function HttpClientBackendService(dataService, config, factory) {
-            var _this = _super.call(this, dataService, config) || this;
-            _this.factory = factory;
-            return _this;
-        }
+        /**
+         * Commands reconfigure the in-memory web api service or extract information from it.
+         * Commands ignore the latency delay and respond ASAP.
+         *
+         * When the last segment of the `apiBase` path is "commands",
+         * the `collectionName` is the command.
+         *
+         * Example URLs:
+         *   commands/resetdb (POST) // Reset the "database" to its original state
+         *   commands/config (GET)   // Return this service's config object
+         *   commands/config (POST)  // Update the config (e.g. the delay)
+         *
+         * Usage:
+         *   http.post('commands/resetdb', undefined);
+         *   http.get('commands/config');
+         *   http.post('commands/config', '{"delay":1000}');
+         */
+        /**
+         * Commands reconfigure the in-memory web api service or extract information from it.
+         * Commands ignore the latency delay and respond ASAP.
+         *
+         * When the last segment of the `apiBase` path is "commands",
+         * the `collectionName` is the command.
+         *
+         * Example URLs:
+         *   commands/resetdb (POST) // Reset the "database" to its original state
+         *   commands/config (GET)   // Return this service's config object
+         *   commands/config (POST)  // Update the config (e.g. the delay)
+         *
+         * Usage:
+         *   http.post('commands/resetdb', undefined);
+         *   http.get('commands/config');
+         *   http.post('commands/config', '{"delay":1000}');
+         * @protected
+         * @param {?} request
+         * @return {?}
+         */
+        BackendService.prototype.commands = /**
+         * Commands reconfigure the in-memory web api service or extract information from it.
+         * Commands ignore the latency delay and respond ASAP.
+         *
+         * When the last segment of the `apiBase` path is "commands",
+         * the `collectionName` is the command.
+         *
+         * Example URLs:
+         *   commands/resetdb (POST) // Reset the "database" to its original state
+         *   commands/config (GET)   // Return this service's config object
+         *   commands/config (POST)  // Update the config (e.g. the delay)
+         *
+         * Usage:
+         *   http.post('commands/resetdb', undefined);
+         *   http.get('commands/config');
+         *   http.post('commands/config', '{"delay":1000}');
+         * @protected
+         * @param {?} request
+         * @return {?}
+         */
+            function (request) {
+                var _this = this;
+                /** @type {?} */
+                var command = request.collectionName.toLowerCase();
+                /** @type {?} */
+                var method = request.method;
+                /** @type {?} */
+                var response = {
+                    url: request.url
+                };
+                switch (command) {
+                    case 'resetdb':
+                        response.status = STATUS_CODE.NO_CONTENT;
+                        return this.resetDb(request).pipe(operators.concatMap(function () { return _this.createResponse$(function () { return response; }, false /* no latency delay */); }));
+                    case 'config':
+                        if (method === 'get') {
+                            response.status = STATUS_CODE.OK;
+                            response.body = this.clone(this.config);
+                            // any other HTTP method is assumed to be a config update
+                        }
+                        else {
+                            /** @type {?} */
+                            var body = request.request.body;
+                            Object.assign(this.config, body);
+                            this.passThruBackend = undefined; // re-create when needed
+                            response.status = STATUS_CODE.NO_CONTENT;
+                        }
+                        break;
+                    default:
+                        response = this.createErrorResponse(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, "Unknown command \"" + command + "\"");
+                }
+                return this.createResponse$(function () { return response; }, false /* no latency delay */);
+            };
+        /**
+         * @protected
+         * @param {?} __0
+         * @return {?}
+         */
+        BackendService.prototype.get = /**
+         * @protected
+         * @param {?} __0
+         * @return {?}
+         */
+            function (_a) {
+                var collection = _a.collection, collectionName = _a.collectionName, headers = _a.headers, id = _a.id, query = _a.query, url = _a.url;
+                /** @type {?} */
+                var data = collection;
+                // tslint:disable-next-line:triple-equals
+                if (id != undefined && id !== '') {
+                    data = this.findById(collection, id);
+                    if (!data) {
+                        return this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, "'" + collectionName + "' with id='" + id + "' not found");
+                    }
+                }
+                else if (query) {
+                    data = this.applyQuery(collection, query);
+                    if (!data.length) {
+                        return this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, "'" + collectionName + "' with id='" + id + "' not found");
+                    }
+                }
+                return {
+                    body: this.bodify(this.clone(data)),
+                    headers: headers,
+                    status: STATUS_CODE.OK
+                };
+            };
+        // Create entity
+        // Can update an existing entity too if post409 is false.
+        // Create entity
+        // Can update an existing entity too if post409 is false.
+        /**
+         * @protected
+         * @param {?} __0
+         * @return {?}
+         */
+        BackendService.prototype.post =
+            // Create entity
+            // Can update an existing entity too if post409 is false.
+            /**
+             * @protected
+             * @param {?} __0
+             * @return {?}
+             */
+            function (_a) {
+                var collection = _a.collection, collectionName = _a.collectionName, headers = _a.headers, id = _a.id, request = _a.request, resourceUrl = _a.resourceUrl, url = _a.url;
+                /** @type {?} */
+                var requestBody = request.body;
+                /** @type {?} */
+                var item = this.clone(requestBody);
+                // tslint:disable-next-line:triple-equals
+                if (item.id == undefined) {
+                    try {
+                        item.id = id || this.genId(collection, collectionName);
+                    }
+                    catch (error) {
+                        /** @type {?} */
+                        var message = error.message || '';
+                        if (/id type is non-numeric/.test(message)) {
+                            return this.createErrorResponse(url, STATUS_CODE.UNPROCESSABLE_ENTRY, message);
+                        }
+                        else {
+                            console.error(error);
+                            return this.createErrorResponse(url, STATUS_CODE.INTERNAL_SERVER_ERROR, "Failed to generate new id for '" + collectionName + "'");
+                        }
+                    }
+                }
+                if (id && id !== item.id) {
+                    return this.createErrorResponse(url, STATUS_CODE.BAD_REQUEST, "Request id does not match item.id");
+                }
+                else {
+                    id = item.id;
+                }
+                /** @type {?} */
+                var existingIx = this.indexOf(collection, id);
+                /** @type {?} */
+                var body = this.bodify(item);
+                if (existingIx === -1) {
+                    collection.push(item);
+                    headers.set('Location', resourceUrl + '/' + id);
+                    return { headers: headers, body: body, status: STATUS_CODE.CREATED };
+                }
+                else if (this.config.post409) {
+                    return this.createErrorResponse(url, STATUS_CODE.CONFLICT, "'" + collectionName + "' item with id='" + id + " exists and may not be updated with POST; use PUT instead.");
+                }
+                else {
+                    collection[existingIx] = item;
+                    return this.config.post204 ?
+                        { headers: headers, status: STATUS_CODE.NO_CONTENT } : // successful; no content
+                        { headers: headers, body: body, status: STATUS_CODE.OK }; // successful; return entity
+                }
+            };
+        // Update existing entity
+        // Can create an entity too if put404 is false.
+        // Update existing entity
+        // Can create an entity too if put404 is false.
+        /**
+         * @protected
+         * @param {?} __0
+         * @return {?}
+         */
+        BackendService.prototype.put =
+            // Update existing entity
+            // Can create an entity too if put404 is false.
+            /**
+             * @protected
+             * @param {?} __0
+             * @return {?}
+             */
+            function (_a) {
+                var collection = _a.collection, collectionName = _a.collectionName, headers = _a.headers, id = _a.id, request = _a.request, url = _a.url;
+                /** @type {?} */
+                var item = this.clone(request.body);
+                // tslint:disable-next-line:triple-equals
+                if (item.id == undefined) {
+                    return this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, "Missing '" + collectionName + "' id");
+                }
+                if (id && id !== item.id) {
+                    return this.createErrorResponse(url, STATUS_CODE.BAD_REQUEST, "Request for '" + collectionName + "' id does not match item.id");
+                }
+                else {
+                    id = item.id;
+                }
+                /** @type {?} */
+                var existingIx = this.indexOf(collection, id);
+                /** @type {?} */
+                var body = this.bodify(item);
+                if (existingIx > -1) {
+                    collection[existingIx] = item;
+                    return this.config.put204 ?
+                        { headers: headers, status: STATUS_CODE.NO_CONTENT } : // successful; no content
+                        { headers: headers, body: body, status: STATUS_CODE.OK }; // successful; return entity
+                }
+                else if (this.config.put404) {
+                    // item to update not found; use POST to create new item for this id.
+                    return this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, "'" + collectionName + "' item with id='" + id + " not found and may not be created with PUT; use POST instead.");
+                }
+                else {
+                    // create new item for id not found
+                    collection.push(item);
+                    return { headers: headers, body: body, status: STATUS_CODE.CREATED };
+                }
+            };
+        /**
+         * @protected
+         * @param {?} __0
+         * @return {?}
+         */
+        BackendService.prototype.delete = /**
+         * @protected
+         * @param {?} __0
+         * @return {?}
+         */
+            function (_a) {
+                var collection = _a.collection, collectionName = _a.collectionName, headers = _a.headers, id = _a.id, url = _a.url;
+                // tslint:disable-next-line:triple-equals
+                if (id == undefined) {
+                    return this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, "Missing \"" + collectionName + "\" id");
+                }
+                /** @type {?} */
+                var exists = this.removeById(collection, id);
+                return {
+                    headers: headers,
+                    status: (exists || !this.config.delete404) ? STATUS_CODE.NO_CONTENT : STATUS_CODE.NOT_FOUND
+                };
+            };
+        ///////
+        ///////
         /**
          * @param {?} request
          * @return {?}
          */
-        HttpClientBackendService.prototype.handle = /**
-         * @param {?} request
-         * @return {?}
-         */
+        BackendService.prototype.handle =
+            ///////
+            /**
+             * @param {?} request
+             * @return {?}
+             */
             function (request) {
                 try {
                     return this.handleRequest(request);
                 }
                 catch (error) {
                     /** @type {?} */
-                    var resOptions_1 = this.createErrorResponseOptions(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, "" + (error.message || error));
-                    return this.createResponse$(function () { return resOptions_1; });
+                    var response_1 = this.createErrorResponse(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, "" + (error.message || error));
+                    return this.createResponse$(function () { return response_1; });
                 }
-            };
-        /**
-         * @protected
-         * @param {?} request
-         * @return {?}
-         */
-        HttpClientBackendService.prototype.getJsonBody = /**
-         * @protected
-         * @param {?} request
-         * @return {?}
-         */
-            function (request) {
-                return request.body;
-            };
-        /**
-         * @protected
-         * @param {?} request
-         * @return {?}
-         */
-        HttpClientBackendService.prototype.getRequestMethod = /**
-         * @protected
-         * @param {?} request
-         * @return {?}
-         */
-            function (request) {
-                return (request.method || 'get').toLowerCase();
-            };
-        /**
-         * @protected
-         * @param {?} headers
-         * @return {?}
-         */
-        HttpClientBackendService.prototype.createHeaders = /**
-         * @protected
-         * @param {?} headers
-         * @return {?}
-         */
-            function (headers) {
-                return new http.HttpHeaders(headers);
             };
         /**
          * @protected
          * @param {?} search
          * @return {?}
          */
-        HttpClientBackendService.prototype.createQueryMap = /**
+        BackendService.prototype.createQueryMap = /**
          * @protected
          * @param {?} search
          * @return {?}
@@ -2034,22 +1969,22 @@
             };
         /**
          * @protected
-         * @param {?} resOptions$
+         * @param {?} response$
          * @return {?}
          */
-        HttpClientBackendService.prototype.createResponse$fromResponseOptions$ = /**
+        BackendService.prototype.createResponse$fromMemoryResponse$ = /**
          * @protected
-         * @param {?} resOptions$
+         * @param {?} response$
          * @return {?}
          */
-            function (resOptions$) {
-                return resOptions$.pipe(operators.map(function (options) { return new http.HttpResponse(options); }));
+            function (response$) {
+                return response$.pipe(operators.map(function (options) { return new http.HttpResponse(options); }));
             };
         /**
          * @protected
          * @return {?}
          */
-        HttpClientBackendService.prototype.createPassThruBackend = /**
+        BackendService.prototype.createPassThruBackend = /**
          * @protected
          * @return {?}
          */
@@ -2062,19 +1997,19 @@
                     throw error;
                 }
             };
-        HttpClientBackendService.decorators = [
+        BackendService.decorators = [
             { type: i0.Injectable }
         ];
         /** @nocollapse */
-        HttpClientBackendService.ctorParameters = function () {
+        BackendService.ctorParameters = function () {
             return [
                 { type: MemoryDataService },
-                { type: MemoryBackendConfig, decorators: [{ type: i0.Inject, args: [MemoryBackendConfig,] }, { type: i0.Optional }] },
+                { type: MemoryBackendConfig },
                 { type: http.XhrFactory }
             ];
         };
-        return HttpClientBackendService;
-    }(BackendService));
+        return BackendService;
+    }());
 
     /**
      * @fileoverview added by tsickle
@@ -2088,31 +2023,31 @@
      * @param {?} factory
      * @return {?}
      */
-    function httpClientBackendServiceFactory(dataService, config, factory) {
+    function BackendServiceFactory(dataService, config, factory) {
         /** @type {?} */
-        var backend = new HttpClientBackendService(dataService, config, factory);
+        var backend = new BackendService(dataService, config, factory);
         return backend;
     }
-    var HttpClientMemoryModule = /** @class */ (function () {
-        function HttpClientMemoryModule() {
+    var MemoryModule = /** @class */ (function () {
+        function MemoryModule() {
         }
         /**
          * @param {?} dataService
          * @param {?=} config
          * @return {?}
          */
-        HttpClientMemoryModule.forRoot = /**
+        MemoryModule.forRoot = /**
          * @param {?} dataService
          * @param {?=} config
          * @return {?}
          */
             function (dataService, config) {
                 return {
-                    ngModule: HttpClientMemoryModule,
+                    ngModule: MemoryModule,
                     providers: [
                         { provide: MemoryDataService, useClass: dataService },
                         { provide: MemoryBackendConfig, useValue: config },
-                        { provide: http.HttpBackend, useFactory: httpClientBackendServiceFactory, deps: [MemoryDataService, MemoryBackendConfig, http.XhrFactory] }
+                        { provide: http.HttpBackend, useFactory: BackendServiceFactory, deps: [MemoryDataService, MemoryBackendConfig, http.XhrFactory] }
                     ]
                 };
             };
@@ -2121,18 +2056,18 @@
          * @param {?=} config
          * @return {?}
          */
-        HttpClientMemoryModule.forFeature = /**
+        MemoryModule.forFeature = /**
          * @param {?} dataService
          * @param {?=} config
          * @return {?}
          */
             function (dataService, config) {
-                return HttpClientMemoryModule.forRoot(dataService, config);
+                return MemoryModule.forRoot(dataService, config);
             };
-        HttpClientMemoryModule.decorators = [
+        MemoryModule.decorators = [
             { type: i0.NgModule, args: [{},] }
         ];
-        return HttpClientMemoryModule;
+        return MemoryModule;
     }());
 
     /**
@@ -2166,7 +2101,7 @@
                     ngModule: DataModule,
                     providers: __spread([
                         { provide: DATA_CONFIG, useValue: config }
-                    ], HttpClientMemoryModule.forRoot(DataService, config.memory).providers)
+                    ], MemoryModule.forRoot(DataService, config.memory).providers)
                 };
             };
         DataModule.decorators = [
@@ -2174,13 +2109,13 @@
                         imports: [
                             common.CommonModule,
                             http.HttpClientModule,
-                            HttpClientMemoryModule,
+                            MemoryModule,
                             core.CoreModule,
                         ],
                         providers: __spread(services),
                         declarations: __spread(components),
                         exports: __spread([
-                            HttpClientMemoryModule,
+                            MemoryModule,
                             core.CoreModule
                         ], components),
                     },] }
@@ -2209,10 +2144,10 @@
     exports.DataService = DataService;
     exports.DataModuleComponent = DataModuleComponent;
     exports.DataModule = DataModule;
-    exports.ɵb = HttpClientMemoryModule;
-    exports.ɵa = httpClientBackendServiceFactory;
     exports.ɵd = MemoryBackendConfig;
     exports.ɵc = MemoryDataService;
+    exports.ɵa = BackendServiceFactory;
+    exports.ɵb = MemoryModule;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

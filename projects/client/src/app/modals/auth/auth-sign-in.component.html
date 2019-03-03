@@ -36,7 +36,7 @@
 		</div>
 		-->
 		</div>
-		<div class="btn-group">
+		<div class="group group--stack">
 			<button type="button" class="btn btn--secondary" (click)="onForgotten()" title="{{ 'signIn.passwordForgotten' | translate }}"><span>{{ 'signIn.passwordForgotten' | translate }}</span></button>
 			<button type="submit" class="btn btn--primary" [ngClass]="{ disabled: submitted, invalid: !signIn.valid, 'btn--busy': busy }" title="{{ 'signIn.register' | translate }}">
 				<span>{{ 'signIn.register' | translate }}</span>

@@ -1,13 +1,13 @@
 <section class="section section--background">
 	<picture-component class="picture picture--background" [image]="section.images | image : 'Default'"></picture-component>
-	<div class="inner">
-		<div class="container">
+	<div class="container">
+		<div class="inner">
 			<div class="group group--headline">
-				<div class="h2" [innerHTML]="section.title"></div>
-				<div class="h4" [innerHTML]="section.abstract"></div>
+				<div class="title" [innerHTML]="section.title"></div>
+				<div class="abstract" [innerHTML]="section.abstract"></div>
 			</div>
-			<div class="group group--cta">
-				<a class="btn btn--cta" [routerLink]="section.slug | slugAsync" [innerHTML]="section.title"></a>
+			<div class="group group--btn">
+				<a class="btn btn--cta" [routerLink]="section.slug" [innerHTML]="section.title"></a>
 			</div>
 		</div>
 	</div>

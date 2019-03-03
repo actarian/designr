@@ -4,7 +4,7 @@ import { HttpErrorResponse, HttpClient, HttpHeaders, HttpParams, HttpClientModul
 import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
-import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, InjectionToken, Component, ElementRef, Renderer2, ComponentFactoryResolver, ViewChild, Pipe, ViewEncapsulation, ChangeDetectorRef, EventEmitter, WrappedValue, defineInjectable, inject, INJECTOR, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ComponentFactoryResolver, ViewChild, ElementRef, Renderer2, Pipe, ChangeDetectorRef, ViewEncapsulation, EventEmitter, WrappedValue, defineInjectable, inject, INJECTOR, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
 import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, first, takeUntil } from 'rxjs/operators';
 
@@ -1544,7 +1544,7 @@ class TranslateService extends ApiService {
      */
     parseParams(value, params) {
         /** @type {?} */
-        const TEMPLATE_REGEXP = /@\s?([^{}\s]*)\s?/g;
+        const TEMPLATE_REGEXP = /@([^{}\s]*)/g;
         return value.replace(TEMPLATE_REGEXP, (text, key) => {
             /** @type {?} */
             const replacer = (/** @type {?} */ (params[key]));
@@ -2198,6 +2198,7 @@ class LabelService extends ApiService {
         // !!! new async pipe
         this.collectedKeys = {};
         this.cache = {};
+        this.parsers = {};
         this.labels$ = new Subject();
         this.emitter = new EventEmitter();
     }
@@ -2216,7 +2217,6 @@ class LabelService extends ApiService {
      * @return {?}
      */
     parseLabel(value, key, defaultValue, params) {
-        console.log('parseLabel', value, key, defaultValue, params);
         if (value == null) {
             value = defaultValue;
         }
@@ -2251,7 +2251,7 @@ class LabelService extends ApiService {
      */
     parseParams(value, params) {
         /** @type {?} */
-        const TEMPLATE_REGEXP = /@\s?([^{}\s]*)\s?/g;
+        const TEMPLATE_REGEXP = /@([^{}\s]*)/g;
         return value.replace(TEMPLATE_REGEXP, (text, key) => {
             /** @type {?} */
             const replacer = (/** @type {?} */ (params[key]));
@@ -2266,7 +2266,9 @@ class LabelService extends ApiService {
      */
     getKey(key, defaultValue, params) {
         if (this.cache.hasOwnProperty(key)) {
-            return of(this.cache[key]);
+            /** @type {?} */
+            const label = this.cache[key];
+            return of(label);
         }
         else {
             Object.defineProperty(this.collectedKeys, key, {
@@ -2276,9 +2278,11 @@ class LabelService extends ApiService {
             });
             this.cache[key] = null;
         }
+        this.parsers[key] = (label) => this.parseLabel(label, key, defaultValue, params);
+        // !!! never reach this, return of(null) ?
         return this.labels$.pipe(map(items => items[key] || null), filter(label => label !== null), 
         // tap(label => console.log('getKey', key, label)),
-        map(label => this.parseLabel(label, key, defaultValue, params)));
+        map(label => this.parseLabel(label, key, defaultValue, params)), tap(label => this.cache[key] = label));
     }
     /**
      * @return {?}
@@ -2313,7 +2317,7 @@ class LabelService extends ApiService {
                 // console.log('LabelService.collectKeys', JSON.stringify(keys));
                 /** @type {?} */
                 const items = {};
-                keys.forEach(x => items[x.id] = x.value || x.defaultValue || x.id);
+                keys.forEach(x => items[x.id] = this.parsers[x.id](x.value || x.defaultValue || x.id));
                 return items;
             }), tap((items) => {
                 Object.assign(this.cache, items);

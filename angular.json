@@ -299,7 +299,7 @@
 						"polyfills": "projects/client/src/polyfills.ts",
 						"tsConfig": "projects/client/tsconfig.browser.json",
 						"assets": ["projects/client/src/favicon.ico", "projects/client/src/assets"],
-						"styles": ["projects/client/src/styles.scss"],
+						"styles": ["projects/client/src/scss/styles.scss"],
 						"extractCss": true,
 						"lazyModules": [
 							"projects/client/src/app/bundles/editor.bundle"
@@ -401,7 +401,7 @@
 						"polyfills": "projects/client/src/polyfills.ts",
 						"tsConfig": "projects/client/tsconfig.spec.json",
 						"karmaConfig": "projects/client/karma.conf.js",
-						"styles": ["projects/client/src/styles.scss"],
+						"styles": ["projects/client/src/scss/styles.scss"],
 						"scripts": [],
 						"assets": ["projects/client/src/favicon.ico", "projects/client/src/assets"]
 					}

@@ -1,4 +1,4 @@
-<hero-component [page]="page"></hero-component>
+<hero-component [section]="page"></hero-component>
 <section class="section section--form">
 	<div class="container">
 		<div class="group group--form">
@@ -11,7 +11,7 @@
 					</ng-container>
 				</div>
 				-->
-				<div class="btn-group">
+				<div class="group group--inline">
 					<button type="text" class="btn btn--secondary" [disabled]="submitted || !group.valid" (click)="onReset()"><span>Cancel</span></button>
 					<button type="submit" class="btn btn--primary" [disabled]="submitted || !group.valid" [ngClass]="{ 'btn--busy': busy }"><span>Save</span></button>
 				</div>
@@ -22,4 +22,4 @@
 <content-component [page]="page"></content-component>
 <section-sections [sections]="page.related"></section-sections>
 <!-- <related-component [page]="page"></related-component> -->
-<debug-component [page]="page"></debug-component>
+<footer-component></footer-component>
