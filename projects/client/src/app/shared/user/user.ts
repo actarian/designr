@@ -2,6 +2,7 @@
 export class User {
 	id: number | string;
 	name?: string;
+	password?: string;
 	firstName?: string;
 	lastName?: string;
 	email?: string;

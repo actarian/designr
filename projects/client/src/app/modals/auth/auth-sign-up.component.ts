@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ControlBase, FormService } from '@designr/control';
 import { DisposableComponent } from '@designr/core';
 import { FacebookService, FacebookUser, GoogleService, GoogleUser } from '@designr/plugins';
 import { ModalCompleteEvent, ModalData, ModalService } from '@designr/ui';
 import { finalize, first } from 'rxjs/operators';
-import { User, UserSignUp } from '../../shared/user/user';
+import { User } from '../../shared/user/user';
 import { UserService } from '../../shared/user/user.service';
 import { AuthSignInComponent } from './auth-sign-in.component';
 
@@ -16,7 +18,8 @@ import { AuthSignInComponent } from './auth-sign-in.component';
 
 export class AuthSignUpComponent extends DisposableComponent implements OnInit {
 
-	model: UserSignUp = new UserSignUp();
+	controls: ControlBase<any>[];
+	form: FormGroup;
 	user: User;
 	facebook: FacebookUser;
 	google: GoogleUser;
@@ -26,6 +29,7 @@ export class AuthSignUpComponent extends DisposableComponent implements OnInit {
 	exists$: Function;
 
 	constructor(
+		private formService: FormService,
 		private modalService: ModalService,
 		private modalData: ModalData,
 		private facebookService: FacebookService,
@@ -40,31 +44,76 @@ export class AuthSignUpComponent extends DisposableComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.controls = this.formService.getControlsFromOptions([{
+			key: 'firstName',
+			schema: 'text',
+			label: 'signUp.firstName',
+			placeholder: 'signUp.firstName',
+			required: true,
+			order: 1
+		}, {
+			key: 'lastName',
+			schema: 'text',
+			label: 'signUp.lastName',
+			placeholder: 'signUp.lastName',
+			required: true,
+			order: 2
+		}, {
+			key: 'email',
+			schema: 'email',
+			label: 'signUp.email',
+			placeholder: 'signIn.email',
+			required: true,
+			match: 'emailConfirm',
+			reverse: true,
+			order: 3
+		}, {
+			key: 'emailConfirm',
+			schema: 'email',
+			label: 'signUp.emailConfirm',
+			placeholder: 'signUp.emailConfirm',
+			required: true,
+			match: 'email',
+			order: 4,
+		}, {
+			key: 'password',
+			schema: 'password',
+			label: 'signIn.password',
+			placeholder: 'signIn.password',
+			required: true,
+			minlength: 6,
+			order: 5
+		}]);
+		this.form = this.formService.getGroupFromControls(this.controls);
 		const data: any = this.modalData;
 		if (data) {
 			console.log('AuthSignUpComponent.data', data);
 			if (data.facebook) {
 				this.facebook = data.facebook as FacebookUser;
-				this.model.firstName = this.facebook.first_name;
-				this.model.lastName = this.facebook.last_name;
-				this.model.email = this.facebook.email;
-				this.model.emailConfirm = this.facebook.email;
+				this.form.setValue({
+					firstName: this.facebook.first_name,
+					lastName: this.facebook.last_name,
+					email: this.facebook.email,
+					emailConfirm: this.facebook.email,
+				});
 			}
 			if (data.google) {
 				this.google = data.google as GoogleUser;
-				this.model.firstName = this.google.firstName;
-				this.model.lastName = this.google.lastName;
-				this.model.email = this.google.email;
-				this.model.emailConfirm = this.google.email;
+				this.form.setValue({
+					firstName: this.google.firstName,
+					lastName: this.google.lastName,
+					email: this.google.email,
+					emailConfirm: this.google.email,
+				});
 			}
 		}
 	}
 
-	onSubmit(): void {
+	onSubmit(model): void {
 		this.error = null;
 		this.submitted = true;
 		this.busy = true;
-		this.userService.signUp(this.model).pipe(
+		this.userService.signUp(model).pipe(
 			first(),
 			finalize(() => this.busy = false),
 		).subscribe(

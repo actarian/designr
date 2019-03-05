@@ -1,8 +1,9 @@
+import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 import { __spread, __extends } from 'tslib';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { DisposableComponent, CoreModule } from '@designr/core';
-import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, of, range, fromEvent, Observable } from 'rxjs';
+import { map, takeUntil, shareReplay, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, HostListener, Output, NgModule, Optional, SkipSelf, defineInjectable, inject, ViewEncapsulation, ReflectiveInjector, ComponentFactoryResolver, ViewChild, ViewContainerRef, PLATFORM_ID, NgZone, Renderer2 } from '@angular/core';
 
 /**
@@ -608,7 +609,7 @@ var ModalContainerComponent = /** @class */ (function (_super) {
     ModalContainerComponent.decorators = [
         { type: Component, args: [{
                     selector: 'core-modal-container-component',
-                    template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal__background\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal__page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal__header\">\r\n\t\t\t<button type=\"button\" class=\"btn btn--prev\" (click)=\"doPrev()\" *ngIf=\"modalCount > 1\" [title]=\"'modal.back' | label : 'back'\">\r\n\t\t\t\t<span sprite=\"ico-prev\"></span>\r\n\t\t\t\t<span>{{'modal.back' | label : 'back'}}</span>\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"btn btn--close\" (click)=\"doClose()\" title=\"'modal.close' | label : 'close'\">\r\n\t\t\t\t<span sprite=\"ico-close\"></span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal__content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<core-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></core-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
+                    template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal__background\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal__page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal__header\">\r\n\t\t\t<button type=\"button\" class=\"btn btn--prev\" (click)=\"doPrev()\" *ngIf=\"modalCount > 1\" [title]=\"'modal.back' | label : 'back'\">\r\n\t\t\t\t<span sprite=\"ico-prev\"></span> <span>{{'modal.back' | label : 'back'}}</span>\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"btn btn--close\" (click)=\"doClose()\" title=\"'modal.close' | label : 'close'\">\r\n\t\t\t\t<span sprite=\"ico-close\"></span> <span>{{'modal.close' | label : 'close'}}</span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal__content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<core-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></core-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
                     encapsulation: ViewEncapsulation.Emulated
                 }] }
     ];
@@ -697,6 +698,326 @@ var ModalViewComponent = /** @class */ (function (_super) {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+var RafService = /** @class */ (function () {
+    function RafService(platformId, zone) {
+        this.platformId = platformId;
+        this.zone = zone;
+    }
+    /**
+     * @return {?}
+     */
+    RafService.prototype.raf$ = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        return this.zone.runOutsideAngular(function () {
+            if (isPlatformBrowser(_this.platformId)) {
+                return range(0, Number.POSITIVE_INFINITY, animationFrame).pipe(shareReplay());
+            }
+            else {
+                return of(null);
+            }
+        });
+    };
+    RafService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */
+    RafService.ctorParameters = function () { return [
+        { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
+        { type: NgZone }
+    ]; };
+    /** @nocollapse */ RafService.ngInjectableDef = defineInjectable({ factory: function RafService_Factory() { return new RafService(inject(PLATFORM_ID), inject(NgZone)); }, token: RafService, providedIn: "root" });
+    return RafService;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var Point = /** @class */ (function () {
+    function Point() {
+        this.top = 0;
+        this.left = 0;
+        this.x = 0;
+        this.y = 0;
+    }
+    return Point;
+}());
+var Rect = /** @class */ (function () {
+    function Rect(rect) {
+        this.top = 0;
+        this.left = 0;
+        this.width = 0;
+        this.height = 0;
+        this.right = 0;
+        this.bottom = 0;
+        this.center = new Point();
+        this.set(rect);
+    }
+    /**
+     * @param {?} rect
+     * @param {?} left
+     * @param {?} top
+     * @return {?}
+     */
+    Rect.contains = /**
+     * @param {?} rect
+     * @param {?} left
+     * @param {?} top
+     * @return {?}
+     */
+    function (rect, left, top) {
+        return rect.top <= top && top <= rect.bottom && rect.left <= left && left <= rect.right;
+    };
+    /**
+     * @param {?} r1
+     * @param {?} r2
+     * @return {?}
+     */
+    Rect.intersectRect = /**
+     * @param {?} r1
+     * @param {?} r2
+     * @return {?}
+     */
+    function (r1, r2) {
+        return !(r2.left > r1.right ||
+            r2.right < r1.left ||
+            r2.top > r1.bottom ||
+            r2.bottom < r1.top);
+    };
+    /**
+     * @param {?} node
+     * @return {?}
+     */
+    Rect.fromNode = /**
+     * @param {?} node
+     * @return {?}
+     */
+    function (node) {
+        if (!node.getClientRects().length) {
+            return new Rect();
+        }
+        /** @type {?} */
+        var rect = node.getBoundingClientRect();
+        // const defaultView = node.ownerDocument.defaultView;
+        return new Rect({
+            // top: rect.top + defaultView.pageYOffset,
+            // left: rect.left + defaultView.pageXOffset,
+            top: rect.top,
+            left: rect.left,
+            width: rect.width,
+            height: rect.height,
+        });
+    };
+    /**
+     * @param {?} rect
+     * @return {?}
+     */
+    Rect.prototype.set = /**
+     * @param {?} rect
+     * @return {?}
+     */
+    function (rect) {
+        if (rect) {
+            Object.assign(this, rect);
+            this.right = this.left + this.width;
+            this.bottom = this.top + this.height;
+        }
+        /** @type {?} */
+        var y = this.top + this.height / 2;
+        /** @type {?} */
+        var x = this.left + this.width / 2;
+        this.center = {
+            left: x,
+            top: y,
+            x: x,
+            y: y,
+        };
+    };
+    /**
+     * @param {?} left
+     * @param {?} top
+     * @return {?}
+     */
+    Rect.prototype.contains = /**
+     * @param {?} left
+     * @param {?} top
+     * @return {?}
+     */
+    function (left, top) {
+        return Rect.contains(this, left, top);
+    };
+    /**
+     * @param {?} rect
+     * @return {?}
+     */
+    Rect.prototype.intersect = /**
+     * @param {?} rect
+     * @return {?}
+     */
+    function (rect) {
+        return Rect.intersectRect(this, rect);
+    };
+    /**
+     * @param {?} rect
+     * @return {?}
+     */
+    Rect.prototype.intersection = /**
+     * @param {?} rect
+     * @return {?}
+     */
+    function (rect) {
+        /** @type {?} */
+        var center = {
+            x: (this.center.x - rect.center.x) / (rect.width / 2),
+            y: (this.center.y - rect.center.y) / (rect.height / 2),
+        };
+        if (this.intersect(rect)) {
+            /** @type {?} */
+            var dx = this.left > rect.left ? 0 : Math.abs(rect.left - this.left);
+            /** @type {?} */
+            var dy = this.top > rect.top ? 0 : Math.abs(rect.top - this.top);
+            /** @type {?} */
+            var x = dx ? (1 - dx / this.width) : ((rect.left + rect.width) - this.left) / this.width;
+            /** @type {?} */
+            var y = dy ? (1 - dy / this.height) : ((rect.top + rect.height) - this.top) / this.height;
+            x = Math.min(1, x);
+            y = Math.min(1, y);
+            return {
+                x: x,
+                y: y,
+                center: center
+            };
+        }
+        else {
+            return { x: 0, y: 0, center: center };
+        }
+    };
+    return Rect;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var ParallaxDirective = /** @class */ (function (_super) {
+    __extends(ParallaxDirective, _super);
+    function ParallaxDirective(platformId, zone, elementRef, rafService) {
+        var _this = _super.call(this) || this;
+        _this.platformId = platformId;
+        _this.zone = zone;
+        _this.elementRef = elementRef;
+        _this.rafService = rafService;
+        return _this;
+    }
+    /**
+     * @return {?}
+     */
+    ParallaxDirective.prototype.ngAfterViewInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
+        this.zone.runOutsideAngular(function () {
+            _this.parallax$().pipe(
+            /*
+            distinctUntilChanged((a, b) => {
+                return a.p !== b.p;
+            }),
+            */
+            takeUntil(_this.unsubscribe)).subscribe(function (parallax) {
+                // console.log(parallax);
+                _this.elementRef.nativeElement.setAttribute('style', "height: " + parallax.s * 100 + "%; top: 50%; left: 50%; transform: translateX(-50%) translateY(" + parallax.p + "%);");
+            });
+        });
+    };
+    /**
+     * @return {?}
+     */
+    ParallaxDirective.prototype.parallax$ = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        return this.rafService.raf$().pipe(map(function (top) {
+            /** @type {?} */
+            var windowRect = new Rect({
+                top: 0,
+                left: 0,
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+            // this.windowRect;
+            /** @type {?} */
+            var node = _this.elementRef.nativeElement;
+            /** @type {?} */
+            var parallax = (_this.parallax || 5) * 2;
+            /** @type {?} */
+            var direction = 1;
+            // i % 2 === 0 ? 1 : -1;
+            /** @type {?} */
+            var rect = Rect.fromNode(node);
+            rect = new Rect({
+                top: rect.top,
+                left: rect.left,
+                width: rect.width,
+                height: rect.height,
+            });
+            /** @type {?} */
+            var intersection = rect.intersection(windowRect);
+            // console.log(intersection);
+            if (intersection.y > 0) {
+                /** @type {?} */
+                var y = Math.min(1, Math.max(-1, intersection.center.y));
+                /** @type {?} */
+                var s = (100 + parallax * 2) / 100;
+                /** @type {?} */
+                var p = (-50 + (y * parallax * direction));
+                return { s: s, p: p };
+            }
+            else {
+                return null;
+            }
+        }), filter(function (x) { return x !== null; }));
+    };
+    /**
+     * @return {?}
+     */
+    ParallaxDirective.prototype.scrollTop$ = /**
+     * @return {?}
+     */
+    function () {
+        return this.rafService.raf$().pipe(map(function (x) { return window.pageYOffset; }), distinctUntilChanged(), tap(function (x) { return console.log(x); }));
+    };
+    ParallaxDirective.decorators = [
+        { type: Directive, args: [{
+                    selector: '[parallax]'
+                },] }
+    ];
+    /** @nocollapse */
+    ParallaxDirective.ctorParameters = function () { return [
+        { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
+        { type: NgZone },
+        { type: ElementRef },
+        { type: RafService }
+    ]; };
+    ParallaxDirective.propDecorators = {
+        parallax: [{ type: Input }]
+    };
+    return ParallaxDirective;
+}(DisposableComponent));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var ScrollDirective = /** @class */ (function (_super) {
     __extends(ScrollDirective, _super);
     function ScrollDirective(platformId, zone, elementRef) {
@@ -718,6 +1039,13 @@ var ScrollDirective = /** @class */ (function (_super) {
                     .pipe(takeUntil(_this.unsubscribe))
                     .subscribe(observer);
             });
+            /*
+            this.zone.runOutsideAngular(() => {
+                this.renderer.listenGlobal('window', 'scroll', () => {
+                    console.log('scrolling');
+                });
+            });
+            */
         });
         return _this;
     }
@@ -788,6 +1116,7 @@ var SpriteComponent = /** @class */ (function () {
 var services = [
     UIService,
     ModalService,
+    RafService,
 ];
 /** @type {?} */
 var components = [
@@ -800,6 +1129,7 @@ var components = [
 var directives = [
     ClickOutsideDirective,
     LazyImagesDirective,
+    ParallaxDirective,
     ScrollDirective,
 ];
 var UIModule = /** @class */ (function () {
@@ -854,6 +1184,6 @@ var UIModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { UIConfig, UI_CONFIG, UIService, UIModuleComponent, UIModule, ClickOutsideDirective, LazyImagesDirective, ModalCompleteEvent, ModalData, ModalContainerComponent, ModalViewComponent, ModalService, ScrollDirective, SpriteComponent as ɵa };
+export { UIConfig, UI_CONFIG, UIService, UIModuleComponent, UIModule, ClickOutsideDirective, LazyImagesDirective, ModalCompleteEvent, ModalData, ModalContainerComponent, ModalViewComponent, ModalService, ParallaxDirective, RafService, ScrollDirective, SpriteComponent as ɵa };
 
 //# sourceMappingURL=designr-ui.js.map

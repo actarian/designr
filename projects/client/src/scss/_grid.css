@@ -22,9 +22,10 @@
 
 .container {
 	position: relative;
-	padding: 15px;
+	/* padding: 15px; */
 }
 
+/*
 .row {
 	display: flex;
 	flex-wrap: wrap;
@@ -34,5 +35,6 @@
 		margin-right: 15px;
 	}
 }
+*/
 
 @include make-grid-columns();

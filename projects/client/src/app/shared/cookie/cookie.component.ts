@@ -1,14 +1,13 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
-import { SessionStorageService } from '@designr/core';
-import { SectionComponent } from '@designr/section';
+import { DisposableComponent, SessionStorageService } from '@designr/core';
 
 @Component({
 	selector: 'cookie-component',
 	templateUrl: 'cookie.component.html',
 	styleUrls: ['cookie.component.scss']
 })
-export class CookieComponent extends SectionComponent {
+export class CookieComponent extends DisposableComponent {
 
 	public cookieAccepted: boolean = true;
 

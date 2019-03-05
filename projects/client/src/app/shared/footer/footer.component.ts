@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { SectionComponent } from '@designr/section';
+import { DisposableComponent } from '@designr/core';
 
 @Component({
 	selector: 'footer-component',
@@ -8,6 +8,6 @@ import { SectionComponent } from '@designr/section';
 	encapsulation: ViewEncapsulation.Emulated,
 })
 
-export class FooterComponent extends SectionComponent {
+export class FooterComponent extends DisposableComponent {
 
 }

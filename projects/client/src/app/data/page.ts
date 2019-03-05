@@ -123,6 +123,41 @@ export const page: Page[] = [{
 	}]
 }, {
 	id: 2000,
+	slug: '/products',
+	url: 'https://actarian.github.io/designr/#/products',
+	title: 'Duis luctus ullamcorper risus imperdiet maximus.',
+	abstract: 'Nam id suscipit tellus. Sed nec massa non mauris semper mattis in eget est.',
+	description: '<p>Ut ultrices condimentum urna, et aliquam orci semper ut. Donec eleifend sapien vel vestibulum cursus. Duis luctus ullamcorper risus imperdiet maximus. Vestibulum volutpat mauris diam, eget tempor lorem ultrices a.</p><p>Suspendisse non aliquet arcu. Praesent a enim accumsan orci semper venenatis non eget lorem. Praesent rhoncus molestie lectus id semper.</p>',
+	component: 'ProductsComponent',
+	type: 1,
+	active: true,
+	meta: {
+		title: 'Page Meta Title',
+		description: 'Page Meta Description',
+		keywords: 'keyword,keyword',
+		robots: 'index,follow'
+	},
+	images: [{
+		id: 0,
+		type: 1,
+		description: 'Image description',
+		fileName: 'placeholder',
+		url: 'placeholder',
+	}],
+	features: [{
+		id: 8,
+		slug: '/contacts',
+		title: 'Contacts',
+		abstract: 'Nam id suscipit tellus. Sed nec massa non mauris semper mattis in eget est.',
+		type: 1
+	}],
+	taxonomies: [{
+		id: 2,
+		name: 'Page Tag',
+		type: 0
+	}]
+}, {
+	id: 3000,
 	slug: '/contacts',
 	url: 'https://actarian.github.io/designr/#/contacts',
 	title: 'Praesent a enim accumsan orci.',

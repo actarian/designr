@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { FormService } from '@designr/control';
+import { FormGroup } from '@angular/forms';
+import { ControlBase, FormService } from '@designr/control';
 import { AuthService, AuthToken, DisposableComponent } from '@designr/core';
 import { ModalCompleteEvent, ModalService } from '@designr/ui';
 // import { FormGroup } from '@angular/forms';
@@ -17,78 +18,55 @@ import { AuthForgottenComponent } from './auth-forgotten.component';
 })
 
 export class AuthSignInComponent extends DisposableComponent implements OnInit {
-	// controls: ControlBase<any>[];
-	// group: FormGroup;
 
-	model: UserSignIn = new UserSignIn({ passwordReveal: true });
+	controls: ControlBase<any>[];
+	form: FormGroup;
 	error: any;
 	busy: boolean = false;
 	submitted: boolean = false;
 
+	model: UserSignIn = new UserSignIn({ passwordReveal: true });
+
 	constructor(
+		private formService: FormService,
 		private modalService: ModalService,
 		private authService: AuthService,
 		private userService: UserService,
-		private formService: FormService, // !!!
 	) {
 		super();
 	}
 
 	ngOnInit() {
-		// REACTIVE FORM
-		/*
 		this.controls = this.formService.getControlsFromOptions([{
 			key: 'email',
 			schema: 'email',
 			label: 'signIn.email',
 			placeholder: 'signIn.email',
 			required: true,
-			match: 'emailConfirm',
-			reverse: true,
 			order: 1
-		}, {
-			key: 'emailConfirm',
-			schema: 'email',
-			label: 'signIn.emailConfirm',
-			placeholder: 'signIn.emailConfirm',
-			required: true,
-			match: 'email',
-			order: 2,
 		}, {
 			key: 'password',
 			schema: 'password',
 			label: 'signIn.password',
 			placeholder: 'signIn.password',
 			required: true,
-			minlength: 6,
-			order: 3
-		}, {
-			key: 'hours',
-			schema: 'number',
-			label: 'signIn.hours',
-			placeholder: 'signIn.hours',
-			required: true,
-			min: 0,
-			max: 24,
-			step: 1,
-			format: 'H',
-			order: 3
+			order: 2
 		}, {
 			key: 'rememberMe',
 			schema: 'checkbox',
 			label: 'signIn.rememberMe',
 			placeholder: 'signIn.rememberMe',
-			order: 5
-		}]); // !!!
-		this.group = this.formService.getGroupFromControls(this.controls); // !!!
-		*/
+			order: 3
+		}]);
+		this.form = this.formService.getGroupFromControls(this.controls);
 	}
 
-	onSubmit(): void {
+	onSubmit(model): void {
+		console.log('onSubmit', model);
 		this.submitted = true;
 		this.error = null;
 		this.busy = true;
-		this.userService.tryLogin(this.model).pipe(
+		this.userService.tryLogin(model).pipe(
 			first(),
 			finalize(() => this.busy = false),
 		).subscribe(
@@ -96,7 +74,9 @@ export class AuthSignInComponent extends DisposableComponent implements OnInit {
 				if (user) {
 					this.onAuth(user);
 				} else {
-					this.error = { message: 'Utente inesistente' };
+					this.error = {
+						message: 'Invalid user'
+					};
 				}
 			},
 			error => {

@@ -8,8 +8,7 @@ declare var require: any; // use require for polyfill
 })
 export class LazyImagesDirective implements OnInit, OnDestroy {
 
-	@Input()
-	lazyImages: Object;
+	@Input() lazyImages: Object;
 	observer: IntersectionObserver;
 	nativeElement: HTMLElement;
 

@@ -1,0 +1,21 @@
+<header class="header" [ngClass]="{ scrolled: scrolled }" (scroll)="onScroll($event)">
+	<div class="container">
+		<div class="brand" [routerLink]="'homepage' | slugAsync">
+			designr
+		</div>
+		<ul class="nav nav--header">
+			<li class="nav__item" *ngFor="let item of menu;">
+				<a class="nav__link" [routerLink]="[item.slug] | route">{{item.name}}</a>
+			</li>
+		</ul>
+		<div class="nav nav--service">
+			<ng-container *ngIf="!userService.user">
+				<button type="button" class="btn btn--cta" (click)="onSign()">{{'header.signIn' | label : 'signin'}}</button>
+			</ng-container>
+			<ng-container *ngIf="userService.user">
+				<button type="button" class="btn btn--cta">{{userService.user.firstName}}</button>
+				<button type="button" class="btn btn--cta" (click)="onSignOut()">signout</button>
+			</ng-container>
+		</div>
+	</div>
+</header>

@@ -2,5 +2,6 @@ import { DocumentIndex } from '@designr/core';
 
 export const slug: DocumentIndex[] = [
 	{ mnemonic: 'homepage', id: 1000, slug: '/' },
-	{ mnemonic: 'contacts', id: 2000, slug: '/contacts' }
+	{ mnemonic: 'products', id: 2000, slug: '/products' },
+	{ mnemonic: 'contacts', id: 3000, slug: '/contacts' }
 ];

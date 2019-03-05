@@ -19,7 +19,10 @@ import { AuthForgottenComponent } from './modals/auth/auth-forgotten.component';
 import { AuthSignInComponent } from './modals/auth/auth-sign-in.component';
 import { AuthSignUpComponent } from './modals/auth/auth-sign-up.component';
 import { AuthComponent } from './modals/auth/auth.component';
+import { CookieComponent } from './shared/cookie/cookie.component';
 import { DebugComponent } from './shared/debug/debug.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { HeaderComponent } from './shared/header/header.component';
 import { LoaderComponent } from './shared/loader/loader.component';
 import { PictureComponent } from './shared/picture/picture.component';
 import { SpritesComponent } from './shared/sprites/sprites.component';
@@ -46,7 +49,10 @@ const services = [
 ];
 
 const shared: Type<DisposableComponent>[] = [
+	CookieComponent,
 	DebugComponent,
+	FooterComponent,
+	HeaderComponent,
 	LoaderComponent,
 	PictureComponent,
 	SpritesComponent,

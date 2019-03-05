@@ -16,6 +16,11 @@
 	.picture {
 		@include aspect-clip(3, 2);
 	}
+
+	.container {
+		padding: 15px;
+	}
+
 }
 
 .cards--3 {

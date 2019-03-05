@@ -1,19 +1,15 @@
 <div class="container" [hidden]="sent">
 	<div class="headline">{{ 'signForgotten.title' | translate }}</div>
-	<form name="signForgotten" role="form" novalidate autocomplete="off" (ngSubmit)="signForgotten.valid && onSubmit()" #signForgotten="ngForm">
-		<div class="fieldset">
-			<div class="form-group">
-				<input placeholder="{{ 'signForgotten.email' | translate }}" type="email" class="form-control" required pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" [(ngModel)]="model.email" name="email" #email="ngModel">
-				<div *ngIf="email.invalid && (signForgotten.submitted || email.dirty || email.touched)" class="alert alert--danger">
-					<div *ngIf="email.errors.required">{{ 'errors.required' | translate }}</div>
-					<div *ngIf="email.errors.pattern">{{ 'errors.email' | translate }}</div>
-				</div>
-			</div>
+	<form class="form" [ngClass]="{ submitted: form.submitted }" name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit(form.value)" role="form" novalidate autocomplete="off">
+		<controls-component class="fieldset" [controls]="controls" [form]="form"></controls-component>
+		<div class="alert alert--danger fade show" role="alert" *ngIf="error">
+			<ng-container [ngSwitch]="error.status">
+				<strong *ngSwitchCase="409" [innerHTML]="'signUp.alreadyInUse' | translate"></strong>
+				<strong *ngSwitchDefault [innerHTML]="'signUp.error' | translate"></strong>
+			</ng-container>
 		</div>
 		<div class="group group--stack">
-			<button type="submit" class="btn btn--primary" [ngClass]="{ disabled: submitted, invalid: !signForgotten.valid, 'btn--busy': busy }" title="{{ 'signForgotten.send' | translate }}">
-				<span>{{ 'signForgotten.send' | translate }}</span>
-			</button>
+			<button type="submit" class="btn btn--primary" [disabled]="submitted || !form.valid" [ngClass]="{ disabled: submitted, invalid: !form.valid, 'btn--busy': busy }"><span>{{ 'signForgotten.send' | translate }}</span></button>
 		</div>
 	</form>
 </div>

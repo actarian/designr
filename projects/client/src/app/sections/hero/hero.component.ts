@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone } from '@angular/core';
 import { SectionComponent } from '@designr/section';
+import { RafService } from '@designr/ui';
 import * as Swiper from 'swiper/dist/js/swiper.js';
 
 @Component({
@@ -31,6 +32,8 @@ export class HeroComponent extends SectionComponent implements AfterViewInit {
 
 	constructor(
 		private elementRef: ElementRef,
+		private zone: NgZone,
+		private rafService: RafService,
 	) {
 		super();
 	}
@@ -41,9 +44,11 @@ export class HeroComponent extends SectionComponent implements AfterViewInit {
 		Swiper constructor accept DOMElement as parameter, i recommand this approch to optimize DOM parsing.
 		Because you store Swiper instance as attribute, you will be able to control Swiper by javascript.
 		*/
-		this.swiper = new Swiper(
-			this.elementRef.nativeElement.querySelector('.swiper-container'),
-			this.config
-		);
+		this.zone.runOutsideAngular(() => {
+			this.swiper = new Swiper(
+				this.elementRef.nativeElement.querySelector('.swiper-container'),
+				this.config
+			);
+		});
 	}
 }

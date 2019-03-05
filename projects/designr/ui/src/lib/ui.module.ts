@@ -9,12 +9,15 @@ import { LazyImagesDirective } from './ui/lazy-images/lazy-images.directive';
 import { ModalContainerComponent } from './ui/modal/modal-container.component';
 import { ModalViewComponent } from './ui/modal/modal-view.component';
 import { ModalService } from './ui/modal/modal.service';
+import { ParallaxDirective } from './ui/parallax/parallax.directive';
+import { RafService } from './ui/raf/raf.service';
 import { ScrollDirective } from './ui/scroll/scroll.directive';
 import { SpriteComponent } from './ui/sprite/sprite.component';
 
 const services = [
 	UIService,
 	ModalService,
+	RafService,
 ];
 
 const components = [
@@ -27,6 +30,7 @@ const components = [
 const directives = [
 	ClickOutsideDirective,
 	LazyImagesDirective,
+	ParallaxDirective,
 	ScrollDirective,
 ];
 

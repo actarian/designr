@@ -39,7 +39,7 @@ export class AppComponent extends DisposableComponent implements DoCheck {
 
 	ngDoCheck() {
 		// called whenever Angular runs change detection
-		// console.log('AppComponent.ngDoCheck');
+		console.log('AppComponent.ngDoCheck');
 		this.slugService.collect();
 		this.labelService.collect();
 	}

@@ -8,5 +8,7 @@ export { ModalCompleteEvent, ModalData } from './lib/ui/modal/modal';
 export { ModalContainerComponent } from './lib/ui/modal/modal-container.component';
 export { ModalViewComponent } from './lib/ui/modal/modal-view.component';
 export { ModalService } from './lib/ui/modal/modal.service';
+export { ParallaxDirective } from './lib/ui/parallax/parallax.directive';
+export { RafService } from './lib/ui/raf/raf.service';
 export { ScrollDirective } from './lib/ui/scroll/scroll.directive';
 

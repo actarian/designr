@@ -1,7 +1,8 @@
+import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { DisposableComponent, CoreModule } from '@designr/core';
-import { BehaviorSubject, fromEvent, Observable } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, of, range, fromEvent, Observable } from 'rxjs';
+import { map, takeUntil, shareReplay, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, HostListener, Output, ViewEncapsulation, ComponentFactoryResolver, ReflectiveInjector, ViewChild, ViewContainerRef, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, NgZone, Renderer2 } from '@angular/core';
 
 /**
@@ -528,7 +529,7 @@ class ModalContainerComponent extends DisposableComponent {
 ModalContainerComponent.decorators = [
     { type: Component, args: [{
                 selector: 'core-modal-container-component',
-                template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal__background\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal__page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal__header\">\r\n\t\t\t<button type=\"button\" class=\"btn btn--prev\" (click)=\"doPrev()\" *ngIf=\"modalCount > 1\" [title]=\"'modal.back' | label : 'back'\">\r\n\t\t\t\t<span sprite=\"ico-prev\"></span>\r\n\t\t\t\t<span>{{'modal.back' | label : 'back'}}</span>\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"btn btn--close\" (click)=\"doClose()\" title=\"'modal.close' | label : 'close'\">\r\n\t\t\t\t<span sprite=\"ico-close\"></span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal__content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<core-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></core-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
+                template: "<div class=\"modal\" [ngClass]=\"{ active: modalCount > 0 }\">\r\n\t<div class=\"modal__background\" (click)=\"doClose()\"></div>\r\n\t<div class=\"modal__page\" [ngClass]=\"className\">\r\n\t\t<div class=\"modal__header\">\r\n\t\t\t<button type=\"button\" class=\"btn btn--prev\" (click)=\"doPrev()\" *ngIf=\"modalCount > 1\" [title]=\"'modal.back' | label : 'back'\">\r\n\t\t\t\t<span sprite=\"ico-prev\"></span> <span>{{'modal.back' | label : 'back'}}</span>\r\n\t\t\t</button>\r\n\t\t\t<button type=\"button\" class=\"btn btn--close\" (click)=\"doClose()\" title=\"'modal.close' | label : 'close'\">\r\n\t\t\t\t<span sprite=\"ico-close\"></span> <span>{{'modal.close' | label : 'close'}}</span>\r\n\t\t\t</button>\r\n\t\t</div>\r\n\t\t<div class=\"modal__content\">\r\n\t\t\t<ng-container *ngFor=\"let modal of (modalService.modals$ | async); let last = last;\">\r\n\t\t\t\t<core-modal-view-component [modal]=\"modal\" [hidden]=\"!last\"></core-modal-view-component>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</div>\r\n</div>\r\n",
                 encapsulation: ViewEncapsulation.Emulated
             }] }
 ];
@@ -608,6 +609,286 @@ ModalViewComponent.propDecorators = {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class RafService {
+    /**
+     * @param {?} platformId
+     * @param {?} zone
+     */
+    constructor(platformId, zone) {
+        this.platformId = platformId;
+        this.zone = zone;
+    }
+    /**
+     * @return {?}
+     */
+    raf$() {
+        return this.zone.runOutsideAngular(() => {
+            if (isPlatformBrowser(this.platformId)) {
+                return range(0, Number.POSITIVE_INFINITY, animationFrame).pipe(shareReplay());
+            }
+            else {
+                return of(null);
+            }
+        });
+    }
+}
+RafService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+RafService.ctorParameters = () => [
+    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
+    { type: NgZone }
+];
+/** @nocollapse */ RafService.ngInjectableDef = defineInjectable({ factory: function RafService_Factory() { return new RafService(inject(PLATFORM_ID), inject(NgZone)); }, token: RafService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class Point {
+    constructor() {
+        this.top = 0;
+        this.left = 0;
+        this.x = 0;
+        this.y = 0;
+    }
+}
+class Rect {
+    /**
+     * @param {?=} rect
+     */
+    constructor(rect) {
+        this.top = 0;
+        this.left = 0;
+        this.width = 0;
+        this.height = 0;
+        this.right = 0;
+        this.bottom = 0;
+        this.center = new Point();
+        this.set(rect);
+    }
+    /**
+     * @param {?} rect
+     * @param {?} left
+     * @param {?} top
+     * @return {?}
+     */
+    static contains(rect, left, top) {
+        return rect.top <= top && top <= rect.bottom && rect.left <= left && left <= rect.right;
+    }
+    /**
+     * @param {?} r1
+     * @param {?} r2
+     * @return {?}
+     */
+    static intersectRect(r1, r2) {
+        return !(r2.left > r1.right ||
+            r2.right < r1.left ||
+            r2.top > r1.bottom ||
+            r2.bottom < r1.top);
+    }
+    /**
+     * @param {?} node
+     * @return {?}
+     */
+    static fromNode(node) {
+        if (!node.getClientRects().length) {
+            return new Rect();
+        }
+        /** @type {?} */
+        const rect = node.getBoundingClientRect();
+        // const defaultView = node.ownerDocument.defaultView;
+        return new Rect({
+            // top: rect.top + defaultView.pageYOffset,
+            // left: rect.left + defaultView.pageXOffset,
+            top: rect.top,
+            left: rect.left,
+            width: rect.width,
+            height: rect.height,
+        });
+    }
+    /**
+     * @param {?} rect
+     * @return {?}
+     */
+    set(rect) {
+        if (rect) {
+            Object.assign(this, rect);
+            this.right = this.left + this.width;
+            this.bottom = this.top + this.height;
+        }
+        /** @type {?} */
+        const y = this.top + this.height / 2;
+        /** @type {?} */
+        const x = this.left + this.width / 2;
+        this.center = {
+            left: x,
+            top: y,
+            x,
+            y,
+        };
+    }
+    /**
+     * @param {?} left
+     * @param {?} top
+     * @return {?}
+     */
+    contains(left, top) {
+        return Rect.contains(this, left, top);
+    }
+    /**
+     * @param {?} rect
+     * @return {?}
+     */
+    intersect(rect) {
+        return Rect.intersectRect(this, rect);
+    }
+    /**
+     * @param {?} rect
+     * @return {?}
+     */
+    intersection(rect) {
+        /** @type {?} */
+        const center = {
+            x: (this.center.x - rect.center.x) / (rect.width / 2),
+            y: (this.center.y - rect.center.y) / (rect.height / 2),
+        };
+        if (this.intersect(rect)) {
+            /** @type {?} */
+            const dx = this.left > rect.left ? 0 : Math.abs(rect.left - this.left);
+            /** @type {?} */
+            const dy = this.top > rect.top ? 0 : Math.abs(rect.top - this.top);
+            /** @type {?} */
+            let x = dx ? (1 - dx / this.width) : ((rect.left + rect.width) - this.left) / this.width;
+            /** @type {?} */
+            let y = dy ? (1 - dy / this.height) : ((rect.top + rect.height) - this.top) / this.height;
+            x = Math.min(1, x);
+            y = Math.min(1, y);
+            return {
+                x: x,
+                y: y,
+                center: center
+            };
+        }
+        else {
+            return { x: 0, y: 0, center: center };
+        }
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ParallaxDirective extends DisposableComponent {
+    /**
+     * @param {?} platformId
+     * @param {?} zone
+     * @param {?} elementRef
+     * @param {?} rafService
+     */
+    constructor(platformId, zone, elementRef, rafService) {
+        super();
+        this.platformId = platformId;
+        this.zone = zone;
+        this.elementRef = elementRef;
+        this.rafService = rafService;
+    }
+    /**
+     * @return {?}
+     */
+    ngAfterViewInit() {
+        if (!isPlatformBrowser(this.platformId)) {
+            return;
+        }
+        this.zone.runOutsideAngular(() => {
+            this.parallax$().pipe(
+            /*
+            distinctUntilChanged((a, b) => {
+                return a.p !== b.p;
+            }),
+            */
+            takeUntil(this.unsubscribe)).subscribe(parallax => {
+                // console.log(parallax);
+                this.elementRef.nativeElement.setAttribute('style', `height: ${parallax.s * 100}%; top: 50%; left: 50%; transform: translateX(-50%) translateY(${parallax.p}%);`);
+            });
+        });
+    }
+    /**
+     * @return {?}
+     */
+    parallax$() {
+        return this.rafService.raf$().pipe(map(top => {
+            /** @type {?} */
+            const windowRect = new Rect({
+                top: 0,
+                left: 0,
+                width: window.innerWidth,
+                height: window.innerHeight,
+            });
+            // this.windowRect;
+            /** @type {?} */
+            const node = this.elementRef.nativeElement;
+            /** @type {?} */
+            const parallax = (this.parallax || 5) * 2;
+            /** @type {?} */
+            const direction = 1;
+            // i % 2 === 0 ? 1 : -1;
+            /** @type {?} */
+            let rect = Rect.fromNode(node);
+            rect = new Rect({
+                top: rect.top,
+                left: rect.left,
+                width: rect.width,
+                height: rect.height,
+            });
+            /** @type {?} */
+            const intersection = rect.intersection(windowRect);
+            // console.log(intersection);
+            if (intersection.y > 0) {
+                /** @type {?} */
+                const y = Math.min(1, Math.max(-1, intersection.center.y));
+                /** @type {?} */
+                const s = (100 + parallax * 2) / 100;
+                /** @type {?} */
+                const p = (-50 + (y * parallax * direction));
+                return { s: s, p: p };
+            }
+            else {
+                return null;
+            }
+        }), filter(x => x !== null));
+    }
+    /**
+     * @return {?}
+     */
+    scrollTop$() {
+        return this.rafService.raf$().pipe(map(x => window.pageYOffset), distinctUntilChanged(), tap(x => console.log(x)));
+    }
+}
+ParallaxDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[parallax]'
+            },] }
+];
+/** @nocollapse */
+ParallaxDirective.ctorParameters = () => [
+    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
+    { type: NgZone },
+    { type: ElementRef },
+    { type: RafService }
+];
+ParallaxDirective.propDecorators = {
+    parallax: [{ type: Input }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class ScrollDirective extends DisposableComponent {
     /**
      * @param {?} platformId
@@ -633,6 +914,13 @@ class ScrollDirective extends DisposableComponent {
                     .pipe(takeUntil(this.unsubscribe))
                     .subscribe(observer);
             });
+            /*
+            this.zone.runOutsideAngular(() => {
+                this.renderer.listenGlobal('window', 'scroll', () => {
+                    console.log('scrolling');
+                });
+            });
+            */
         });
     }
     /**
@@ -698,6 +986,7 @@ SpriteComponent.propDecorators = {
 const services = [
     UIService,
     ModalService,
+    RafService,
 ];
 /** @type {?} */
 const components = [
@@ -710,6 +999,7 @@ const components = [
 const directives = [
     ClickOutsideDirective,
     LazyImagesDirective,
+    ParallaxDirective,
     ScrollDirective,
 ];
 class UIModule {
@@ -769,6 +1059,6 @@ UIModule.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { UIConfig, UI_CONFIG, UIService, UIModuleComponent, UIModule, ClickOutsideDirective, LazyImagesDirective, ModalCompleteEvent, ModalData, ModalContainerComponent, ModalViewComponent, ModalService, ScrollDirective, SpriteComponent as ɵa };
+export { UIConfig, UI_CONFIG, UIService, UIModuleComponent, UIModule, ClickOutsideDirective, LazyImagesDirective, ModalCompleteEvent, ModalData, ModalContainerComponent, ModalViewComponent, ModalService, ParallaxDirective, RafService, ScrollDirective, SpriteComponent as ɵa };
 
 //# sourceMappingURL=designr-ui.js.map

@@ -6,7 +6,6 @@
 	top: 0;
 	left: 0;
 	z-index: 1;
-	padding: 10px 0;
 	color: $foreground-secondary;
 	transition: background ease-in-out 400ms;
 
@@ -16,28 +15,24 @@
 	}
 }
 
+.container {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	min-height: 70px;
+	padding: 15px;
+}
+
 .brand {
+	flex: 0 1 130px;
 	font-family: $font-primary;
 	font-size: 1.5rem;
 	font-weight: 600;
 }
 
-.container {
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+.nav--header {
+	flex: 1 0 auto;
 }
-
-.row {
-	align-items: center;
-	justify-content: space-between;
-
-	&> :nth-child(2) {
-		flex: 1 0 auto;
-	}
-}
-
-// .nav--header { }
 
 .nav__item {
 	margin-right: 30px;

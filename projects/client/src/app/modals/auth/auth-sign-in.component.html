@@ -1,50 +1,15 @@
 <div class="container">
-	<div class="headline">{{ 'signIn.title' | translate }}</div>
-	<form class="form" [ngClass]="{submitted: signIn.submitted}" name="signIn" role="form" novalidate autocomplete="off" (ngSubmit)="signIn.valid && onSubmit()" #signIn="ngForm">
-		<div class="fieldset">
-			<div class="form-group">
-				<label>{{ 'signIn.emailOrCode' | translate }}</label>
-				<!-- pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,} | ^[0-9]{1,6}$"  -->
-				<input placeholder="{{ 'signIn.emailOrCode' | translate }}" type="text" class="form-control" required [(ngModel)]="model.email" name="email" #email="ngModel">
-				<div *ngIf="email.invalid && (signIn.submitted || email.dirty || email.touched)" class="alert alert--danger">
-					<div *ngIf="email.errors.required">{{ 'errors.required' | translate }}</div>
-				</div>
+	<div class="group group--headline">{{ 'signIn.title' | translate }}</div>
+	<div class="group group--form">
+		<form class="form" [ngClass]="{ submitted: form.submitted }" name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit(form.value)" role="form" novalidate autocomplete="off">
+			<controls-component class="fieldset" [controls]="controls" [form]="form"></controls-component>
+			<div class="alert alert--danger fade show" role="alert" *ngIf="error">
+				<strong [innerHTML]="'signIn.wrong' | translate"></strong>
 			</div>
-			<div class="form-group">
-				<label>{{ 'signIn.password' | translate }}</label>
-				<div class="form-password-reveal">
-					<input placeholder="{{ 'signIn.password' | translate }}" [type]="passwordReveal.value ? 'text' : 'password'" class="form-control" required [(ngModel)]="model.password" name="password" #password="ngModel">
-					<div class="checkbox">
-						<label>
-						<input type="checkbox" class="form-check-input" [(ngModel)]="model.passwordReveal" name="passwordReveal" #passwordReveal="ngModel">
-						<span>{{ 'signIn.passwordReveal' | translate }}</span>
-					</label>
-					</div>
-				</div>
-				<div *ngIf="password.invalid && (signIn.submitted || password.dirty || password.touched)" class="alert alert--danger">
-					<div *ngIf="password.errors.required">{{ 'errors.required' | translate }}</div>
-				</div>
+			<div class="group group--stack">
+				<button type="submit" class="btn btn--primary" [disabled]="submitted || !form.valid" [ngClass]="{ disabled: submitted, invalid: !form.valid, 'btn--busy': busy }"><span>{{ 'signIn.register' | translate }}</span></button>
+				<button type="button" class="btn btn--secondary" [disabled]="submitted" (click)="onForgotten()" title="{{ 'signIn.passwordForgotten' | translate }}"><span>{{ 'signIn.passwordForgotten' | translate }}</span></button>
 			</div>
-			<!--
-		<div class="form-group">
-			<div class="checkbox">
-				<label>
-					<input type="checkbox" class="form-check-input" [(ngModel)]="model.rememberMe" name="rememberMe" #rememberMe="ngModel">
-					<span>{{ 'signIn.rememberMe' | translate }}</span>
-				</label>
-			</div>
-		</div>
-		-->
-		</div>
-		<div class="group group--stack">
-			<button type="button" class="btn btn--secondary" (click)="onForgotten()" title="{{ 'signIn.passwordForgotten' | translate }}"><span>{{ 'signIn.passwordForgotten' | translate }}</span></button>
-			<button type="submit" class="btn btn--primary" [ngClass]="{ disabled: submitted, invalid: !signIn.valid, 'btn--busy': busy }" title="{{ 'signIn.register' | translate }}">
-				<span>{{ 'signIn.register' | translate }}</span>
-			</button>
-		</div>
-	</form>
-	<div class="alert alert--danger fade show" role="alert" *ngIf="error">
-		<!-- <strong>{{error.message || error.statusText}}</strong> -->
-		<strong>Email, codice utente o password errata</strong>
+		</form>
 	</div>
 </div>

@@ -35,6 +35,13 @@ export class ScrollDirective extends DisposableComponent implements OnInit, OnDe
 				.pipe(takeUntil(this.unsubscribe))
 				.subscribe(observer);
 		});
+		/*
+		this.zone.runOutsideAngular(() => {
+			this.renderer.listenGlobal('window', 'scroll', () => {
+				console.log('scrolling');
+			});
+		});
+		*/
 	});
 
 	ngOnInit() {
