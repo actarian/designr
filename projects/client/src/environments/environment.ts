@@ -85,6 +85,6 @@ export const environment = {
 		},
 	},
 	picture: {
-		placeholder: 'https://dummyimage.com/${w}x${h}/000000/222222/'
+		placeholder: 'https://dummyimage.com/${w}x${h}/111111/444444/'
 	}
 };

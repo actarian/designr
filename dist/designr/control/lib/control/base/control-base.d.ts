@@ -26,7 +26,6 @@ export declare class ControlBaseOptions<T> {
 }
 export declare class ControlBase<T> {
     static uid: number;
-    readonly component: string;
     readonly schema: string;
     private _originalValue;
     value: T;

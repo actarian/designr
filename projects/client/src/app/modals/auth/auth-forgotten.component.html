@@ -1,6 +1,6 @@
 <div class="container" [hidden]="sent">
 	<div class="headline">{{ 'signForgotten.title' | translate }}</div>
-	<form class="form" [ngClass]="{ submitted: form.submitted }" name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit(form.value)" role="form" novalidate autocomplete="off">
+	<form class="form" [ngClass]="{ submitted: submitted }" name="form" [formGroup]="form" (ngSubmit)="form.valid && onSubmit(form.value)" role="form" novalidate autocomplete="off">
 		<controls-component class="fieldset" [controls]="controls" [form]="form"></controls-component>
 		<div class="alert alert--danger fade show" role="alert" *ngIf="error">
 			<ng-container [ngSwitch]="error.status">

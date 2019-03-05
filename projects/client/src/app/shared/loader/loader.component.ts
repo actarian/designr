@@ -6,8 +6,8 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
 	selector: 'loader-component',
-	templateUrl: './loader.component.html',
-	styleUrls: ['./loader.component.scss']
+	templateUrl: 'loader.component.html',
+	styleUrls: ['loader.component.scss']
 })
 export class LoaderComponent extends DisposableComponent implements AfterViewInit {
 

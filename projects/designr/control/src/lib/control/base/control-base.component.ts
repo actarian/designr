@@ -38,13 +38,13 @@ export class ControlBaseComponent implements ControlValueAccessor {
 	protected onTouched = () => { };
 
 	protected formatValue(value: any): void {
-		// console.log('ControlBaseComponent.formatValue', value);
+		console.log('ControlBaseComponent.formatValue', value);
 		this.renderer.setProperty(this.element, 'value', value);
 		// console.log('ControlEditableComponent.writeValue', value);
 	}
 
 	protected parseValue(value: any) {
-		// console.log('ControlBaseComponent.parseValue', value);
+		console.log('ControlBaseComponent.parseValue', value);
 		const parsed = this.innervalue;
 		this.onChange(parsed);
 	}

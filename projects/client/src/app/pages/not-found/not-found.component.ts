@@ -3,7 +3,8 @@ import { PageComponent } from '@designr/page';
 
 @Component({
 	selector: 'not-found-component',
-	templateUrl: './not-found.component.html',
+	templateUrl: 'not-found.component.html',
+	styleUrls: ['not-found.component.scss'],
 })
 export class NotFoundComponent extends PageComponent {
 
@@ -11,6 +12,7 @@ export class NotFoundComponent extends PageComponent {
 		protected injector: Injector,
 	) {
 		super(injector);
+		console.log(this.router.url, this.router);
 	}
 
 }

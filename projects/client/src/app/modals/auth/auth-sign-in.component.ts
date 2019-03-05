@@ -57,7 +57,13 @@ export class AuthSignInComponent extends DisposableComponent implements OnInit {
 			label: 'signIn.rememberMe',
 			placeholder: 'signIn.rememberMe',
 			order: 3
-		}]);
+		}, {
+			key: 'custom',
+			schema: 'custom',
+			label: 'signIn.custom',
+			placeholder: 'signIn.custom',
+			order: 4
+		},]);
 		this.form = this.formService.getGroupFromControls(this.controls);
 	}
 

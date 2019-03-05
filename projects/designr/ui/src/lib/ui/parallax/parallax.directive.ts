@@ -12,6 +12,7 @@ import Rect from '../rect/rect';
 export class ParallaxDirective extends DisposableComponent implements AfterViewInit {
 
 	@Input() parallax: number;
+	// @ViewChild('img', { read: HTMLImageElement }) image;
 
 	constructor(
 		@Inject(PLATFORM_ID) private platformId: string,
@@ -27,6 +28,7 @@ export class ParallaxDirective extends DisposableComponent implements AfterViewI
 			return;
 		}
 		this.zone.runOutsideAngular(() => {
+			const image = this.elementRef.nativeElement.querySelector('img');
 			this.parallax$().pipe(
 				/*
 				distinctUntilChanged((a, b) => {
@@ -36,7 +38,7 @@ export class ParallaxDirective extends DisposableComponent implements AfterViewI
 				takeUntil(this.unsubscribe),
 			).subscribe(parallax => {
 				// console.log(parallax);
-				this.elementRef.nativeElement.setAttribute('style', `height: ${parallax.s * 100}%; top: 50%; left: 50%; transform: translateX(-50%) translateY(${parallax.p}%);`);
+				image.setAttribute('style', `height: ${parallax.s * 100}%; top: 50%; left: 50%; transform: translateX(-50%) translateY(${parallax.p}%);`);
 			});
 		});
 	}

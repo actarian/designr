@@ -28,7 +28,6 @@ ControlBaseOptions = /** @class */ (function () {
 var ControlBase = /** @class */ (function () {
     function ControlBase(options) {
         if (options === void 0) { options = {}; }
-        this.component = 'ControlBaseComponent';
         this.schema = 'base';
         this._originalValue = options.value;
         this.value = options.value;
@@ -75,7 +74,6 @@ var ControlCheckbox = /** @class */ (function (_super) {
     function ControlCheckbox(options) {
         if (options === void 0) { options = {}; }
         var _this = _super.call(this, options) || this;
-        _this.component = 'ControlCheckboxComponent';
         _this.schema = 'checkbox';
         _this.type = options.type || _this.type;
         return _this;
@@ -124,7 +122,7 @@ var ControlBaseComponent = /** @class */ (function () {
      * @return {?}
      */
     function (value) {
-        // console.log('ControlBaseComponent.formatValue', value);
+        console.log('ControlBaseComponent.formatValue', value);
         this.renderer.setProperty(this.element, 'value', value);
         // console.log('ControlEditableComponent.writeValue', value);
     };
@@ -139,7 +137,7 @@ var ControlBaseComponent = /** @class */ (function () {
      * @return {?}
      */
     function (value) {
-        // console.log('ControlBaseComponent.parseValue', value);
+        console.log('ControlBaseComponent.parseValue', value);
         /** @type {?} */
         var parsed = this.innervalue;
         this.onChange(parsed);
@@ -322,7 +320,6 @@ var ControlEmail = /** @class */ (function (_super) {
     function ControlEmail(options) {
         if (options === void 0) { options = {}; }
         var _this = _super.call(this, options) || this;
-        _this.component = 'ControlEmailComponent';
         _this.schema = 'email';
         _this.type = options.type || _this.type;
         _this.email = true;
@@ -373,7 +370,6 @@ var ControlMarkdown = /** @class */ (function (_super) {
     function ControlMarkdown(options) {
         if (options === void 0) { options = {}; }
         var _this = _super.call(this, options) || this;
-        _this.component = 'ControlMarkdownComponent';
         _this.schema = 'markdown';
         _this.type = options.type || _this.type;
         return _this;
@@ -422,7 +418,6 @@ var ControlNumber = /** @class */ (function (_super) {
     function ControlNumber(options) {
         if (options === void 0) { options = {}; }
         var _this = _super.call(this, options) || this;
-        _this.component = 'ControlNumberComponent';
         _this.schema = 'number';
         _this.type = options.type || _this.type;
         return _this;
@@ -471,7 +466,6 @@ var ControlPassword = /** @class */ (function (_super) {
     function ControlPassword(options) {
         if (options === void 0) { options = {}; }
         var _this = _super.call(this, options) || this;
-        _this.component = 'ControlPasswordComponent';
         _this.schema = 'password';
         _this.type = options.type || _this.type;
         return _this;
@@ -520,7 +514,6 @@ var ControlRadio = /** @class */ (function (_super) {
     function ControlRadio(options) {
         if (options === void 0) { options = {}; }
         var _this = _super.call(this, options) || this;
-        _this.component = 'ControlRadioComponent';
         _this.schema = 'radio';
         _this.type = options.type || _this.type;
         return _this;
@@ -569,7 +562,6 @@ var ControlSelect = /** @class */ (function (_super) {
     function ControlSelect(options) {
         if (options === void 0) { options = {}; }
         var _this = _super.call(this, options) || this;
-        _this.component = 'ControlSelectComponent';
         _this.schema = 'select';
         _this.options = [];
         _this.options = options.options || [];
@@ -619,7 +611,6 @@ var ControlText = /** @class */ (function (_super) {
     function ControlText(options) {
         if (options === void 0) { options = {}; }
         var _this = _super.call(this, options) || this;
-        _this.component = 'ControlTextComponent';
         _this.schema = 'text';
         _this.type = options.type || _this.type;
         return _this;
@@ -668,7 +659,6 @@ var ControlTextarea = /** @class */ (function (_super) {
     function ControlTextarea(options) {
         if (options === void 0) { options = {}; }
         var _this = _super.call(this, options) || this;
-        _this.component = 'ControlTextareaComponent';
         _this.schema = 'textarea';
         _this.type = options.type || _this.type;
         return _this;

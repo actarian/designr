@@ -1,3 +1,12 @@
-<div>404 NOT FOUND!</div>
+<section class="section section--background">
+	<div class="container">
+		<div class="inner">
+			<div class="group group--headline">
+				<div class="title" [innerHTML]="'notFound.title' | label : '404 Not Found'"></div>
+				<div class="abstract" [innerHTML]="'notFound.abstract' | label : 'Can\'t resolve page @url' : { url: router.url }"></div>
+			</div>
+		</div>
+	</div>
+</section>
 <!-- FOOTER -->
 <footer-component></footer-component>

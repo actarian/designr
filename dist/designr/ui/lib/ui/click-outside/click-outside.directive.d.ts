@@ -1,7 +1,13 @@
-import { ElementRef, EventEmitter } from '@angular/core';
-export declare class ClickOutsideDirective {
+import { ElementRef, EventEmitter, OnDestroy, OnInit } from '@angular/core';
+import { EventManager } from '@angular/platform-browser';
+export declare class ClickOutsideDirective implements OnInit, OnDestroy {
+    private eventManager;
     private element;
-    constructor(element: ElementRef);
+    initialFocus: boolean;
     clickOutside: EventEmitter<{}>;
+    private removeClick;
+    constructor(eventManager: EventManager, element: ElementRef);
+    ngOnInit(): void;
+    ngOnDestroy(): void;
     onClick(e: Event): void;
 }

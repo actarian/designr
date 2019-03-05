@@ -1,17 +1,33 @@
-import { Directive, ElementRef, EventEmitter, HostListener, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { EventManager } from '@angular/platform-browser';
 
 @Directive({
 	selector: '[clickOutside]'
 })
-export class ClickOutsideDirective {
+export class ClickOutsideDirective implements OnInit, OnDestroy {
+
+	@Input() initialFocus: boolean = false;
+	@Output() clickOutside = new EventEmitter();
+	private removeClick: Function;
 
 	constructor(
+		private eventManager: EventManager,
 		private element: ElementRef
 	) { }
 
-	@Output() public clickOutside = new EventEmitter();
+	ngOnInit() {
+		this.eventManager.getZone().runOutsideAngular(() => {
+			this.removeClick = this.eventManager.addGlobalEventListener('document', 'click', (e) => {
+				this.onClick(e);
+			});
+		});
+	}
 
-	@HostListener('document:click', ['$event'])
+	ngOnDestroy() {
+		this.removeClick();
+	}
+
+	// @HostListener('document:click', ['$event'])
 	public onClick(e: Event) {
 		const targetElement: Element = e.target as Element;
 		// console.log('ClickOutsideDirective.onClick', this.element.nativeElement, targetElement, this.element.nativeElement.contains(targetElement));
@@ -19,7 +35,14 @@ export class ClickOutsideDirective {
 		// console.log(targetElement, documentContained);
 		const clickedInside = this.element.nativeElement.contains(targetElement) || !document.contains(targetElement);
 		if (!clickedInside) {
-			this.clickOutside.emit(null);
+			if (this.initialFocus) {
+				this.initialFocus = false;
+				this.eventManager.getZone().run(() => {
+					this.clickOutside.emit(null);
+				});
+			}
+		} else {
+			this.initialFocus = true;
 		}
 	}
 }

@@ -228,6 +228,8 @@ Apache-2.0
  
 
 
+@designr/core
+
 util
 MIT
 Copyright Joyent, Inc. and other Node contributors. All rights reserved.
@@ -271,6 +273,9 @@ PERFORMANCE OF THIS SOFTWARE.
 
 
 @angular/common
+MIT
+
+@angular/platform-browser
 MIT
 
 tslib
@@ -332,9 +337,6 @@ If the Work includes a "NOTICE" text file as part of its distribution, then any 
 END OF TERMS AND CONDITIONS
 
 
-@angular/platform-browser
-MIT
-
 json-formatter-js
 MIT
 The MIT License (MIT)
@@ -359,11 +361,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-@designr/page
-
 @designr/control
-
-@designr/core
 
 @designr/editor
 
@@ -417,6 +415,8 @@ Redistribution and use in source and binary forms, with or without modification,
 This software is provided by the copyright holders and contributors “as is” and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the copyright owner or contributors be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.
 
 
+@designr/page
+
 swiper
 MIT
 The MIT License (MIT)
@@ -464,10 +464,10 @@ MIT
 @angular/service-worker
 MIT
 
-@angular/forms
+@angular/core
 MIT
 
-@angular/core
+@angular/forms
 MIT
 
 zone.js

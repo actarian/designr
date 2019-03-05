@@ -1,10 +1,11 @@
+import { EventManager } from '@angular/platform-browser';
 import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 import { __spread, __extends } from 'tslib';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { DisposableComponent, CoreModule } from '@designr/core';
 import { BehaviorSubject, of, range, fromEvent, Observable } from 'rxjs';
 import { map, takeUntil, shareReplay, distinctUntilChanged, filter, tap } from 'rxjs/operators';
-import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, HostListener, Output, NgModule, Optional, SkipSelf, defineInjectable, inject, ViewEncapsulation, ReflectiveInjector, ComponentFactoryResolver, ViewChild, ViewContainerRef, PLATFORM_ID, NgZone, Renderer2 } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, Output, NgModule, Optional, SkipSelf, defineInjectable, inject, ViewEncapsulation, ReflectiveInjector, ComponentFactoryResolver, ViewChild, ViewContainerRef, PLATFORM_ID, NgZone, Renderer2 } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -77,19 +78,49 @@ var UIModuleComponent = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ClickOutsideDirective = /** @class */ (function () {
-    function ClickOutsideDirective(element) {
+    function ClickOutsideDirective(eventManager, element) {
+        this.eventManager = eventManager;
         this.element = element;
+        this.initialFocus = false;
         this.clickOutside = new EventEmitter();
     }
+    /**
+     * @return {?}
+     */
+    ClickOutsideDirective.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        this.eventManager.getZone().runOutsideAngular(function () {
+            _this.removeClick = _this.eventManager.addGlobalEventListener('document', 'click', function (e) {
+                _this.onClick(e);
+            });
+        });
+    };
+    /**
+     * @return {?}
+     */
+    ClickOutsideDirective.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this.removeClick();
+    };
+    // @HostListener('document:click', ['$event'])
+    // @HostListener('document:click', ['$event'])
     /**
      * @param {?} e
      * @return {?}
      */
-    ClickOutsideDirective.prototype.onClick = /**
+    ClickOutsideDirective.prototype.onClick = 
+    // @HostListener('document:click', ['$event'])
+    /**
      * @param {?} e
      * @return {?}
      */
     function (e) {
+        var _this = this;
         /** @type {?} */
         var targetElement = (/** @type {?} */ (e.target));
         // console.log('ClickOutsideDirective.onClick', this.element.nativeElement, targetElement, this.element.nativeElement.contains(targetElement));
@@ -98,7 +129,15 @@ var ClickOutsideDirective = /** @class */ (function () {
         /** @type {?} */
         var clickedInside = this.element.nativeElement.contains(targetElement) || !document.contains(targetElement);
         if (!clickedInside) {
-            this.clickOutside.emit(null);
+            if (this.initialFocus) {
+                this.initialFocus = false;
+                this.eventManager.getZone().run(function () {
+                    _this.clickOutside.emit(null);
+                });
+            }
+        }
+        else {
+            this.initialFocus = true;
         }
     };
     ClickOutsideDirective.decorators = [
@@ -108,11 +147,12 @@ var ClickOutsideDirective = /** @class */ (function () {
     ];
     /** @nocollapse */
     ClickOutsideDirective.ctorParameters = function () { return [
+        { type: EventManager },
         { type: ElementRef }
     ]; };
     ClickOutsideDirective.propDecorators = {
-        clickOutside: [{ type: Output }],
-        onClick: [{ type: HostListener, args: ['document:click', ['$event'],] }]
+        initialFocus: [{ type: Input }],
+        clickOutside: [{ type: Output }]
     };
     return ClickOutsideDirective;
 }());
@@ -906,6 +946,7 @@ var Rect = /** @class */ (function () {
  */
 var ParallaxDirective = /** @class */ (function (_super) {
     __extends(ParallaxDirective, _super);
+    // @ViewChild('img', { read: HTMLImageElement }) image;
     function ParallaxDirective(platformId, zone, elementRef, rafService) {
         var _this = _super.call(this) || this;
         _this.platformId = platformId;
@@ -926,6 +967,8 @@ var ParallaxDirective = /** @class */ (function (_super) {
             return;
         }
         this.zone.runOutsideAngular(function () {
+            /** @type {?} */
+            var image = _this.elementRef.nativeElement.querySelector('img');
             _this.parallax$().pipe(
             /*
             distinctUntilChanged((a, b) => {
@@ -934,7 +977,7 @@ var ParallaxDirective = /** @class */ (function (_super) {
             */
             takeUntil(_this.unsubscribe)).subscribe(function (parallax) {
                 // console.log(parallax);
-                _this.elementRef.nativeElement.setAttribute('style', "height: " + parallax.s * 100 + "%; top: 50%; left: 50%; transform: translateX(-50%) translateY(" + parallax.p + "%);");
+                image.setAttribute('style', "height: " + parallax.s * 100 + "%; top: 50%; left: 50%; transform: translateX(-50%) translateY(" + parallax.p + "%);");
             });
         });
     };

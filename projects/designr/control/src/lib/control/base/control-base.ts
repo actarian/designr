@@ -33,7 +33,6 @@ export class ControlBase<T> {
 
 	static uid: number = 0;
 
-	readonly component: string = 'ControlBaseComponent';
 	readonly schema: string = 'base';
 
 	private _originalValue: T;

@@ -1,8 +1,10 @@
 a,
 button,
+[ng-reflect-router-link],
 .btn {
 	display: inline-block;
 	border: none;
+	outline: none;
 	cursor: pointer;
 	transition: all ease-in-out 350ms;
 

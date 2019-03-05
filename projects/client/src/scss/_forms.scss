@@ -18,6 +18,11 @@
 	.form-group {
 		width: calc(50% - 10px);
 		flex: 0 0 calc(50% - 10px);
+
+		&:last-child:nth-child(odd) {
+			width: 100%;
+			flex: 1 0 100%;
+		}
 	}
 }
 

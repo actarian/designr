@@ -1,8 +1,8 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('rxjs/internal/scheduler/animationFrame'), require('@angular/common'), require('@designr/core'), require('rxjs'), require('rxjs/operators'), require('@angular/core')) :
-    typeof define === 'function' && define.amd ? define('@designr/ui', ['exports', 'rxjs/internal/scheduler/animationFrame', '@angular/common', '@designr/core', 'rxjs', 'rxjs/operators', '@angular/core'], factory) :
-    (factory((global.designr = global.designr || {}, global.designr.ui = {}),global.rxjs['internal/scheduler/animationFrame'],global.ng.common,global.core,global.rxjs,global.rxjs.operators,global.ng.core));
-}(this, (function (exports,animationFrame,common,core,rxjs,operators,i0) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/platform-browser'), require('rxjs/internal/scheduler/animationFrame'), require('@angular/common'), require('@designr/core'), require('rxjs'), require('rxjs/operators'), require('@angular/core')) :
+    typeof define === 'function' && define.amd ? define('@designr/ui', ['exports', '@angular/platform-browser', 'rxjs/internal/scheduler/animationFrame', '@angular/common', '@designr/core', 'rxjs', 'rxjs/operators', '@angular/core'], factory) :
+    (factory((global.designr = global.designr || {}, global.designr.ui = {}),global.ng.platformBrowser,global.rxjs['internal/scheduler/animationFrame'],global.ng.common,global.core,global.rxjs,global.rxjs.operators,global.ng.core));
+}(this, (function (exports,platformBrowser,animationFrame,common,core,rxjs,operators,i0) { 'use strict';
 
     /**
      * @fileoverview added by tsickle
@@ -135,19 +135,49 @@
      * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var ClickOutsideDirective = /** @class */ (function () {
-        function ClickOutsideDirective(element) {
+        function ClickOutsideDirective(eventManager, element) {
+            this.eventManager = eventManager;
             this.element = element;
+            this.initialFocus = false;
             this.clickOutside = new i0.EventEmitter();
         }
+        /**
+         * @return {?}
+         */
+        ClickOutsideDirective.prototype.ngOnInit = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                this.eventManager.getZone().runOutsideAngular(function () {
+                    _this.removeClick = _this.eventManager.addGlobalEventListener('document', 'click', function (e) {
+                        _this.onClick(e);
+                    });
+                });
+            };
+        /**
+         * @return {?}
+         */
+        ClickOutsideDirective.prototype.ngOnDestroy = /**
+         * @return {?}
+         */
+            function () {
+                this.removeClick();
+            };
+        // @HostListener('document:click', ['$event'])
+        // @HostListener('document:click', ['$event'])
         /**
          * @param {?} e
          * @return {?}
          */
-        ClickOutsideDirective.prototype.onClick = /**
-         * @param {?} e
-         * @return {?}
-         */
+        ClickOutsideDirective.prototype.onClick =
+            // @HostListener('document:click', ['$event'])
+            /**
+             * @param {?} e
+             * @return {?}
+             */
             function (e) {
+                var _this = this;
                 /** @type {?} */
                 var targetElement = ( /** @type {?} */(e.target));
                 // console.log('ClickOutsideDirective.onClick', this.element.nativeElement, targetElement, this.element.nativeElement.contains(targetElement));
@@ -156,7 +186,15 @@
                 /** @type {?} */
                 var clickedInside = this.element.nativeElement.contains(targetElement) || !document.contains(targetElement);
                 if (!clickedInside) {
-                    this.clickOutside.emit(null);
+                    if (this.initialFocus) {
+                        this.initialFocus = false;
+                        this.eventManager.getZone().run(function () {
+                            _this.clickOutside.emit(null);
+                        });
+                    }
+                }
+                else {
+                    this.initialFocus = true;
                 }
             };
         ClickOutsideDirective.decorators = [
@@ -167,12 +205,13 @@
         /** @nocollapse */
         ClickOutsideDirective.ctorParameters = function () {
             return [
+                { type: platformBrowser.EventManager },
                 { type: i0.ElementRef }
             ];
         };
         ClickOutsideDirective.propDecorators = {
-            clickOutside: [{ type: i0.Output }],
-            onClick: [{ type: i0.HostListener, args: ['document:click', ['$event'],] }]
+            initialFocus: [{ type: i0.Input }],
+            clickOutside: [{ type: i0.Output }]
         };
         return ClickOutsideDirective;
     }());
@@ -979,6 +1018,7 @@
      */
     var ParallaxDirective = /** @class */ (function (_super) {
         __extends(ParallaxDirective, _super);
+        // @ViewChild('img', { read: HTMLImageElement }) image;
         function ParallaxDirective(platformId, zone, elementRef, rafService) {
             var _this = _super.call(this) || this;
             _this.platformId = platformId;
@@ -999,6 +1039,8 @@
                     return;
                 }
                 this.zone.runOutsideAngular(function () {
+                    /** @type {?} */
+                    var image = _this.elementRef.nativeElement.querySelector('img');
                     _this.parallax$().pipe(
                     /*
                     distinctUntilChanged((a, b) => {
@@ -1007,7 +1049,7 @@
                     */
                     operators.takeUntil(_this.unsubscribe)).subscribe(function (parallax) {
                         // console.log(parallax);
-                        _this.elementRef.nativeElement.setAttribute('style', "height: " + parallax.s * 100 + "%; top: 50%; left: 50%; transform: translateX(-50%) translateY(" + parallax.p + "%);");
+                        image.setAttribute('style', "height: " + parallax.s * 100 + "%; top: 50%; left: 50%; transform: translateX(-50%) translateY(" + parallax.p + "%);");
                     });
                 });
             };

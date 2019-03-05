@@ -23,7 +23,6 @@ class ControlBase {
      * @param {?=} options
      */
     constructor(options = {}) {
-        this.component = 'ControlBaseComponent';
         this.schema = 'base';
         this._originalValue = options.value;
         this.value = options.value;
@@ -70,7 +69,6 @@ class ControlCheckbox extends ControlBase {
      */
     constructor(options = {}) {
         super(options);
-        this.component = 'ControlCheckboxComponent';
         this.schema = 'checkbox';
         this.type = options.type || this.type;
     }
@@ -107,7 +105,7 @@ class ControlBaseComponent {
      * @return {?}
      */
     formatValue(value) {
-        // console.log('ControlBaseComponent.formatValue', value);
+        console.log('ControlBaseComponent.formatValue', value);
         this.renderer.setProperty(this.element, 'value', value);
         // console.log('ControlEditableComponent.writeValue', value);
     }
@@ -117,7 +115,7 @@ class ControlBaseComponent {
      * @return {?}
      */
     parseValue(value) {
-        // console.log('ControlBaseComponent.parseValue', value);
+        console.log('ControlBaseComponent.parseValue', value);
         /** @type {?} */
         const parsed = this.innervalue;
         this.onChange(parsed);
@@ -266,7 +264,6 @@ class ControlEmail extends ControlBase {
      */
     constructor(options = {}) {
         super(options);
-        this.component = 'ControlEmailComponent';
         this.schema = 'email';
         this.type = options.type || this.type;
         this.email = true;
@@ -316,7 +313,6 @@ class ControlMarkdown extends ControlBase {
      */
     constructor(options = {}) {
         super(options);
-        this.component = 'ControlMarkdownComponent';
         this.schema = 'markdown';
         this.type = options.type || this.type;
     }
@@ -364,7 +360,6 @@ class ControlNumber extends ControlBase {
      */
     constructor(options = {}) {
         super(options);
-        this.component = 'ControlNumberComponent';
         this.schema = 'number';
         this.type = options.type || this.type;
     }
@@ -412,7 +407,6 @@ class ControlPassword extends ControlBase {
      */
     constructor(options = {}) {
         super(options);
-        this.component = 'ControlPasswordComponent';
         this.schema = 'password';
         this.type = options.type || this.type;
     }
@@ -460,7 +454,6 @@ class ControlRadio extends ControlBase {
      */
     constructor(options = {}) {
         super(options);
-        this.component = 'ControlRadioComponent';
         this.schema = 'radio';
         this.type = options.type || this.type;
     }
@@ -508,7 +501,6 @@ class ControlSelect extends ControlBase {
      */
     constructor(options = {}) {
         super(options);
-        this.component = 'ControlSelectComponent';
         this.schema = 'select';
         this.options = [];
         this.options = options.options || [];
@@ -557,7 +549,6 @@ class ControlText extends ControlBase {
      */
     constructor(options = {}) {
         super(options);
-        this.component = 'ControlTextComponent';
         this.schema = 'text';
         this.type = options.type || this.type;
     }
@@ -605,7 +596,6 @@ class ControlTextarea extends ControlBase {
      */
     constructor(options = {}) {
         super(options);
-        this.component = 'ControlTextareaComponent';
         this.schema = 'textarea';
         this.type = options.type || this.type;
     }

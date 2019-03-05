@@ -2,7 +2,7 @@
 	<div class="swiper-container">
 		<div class="swiper-wrapper">
 			<div class="swiper-slide" *ngFor="let item of [1,2,3]">
-				<picture-component class="picture picture--background" [image]="section.images | image : 'Default'" breakpoints="991x558, 1199x675, 1520x855, 1800x1012"></picture-component>
+				<picture-component [parallax]="10" class="picture picture--background" [image]="section.images | image : 'Default'" breakpoints="991x558, 1199x675, 1520x855, 1800x1012"></picture-component>
 				<div class="container">
 					<div class="inner">
 						<div class="group group--headline">

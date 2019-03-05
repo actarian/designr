@@ -1,9 +1,10 @@
+import { EventManager } from '@angular/platform-browser';
 import { animationFrame } from 'rxjs/internal/scheduler/animationFrame';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { DisposableComponent, CoreModule } from '@designr/core';
 import { BehaviorSubject, of, range, fromEvent, Observable } from 'rxjs';
 import { map, takeUntil, shareReplay, distinctUntilChanged, filter, tap } from 'rxjs/operators';
-import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, HostListener, Output, ViewEncapsulation, ComponentFactoryResolver, ReflectiveInjector, ViewChild, ViewContainerRef, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, NgZone, Renderer2 } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, Output, ViewEncapsulation, ComponentFactoryResolver, ReflectiveInjector, ViewChild, ViewContainerRef, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, NgZone, Renderer2 } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -77,12 +78,32 @@ UIModuleComponent.ctorParameters = () => [];
  */
 class ClickOutsideDirective {
     /**
+     * @param {?} eventManager
      * @param {?} element
      */
-    constructor(element) {
+    constructor(eventManager, element) {
+        this.eventManager = eventManager;
         this.element = element;
+        this.initialFocus = false;
         this.clickOutside = new EventEmitter();
     }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        this.eventManager.getZone().runOutsideAngular(() => {
+            this.removeClick = this.eventManager.addGlobalEventListener('document', 'click', (e) => {
+                this.onClick(e);
+            });
+        });
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this.removeClick();
+    }
+    // @HostListener('document:click', ['$event'])
     /**
      * @param {?} e
      * @return {?}
@@ -96,7 +117,15 @@ class ClickOutsideDirective {
         /** @type {?} */
         const clickedInside = this.element.nativeElement.contains(targetElement) || !document.contains(targetElement);
         if (!clickedInside) {
-            this.clickOutside.emit(null);
+            if (this.initialFocus) {
+                this.initialFocus = false;
+                this.eventManager.getZone().run(() => {
+                    this.clickOutside.emit(null);
+                });
+            }
+        }
+        else {
+            this.initialFocus = true;
         }
     }
 }
@@ -107,11 +136,12 @@ ClickOutsideDirective.decorators = [
 ];
 /** @nocollapse */
 ClickOutsideDirective.ctorParameters = () => [
+    { type: EventManager },
     { type: ElementRef }
 ];
 ClickOutsideDirective.propDecorators = {
-    clickOutside: [{ type: Output }],
-    onClick: [{ type: HostListener, args: ['document:click', ['$event'],] }]
+    initialFocus: [{ type: Input }],
+    clickOutside: [{ type: Output }]
 };
 
 /**
@@ -784,6 +814,7 @@ class Rect {
  * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ParallaxDirective extends DisposableComponent {
+    // @ViewChild('img', { read: HTMLImageElement }) image;
     /**
      * @param {?} platformId
      * @param {?} zone
@@ -805,6 +836,8 @@ class ParallaxDirective extends DisposableComponent {
             return;
         }
         this.zone.runOutsideAngular(() => {
+            /** @type {?} */
+            const image = this.elementRef.nativeElement.querySelector('img');
             this.parallax$().pipe(
             /*
             distinctUntilChanged((a, b) => {
@@ -813,7 +846,7 @@ class ParallaxDirective extends DisposableComponent {
             */
             takeUntil(this.unsubscribe)).subscribe(parallax => {
                 // console.log(parallax);
-                this.elementRef.nativeElement.setAttribute('style', `height: ${parallax.s * 100}%; top: 50%; left: 50%; transform: translateX(-50%) translateY(${parallax.p}%);`);
+                image.setAttribute('style', `height: ${parallax.s * 100}%; top: 50%; left: 50%; transform: translateX(-50%) translateY(${parallax.p}%);`);
             });
         });
     }

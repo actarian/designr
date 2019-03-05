@@ -96,7 +96,6 @@
             if (options === void 0) {
                 options = {};
             }
-            this.component = 'ControlBaseComponent';
             this.schema = 'base';
             this._originalValue = options.value;
             this.value = options.value;
@@ -145,7 +144,6 @@
                 options = {};
             }
             var _this = _super.call(this, options) || this;
-            _this.component = 'ControlCheckboxComponent';
             _this.schema = 'checkbox';
             _this.type = options.type || _this.type;
             return _this;
@@ -192,7 +190,7 @@
          * @return {?}
          */
             function (value) {
-                // console.log('ControlBaseComponent.formatValue', value);
+                console.log('ControlBaseComponent.formatValue', value);
                 this.renderer.setProperty(this.element, 'value', value);
                 // console.log('ControlEditableComponent.writeValue', value);
             };
@@ -207,7 +205,7 @@
          * @return {?}
          */
             function (value) {
-                // console.log('ControlBaseComponent.parseValue', value);
+                console.log('ControlBaseComponent.parseValue', value);
                 /** @type {?} */
                 var parsed = this.innervalue;
                 this.onChange(parsed);
@@ -396,7 +394,6 @@
                 options = {};
             }
             var _this = _super.call(this, options) || this;
-            _this.component = 'ControlEmailComponent';
             _this.schema = 'email';
             _this.type = options.type || _this.type;
             _this.email = true;
@@ -451,7 +448,6 @@
                 options = {};
             }
             var _this = _super.call(this, options) || this;
-            _this.component = 'ControlMarkdownComponent';
             _this.schema = 'markdown';
             _this.type = options.type || _this.type;
             return _this;
@@ -504,7 +500,6 @@
                 options = {};
             }
             var _this = _super.call(this, options) || this;
-            _this.component = 'ControlNumberComponent';
             _this.schema = 'number';
             _this.type = options.type || _this.type;
             return _this;
@@ -557,7 +552,6 @@
                 options = {};
             }
             var _this = _super.call(this, options) || this;
-            _this.component = 'ControlPasswordComponent';
             _this.schema = 'password';
             _this.type = options.type || _this.type;
             return _this;
@@ -610,7 +604,6 @@
                 options = {};
             }
             var _this = _super.call(this, options) || this;
-            _this.component = 'ControlRadioComponent';
             _this.schema = 'radio';
             _this.type = options.type || _this.type;
             return _this;
@@ -663,7 +656,6 @@
                 options = {};
             }
             var _this = _super.call(this, options) || this;
-            _this.component = 'ControlSelectComponent';
             _this.schema = 'select';
             _this.options = [];
             _this.options = options.options || [];
@@ -717,7 +709,6 @@
                 options = {};
             }
             var _this = _super.call(this, options) || this;
-            _this.component = 'ControlTextComponent';
             _this.schema = 'text';
             _this.type = options.type || _this.type;
             return _this;
@@ -770,7 +761,6 @@
                 options = {};
             }
             var _this = _super.call(this, options) || this;
-            _this.component = 'ControlTextareaComponent';
             _this.schema = 'textarea';
             _this.type = options.type || _this.type;
             return _this;
