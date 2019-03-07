@@ -6,7 +6,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PageConfig = /** @class */ (function () {
         function PageConfig(options) {
@@ -25,7 +25,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PageModuleComponent = /** @class */ (function () {
         function PageModuleComponent() {
@@ -110,7 +110,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PageComponent = /** @class */ (function (_super) {
         __extends(PageComponent, _super);
@@ -165,12 +165,15 @@
                 if (i1.isPlatformBrowser(this.platformId)) {
                     // !!! Router dependancy manually activated
                     // const router = RouteService.injector.get(Router);
-                    this.router.events.subscribe(function (e) {
+                    this.router.events.subscribe(( /**
+                     * @param {?} e
+                     * @return {?}
+                     */function (e) {
                         if (!(e instanceof router.NavigationEnd)) {
                             return;
                         }
                         window.scrollTo(0, 0);
-                    });
+                    }));
                 }
             };
         /**
@@ -213,7 +216,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PageNotFoundComponent = /** @class */ (function (_super) {
         __extends(PageNotFoundComponent, _super);
@@ -241,7 +244,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var LinkService = /** @class */ (function () {
         function LinkService(doc) {
@@ -354,7 +357,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PageMeta = /** @class */ (function () {
         function PageMeta() {
@@ -381,13 +384,16 @@
                 Object.assign(this, options);
                 if (options.related) {
                     /** @type {?} */
-                    var related = options.related.map(function (x) {
+                    var related = options.related.map(( /**
+                     * @param {?} x
+                     * @return {?}
+                     */function (x) {
                         // const item = new PageIndex(x.page);
                         /** @type {?} */
                         var item = new PageIndex(x);
                         item.relationType = x.type;
                         return item;
-                    });
+                    }));
                     this.related = related;
                 }
             }
@@ -401,7 +407,10 @@
          * @return {?}
          */
             function (id) {
-                return this.features.find(function (x) { return x.id === id; }) || null;
+                return this.features.find(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) { return x.id === id; })) || null;
             };
         /**
          * @param {?} type
@@ -414,7 +423,15 @@
          * @return {?}
          */
             function (type, n) {
-                return this.features ? this.features.filter(function (x, i) { return (n.indexOf(Number(x.id)) !== -1 && x.type === type); }).sort(function (a, b) { return a.type - b.type; }) : [];
+                return this.features ? this.features.filter(( /**
+                 * @param {?} x
+                 * @param {?} i
+                 * @return {?}
+                 */function (x, i) { return (n.indexOf(Number(x.id)) !== -1 && x.type === type); })).sort(( /**
+                 * @param {?} a
+                 * @param {?} b
+                 * @return {?}
+                 */function (a, b) { return a.type - b.type; })) : [];
             };
         /**
          * @param {?} type
@@ -425,7 +442,10 @@
          * @return {?}
          */
             function (type) {
-                return this.features ? this.features.filter(function (x) { return (type.indexOf(Number(x.type)) !== -1); }) : [];
+                return this.features ? this.features.filter(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) { return (type.indexOf(Number(x.type)) !== -1); })) : [];
             };
         /**
          * @param {?} type
@@ -439,18 +459,24 @@
                 var _this = this;
                 /** @type {?} */
                 var groups = {};
-                type.forEach(function (type) {
+                type.forEach(( /**
+                 * @param {?} type
+                 * @return {?}
+                 */function (type) {
                     /** @type {?} */
                     var group = groups[type] || { features: [] };
                     if (_this.features) {
-                        _this.features.forEach(function (x) {
+                        _this.features.forEach(( /**
+                         * @param {?} x
+                         * @return {?}
+                         */function (x) {
                             if (Number(x.type) === type) {
                                 group.features.push(x);
                             }
-                        });
+                        }));
                     }
                     groups[type] = group;
-                });
+                }));
                 /*
                 if (this.features) {
                     this.features.forEach((x: Feature) => {
@@ -469,7 +495,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PageService = /** @class */ (function (_super) {
         __extends(PageService, _super);
@@ -510,15 +536,24 @@
                 if (slug.indexOf('/') === 0) {
                     slug = slug.substr(1);
                 }
-                return this.stateGet("?slug=/" + slug).pipe(operators.map(function (x) {
-                    x = new Page(Array.isArray(x) ? x.find(function (x) { return x.slug === "/" + slug; }) : x);
+                return this.stateGet("?slug=/" + slug).pipe(operators.map(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) {
+                    x = new Page(Array.isArray(x) ? x.find(( /**
+                     * @param {?} x
+                     * @return {?}
+                     */function (x) { return x.slug === "/" + slug; })) : x);
                     // console.log('PageService.getStatePageBySlug', x);
                     return x;
-                }), operators.catchError(function (error) {
+                })), operators.catchError(( /**
+                 * @param {?} error
+                 * @return {?}
+                 */function (error) {
                     // console.log('getStatePageBySlug.error', error);
                     _this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
                     return rxjs.of(null);
-                }));
+                })));
             };
         /**
          * @param {?} id
@@ -532,10 +567,16 @@
                 var _this = this;
                 return this.stateGet("/" + id).pipe(
                 // tap(x => console.log('PageService.getPageById', id, x)),
-                operators.map(function (x) { return new Page(x); }), operators.catchError(function (error) {
+                operators.map(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) { return new Page(x); })), operators.catchError(( /**
+                 * @param {?} error
+                 * @return {?}
+                 */function (error) {
                     _this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
                     return rxjs.of(null);
-                }));
+                })));
             };
         /**
          * @param {?} id
@@ -549,10 +590,16 @@
                 var _this = this;
                 return this.get("/" + id).pipe(
                 // tap(x => console.log('PageService.getPageById', id, x)),
-                operators.map(function (x) { return new Page(x); }), operators.catchError(function (error) {
+                operators.map(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) { return new Page(x); })), operators.catchError(( /**
+                 * @param {?} error
+                 * @return {?}
+                 */function (error) {
                     _this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
                     return rxjs.of(null);
-                }));
+                })));
             };
         /**
          * @param {?} slug
@@ -566,14 +613,20 @@
                 var _this = this;
                 slug = slug.split(';')[0];
                 // console.log('PageService.getPageBySlug', slug);
-                return this.get("?slug=/" + slug).pipe(operators.map(function (x) { return new Page(x); }), 
+                return this.get("?slug=/" + slug).pipe(operators.map(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) { return new Page(x); })), 
                 // tap(x => this.logger.log(`found pages matching "${slug}"`))
                 // tap(x => console.log('PageService.getPageBySlug', x, slug))
-                operators.catchError(function (error) {
+                operators.catchError(( /**
+                 * @param {?} error
+                 * @return {?}
+                 */function (error) {
                     // console.log('PageService.getPageBySlug.error', error);
                     _this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
                     return rxjs.of(null);
-                }));
+                })));
             };
         /**
          * @param {?} page
@@ -617,9 +670,18 @@
          */
             function (page) {
                 /** @type {?} */
-                var image = page.images ? (page.images.find(function (i) { return i.type === i2$1.ImageType.Share; }) ||
-                    page.images.find(function (i) { return i.type === i2$1.ImageType.Default; }) ||
-                    page.images.find(function (i) { return i.type === i2$1.ImageType.Gallery; })) : null;
+                var image = page.images ? (page.images.find(( /**
+                 * @param {?} i
+                 * @return {?}
+                 */function (i) { return i.type === i2$1.ImageType.Share; })) ||
+                    page.images.find(( /**
+                     * @param {?} i
+                     * @return {?}
+                     */function (i) { return i.type === i2$1.ImageType.Default; })) ||
+                    page.images.find(( /**
+                     * @param {?} i
+                     * @return {?}
+                     */function (i) { return i.type === i2$1.ImageType.Gallery; }))) : null;
                 return image || ( /** @type {?} */({
                     url: 'https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png'
                 }));
@@ -692,7 +754,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PageOutletComponent = /** @class */ (function (_super) {
         __extends(PageOutletComponent, _super);
@@ -704,9 +766,11 @@
             _this.routeService = routeService;
             _this.pageService = pageService;
             // !!! keep -> Avoid PageOutlet Route Caching for different routes
-            _this.router.routeReuseStrategy.shouldReuseRoute = function () {
+            _this.router.routeReuseStrategy.shouldReuseRoute = ( /**
+             * @return {?}
+             */function () {
                 return false;
-            };
+            });
             return _this;
         }
         /**
@@ -805,7 +869,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PageResolver = /** @class */ (function () {
         function PageResolver(pageService, page) {
@@ -824,7 +888,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PageResolverService = /** @class */ (function () {
         function PageResolverService(pageService, routeService) {
@@ -862,11 +926,17 @@
                 }
                 else {
                     /** @type {?} */
-                    var paths = route.url.filter(function (x) {
+                    var paths = route.url.filter(( /**
+                     * @param {?} x
+                     * @return {?}
+                     */function (x) {
                         return x.path;
-                    }).map(function (x) {
+                    })).map(( /**
+                     * @param {?} x
+                     * @return {?}
+                     */function (x) {
                         return x.path;
-                    });
+                    }));
                     /** @type {?} */
                     var slug = this.routeService.toSlug(paths).join('/');
                     return this.getPageBySlug(slug);
@@ -883,7 +953,10 @@
             function (id) {
                 var _this = this;
                 // console.log('PageResolverService.getPageById', id);
-                return this.pageService.getPageById(id).pipe(operators.map(function (page) { return _this.pageToPageResolver(page); }));
+                return this.pageService.getPageById(id).pipe(operators.map(( /**
+                 * @param {?} page
+                 * @return {?}
+                 */function (page) { return _this.pageToPageResolver(page); })));
             };
         /**
          * @param {?} slug
@@ -896,7 +969,10 @@
             function (slug) {
                 var _this = this;
                 // console.log('PageResolverService.getPageBySlug', slug);
-                return this.pageService.getStatePageBySlug(slug).pipe(operators.map(function (page) { return _this.pageToPageResolver(page); }));
+                return this.pageService.getStatePageBySlug(slug).pipe(operators.map(( /**
+                 * @param {?} page
+                 * @return {?}
+                 */function (page) { return _this.pageToPageResolver(page); })));
             };
         PageResolverService.decorators = [
             { type: i0.Injectable, args: [{
@@ -916,7 +992,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PageGuard = /** @class */ (function () {
         function PageGuard() {
@@ -983,7 +1059,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var StaticGuard = /** @class */ (function () {
         function StaticGuard() {
@@ -1051,7 +1127,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var routes = [
@@ -1077,7 +1153,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var services = [
@@ -1144,12 +1220,12 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.PageConfig = PageConfig;

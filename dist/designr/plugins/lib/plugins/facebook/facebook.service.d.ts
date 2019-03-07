@@ -48,8 +48,8 @@ export declare class FacebookService {
     constructor(platformId: string, pluginsService: PluginsService, storageService: LocalStorageService, onceService: OnceService, routeService: RouteService, pageService: PageService);
     init(): void;
     facebook(): Observable<any>;
-    status(): Observable<{}>;
-    login(): Observable<{}>;
+    status(): Observable<never>;
+    login(): Observable<never>;
     logout(): Observable<any>;
     getMe(fields?: string): Observable<FacebookUser>;
 }

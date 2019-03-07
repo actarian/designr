@@ -9,7 +9,7 @@ import { concatMap, filter, first, map, takeUntil, mergeMap } from 'rxjs/operato
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PluginsConfig {
     /**
@@ -28,7 +28,7 @@ const PLUGINS_CONFIG = new InjectionToken('plugin.config');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PluginsService {
     /**
@@ -55,7 +55,7 @@ PluginsService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PluginsModuleComponent {
     constructor() {
@@ -78,7 +78,7 @@ PluginsModuleComponent.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class FacebookConfig {
     constructor() {
@@ -141,7 +141,11 @@ class FacebookService {
                 return of(this.FB);
             }
             else {
-                return this.onceService.script('//connect.facebook.net/' + this.routeService.currentLang + '/sdk.js', 'fbAsyncInit').pipe(concatMap(x => {
+                return this.onceService.script('//connect.facebook.net/' + this.routeService.currentLang + '/sdk.js', 'fbAsyncInit').pipe(concatMap((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                x => {
                     // console.log(x);
                     /** @type {?} */
                     const FB = window['FB'];
@@ -154,7 +158,7 @@ class FacebookService {
                     });
                     this.FB = FB;
                     return of(FB);
-                }));
+                })));
             }
         }
         else {
@@ -165,9 +169,26 @@ class FacebookService {
      * @return {?}
      */
     status() {
-        return this.facebook().pipe(filter(f => f !== null), concatMap(f => {
-            return from(new Promise((resolve, reject) => {
-                f.getLoginStatus((r) => {
+        return this.facebook().pipe(filter((/**
+         * @param {?} f
+         * @return {?}
+         */
+        f => f !== null)), concatMap((/**
+         * @param {?} f
+         * @return {?}
+         */
+        f => {
+            return from(new Promise((/**
+             * @param {?} resolve
+             * @param {?} reject
+             * @return {?}
+             */
+            (resolve, reject) => {
+                f.getLoginStatus((/**
+                 * @param {?} r
+                 * @return {?}
+                 */
+                (r) => {
                     this.authResponse = null;
                     if (r.status === 'connected') {
                         this.authResponse = r.authResponse;
@@ -181,9 +202,9 @@ class FacebookService {
                     else {
                         reject(r);
                     }
-                }, { scope: this.options.scope });
-            }));
-        }));
+                }), { scope: this.options.scope });
+            })));
+        })));
         /*
         return from(new Promise((resolve, reject) => {
             this.facebook().subscribe(x => {
@@ -208,9 +229,26 @@ class FacebookService {
      * @return {?}
      */
     login() {
-        return this.facebook().pipe(filter(f => f !== null), concatMap(f => {
-            return from(new Promise((resolve, reject) => {
-                f.login((r) => {
+        return this.facebook().pipe(filter((/**
+         * @param {?} f
+         * @return {?}
+         */
+        f => f !== null)), concatMap((/**
+         * @param {?} f
+         * @return {?}
+         */
+        f => {
+            return from(new Promise((/**
+             * @param {?} resolve
+             * @param {?} reject
+             * @return {?}
+             */
+            (resolve, reject) => {
+                f.login((/**
+                 * @param {?} r
+                 * @return {?}
+                 */
+                (r) => {
                     this.authResponse = null;
                     if (r.status === 'connected') {
                         this.authResponse = r.authResponse;
@@ -224,9 +262,9 @@ class FacebookService {
                     else {
                         reject(r);
                     }
-                }, { scope: this.options.scope });
-            }));
-        }));
+                }), { scope: this.options.scope });
+            })));
+        })));
         /*
         return from(new Promise((resolve, reject) => {
             this.facebook().subscribe(x => {
@@ -251,15 +289,32 @@ class FacebookService {
      * @return {?}
      */
     logout() {
-        return this.facebook().pipe(filter(f => f !== null), concatMap(f => {
-            return from(new Promise((resolve, reject) => {
+        return this.facebook().pipe(filter((/**
+         * @param {?} f
+         * @return {?}
+         */
+        f => f !== null)), concatMap((/**
+         * @param {?} f
+         * @return {?}
+         */
+        f => {
+            return from(new Promise((/**
+             * @param {?} resolve
+             * @param {?} reject
+             * @return {?}
+             */
+            (resolve, reject) => {
                 // console.log('f', f);
-                f.logout(r => {
+                f.logout((/**
+                 * @param {?} r
+                 * @return {?}
+                 */
+                r => {
                     resolve(r);
                     this.storage.delete('facebook');
-                });
-            }));
-        }));
+                }));
+            })));
+        })));
         /*
         return from(new Promise((resolve, reject) => {
             this.facebook().subscribe(x => {
@@ -276,13 +331,26 @@ class FacebookService {
      * @return {?}
      */
     getMe(fields) {
-        return this.login().pipe(concatMap(l => {
-            return from(new Promise((resolve, reject) => {
+        return this.login().pipe(concatMap((/**
+         * @param {?} l
+         * @return {?}
+         */
+        l => {
+            return from(new Promise((/**
+             * @param {?} resolve
+             * @param {?} reject
+             * @return {?}
+             */
+            (resolve, reject) => {
                 fields = fields || this.options.fields;
                 this.FB.api('/me', {
                     fields: fields,
                     accessToken: this.options.tokenClient,
-                }, (r) => {
+                }, (/**
+                 * @param {?} r
+                 * @return {?}
+                 */
+                (r) => {
                     if (!r || r.error) {
                         /** @type {?} */
                         const error = r ? r.error : 'error';
@@ -297,9 +365,9 @@ class FacebookService {
                         // console.log('FacebookService.getMe.success', user);
                         resolve(user);
                     }
-                });
-            }));
-        }));
+                }));
+            })));
+        })));
     }
 }
 FacebookService.decorators = [
@@ -320,7 +388,7 @@ FacebookService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class GoogleTagManagerPageViewEvent {
 }
@@ -376,11 +444,15 @@ class GoogleTagManagerService {
                 const dataLayer = window['dataLayer'];
                 dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
                 // console.log('GoogleTagManagerConfig.once', src, dataLayer);
-                this.dataLayer$ = this.onceService.script(src).pipe(map(x => {
+                this.dataLayer$ = this.onceService.script(src).pipe(map((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                x => {
                     // console.log('dataLayer', dataLayer, x);
                     this.dataLayer = dataLayer;
                     return dataLayer;
-                }));
+                })));
                 return this.dataLayer$;
             }
         }
@@ -393,20 +465,27 @@ class GoogleTagManagerService {
      * @return {?}
      */
     push(payload) {
-        this.zone.runOutsideAngular(() => {
+        this.zone.runOutsideAngular((/**
+         * @return {?}
+         */
+        () => {
             if (this.dataLayer) {
                 this.dataLayer.push(payload);
                 this.logger.log('GoogleTagManagerConfig.push', payload);
             }
             else {
-                this.once().pipe(first()).subscribe(dataLayer => {
+                this.once().pipe(first()).subscribe((/**
+                 * @param {?} dataLayer
+                 * @return {?}
+                 */
+                dataLayer => {
                     if (this.dataLayer) {
                         this.dataLayer.push(payload);
                         this.logger.log('GoogleTagManagerConfig.push', payload);
                     }
-                });
+                }));
             }
-        });
+        }));
     }
 }
 GoogleTagManagerService.decorators = [
@@ -426,7 +505,7 @@ GoogleTagManagerService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class GoogleTagManagerComponent extends DisposableComponent {
     /**
@@ -449,7 +528,15 @@ class GoogleTagManagerComponent extends DisposableComponent {
      */
     ngAfterViewInit() {
         if (isPlatformBrowser(this.platformId)) {
-            this.router.events.pipe(takeUntil(this.unsubscribe), filter(e => e instanceof NavigationEnd)).subscribe((e) => {
+            this.router.events.pipe(takeUntil(this.unsubscribe), filter((/**
+             * @param {?} e
+             * @return {?}
+             */
+            e => e instanceof NavigationEnd))).subscribe((/**
+             * @param {?} e
+             * @return {?}
+             */
+            (e) => {
                 /** @type {?} */
                 const url = `${this.pluginsService.options.origin}${e.urlAfterRedirects}`;
                 // console.log('GoogleTagManagerComponent.NavigationEnd', e.id, e.url, e.urlAfterRedirects, url);
@@ -457,15 +544,19 @@ class GoogleTagManagerComponent extends DisposableComponent {
                     this.pageView.emit({ dataLayer: this.dataLayer, url });
                 }
                 else {
-                    this.googleTagManager.once().pipe(takeUntil(this.unsubscribe)).subscribe(dataLayer => {
+                    this.googleTagManager.once().pipe(takeUntil(this.unsubscribe)).subscribe((/**
+                     * @param {?} dataLayer
+                     * @return {?}
+                     */
+                    dataLayer => {
                         // console.log('dataLayer', dataLayer);
                         this.id = this.googleTagManager.options.id;
                         this.iframeUrl = `https://www.googletagmanager.com/ns.html?id=${this.id}`;
                         this.dataLayer = dataLayer;
                         this.pageView.emit({ dataLayer: this.dataLayer, url });
-                    });
+                    }));
                 }
-            });
+            }));
         }
     }
 }
@@ -493,7 +584,7 @@ GoogleTagManagerComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class GoogleConfig {
     constructor() {
@@ -542,14 +633,18 @@ class GoogleService {
      */
     google() {
         if (isPlatformBrowser(this.platformId)) {
-            return new Observable().pipe(x => {
+            return new Observable().pipe((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => {
                 if (this.gapi) {
                     return of(this.gapi);
                 }
                 else {
                     return this.once();
                 }
-            });
+            }));
         }
         else {
             return of(null);
@@ -559,7 +654,11 @@ class GoogleService {
      * @return {?}
      */
     getMe() {
-        return this.login().pipe(concatMap(x => {
+        return this.login().pipe(concatMap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => {
             /** @type {?} */
             const profile = this.instance.currentUser.get().getBasicProfile();
             /** @type {?} */
@@ -574,80 +673,132 @@ class GoogleService {
                 googleToken: this.authResponse.access_token,
             }));
             return of(user);
-        }));
+        })));
     }
     /**
      * @return {?}
      */
     login() {
-        return this.auth2Instance().pipe(concatMap(x => {
+        return this.auth2Instance().pipe(concatMap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => {
             return this.signin();
-        }));
+        })));
     }
     /**
      * @return {?}
      */
     logout() {
-        return this.auth2Instance().pipe(concatMap(x => {
-            return from(new Promise((resolve, reject) => {
+        return this.auth2Instance().pipe(concatMap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => {
+            return from(new Promise((/**
+             * @param {?} resolve
+             * @param {?} reject
+             * @return {?}
+             */
+            (resolve, reject) => {
                 if (this.instance.isSignedIn && this.instance.isSignedIn.get()) {
-                    this.instance.signOut().then((signed) => {
+                    this.instance.signOut().then((/**
+                     * @param {?} signed
+                     * @return {?}
+                     */
+                    (signed) => {
                         resolve();
-                    }, reject);
+                    }), reject);
                 }
                 else {
                     resolve();
                 }
-            }));
-        }));
+            })));
+        })));
     }
     /**
      * @private
      * @return {?}
      */
     once() {
-        return this.onceService.script('https://apis.google.com/js/api:client.js?onload={{callback}}', true).pipe(concatMap(x => {
+        return this.onceService.script('https://apis.google.com/js/api:client.js?onload={{callback}}', true).pipe(concatMap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => {
             this.gapi = window['gapi'];
             return of(this.gapi);
-        }));
+        })));
     }
     /**
      * @private
      * @return {?}
      */
     getAuth2() {
-        return new Observable().pipe(x => {
+        return new Observable().pipe((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => {
             if (this.auth2) {
                 return of(this.auth2);
             }
             else {
-                return this.google().pipe(concatMap(x => {
+                return this.google().pipe(concatMap((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                x => {
                     if (this.gapi.auth2) {
                         return this.auth2init();
                     }
                     else {
-                        return from(new Promise((resolve, reject) => {
-                            this.gapi.load('auth2', () => {
-                                setTimeout(() => {
+                        return from(new Promise((/**
+                         * @param {?} resolve
+                         * @param {?} reject
+                         * @return {?}
+                         */
+                        (resolve, reject) => {
+                            this.gapi.load('auth2', (/**
+                             * @return {?}
+                             */
+                            () => {
+                                setTimeout((/**
+                                 * @return {?}
+                                 */
+                                () => {
                                     resolve();
-                                }, 200);
-                            }, reject);
-                        })).pipe(concatMap(x => {
+                                }), 200);
+                            }), reject);
+                        }))).pipe(concatMap((/**
+                         * @param {?} x
+                         * @return {?}
+                         */
+                        x => {
                             return this.auth2init();
-                        }));
+                        })));
                     }
-                }));
+                })));
             }
-        });
+        }));
     }
     /**
      * @private
      * @return {?}
      */
     signin() {
-        return from(new Promise((resolve, reject) => {
+        return from(new Promise((/**
+         * @param {?} resolve
+         * @param {?} reject
+         * @return {?}
+         */
+        (resolve, reject) => {
             /** @type {?} */
-            const readAccessToken = () => {
+            const readAccessToken = (/**
+             * @return {?}
+             */
+            () => {
                 // console.log('GoogleLogin.readAccessToken');
                 try {
                     /** @type {?} */
@@ -664,40 +815,56 @@ class GoogleService {
                     this.storage.delete('google');
                     reject(error);
                 }
-            };
+            });
             if (this.instance.isSignedIn && this.instance.isSignedIn.get()) {
                 readAccessToken();
             }
             else {
                 this.instance.signIn({
                     scope: 'profile email',
-                }).then((signed) => {
+                }).then((/**
+                 * @param {?} signed
+                 * @return {?}
+                 */
+                (signed) => {
                     readAccessToken();
-                }, (error) => {
+                }), (/**
+                 * @param {?} error
+                 * @return {?}
+                 */
+                (error) => {
                     this.storage.delete('google');
                     reject(error);
-                });
+                }));
             }
-        }));
+        })));
     }
     /**
      * @private
      * @return {?}
      */
     auth2init() {
-        return from(new Promise((resolve, reject) => {
+        return from(new Promise((/**
+         * @param {?} resolve
+         * @param {?} reject
+         * @return {?}
+         */
+        (resolve, reject) => {
             this.gapi.auth2.init({
                 client_id: this.options.clientId,
                 cookiepolicy: 'single_host_origin',
                 scope: 'profile email',
                 fetch_basic_profile: true,
                 ux_mode: 'popup',
-            }).then(() => {
+            }).then((/**
+             * @return {?}
+             */
+            () => {
                 this.auth2 = this.gapi.auth2;
                 // console.log('Auth2Init.success', this.auth2);
                 resolve(this.auth2);
-            }, reject);
-        }));
+            }), reject);
+        })));
     }
     /**
      * @return {?}
@@ -707,10 +874,14 @@ class GoogleService {
             return of(this.instance);
         }
         else {
-            return this.getAuth2().pipe(concatMap(x => {
+            return this.getAuth2().pipe(concatMap((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => {
                 this.instance = this.auth2.getAuthInstance();
                 return of(this.instance);
-            }));
+            })));
         }
     }
 }
@@ -730,7 +901,7 @@ GoogleService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class MapboxService {
 }
@@ -743,7 +914,7 @@ MapboxService.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PayPalConfig {
 }
@@ -787,10 +958,14 @@ class PayPalService {
                 /** @type {?} */
                 const src = `https://www.paypalobjects.com/api/checkout.js`;
                 // console.log('PayPalConfig.once', src);
-                this.paypal$ = this.onceService.script(src).pipe(map(x => {
+                this.paypal$ = this.onceService.script(src).pipe(map((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                x => {
                     this.paypal = window['paypal'];
                     return this.paypal;
-                }));
+                })));
                 return this.paypal$;
             }
         }
@@ -805,10 +980,14 @@ class PayPalService {
      */
     render(options, selector) {
         selector = selector || '#paypal-button';
-        return this.once().pipe(mergeMap(paypal => {
+        return this.once().pipe(mergeMap((/**
+         * @param {?} paypal
+         * @return {?}
+         */
+        paypal => {
             paypal.Button.render(this.getOptions(paypal, options), selector);
             return of(paypal);
-        }));
+        })));
     }
     /**
      * @private
@@ -819,14 +998,37 @@ class PayPalService {
     getOptions(paypal, options) {
         /** @type {?} */
         const payload = Object.assign(this.options, options);
-        payload.payment = (data, actions) => {
-            return new paypal.Promise((resolve, reject) => {
+        payload.payment = (/**
+         * @param {?} data
+         * @param {?} actions
+         * @return {?}
+         */
+        (data, actions) => {
+            return new paypal.Promise((/**
+             * @param {?} resolve
+             * @param {?} reject
+             * @return {?}
+             */
+            (resolve, reject) => {
                 if (options.payment) {
-                    options.payment().pipe(first(), mergeMap(payload => {
+                    options.payment().pipe(first(), mergeMap((/**
+                     * @param {?} payload
+                     * @return {?}
+                     */
+                    payload => {
                         return from(actions.payment.create(payload));
-                    })).subscribe(success => resolve(success), // actions.payment.create(success)
+                    }))).subscribe((/**
+                     * @param {?} success
+                     * @return {?}
+                     */
+                    success => resolve(success)), (
                     // actions.payment.create(success)
-                    error => reject(error));
+                    /**
+                     * @param {?} error
+                     * @return {?}
+                     */
+                    // actions.payment.create(success)
+                    error => reject(error)));
                 }
                 else {
                     console.log('PayPalService.payment callback not setted');
@@ -839,16 +1041,29 @@ class PayPalService {
                 // jQuery.post('/my-api/create-payment')
                 // .done(function(data) { resolve(data.paymentID); })
                 // .fail(function(err)  { reject(err); });
-            });
-        };
-        payload.onAuthorize = (data, actions) => {
+            }));
+        });
+        payload.onAuthorize = (/**
+         * @param {?} data
+         * @param {?} actions
+         * @return {?}
+         */
+        (data, actions) => {
             if (options.onAuthorize) {
-                return actions.payment.execute().then(payment => options.onAuthorize(payment, null), error => options.onAuthorize(null, error));
+                return actions.payment.execute().then((/**
+                 * @param {?} payment
+                 * @return {?}
+                 */
+                payment => options.onAuthorize(payment, null)), (/**
+                 * @param {?} error
+                 * @return {?}
+                 */
+                error => options.onAuthorize(null, error)));
             }
             else {
                 console.log('PayPalService.onAuthorize callback not setted');
             }
-        };
+        });
         return payload;
     }
 }
@@ -867,7 +1082,7 @@ PayPalService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PayPalWidgetComponent extends DisposableComponent {
     /**
@@ -884,9 +1099,13 @@ class PayPalWidgetComponent extends DisposableComponent {
      */
     ngAfterViewInit() {
         if (isPlatformBrowser(this.platformId)) {
-            this.paypalService.render(this.paypalOptions, '#paypal-widget-button').pipe(takeUntil(this.unsubscribe)).subscribe(paypal => {
+            this.paypalService.render(this.paypalOptions, '#paypal-widget-button').pipe(takeUntil(this.unsubscribe)).subscribe((/**
+             * @param {?} paypal
+             * @return {?}
+             */
+            paypal => {
                 // console.log('PayPalWidgetComponent.rendered', paypal)
-            });
+            }));
         }
     }
 }
@@ -907,7 +1126,7 @@ PayPalWidgetComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const SWIPER_CONFIG = new InjectionToken('SWIPER_CONFIG');
@@ -984,7 +1203,7 @@ class SwiperConfig {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class SwiperDirective {
     /**
@@ -1089,24 +1308,38 @@ class SwiperDirective {
             this.index_ = null;
         }
         params.on = {
-            slideChange: () => {
+            slideChange: (/**
+             * @return {?}
+             */
+            () => {
                 if (this.swiper_ && this.indexChange.observers.length) {
                     this.emit(this.indexChange, this.swiper_.realIndex);
                 }
-            }
+            })
         };
-        this.zone.runOutsideAngular(() => {
+        this.zone.runOutsideAngular((/**
+         * @return {?}
+         */
+        () => {
             this.swiper_ = new Swiper(this.elementRef.nativeElement, params);
-        });
+        }));
         if (params.init !== false && this.init.observers.length) {
             this.emit(this.init, this.swiper_);
         }
         // Add native Swiper event handling
-        SwiperEvents.forEach((eventName) => {
+        SwiperEvents.forEach((/**
+         * @param {?} eventName
+         * @return {?}
+         */
+        (eventName) => {
             /** @type {?} */
             let swiperEvent = eventName.replace('swiper', '');
             swiperEvent = swiperEvent.charAt(0).toLowerCase() + swiperEvent.slice(1);
-            this.swiper_.on(swiperEvent, (...args) => {
+            this.swiper_.on(swiperEvent, (/**
+             * @param {...?} args
+             * @return {?}
+             */
+            (...args) => {
                 if (args.length === 1) {
                     args = args[0];
                 }
@@ -1115,8 +1348,8 @@ class SwiperDirective {
                 if (emitter.observers.length) {
                     this.emit(emitter, args);
                 }
-            });
-        });
+            }));
+        }));
         if (!this.config_) {
             this.config_ = this.differs.find(this.config || {}).create();
             this.config_.diff(this.config || {});
@@ -1127,9 +1360,12 @@ class SwiperDirective {
      */
     ngOnDestroy() {
         if (this.swiper_) {
-            this.zone.runOutsideAngular(() => {
+            this.zone.runOutsideAngular((/**
+             * @return {?}
+             */
+            () => {
                 this.swiper_.destroy(true, this.swiper_.initialized || false);
-            });
+            }));
             this.swiper_ = null;
         }
     }
@@ -1156,16 +1392,22 @@ class SwiperDirective {
         if (this.swiper_ && changes['disabled']) {
             if (changes['disabled'].currentValue !== changes['disabled'].previousValue) {
                 if (changes['disabled'].currentValue === true) {
-                    this.zone.runOutsideAngular(() => {
+                    this.zone.runOutsideAngular((/**
+                     * @return {?}
+                     */
+                    () => {
                         this.ngOnDestroy();
                         this.ngAfterViewInit();
-                    });
+                    }));
                 }
                 else if (changes['disabled'].currentValue === false) {
-                    this.zone.runOutsideAngular(() => {
+                    this.zone.runOutsideAngular((/**
+                     * @return {?}
+                     */
+                    () => {
                         this.ngOnDestroy();
                         this.ngAfterViewInit();
-                    });
+                    }));
                 }
             }
         }
@@ -1181,7 +1423,10 @@ class SwiperDirective {
             emitter.emit(value);
         }
         else {
-            this.zone.run(() => emitter.emit(value));
+            this.zone.run((/**
+             * @return {?}
+             */
+            () => emitter.emit(value)));
         }
     }
     /**
@@ -1195,22 +1440,31 @@ class SwiperDirective {
      */
     initialize() {
         if (this.swiper_) {
-            this.zone.runOutsideAngular(() => {
+            this.zone.runOutsideAngular((/**
+             * @return {?}
+             */
+            () => {
                 this.swiper_.init();
-            });
+            }));
         }
     }
     /**
      * @return {?}
      */
     update() {
-        setTimeout(() => {
+        setTimeout((/**
+         * @return {?}
+         */
+        () => {
             if (this.swiper_) {
-                this.zone.runOutsideAngular(() => {
+                this.zone.runOutsideAngular((/**
+                 * @return {?}
+                 */
+                () => {
                     this.swiper_.update();
-                });
+                }));
             }
-        }, 0);
+        }), 0);
     }
     /**
      * @param {?=} real
@@ -1240,9 +1494,12 @@ class SwiperDirective {
             if (this.swiper_.params.loop) {
                 realIndex += this.swiper_.loopedSlides;
             }
-            this.zone.runOutsideAngular(() => {
+            this.zone.runOutsideAngular((/**
+             * @return {?}
+             */
+            () => {
                 this.swiper_.slideTo(realIndex, speed, !silent);
-            });
+            }));
         }
     }
     /**
@@ -1252,9 +1509,12 @@ class SwiperDirective {
      */
     prevSlide(speed, silent) {
         if (this.swiper_) {
-            this.zone.runOutsideAngular(() => {
+            this.zone.runOutsideAngular((/**
+             * @return {?}
+             */
+            () => {
                 this.swiper_.slidePrev(speed, !silent);
-            });
+            }));
         }
     }
     /**
@@ -1264,9 +1524,12 @@ class SwiperDirective {
      */
     nextSlide(speed, silent) {
         if (this.swiper_) {
-            this.zone.runOutsideAngular(() => {
+            this.zone.runOutsideAngular((/**
+             * @return {?}
+             */
+            () => {
                 this.swiper_.slideNext(speed, !silent);
-            });
+            }));
         }
     }
     /**
@@ -1278,9 +1541,12 @@ class SwiperDirective {
             this.setIndex(0);
         }
         if (this.swiper_ && this.swiper_.autoplay) {
-            this.zone.runOutsideAngular(() => {
+            this.zone.runOutsideAngular((/**
+             * @return {?}
+             */
+            () => {
                 this.swiper_.autoplay.stop();
-            });
+            }));
         }
     }
     /**
@@ -1292,9 +1558,12 @@ class SwiperDirective {
             this.setIndex(0);
         }
         if (this.swiper_ && this.swiper_.autoplay) {
-            this.zone.runOutsideAngular(() => {
+            this.zone.runOutsideAngular((/**
+             * @return {?}
+             */
+            () => {
                 this.swiper_.autoplay.start();
-            });
+            }));
         }
     }
 }
@@ -1361,7 +1630,7 @@ SwiperDirective.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class SwiperComponent {
     /**
@@ -1445,20 +1714,33 @@ class SwiperComponent {
         if (!isPlatformBrowser(this.platformId)) {
             return;
         }
-        this.zone.runOutsideAngular(() => {
+        this.zone.runOutsideAngular((/**
+         * @return {?}
+         */
+        () => {
             this.updateClasses();
             if (this.swiperSlides && typeof MutationObserver !== 'undefined') {
-                this.mo = new MutationObserver(() => {
+                this.mo = new MutationObserver((/**
+                 * @return {?}
+                 */
+                () => {
                     this.updateClasses();
-                });
+                }));
                 this.mo.observe(this.swiperSlides.nativeElement, { childList: true });
             }
-        });
-        window.setTimeout(() => {
+        }));
+        window.setTimeout((/**
+         * @return {?}
+         */
+        () => {
             if (this.directiveRef) {
                 this.init.emit();
                 this.directiveRef.indexChange = this.indexChange;
-                SwiperEvents.forEach((eventName) => {
+                SwiperEvents.forEach((/**
+                 * @param {?} eventName
+                 * @return {?}
+                 */
+                (eventName) => {
                     if (this.directiveRef) {
                         /** @type {?} */
                         const directiveOutput = (/** @type {?} */ (eventName));
@@ -1466,9 +1748,9 @@ class SwiperComponent {
                         const componentOutput = (/** @type {?} */ (eventName));
                         this.directiveRef[directiveOutput] = (/** @type {?} */ (this[componentOutput]));
                     }
-                });
+                }));
             }
-        }, 0);
+        }), 0);
     }
     /**
      * @return {?}
@@ -1496,7 +1778,12 @@ class SwiperComponent {
                 this.paginationBackup = this.config.pagination;
                 this.paginationConfig = {
                     el: '.swiper-pagination',
-                    renderBullet: (index, className) => {
+                    renderBullet: (/**
+                     * @param {?} index
+                     * @param {?} className
+                     * @return {?}
+                     */
+                    (index, className) => {
                         /** @type {?} */
                         const children = this.swiperSlides ? this.swiperSlides.nativeElement.children : [];
                         /** @type {?} */
@@ -1508,7 +1795,7 @@ class SwiperComponent {
                             bullet = `<span class="${className} ${className}-last" index="${index}"></span>`;
                         }
                         return `<span class="swiper-pagination-handle" index="${index}">${bullet}</span>`;
-                    }
+                    })
                 };
             }
             if (this.swiperConfig.pagination === true) {
@@ -1623,7 +1910,7 @@ SwiperComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class TrustPilotConfig {
     constructor() {
@@ -1671,10 +1958,14 @@ class TrustPilotService {
                 /** @type {?} */
                 const src = `https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js`;
                 // console.log('TrustPilotConfig.once', src);
-                this.Trustpilot$ = this.onceService.script(src).pipe(map(x => {
+                this.Trustpilot$ = this.onceService.script(src).pipe(map((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                x => {
                     this.Trustpilot = window['Trustpilot'];
                     return this.Trustpilot;
-                }));
+                })));
                 return this.Trustpilot$;
             }
         }
@@ -1698,7 +1989,7 @@ TrustPilotService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class TrustPilotWidgetOptions {
     /**
@@ -1766,10 +2057,14 @@ class TrustPilotWidgetComponent extends DisposableComponent {
         // console.log('TrustPilotWidgetComponent.ngOnInit', this.options, this.loaded);
         if (isPlatformBrowser(this.platformId) && this.elementRef.nativeElement.children.length) { // && environment.production
             if (!this.loaded) {
-                this.trustPilot.once().pipe(takeUntil(this.unsubscribe)).subscribe(Trustpilot => {
+                this.trustPilot.once().pipe(takeUntil(this.unsubscribe)).subscribe((/**
+                 * @param {?} Trustpilot
+                 * @return {?}
+                 */
+                Trustpilot => {
                     Trustpilot.loadFromElement(this.elementRef.nativeElement.firstElementChild);
                     this.loaded = true;
-                });
+                }));
             }
         }
     }
@@ -1796,7 +2091,7 @@ TrustPilotWidgetComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const services = [
@@ -1864,12 +2159,12 @@ PluginsModule.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { PluginsConfig, PLUGINS_CONFIG, PluginsService, PluginsModuleComponent, PluginsModule, FacebookAuthResponse, FacebookConfig, FacebookPicture, FacebookPictureData, FacebookService, FacebookUser, GoogleTagManagerComponent, GoogleTagManagerPageViewEvent, GoogleTagManagerService, GoogleAuthResponse, GoogleConfig, GoogleService, GoogleUser, MapboxService, PayPalWidgetComponent, PayPalService, SwiperComponent, SwiperDirective, SwiperConfig, SwiperEvents, SWIPER_CONFIG, TrustPilotWidgetComponent, TrustPilotService };

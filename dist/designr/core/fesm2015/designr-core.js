@@ -4,13 +4,13 @@ import { HttpErrorResponse, HttpClient, HttpHeaders, HttpParams, HttpClientModul
 import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
-import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ComponentFactoryResolver, ViewChild, ElementRef, Renderer2, Pipe, ChangeDetectorRef, ViewEncapsulation, EventEmitter, WrappedValue, defineInjectable, inject, INJECTOR, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ComponentFactoryResolver, ViewChild, ElementRef, Renderer2, Pipe, ChangeDetectorRef, NgZone, ViewEncapsulation, EventEmitter, WrappedValue, defineInjectable, inject, INJECTOR, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
-import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, first, takeUntil } from 'rxjs/operators';
+import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, delay, first, takeUntil } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const TIMEOUT = 5 * 60 * 1000;
@@ -142,7 +142,12 @@ class CookieStorageService {
             /** @type {?} */
             let cache = [];
             /** @type {?} */
-            const json = JSON.stringify(value, function (key, value) {
+            const json = JSON.stringify(value, (/**
+             * @param {?} key
+             * @param {?} value
+             * @return {?}
+             */
+            function (key, value) {
                 if (key === 'pool') {
                     return;
                 }
@@ -154,7 +159,7 @@ class CookieStorageService {
                     cache.push(value);
                 }
                 return value;
-            });
+            }));
             cache = null;
             this.setter(name, btoa(encodeURIComponent(json)), days);
         }
@@ -327,7 +332,12 @@ class SessionStorageService {
             /** @type {?} */
             let cache = [];
             /** @type {?} */
-            const json = JSON.stringify(value, function (key, value) {
+            const json = JSON.stringify(value, (/**
+             * @param {?} key
+             * @param {?} value
+             * @return {?}
+             */
+            function (key, value) {
                 if (key === 'pool') {
                     return;
                 }
@@ -339,7 +349,7 @@ class SessionStorageService {
                     cache.push(value);
                 }
                 return value;
-            });
+            }));
             cache = null;
             window.sessionStorage.setItem(name, json);
         }
@@ -477,7 +487,12 @@ class LocalStorageService {
             /** @type {?} */
             let cache = [];
             /** @type {?} */
-            const json = JSON.stringify(value, function (key, value) {
+            const json = JSON.stringify(value, (/**
+             * @param {?} key
+             * @param {?} value
+             * @return {?}
+             */
+            function (key, value) {
                 if (key === 'pool') {
                     return;
                 }
@@ -489,7 +504,7 @@ class LocalStorageService {
                     cache.push(value);
                 }
                 return value;
-            });
+            }));
             cache = null;
             window.localStorage.setItem(name, json);
         }
@@ -536,7 +551,7 @@ LocalStorageService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @enum {number} */
 const AuthStrategy = {
@@ -635,14 +650,14 @@ AuthService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const BUNDLES = new InjectionToken('core.bundles');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class CoreTransitionConfig {
     /**
@@ -687,7 +702,7 @@ const CORE_CONFIG = new InjectionToken('core.config');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class CoreService {
     /**
@@ -714,7 +729,7 @@ CoreService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class DefaultContentDirective {
     /**
@@ -773,7 +788,7 @@ DefaultContentDirective.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class CoreModuleComponent {
     constructor() {
@@ -796,7 +811,7 @@ CoreModuleComponent.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class BundleDirective {
     /**
@@ -815,7 +830,11 @@ class BundleDirective {
      * @return {?}
      */
     ngOnInit() {
-        this.loader.load(this.bundles[this.bundle]).then((moduleFactory) => {
+        this.loader.load(this.bundles[this.bundle]).then((/**
+         * @param {?} moduleFactory
+         * @return {?}
+         */
+        (moduleFactory) => {
             this.moduleRef = moduleFactory.create(this.injector);
             /** @type {?} */
             const rootComponentType = this.moduleRef.injector.get('LAZY_ROOT_COMPONENT');
@@ -823,7 +842,7 @@ class BundleDirective {
             /** @type {?} */
             const factory = this.moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
             this.container.createComponent(factory);
-        });
+        }));
     }
     /**
      * @return {?}
@@ -852,7 +871,7 @@ BundleDirective.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class DisposableComponent {
     constructor() {
@@ -875,7 +894,7 @@ DisposableComponent.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class HighlightPipe {
     /**
@@ -891,9 +910,13 @@ class HighlightPipe {
         query = this.encodeHTML(query);
         /** @type {?} */
         const regExp = new RegExp('&[^;]+;|' + this.escapeRegexChars(query), 'gi');
-        return text.replace(regExp, function (match) {
+        return text.replace(regExp, (/**
+         * @param {?} match
+         * @return {?}
+         */
+        function (match) {
             return match.toLowerCase() === query.toLowerCase() ? '<strong>' + match + '</strong>' : match;
-        });
+        }));
     }
     /**
      * @param {?} text
@@ -932,7 +955,7 @@ HighlightPipe.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class Logger {
     /**
@@ -1023,7 +1046,7 @@ Logger.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class SegmentPipe {
     /**
@@ -1064,7 +1087,7 @@ SegmentPipe.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ApiRequestOptions {
     /**
@@ -1181,7 +1204,11 @@ class ApiService {
         const url = this.getUrl(method);
         /** @type {?} */
         const options = new ApiRequestOptions(params);
-        return this.http.get(url, options).pipe(tap(x => this.logger.request(url)));
+        return this.http.get(url, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.logger.request(url))));
     }
     /**
      * @param {?} first
@@ -1200,7 +1227,11 @@ class ApiService {
         const url = this.getUrl(method);
         /** @type {?} */
         const options = new ApiRequestOptions(params);
-        return this.http.post(url, model, options).pipe(tap(x => this.logger.request(url)));
+        return this.http.post(url, model, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.logger.request(url))));
     }
     /**
      * @param {?} first
@@ -1219,7 +1250,11 @@ class ApiService {
         const url = this.getUrl(method);
         /** @type {?} */
         const options = new ApiRequestOptions(params);
-        return this.http.put(url, model, options).pipe(tap(x => this.logger.request(url)));
+        return this.http.put(url, model, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.logger.request(url))));
     }
     /**
      * @param {?} first
@@ -1238,7 +1273,11 @@ class ApiService {
         const url = this.getUrl(method);
         /** @type {?} */
         const options = new ApiRequestOptions(params);
-        return this.http.patch(url, model, options).pipe(tap(x => this.logger.request(url)));
+        return this.http.patch(url, model, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.logger.request(url))));
     }
     /**
      * @param {?} first
@@ -1259,7 +1298,11 @@ class ApiService {
         const url = id !== null ? this.getUrl(`${method}/${id}`) : this.getUrl(method);
         /** @type {?} */
         const options = new ApiRequestOptions(params);
-        return this.http.delete(url, options).pipe(tap(x => this.logger.request(url)));
+        return this.http.delete(url, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.logger.request(url))));
     }
     /**
      * @param {?} input
@@ -1275,12 +1318,16 @@ class ApiService {
         /** @type {?} */
         let value;
         if (input instanceof Array) {
-            return input.map((value) => {
+            return input.map((/**
+             * @param {?} value
+             * @return {?}
+             */
+            (value) => {
                 if (typeof value === 'object') {
                     value = this.toCamelCase(value);
                 }
                 return value;
-            });
+            }));
         }
         else {
             output = {};
@@ -1305,7 +1352,12 @@ class ApiService {
      */
     getStateKey(url, model) {
         /** @type {?} */
-        const flatMap = (s, x) => {
+        const flatMap = (/**
+         * @param {?} s
+         * @param {?} x
+         * @return {?}
+         */
+        (s, x) => {
             if (typeof x === 'number') {
                 s += x.toString();
             }
@@ -1313,10 +1365,14 @@ class ApiService {
                 s += x.substr(0, 10);
             }
             else if (x && typeof x === 'object') {
-                s += '_' + Object.keys(x).map(k => k + '_' + flatMap('', x[k])).join('_');
+                s += '_' + Object.keys(x).map((/**
+                 * @param {?} k
+                 * @return {?}
+                 */
+                k => k + '_' + flatMap('', x[k]))).join('_');
             }
             return s;
-        };
+        });
         url = flatMap(url, model);
         // console.log('ApiService.getStateKey.url', url);
         /** @type {?} */
@@ -1347,11 +1403,18 @@ class ApiService {
             return of(cached);
         }
         else {
-            return this.http.get(url, options).pipe(tap(x => {
+            return this.http.get(url, options).pipe(tap((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => {
                 if (isPlatformServer(this.platformId)) {
-                    this.state.onSerialize(stateKey, () => x);
+                    this.state.onSerialize(stateKey, (/**
+                     * @return {?}
+                     */
+                    () => x));
                 }
-            }));
+            })));
         }
     }
     /**
@@ -1380,11 +1443,18 @@ class ApiService {
             return of(cached);
         }
         else {
-            return this.http.post(url, model, options).pipe(tap(x => {
+            return this.http.post(url, model, options).pipe(tap((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => {
                 if (isPlatformServer(this.platformId)) {
-                    this.state.onSerialize(stateKey, () => x);
+                    this.state.onSerialize(stateKey, (/**
+                     * @return {?}
+                     */
+                    () => x));
                 }
-            }));
+            })));
         }
     }
 }
@@ -1401,7 +1471,7 @@ ApiService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -1422,9 +1492,13 @@ class TranslateService extends ApiService {
         this.languages = this._languages.asObservable();
         this._languages.next(this.config.languages);
         this._lang = this.config.defaultLanguage;
-        this.getTranslation(this.lang).subscribe(x => {
+        this.getTranslation(this.lang).subscribe((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => {
             // console.log(x);
-        });
+        }));
     }
     /**
      * @return {?}
@@ -1446,7 +1520,11 @@ class TranslateService extends ApiService {
         if (lang !== this._lang) {
             this._lang = lang;
             /** @type {?} */
-            const language = this._languages.getValue().find(x => x.lang === lang);
+            const language = this._languages.getValue().find((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => x.lang === lang));
             this._language.next(language);
         }
     }
@@ -1463,7 +1541,11 @@ class TranslateService extends ApiService {
             return of(this.cache[lang]);
         }
         else {
-            return this.get({ lang }).pipe(take(1), map((x) => {
+            return this.get({ lang }).pipe(take(1), map((/**
+             * @param {?} x
+             * @return {?}
+             */
+            (x) => {
                 if (x[0]) {
                     /** @type {?} */
                     const labels = x[0].labels;
@@ -1474,7 +1556,7 @@ class TranslateService extends ApiService {
                 else {
                     return of(null);
                 }
-            }));
+            })));
         }
     }
     /**
@@ -1545,11 +1627,16 @@ class TranslateService extends ApiService {
     parseParams(value, params) {
         /** @type {?} */
         const TEMPLATE_REGEXP = /@([^{}\s]*)/g;
-        return value.replace(TEMPLATE_REGEXP, (text, key) => {
+        return value.replace(TEMPLATE_REGEXP, (/**
+         * @param {?} text
+         * @param {?} key
+         * @return {?}
+         */
+        (text, key) => {
             /** @type {?} */
             const replacer = (/** @type {?} */ (params[key]));
             return typeof replacer !== 'undefined' ? replacer : text;
-        });
+        }));
     }
     /**
      * @param {?} lang
@@ -1589,7 +1676,7 @@ TranslateService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // @dynamic
 class RouteService {
@@ -1641,7 +1728,11 @@ class RouteService {
         if (lang !== this._lang) {
             this._lang = lang;
             /** @type {?} */
-            const language = this._languages.getValue().find(x => x.lang === lang);
+            const language = this._languages.getValue().find((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => x.lang === lang));
             this._language.next(language);
             this.translateService.use(lang);
             // console.log('RouteService.set lang', lang, this.coreService.options.useLang);
@@ -1672,13 +1763,17 @@ class RouteService {
      */
     getPageParams() {
         // console.log('RouteService.getPageParams', this.router.url);
-        return this.route.queryParams.pipe(distinctUntilChanged(), switchMap(params => {
+        return this.route.queryParams.pipe(distinctUntilChanged(), switchMap((/**
+         * @param {?} params
+         * @return {?}
+         */
+        params => {
             // console.log(params);
             /** @type {?} */
             const parsed = this.parseParams(params);
             this.pageParams$.next(parsed);
             return of(parsed);
-        }));
+        })));
     }
     /**
      * @param {?} params
@@ -1687,7 +1782,11 @@ class RouteService {
     parseParams(params) {
         /** @type {?} */
         const parsed = {};
-        Object.keys(params).forEach(k => parsed[k] = this.parse(params[k]));
+        Object.keys(params).forEach((/**
+         * @param {?} k
+         * @return {?}
+         */
+        k => parsed[k] = this.parse(params[k])));
         /*
         for (const key in params) {
             if (typeof (params[key]) === 'string') {
@@ -1706,7 +1805,11 @@ class RouteService {
     serializeParams(params) {
         /** @type {?} */
         const serialized = {};
-        Object.keys(params).forEach(k => serialized[k] = this.serialize(params[k]));
+        Object.keys(params).forEach((/**
+         * @param {?} k
+         * @return {?}
+         */
+        k => serialized[k] = this.serialize(params[k])));
         return serialized;
     }
     /**
@@ -1782,13 +1885,21 @@ class RouteService {
         /** @type {?} */
         const segments = this.segment.transform(data);
         /** @type {?} */
-        let paths = segments.filter(x => {
+        let paths = segments.filter((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => {
             return typeof x === 'string';
-        });
+        }));
         /** @type {?} */
-        const datas = segments.filter(x => {
+        const datas = segments.filter((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => {
             return typeof x !== 'string';
-        });
+        }));
         if (this.coreService.options.useMarket) {
             /** @type {?} */
             const marketIndex = this.urlStrategy.split('/').indexOf(':market');
@@ -1862,7 +1973,11 @@ class RouteService {
      * @return {?}
      */
     setLanguages() {
-        this.translateService.addLangs(this.coreService.options.languages ? this.coreService.options.languages.map(x => x.lang) : []);
+        this.translateService.addLangs(this.coreService.options.languages ? this.coreService.options.languages.map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => x.lang)) : []);
         this.translateService.setDefaultLang(this.coreService.options.defaultLanguage);
         // this.setLanguage(this.detectLanguage(), true);
         this.setLanguage(this.coreService.options.defaultLanguage, true);
@@ -1877,7 +1992,15 @@ class RouteService {
      * @return {?}
      */
     subscribeToRouter() {
-        this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe((event) => {
+        this.router.events.pipe(filter((/**
+         * @param {?} event
+         * @return {?}
+         */
+        event => event instanceof NavigationStart))).subscribe((/**
+         * @param {?} event
+         * @return {?}
+         */
+        (event) => {
             /** @type {?} */
             const location = this.location.normalize(event.url).split('/');
             if (this.coreService.options.useMarket) {
@@ -1897,13 +2020,17 @@ class RouteService {
                 const lang = location[langIndex];
                 if (lang !== this._lang) {
                     /** @type {?} */
-                    const language = this._languages.getValue().find(x => x.lang === lang);
+                    const language = this._languages.getValue().find((/**
+                     * @param {?} x
+                     * @return {?}
+                     */
+                    x => x.lang === lang));
                     this._language.next(language);
                     this.translateService.use(lang);
                     // console.log('RouteService.setLang', lang, this._lang, langIndex, location, event.url);
                 }
             }
-        });
+        }));
     }
     /**
      * @private
@@ -1946,7 +2073,11 @@ class RouteService {
         /** @type {?} */
         let detectedLanguage = this.coreService.options.defaultLanguage;
         /** @type {?} */
-        const regexp = new RegExp(`(${this.coreService.options.languages ? this.coreService.options.languages.map(x => x.lang).join('|') : ''})`, 'gi');
+        const regexp = new RegExp(`(${this.coreService.options.languages ? this.coreService.options.languages.map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => x.lang)).join('|') : ''})`, 'gi');
         /** @type {?} */
         const match = (acceptLanguage || '').match(regexp);
         detectedLanguage = match ? match[0] : detectedLanguage;
@@ -2000,7 +2131,7 @@ RouteService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class HttpStatusCodeService {
     constructor() {
@@ -2037,7 +2168,7 @@ HttpStatusCodeService.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class HttpResponseInterceptor {
     /**
@@ -2083,7 +2214,11 @@ class HttpResponseInterceptor {
     intercept(request, next) {
         // injecting request
         // parsing response
-        return next.handle(request).pipe(tap((event) => {
+        return next.handle(request).pipe(tap((/**
+         * @param {?} event
+         * @return {?}
+         */
+        (event) => {
             // console.log('HttpResponseInterceptor', event);
             this.logger.httpError = null;
             // this.logger.log(event);
@@ -2093,7 +2228,11 @@ class HttpResponseInterceptor {
                 // do stuff with response if you want
             }
             */
-        }), catchError((error) => {
+        })), catchError((/**
+         * @param {?} error
+         * @return {?}
+         */
+        (error) => {
             // console.warn('HttpResponseInterceptor', error);
             if (error instanceof HttpErrorResponse) {
                 // this.statusCodeService.setStatusCode(error.status);
@@ -2114,7 +2253,7 @@ class HttpResponseInterceptor {
                 }
             }
             return throwError(error);
-        }));
+        })));
     }
 }
 HttpResponseInterceptor.decorators = [
@@ -2131,7 +2270,7 @@ HttpResponseInterceptor.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // import JSONFormatter from 'json-formatter-js';
 class JsonFormatterComponent {
@@ -2183,7 +2322,7 @@ JsonFormatterComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2234,13 +2373,13 @@ class LabelService extends ApiService {
      * @return {?}
      */
     missingLabel(key) {
-        console.log('missingLabel', key, this.missingHandler);
+        // console.log('missingLabel', key, this.missingHandler);
         if (this.missingHandler) {
             return typeof this.missingHandler === 'function' ?
                 this.missingHandler(key) :
                 this.missingHandler;
         }
-        console.log('missingLabel', key);
+        // console.log('missingLabel', key);
         return key;
     }
     /**
@@ -2252,37 +2391,16 @@ class LabelService extends ApiService {
     parseParams(value, params) {
         /** @type {?} */
         const TEMPLATE_REGEXP = /@([^{}\s]*)/g;
-        return value.replace(TEMPLATE_REGEXP, (text, key) => {
+        return value.replace(TEMPLATE_REGEXP, (/**
+         * @param {?} text
+         * @param {?} key
+         * @return {?}
+         */
+        (text, key) => {
             /** @type {?} */
             const replacer = (/** @type {?} */ (params[key]));
             return typeof replacer !== 'undefined' ? replacer : text;
-        });
-    }
-    /**
-     * @param {?} key
-     * @param {?=} defaultValue
-     * @param {?=} params
-     * @return {?}
-     */
-    getKey(key, defaultValue, params) {
-        if (this.cache.hasOwnProperty(key)) {
-            /** @type {?} */
-            const label = this.cache[key];
-            return of(label);
-        }
-        else {
-            Object.defineProperty(this.collectedKeys, key, {
-                value: { id: key, defaultValue: defaultValue },
-                enumerable: true,
-                writable: false,
-            });
-            this.cache[key] = null;
-        }
-        this.parsers[key] = (label) => this.parseLabel(label, key, defaultValue, params);
-        // !!! never reach this, return of(null) ?
-        return this.labels$.pipe(map(items => items[key] || null), filter(label => label !== null), 
-        // tap(label => console.log('getKey', key, label)),
-        map(label => this.parseLabel(label, key, defaultValue, params)), tap(label => this.cache[key] = label));
+        }));
     }
     /**
      * @return {?}
@@ -2290,11 +2408,18 @@ class LabelService extends ApiService {
     register() {
         return this.emitter.pipe(
         // throttleTime(500),
-        tap(() => {
-            this.collectKeys().pipe(first()).subscribe((keys) => {
+        tap((/**
+         * @return {?}
+         */
+        () => {
+            this.collectKeys().pipe(first()).subscribe((/**
+             * @param {?} keys
+             * @return {?}
+             */
+            (keys) => {
                 // console.log('LabelService.collected', keys);
-            });
-        }));
+            }));
+        })));
     }
     /**
      * @return {?}
@@ -2305,28 +2430,98 @@ class LabelService extends ApiService {
         }
     }
     /**
+     * @param {?} key
+     * @param {?=} defaultValue
+     * @param {?=} params
+     * @return {?}
+     */
+    getKey(key, defaultValue, params) {
+        // console.log('LabelService.getKey', key);
+        if (this.cache.hasOwnProperty(key)) {
+            /** @type {?} */
+            const label = this.cache[key];
+            return of(label).pipe(delay(1));
+        }
+        else {
+            Object.defineProperty(this.collectedKeys, key, {
+                value: { id: key, defaultValue: defaultValue },
+                enumerable: true,
+                writable: false,
+            });
+            this.cache[key] = null;
+        }
+        this.parsers[key] = (/**
+         * @param {?} label
+         * @return {?}
+         */
+        (label) => this.parseLabel(label, key, defaultValue, params));
+        // !!! never reach this, return of(null) ?
+        return this.labels$.pipe(map((/**
+         * @param {?} items
+         * @return {?}
+         */
+        items => items[key] || null)), filter((/**
+         * @param {?} label
+         * @return {?}
+         */
+        label => label !== null)), 
+        // tap(label => console.log('getKey', key, label)),
+        map((/**
+         * @param {?} label
+         * @return {?}
+         */
+        label => this.parseLabel(label, key, defaultValue, params))), tap((/**
+         * @param {?} label
+         * @return {?}
+         */
+        label => this.cache[key] = label)));
+    }
+    /**
      * @private
      * @return {?}
      */
     collectKeys() {
         /** @type {?} */
-        const keys = Object.keys(this.collectedKeys).map(x => this.collectedKeys[x]);
+        const keys = Object.keys(this.collectedKeys).map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.collectedKeys[x]));
+        // console.log('LabelService.collectKeys', keys);
         this.collectedKeys = {};
         if (keys.length) {
-            return this.statePost(keys).pipe(map((keys) => {
+            return this.statePost(keys).pipe(map((/**
+             * @param {?} keys
+             * @return {?}
+             */
+            (keys) => {
                 // console.log('LabelService.collectKeys', JSON.stringify(keys));
                 /** @type {?} */
                 const items = {};
-                keys.forEach(x => items[x.id] = this.parsers[x.id](x.value || x.defaultValue || x.id));
+                keys.forEach((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                x => items[x.id] = this.parsers[x.id](x.value || x.defaultValue || x.id)));
                 return items;
-            }), tap((items) => {
+            })), tap((/**
+             * @param {?} items
+             * @return {?}
+             */
+            (items) => {
                 Object.assign(this.cache, items);
                 this.labels$.next(this.cache);
                 // console.log('collectKeys', this.cache);
-            }), catchError(error => {
+            })), 
+            // shareReplay(),
+            catchError((/**
+             * @param {?} error
+             * @return {?}
+             */
+            error => {
                 // console.log('LabelService.collectKeys.error', error);
                 return of({});
-            }));
+            })));
             /*
             return this.post(`/api/i18n/labels`, keys).pipe(
                 map((keys: LabelKey[]) => {
@@ -2360,7 +2555,7 @@ LabelService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LabelDirective extends DisposableComponent {
     /**
@@ -2377,10 +2572,14 @@ class LabelDirective extends DisposableComponent {
      */
     ngOnInit() {
         // console.log('LabelDirective.ngOnInit', this.element.nativeElement.innerHTML);
-        this.labelService.getKey(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(takeUntil(this.unsubscribe)).subscribe(label => {
+        this.labelService.getKey(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(takeUntil(this.unsubscribe)).subscribe((/**
+         * @param {?} label
+         * @return {?}
+         */
+        label => {
             this.element.nativeElement.innerHTML = label;
             // console.log('LabelDirective.ngOnInit', label);
-        });
+        }));
         // console.log('LabelDirective.ngOnInit', this.label, this.labelParams, this.template, this.view);
     }
 }
@@ -2401,124 +2600,39 @@ LabelDirective.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class CustomAsyncPipe {
-    /**
-     * @param {?} changeDetector
-     */
-    constructor(changeDetector) {
-        this.changeDetector = changeDetector;
-        this.subject = null;
-        this.subscription = null;
-        this.value = null;
-        this.cachedValue = null;
-    }
-    /**
-     * @param {?} subject
-     * @return {?}
-     */
-    transform(subject) {
-        return this.observableToValue(subject);
-    }
-    /**
-     * @private
-     * @param {?} subject
-     * @return {?}
-     */
-    observableToValue(subject) {
-        if (subject !== this.subject) {
-            if (this.subject) {
-                this.dispose();
-            }
-            if (subject) {
-                this.subject = subject;
-                this.subscription = this.subject.subscribe((value) => {
-                    // console.log('CustomAsyncPipe.A', value);
-                    this.value = value;
-                    this.changeDetector.markForCheck(); // mark pipe as dirty
-                });
-                this.cachedValue = this.value; // ???
-                return this.value;
-            }
-        }
-        // console.log('CustomAsyncPipe.B', this.value);
-        if (this.cachedValue !== this.value) {
-            this.cachedValue = this.value;
-            return WrappedValue.wrap(this.value); // notify that value has changed
-        }
-        return this.cachedValue; // return cachedValue
-    }
-    /**
-     * @return {?}
-     */
-    dispose() {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
-        }
-        this.value = null;
-        this.cachedValue = null;
-        this.subscription = null;
-        this.subject = null;
-    }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() {
-        this.dispose();
-    }
-    /**
-     * @private
-     * @param {?} subject
-     * @return {?}
-     */
-    _observableToValue(subject) {
-        if (!this.subject) {
-            if (subject) {
-                this.subject = subject;
-                this.subscription = this.subject.subscribe((value) => {
-                    this.value = value;
-                    this.changeDetector.markForCheck(); // value has changed
-                });
-            }
-            this.cachedValue = this.value;
-            return this.value;
-        }
-        if (subject !== this.subject) {
-            this.dispose();
-            return this.transform((/** @type {?} */ (subject)));
-        }
-        if (this.value === this.cachedValue) {
-            return this.cachedValue;
-        }
-        this.cachedValue = this.value;
-        return WrappedValue.wrap(this.value); // value has changed
-    }
-}
-CustomAsyncPipe.decorators = [
-    { type: Pipe, args: [{
-                name: 'customAsync',
-                pure: false
-            },] }
-];
-/** @nocollapse */
-CustomAsyncPipe.ctorParameters = () => [
-    { type: ChangeDetectorRef }
-];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LabelPipe {
     /**
+     * @param {?} zone
      * @param {?} changeDetector
      * @param {?} labelService
      */
-    constructor(changeDetector, labelService) {
+    constructor(zone, changeDetector, labelService) {
+        this.zone = zone;
         this.changeDetector = changeDetector;
         this.labelService = labelService;
-        this.asyncPipe = new CustomAsyncPipe(this.changeDetector);
+        // this.asyncPipe = new CustomAsyncPipe(this.changeDetector);
+    }
+    /**
+     * @param {?} key
+     * @param {?} text
+     * @param {?} params
+     * @return {?}
+     */
+    getKey(key, text, params) {
+        if (this.key$) {
+            return;
+        }
+        this.key$ = this.labelService.getKey(key, text, params);
+        this.key$.pipe(first()).subscribe((/**
+         * @param {?} value
+         * @return {?}
+         */
+        value => {
+            this.value = value;
+            // this.changeDetector.markForCheck();
+        }));
     }
     /**
      * @param {?} key
@@ -2527,13 +2641,16 @@ class LabelPipe {
      * @return {?}
      */
     transform(key, text, params) {
-        return this.asyncPipe.transform(this.labelService.getKey(key, text, params));
+        if (this.value) {
+            return this.value;
+        }
+        this.getKey(key, text, params); // this.asyncPipe.transform(this.labelService.getKey(key, text, params));
     }
     /**
      * @return {?}
      */
     ngOnDestroy() {
-        this.asyncPipe.dispose();
+        // this.asyncPipe.dispose();
     }
 }
 LabelPipe.decorators = [
@@ -2547,14 +2664,15 @@ LabelPipe.decorators = [
 ];
 /** @nocollapse */
 LabelPipe.ctorParameters = () => [
+    { type: NgZone },
     { type: ChangeDetectorRef },
     { type: LabelService }
 ];
-/** @nocollapse */ LabelPipe.ngInjectableDef = defineInjectable({ factory: function LabelPipe_Factory() { return new LabelPipe(inject(ChangeDetectorRef), inject(LabelService)); }, token: LabelPipe, providedIn: "root" });
+/** @nocollapse */ LabelPipe.ngInjectableDef = defineInjectable({ factory: function LabelPipe_Factory() { return new LabelPipe(inject(NgZone), inject(ChangeDetectorRef), inject(LabelService)); }, token: LabelPipe, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LoggerComponent {
     /**
@@ -2584,7 +2702,7 @@ LoggerComponent.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class EventDispatcherService {
     constructor() {
@@ -2601,7 +2719,11 @@ class EventDispatcherService {
      * @return {?}
      */
     observe() {
-        return this.emitter.pipe(tap((event) => console.log('EventDispatcherService', event)));
+        return this.emitter.pipe(tap((/**
+         * @param {?} event
+         * @return {?}
+         */
+        (event) => console.log('EventDispatcherService', event))));
     }
 }
 EventDispatcherService.decorators = [
@@ -2615,7 +2737,7 @@ EventDispatcherService.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2646,7 +2768,11 @@ class IdentityService extends ApiService {
      * @return {?}
      */
     getDetailByIdNo404(id) {
-        return this.get({ id }).pipe(map((identities) => identities[0]));
+        return this.get({ id }).pipe(map((/**
+         * @param {?} identities
+         * @return {?}
+         */
+        (identities) => identities[0])));
     }
     /**
      * @param {?} id
@@ -2683,7 +2809,7 @@ IdentityService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2715,7 +2841,7 @@ EntityService.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class MenuService extends EntityService {
     /**
@@ -2745,7 +2871,7 @@ MenuService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // export class OnceEvent extends Event { }
 class OnceService {
@@ -2784,15 +2910,28 @@ class OnceService {
                 const element = document.createElement('script');
                 element.type = 'text/javascript';
                 if (callback) {
-                    callback$ = from(new Promise((resolve, reject) => {
-                        window[callbackName] = function (data) {
+                    callback$ = from(new Promise((/**
+                     * @param {?} resolve
+                     * @param {?} reject
+                     * @return {?}
+                     */
+                    (resolve, reject) => {
+                        window[callbackName] = (/**
+                         * @param {?} data
+                         * @return {?}
+                         */
+                        function (data) {
                             resolve(data);
-                        };
-                    }));
+                        });
+                    })));
                 }
                 else {
                     element.async = true;
-                    callback$ = fromEvent(element, 'load').pipe(map(x => (/** @type {?} */ (x))));
+                    callback$ = fromEvent(element, 'load').pipe(map((/**
+                     * @param {?} x
+                     * @return {?}
+                     */
+                    x => (/** @type {?} */ (x)))));
                 }
                 /** @type {?} */
                 const scripts = document.getElementsByTagName('script');
@@ -2828,7 +2967,7 @@ OnceService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const OUTLETS = new InjectionToken('core.outlets');
@@ -2837,7 +2976,7 @@ class Outlet {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class OutletDefaultComponent extends DisposableComponent {
 }
@@ -2853,7 +2992,7 @@ OutletDefaultComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class OutletRepeaterComponent extends DisposableComponent {
 }
@@ -2869,7 +3008,7 @@ OutletRepeaterComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class OutletResolverService {
     /**
@@ -2907,7 +3046,7 @@ OutletResolverService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class OutletComponent extends DisposableComponent {
     /**
@@ -2963,7 +3102,7 @@ OutletComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class AssetPipe {
     /**
@@ -3007,7 +3146,122 @@ AssetPipe.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class CustomAsyncPipe {
+    /**
+     * @param {?} changeDetector
+     */
+    constructor(changeDetector) {
+        this.changeDetector = changeDetector;
+        this.subject = null;
+        this.subscription = null;
+        this.value = null;
+        this.cachedValue = null;
+    }
+    /**
+     * @param {?} subject
+     * @return {?}
+     */
+    transform(subject) {
+        return this.observableToValue(subject);
+    }
+    /**
+     * @private
+     * @param {?} subject
+     * @return {?}
+     */
+    observableToValue(subject) {
+        if (subject !== this.subject) {
+            if (this.subject) {
+                this.dispose();
+            }
+            if (subject) {
+                this.subject = subject;
+                this.subscription = this.subject.subscribe((/**
+                 * @param {?} value
+                 * @return {?}
+                 */
+                (value) => {
+                    // console.log('CustomAsyncPipe.A', value);
+                    this.value = value;
+                    this.changeDetector.markForCheck(); // mark pipe as dirty
+                }));
+                this.cachedValue = this.value; // ???
+                return this.value;
+            }
+        }
+        // console.log('CustomAsyncPipe.B', this.value);
+        if (this.cachedValue !== this.value) {
+            this.cachedValue = this.value;
+            return WrappedValue.wrap(this.value); // notify that value has changed
+        }
+        return this.cachedValue; // return cachedValue
+    }
+    /**
+     * @return {?}
+     */
+    dispose() {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+        this.value = null;
+        this.cachedValue = null;
+        this.subscription = null;
+        this.subject = null;
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this.dispose();
+    }
+    /**
+     * @private
+     * @param {?} subject
+     * @return {?}
+     */
+    _observableToValue(subject) {
+        if (!this.subject) {
+            if (subject) {
+                this.subject = subject;
+                this.subscription = this.subject.subscribe((/**
+                 * @param {?} value
+                 * @return {?}
+                 */
+                (value) => {
+                    this.value = value;
+                    this.changeDetector.markForCheck(); // value has changed
+                }));
+            }
+            this.cachedValue = this.value;
+            return this.value;
+        }
+        if (subject !== this.subject) {
+            this.dispose();
+            return this.transform((/** @type {?} */ (subject)));
+        }
+        if (this.value === this.cachedValue) {
+            return this.cachedValue;
+        }
+        this.cachedValue = this.value;
+        return WrappedValue.wrap(this.value); // value has changed
+    }
+}
+CustomAsyncPipe.decorators = [
+    { type: Pipe, args: [{
+                name: 'customAsync',
+                pure: false
+            },] }
+];
+/** @nocollapse */
+CustomAsyncPipe.ctorParameters = () => [
+    { type: ChangeDetectorRef }
+];
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @enum {number} */
 const ImageType = {
@@ -3023,7 +3277,7 @@ class Image {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ImageUrlPipe {
     /**
@@ -3040,7 +3294,11 @@ class ImageUrlPipe {
         /** @type {?} */
         let image = null;
         if (images && images.length) {
-            image = images.find(i => i.type === imageType) || images[0];
+            image = images.find((/**
+             * @param {?} i
+             * @return {?}
+             */
+            i => i.type === imageType)) || images[0];
         }
         return image ? (image.url + queryString).replace(/ /g, '%20') : null;
     }
@@ -3057,7 +3315,7 @@ ImageUrlPipe.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ImagePipe {
     /**
@@ -3069,7 +3327,11 @@ class ImagePipe {
         type = type || 'Default';
         /** @type {?} */
         const imageType = ImageType[type] || ImageType.Default;
-        return (images && images.length) ? images.find(i => i.type === imageType) || null : null; // images[0]
+        return (images && images.length) ? images.find((/**
+         * @param {?} i
+         * @return {?}
+         */
+        i => i.type === imageType)) || null : null; // images[0]
     }
 }
 ImagePipe.decorators = [
@@ -3084,7 +3346,7 @@ ImagePipe.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PublicPipe {
     /**
@@ -3123,7 +3385,7 @@ PublicPipe.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class RoutePipe {
     /**
@@ -3157,7 +3419,7 @@ RoutePipe.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class SlugService extends EntityService {
     constructor() {
@@ -3191,7 +3453,15 @@ class SlugService extends EntityService {
             this.cache[key] = null;
         }
         // return observable of key
-        return this.slugs$.pipe(map(items => items[key]), filter(item => item !== null));
+        return this.slugs$.pipe(map((/**
+         * @param {?} items
+         * @return {?}
+         */
+        items => items[key])), filter((/**
+         * @param {?} item
+         * @return {?}
+         */
+        item => item !== null)));
     }
     /**
      * @return {?}
@@ -3199,11 +3469,18 @@ class SlugService extends EntityService {
     register() {
         return this.emitter.pipe(
         // throttleTime(500),
-        tap(() => {
-            this.collectKeys().pipe(first()).subscribe((keys) => {
+        tap((/**
+         * @return {?}
+         */
+        () => {
+            this.collectKeys().pipe(first()).subscribe((/**
+             * @param {?} keys
+             * @return {?}
+             */
+            (keys) => {
                 // console.log('SlugService.collected', keys);
-            });
-        }));
+            }));
+        })));
     }
     /**
      * @return {?}
@@ -3233,15 +3510,27 @@ class SlugService extends EntityService {
         /** @type {?} */
         const keys = Object.keys(this.collectedKeys);
         this.collectedKeys = {};
-        return this.getSlugs(keys).pipe(map((items) => {
+        return this.getSlugs(keys).pipe(map((/**
+         * @param {?} items
+         * @return {?}
+         */
+        (items) => {
             /** @type {?} */
             const dictionary = {};
-            items.forEach(x => dictionary[x.mnemonic] = [x.slug]);
+            items.forEach((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => dictionary[x.mnemonic] = [x.slug]));
             return dictionary;
-        }), tap((dictionary) => {
+        })), tap((/**
+         * @param {?} dictionary
+         * @return {?}
+         */
+        (dictionary) => {
             Object.assign(this.cache, dictionary);
             this.slugs$.next(this.cache);
-        }));
+        })));
     }
 }
 SlugService.decorators = [
@@ -3253,7 +3542,7 @@ SlugService.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class SlugAsyncPipe {
     /**
@@ -3307,7 +3596,7 @@ SlugAsyncPipe.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class SlugPipe {
     /**
@@ -3343,7 +3632,7 @@ SlugPipe.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class TranslateDirective extends DisposableComponent {
     /**
@@ -3360,10 +3649,14 @@ class TranslateDirective extends DisposableComponent {
      */
     ngOnInit() {
         // console.log('TranslateDirective.ngOnInit', this.element.nativeElement.innerHTML);
-        this.translateService.getTranslate(this.translate, this.element.nativeElement.innerHTML, this.translateParams).pipe(takeUntil(this.unsubscribe)).subscribe(translate => {
+        this.translateService.getTranslate(this.translate, this.element.nativeElement.innerHTML, this.translateParams).pipe(takeUntil(this.unsubscribe)).subscribe((/**
+         * @param {?} translate
+         * @return {?}
+         */
+        translate => {
             this.element.nativeElement.innerHTML = translate;
             // console.log('TranslateDirective.ngOnInit', translate);
-        });
+        }));
         // console.log('TranslateDirective.ngOnInit', this.translate, this.translateParams, this.template, this.view);
     }
 }
@@ -3384,7 +3677,7 @@ TranslateDirective.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class TranslatePipe {
     /**
@@ -3394,7 +3687,11 @@ class TranslatePipe {
     constructor(ref, translateService) {
         this.ref = ref;
         this.translateService = translateService;
-        this.translateService.events.subscribe(x => this.ref.markForCheck());
+        this.translateService.events.subscribe((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.ref.markForCheck()));
     }
     /**
      * @param {?} key
@@ -3428,7 +3725,7 @@ TranslatePipe.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class SafeStylePipe {
     /**
@@ -3461,7 +3758,7 @@ SafeStylePipe.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class SafeUrlPipe {
     /**
@@ -3494,7 +3791,7 @@ SafeUrlPipe.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class TrustPipe {
     /**
@@ -3525,7 +3822,7 @@ TrustPipe.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const services = [
@@ -3646,14 +3943,14 @@ CoreModule.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class Label {
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class Document {
 }
@@ -3662,7 +3959,7 @@ class DocumentIndex {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -3685,7 +3982,11 @@ class DocumentService extends EntityService {
         }
         return this.get({ slug }).pipe(
         // tap(x => this.logger.log(`found identities matching "${slug}"`)),
-        switchMap(x => of(x[0])));
+        switchMap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => of(x[0]))));
     }
 }
 DocumentService.decorators = [
@@ -3697,14 +3998,14 @@ DocumentService.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class Entity {
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class Feature {
     constructor() {
@@ -3714,14 +4015,14 @@ class Feature {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class Identity {
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class MenuItem {
     /**
@@ -3731,7 +4032,11 @@ class MenuItem {
         if (options) {
             Object.assign(this, options);
             if (options.items) {
-                this.items = options.items.map(item => new MenuItem(item));
+                this.items = options.items.map((/**
+                 * @param {?} item
+                 * @return {?}
+                 */
+                item => new MenuItem(item)));
             }
         }
     }
@@ -3739,26 +4044,26 @@ class MenuItem {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class Taxonomy {
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class Translate {
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { AuthService, AuthStrategy, AuthToken, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Outlet, OUTLETS, OutletDefaultComponent, OutletRepeaterComponent, OutletComponent, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵb, BundleDirective as ɵd, OutletResolverService as ɵc };

@@ -8,7 +8,7 @@ import { InjectionToken, Component, Injector, Input, PLATFORM_ID, ViewEncapsulat
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PageConfig {
     /**
@@ -29,7 +29,7 @@ const PAGE_CONFIG = new InjectionToken('page.config');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PageModuleComponent {
     constructor() {
@@ -52,7 +52,7 @@ PageModuleComponent.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PageMeta {
 }
@@ -78,13 +78,17 @@ class Page {
             Object.assign(this, options);
             if (options.related) {
                 /** @type {?} */
-                const related = options.related.map((x) => {
+                const related = options.related.map((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                (x) => {
                     // const item = new PageIndex(x.page);
                     /** @type {?} */
                     const item = new PageIndex(x);
                     item.relationType = x.type;
                     return item;
-                });
+                }));
                 this.related = related;
             }
         }
@@ -94,7 +98,11 @@ class Page {
      * @return {?}
      */
     getFeature(id) {
-        return this.features.find(x => x.id === id) || null;
+        return this.features.find((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => x.id === id)) || null;
     }
     /**
      * @param {?} type
@@ -102,14 +110,28 @@ class Page {
      * @return {?}
      */
     getFeatures(type, n) {
-        return this.features ? this.features.filter((x, i) => (n.indexOf(Number(x.id)) !== -1 && x.type === type)).sort((a, b) => a.type - b.type) : [];
+        return this.features ? this.features.filter((/**
+         * @param {?} x
+         * @param {?} i
+         * @return {?}
+         */
+        (x, i) => (n.indexOf(Number(x.id)) !== -1 && x.type === type))).sort((/**
+         * @param {?} a
+         * @param {?} b
+         * @return {?}
+         */
+        (a, b) => a.type - b.type)) : [];
     }
     /**
      * @param {?} type
      * @return {?}
      */
     getFeaturesByTypes(type) {
-        return this.features ? this.features.filter((x) => (type.indexOf(Number(x.type)) !== -1)) : [];
+        return this.features ? this.features.filter((/**
+         * @param {?} x
+         * @return {?}
+         */
+        (x) => (type.indexOf(Number(x.type)) !== -1))) : [];
     }
     /**
      * @param {?} type
@@ -118,18 +140,26 @@ class Page {
     getGroupedFeaturesByTypes(type) {
         /** @type {?} */
         const groups = {};
-        type.forEach(type => {
+        type.forEach((/**
+         * @param {?} type
+         * @return {?}
+         */
+        type => {
             /** @type {?} */
             const group = groups[type] || { features: [] };
             if (this.features) {
-                this.features.forEach((x) => {
+                this.features.forEach((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                (x) => {
                     if (Number(x.type) === type) {
                         group.features.push(x);
                     }
-                });
+                }));
             }
             groups[type] = group;
-        });
+        }));
         /*
         if (this.features) {
             this.features.forEach((x: Feature) => {
@@ -147,7 +177,7 @@ class Page {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PageComponent extends DisposableComponent {
     /**
@@ -187,12 +217,16 @@ class PageComponent extends DisposableComponent {
         if (isPlatformBrowser(this.platformId)) {
             // !!! Router dependancy manually activated
             // const router = RouteService.injector.get(Router);
-            this.router.events.subscribe((e) => {
+            this.router.events.subscribe((/**
+             * @param {?} e
+             * @return {?}
+             */
+            (e) => {
                 if (!(e instanceof NavigationEnd)) {
                     return;
                 }
                 window.scrollTo(0, 0);
-            });
+            }));
         }
     }
     /**
@@ -226,7 +260,7 @@ PageComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PageNotFoundComponent extends PageComponent {
     /**
@@ -252,7 +286,7 @@ PageNotFoundComponent.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class LinkService {
     /**
@@ -337,7 +371,7 @@ LinkService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PageService extends EntityService {
     /**
@@ -376,15 +410,27 @@ class PageService extends EntityService {
         if (slug.indexOf('/') === 0) {
             slug = slug.substr(1);
         }
-        return this.stateGet(`?slug=/${slug}`).pipe(map(x => {
-            x = new Page(Array.isArray(x) ? x.find(x => x.slug === `/${slug}`) : x);
+        return this.stateGet(`?slug=/${slug}`).pipe(map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => {
+            x = new Page(Array.isArray(x) ? x.find((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => x.slug === `/${slug}`)) : x);
             // console.log('PageService.getStatePageBySlug', x);
             return x;
-        }), catchError(error => {
+        })), catchError((/**
+         * @param {?} error
+         * @return {?}
+         */
+        error => {
             // console.log('getStatePageBySlug.error', error);
             this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
             return of(null);
-        }));
+        })));
     }
     /**
      * @param {?} id
@@ -393,10 +439,18 @@ class PageService extends EntityService {
     getStatePageById(id) {
         return this.stateGet(`/${id}`).pipe(
         // tap(x => console.log('PageService.getPageById', id, x)),
-        map(x => new Page(x)), catchError(error => {
+        map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => new Page(x))), catchError((/**
+         * @param {?} error
+         * @return {?}
+         */
+        error => {
             this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
             return of(null);
-        }));
+        })));
     }
     /**
      * @param {?} id
@@ -405,10 +459,18 @@ class PageService extends EntityService {
     getPageById(id) {
         return this.get(`/${id}`).pipe(
         // tap(x => console.log('PageService.getPageById', id, x)),
-        map(x => new Page(x)), catchError(error => {
+        map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => new Page(x))), catchError((/**
+         * @param {?} error
+         * @return {?}
+         */
+        error => {
             this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
             return of(null);
-        }));
+        })));
     }
     /**
      * @param {?} slug
@@ -417,14 +479,22 @@ class PageService extends EntityService {
     getPageBySlug(slug) {
         slug = slug.split(';')[0];
         // console.log('PageService.getPageBySlug', slug);
-        return this.get(`?slug=/${slug}`).pipe(map(x => new Page(x)), 
+        return this.get(`?slug=/${slug}`).pipe(map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => new Page(x))), 
         // tap(x => this.logger.log(`found pages matching "${slug}"`))
         // tap(x => console.log('PageService.getPageBySlug', x, slug))
-        catchError(error => {
+        catchError((/**
+         * @param {?} error
+         * @return {?}
+         */
+        error => {
             // console.log('PageService.getPageBySlug.error', error);
             this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
             return of(null);
-        }));
+        })));
     }
     /**
      * @param {?} page
@@ -460,9 +530,21 @@ class PageService extends EntityService {
      */
     getSocialImage(page) {
         /** @type {?} */
-        const image = page.images ? (page.images.find(i => i.type === ImageType.Share) ||
-            page.images.find(i => i.type === ImageType.Default) ||
-            page.images.find(i => i.type === ImageType.Gallery)) : null;
+        const image = page.images ? (page.images.find((/**
+         * @param {?} i
+         * @return {?}
+         */
+        i => i.type === ImageType.Share)) ||
+            page.images.find((/**
+             * @param {?} i
+             * @return {?}
+             */
+            i => i.type === ImageType.Default)) ||
+            page.images.find((/**
+             * @param {?} i
+             * @return {?}
+             */
+            i => i.type === ImageType.Gallery))) : null;
         return image || (/** @type {?} */ ({
             url: 'https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png'
         }));
@@ -524,7 +606,7 @@ PageService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PageOutletComponent extends DisposableComponent {
     /**
@@ -542,9 +624,12 @@ class PageOutletComponent extends DisposableComponent {
         this.routeService = routeService;
         this.pageService = pageService;
         // !!! keep -> Avoid PageOutlet Route Caching for different routes
-        this.router.routeReuseStrategy.shouldReuseRoute = () => {
+        this.router.routeReuseStrategy.shouldReuseRoute = (/**
+         * @return {?}
+         */
+        () => {
             return false;
-        };
+        });
     }
     /**
      * @return {?}
@@ -629,7 +714,7 @@ PageOutletComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PageResolver {
     /**
@@ -651,7 +736,7 @@ class PageResolver {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PageResolverService {
     /**
@@ -684,11 +769,19 @@ class PageResolverService {
         }
         else {
             /** @type {?} */
-            const paths = route.url.filter(x => {
+            const paths = route.url.filter((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => {
                 return x.path;
-            }).map(x => {
+            })).map((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => {
                 return x.path;
-            });
+            }));
             /** @type {?} */
             const slug = this.routeService.toSlug(paths).join('/');
             return this.getPageBySlug(slug);
@@ -700,7 +793,11 @@ class PageResolverService {
      */
     getPageById(id) {
         // console.log('PageResolverService.getPageById', id);
-        return this.pageService.getPageById(id).pipe(map(page => this.pageToPageResolver(page)));
+        return this.pageService.getPageById(id).pipe(map((/**
+         * @param {?} page
+         * @return {?}
+         */
+        page => this.pageToPageResolver(page))));
     }
     /**
      * @param {?} slug
@@ -708,7 +805,11 @@ class PageResolverService {
      */
     getPageBySlug(slug) {
         // console.log('PageResolverService.getPageBySlug', slug);
-        return this.pageService.getStatePageBySlug(slug).pipe(map(page => this.pageToPageResolver(page)));
+        return this.pageService.getStatePageBySlug(slug).pipe(map((/**
+         * @param {?} page
+         * @return {?}
+         */
+        page => this.pageToPageResolver(page))));
     }
 }
 PageResolverService.decorators = [
@@ -725,7 +826,7 @@ PageResolverService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PageGuard {
     /**
@@ -772,7 +873,7 @@ PageGuard.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class StaticGuard {
     /**
@@ -820,7 +921,7 @@ StaticGuard.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const routes = [
@@ -843,7 +944,7 @@ PageRouting.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const services = [
@@ -914,12 +1015,12 @@ PageModule.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { PageConfig, PAGE_CONFIG, PageModuleComponent, PageModule, PageRouting, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, LinkService as ɵa };

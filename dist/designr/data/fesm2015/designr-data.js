@@ -7,7 +7,7 @@ import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, Skip
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DATA_CONFIG = new InjectionToken('data.config');
@@ -26,7 +26,7 @@ class DataConfig {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const STATUS_CODE = {
@@ -502,7 +502,7 @@ function isSuccess(status) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class DataService {
     /**
@@ -555,14 +555,38 @@ class DataService {
                 case 'slug':
                     /** @type {?} */
                     const mnemonics = request.body;
-                    body = request.body.map(x => request.collection.find(c => c.mnemonic === x) || null).filter(x => x);
+                    body = request.body.map((/**
+                     * @param {?} x
+                     * @return {?}
+                     */
+                    x => request.collection.find((/**
+                     * @param {?} c
+                     * @return {?}
+                     */
+                    c => c.mnemonic === x)) || null)).filter((/**
+                     * @param {?} x
+                     * @return {?}
+                     */
+                    x => x));
                     // console.log(item);
                     return { headers: request.headers, body: service.bodify(body), status: STATUS_CODE.OK };
                     break;
                 case 'label':
                     /** @type {?} */
-                    const ids = request.body.map(x => x.id);
-                    body = request.body.map(x => request.collection.find(c => c.id === x.id) || x);
+                    const ids = request.body.map((/**
+                     * @param {?} x
+                     * @return {?}
+                     */
+                    x => x.id));
+                    body = request.body.map((/**
+                     * @param {?} x
+                     * @return {?}
+                     */
+                    x => request.collection.find((/**
+                     * @param {?} c
+                     * @return {?}
+                     */
+                    c => c.id === x.id)) || x));
                     // console.log(item);
                     return { headers: request.headers, body: service.bodify(body), status: STATUS_CODE.OK };
                     break;
@@ -584,7 +608,7 @@ DataService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class DataModuleComponent {
     constructor() {
@@ -607,7 +631,7 @@ DataModuleComponent.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -616,39 +640,63 @@ DataModuleComponent.ctorParameters = () => [];
  * @return {?}
  */
 function delayResponse(response$, ms) {
-    return new Observable(observer => {
+    return new Observable((/**
+     * @param {?} observer
+     * @return {?}
+     */
+    observer => {
         /** @type {?} */
         let complete = false;
         /** @type {?} */
         let next = false;
         /** @type {?} */
-        const subscription = response$.subscribe(value => {
+        const subscription = response$.subscribe((/**
+         * @param {?} value
+         * @return {?}
+         */
+        value => {
             next = true;
-            setTimeout(() => {
+            setTimeout((/**
+             * @return {?}
+             */
+            () => {
                 observer.next(value);
                 if (complete) {
                     observer.complete();
                 }
-            }, ms);
-        }, error => {
-            setTimeout(() => {
+            }), ms);
+        }), (/**
+         * @param {?} error
+         * @return {?}
+         */
+        error => {
+            setTimeout((/**
+             * @return {?}
+             */
+            () => {
                 observer.error(error);
-            }, ms);
-        }, () => {
+            }), ms);
+        }), (/**
+         * @return {?}
+         */
+        () => {
             complete = true;
             if (!next) {
                 observer.complete();
             }
-        });
-        return () => {
+        }));
+        return (/**
+         * @return {?}
+         */
+        () => {
             return subscription.unsubscribe();
-        };
-    });
+        });
+    }));
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * Return information (UriInfo) about a URI
@@ -759,7 +807,7 @@ MemoryBackendConfig.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class BackendService {
     /**
@@ -787,7 +835,11 @@ class BackendService {
             this.databaseReadySubject = new BehaviorSubject(false);
             this.resetDb();
         }
-        return this.databaseReadySubject.asObservable().pipe(first((ready) => ready));
+        return this.databaseReadySubject.asObservable().pipe(first((/**
+         * @param {?} ready
+         * @return {?}
+         */
+        (ready) => ready)));
     }
     /**
      * Process Request and return an Observable of Http Response object
@@ -818,7 +870,10 @@ class BackendService {
      */
     handleRequest(request) {
         //  handle the request when there is an in-memory database
-        return this.databaseReady.pipe(concatMap(() => this.handleRequest_(request)));
+        return this.databaseReady.pipe(concatMap((/**
+         * @return {?}
+         */
+        () => this.handleRequest_(request))));
     }
     /**
      * @protected
@@ -874,11 +929,17 @@ class BackendService {
         /** @type {?} */
         let response = interceptor ? interceptor(memoryRequest, this) : null;
         if (response) {
-            return this.createResponse$(() => response);
+            return this.createResponse$((/**
+             * @return {?}
+             */
+            () => response));
         }
         if (this.database[collectionName]) {
             // request is for a known collection of the MemoryDataService
-            return this.createResponse$(() => this.collectionHandler(memoryRequest));
+            return this.createResponse$((/**
+             * @return {?}
+             */
+            () => this.collectionHandler(memoryRequest)));
         }
         if (this.config.passThruUnknownUrl) {
             // unknown collection; pass request thru to a "real" backend.
@@ -886,7 +947,10 @@ class BackendService {
         }
         // 404 - can't handle this request
         response = this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, `Collection '${collectionName}' not found`);
-        return this.createResponse$(() => response);
+        return this.createResponse$((/**
+         * @return {?}
+         */
+        () => response));
     }
     /**
      * Parses the request URL into a `ParsedRequestUrl` object.
@@ -1010,19 +1074,32 @@ class BackendService {
         const conditions = [];
         /** @type {?} */
         const caseSensitive = this.config.caseSensitiveSearch ? undefined : 'i';
-        query.forEach((value, name) => {
-            value.forEach(x => conditions.push({
+        query.forEach((/**
+         * @param {?} value
+         * @param {?} name
+         * @return {?}
+         */
+        (value, name) => {
+            value.forEach((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => conditions.push({
                 name,
                 regexp: new RegExp(decodeURI(x), caseSensitive)
-            }));
-        });
+            })));
+        }));
         /** @type {?} */
         const length = conditions.length;
         if (!length) {
             return collection;
         }
         // AND the RegExp conditions
-        return collection.filter(row => {
+        return collection.filter((/**
+         * @param {?} row
+         * @return {?}
+         */
+        row => {
             /** @type {?} */
             let has = true;
             /** @type {?} */
@@ -1034,7 +1111,7 @@ class BackendService {
                 has = cond.regexp.test(row[cond.name]);
             }
             return has;
-        });
+        }));
     }
     /**
      * Get a method from the `MemoryDataService` (if it exists), bound to that service
@@ -1134,7 +1211,11 @@ class BackendService {
      * @return {?}
      */
     createMemoryResponse$(memoryResponseFactory) {
-        return new Observable((observer) => {
+        return new Observable((/**
+         * @param {?} observer
+         * @return {?}
+         */
+        (observer) => {
             /** @type {?} */
             let response;
             try {
@@ -1157,8 +1238,11 @@ class BackendService {
             else {
                 observer.error(response);
             }
-            return () => { }; // unsubscribe function
-        });
+            return (/**
+             * @return {?}
+             */
+            () => { }); // unsubscribe function
+        }));
     }
     /**
      * Find first instance of item in collection by `item.id`
@@ -1169,7 +1253,11 @@ class BackendService {
      * @return {?}
      */
     findById(collection, id) {
-        return collection.find((item) => item.id === id);
+        return collection.find((/**
+         * @param {?} item
+         * @return {?}
+         */
+        (item) => item.id === id));
     }
     /**
      * Generate the next available id for item in this collection
@@ -1209,9 +1297,14 @@ class BackendService {
         }
         /** @type {?} */
         let maxId = 0;
-        collection.reduce((prev, item) => {
+        collection.reduce((/**
+         * @param {?} prev
+         * @param {?} item
+         * @return {?}
+         */
+        (prev, item) => {
             maxId = Math.max(maxId, typeof item.id === 'number' ? item.id : maxId);
-        }, undefined);
+        }), undefined);
         return maxId + 1;
     }
     /**
@@ -1248,7 +1341,11 @@ class BackendService {
      * @return {?}
      */
     indexOf(collection, id) {
-        return collection.findIndex((item) => item.id === id);
+        return collection.findIndex((/**
+         * @param {?} item
+         * @return {?}
+         */
+        (item) => item.id === id));
     }
     /**
      * return true if can determine that the collection's `item.id` is a number
@@ -1296,10 +1393,14 @@ class BackendService {
         const database$ = database instanceof Observable ? database :
             typeof ((/** @type {?} */ (database))).then === 'function' ? from((/** @type {?} */ (database))) :
                 of(database);
-        database$.pipe(first()).subscribe((database) => {
+        database$.pipe(first()).subscribe((/**
+         * @param {?} database
+         * @return {?}
+         */
+        (database) => {
             this.database = database;
             this.databaseReadySubject.next(true);
-        });
+        }));
         return this.databaseReady;
     }
     /**
@@ -1334,7 +1435,13 @@ class BackendService {
         switch (command) {
             case 'resetdb':
                 response.status = STATUS_CODE.NO_CONTENT;
-                return this.resetDb(request).pipe(concatMap(() => this.createResponse$(() => response, false /* no latency delay */)));
+                return this.resetDb(request).pipe(concatMap((/**
+                 * @return {?}
+                 */
+                () => this.createResponse$((/**
+                 * @return {?}
+                 */
+                () => response), false /* no latency delay */))));
             case 'config':
                 if (method === 'get') {
                     response.status = STATUS_CODE.OK;
@@ -1352,7 +1459,10 @@ class BackendService {
             default:
                 response = this.createErrorResponse(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, `Unknown command "${command}"`);
         }
-        return this.createResponse$(() => response, false /* no latency delay */);
+        return this.createResponse$((/**
+         * @return {?}
+         */
+        () => response), false /* no latency delay */);
     }
     /**
      * @protected
@@ -1504,7 +1614,10 @@ class BackendService {
         catch (error) {
             /** @type {?} */
             const response = this.createErrorResponse(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, `${error.message || error}`);
-            return this.createResponse$(() => response);
+            return this.createResponse$((/**
+             * @return {?}
+             */
+            () => response));
         }
     }
     /**
@@ -1518,7 +1631,11 @@ class BackendService {
         if (search) {
             /** @type {?} */
             const params = new HttpParams({ fromString: search });
-            params.keys().forEach(p => map$$1.set(p, params.getAll(p)));
+            params.keys().forEach((/**
+             * @param {?} p
+             * @return {?}
+             */
+            p => map$$1.set(p, params.getAll(p))));
         }
         return map$$1;
     }
@@ -1528,7 +1645,11 @@ class BackendService {
      * @return {?}
      */
     createResponse$fromMemoryResponse$(response$) {
-        return response$.pipe(map((options) => new HttpResponse(options)));
+        return response$.pipe(map((/**
+         * @param {?} options
+         * @return {?}
+         */
+        (options) => new HttpResponse(options))));
     }
     /**
      * @protected
@@ -1556,7 +1677,7 @@ BackendService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // Internal - Creates the in-mem backend for the HttpClient module
 // AoT requires factory to be exported
@@ -1602,7 +1723,7 @@ MemoryModule.decorators = [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const services = [
@@ -1663,12 +1784,12 @@ DataModule.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { DataConfig, DATA_CONFIG, DataService, DataModuleComponent, DataModule, MemoryBackendConfig as ɵd, MemoryDataService as ɵc, BackendServiceFactory as ɵa, MemoryModule as ɵb };

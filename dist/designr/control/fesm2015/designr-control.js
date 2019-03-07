@@ -8,7 +8,7 @@ import { Component, forwardRef, Input, Renderer2, InjectionToken, Inject, Inject
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -61,7 +61,7 @@ ControlBase.uid = 0;
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlCheckbox extends ControlBase {
     /**
@@ -76,7 +76,7 @@ class ControlCheckbox extends ControlBase {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlBaseComponent {
     /**
@@ -85,8 +85,15 @@ class ControlBaseComponent {
     constructor(renderer) {
         this.renderer = renderer;
         this.reveal = { checked: false };
-        this.onChange = (value) => { };
-        this.onTouched = () => { };
+        this.onChange = (/**
+         * @param {?} value
+         * @return {?}
+         */
+        (value) => { });
+        this.onTouched = (/**
+         * @return {?}
+         */
+        () => { });
     }
     /**
      * @return {?}
@@ -208,7 +215,10 @@ ControlBaseComponent.decorators = [
                 template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<input class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\">\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
                 providers: [{
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => ControlBaseComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => ControlBaseComponent)),
                         multi: true,
                     }]
             }] }
@@ -224,7 +234,7 @@ ControlBaseComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlCheckboxComponent extends ControlBaseComponent {
     /**
@@ -241,7 +251,10 @@ ControlCheckboxComponent.decorators = [
                 template: "<div class=\"form-checkbox\" [formGroup]=\"form\">\r\n\t<label class=\"form-label\">\r\n\t\t<input class=\"form-checkbox__input\" type=\"checkbox\" [id]=\"control.key\" [formControlName]=\"control.key\">\r\n\t\t<span class=\"form-checkbox__label\">{{ control.label | label }}</span>\r\n\t</label>\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.requiredTrue\">{{ 'errors.required' | label }}</div>\r\n\t</div>\r\n</div>\r\n",
                 providers: [{
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => ControlCheckboxComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => ControlCheckboxComponent)),
                         multi: true,
                     }]
             }] }
@@ -256,7 +269,7 @@ ControlCheckboxComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlEmail extends ControlBase {
     /**
@@ -273,7 +286,7 @@ class ControlEmail extends ControlBase {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlEmailComponent extends ControlBaseComponent {
     /**
@@ -290,7 +303,10 @@ ControlEmailComponent.decorators = [
                 template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<input class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\">\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.email\">{{ 'errors.email' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: control.minlength } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: control.maxlength } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
                 providers: [{
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => ControlEmailComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => ControlEmailComponent)),
                         multi: true,
                     }]
             }] }
@@ -305,7 +321,7 @@ ControlEmailComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlMarkdown extends ControlBase {
     /**
@@ -320,7 +336,7 @@ class ControlMarkdown extends ControlBase {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlMarkdownComponent extends ControlBaseComponent {
     /**
@@ -337,7 +353,10 @@ ControlMarkdownComponent.decorators = [
                 template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<textarea class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [formControlName]=\"control.key\" rows=\"4\"></textarea>\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: control.minlength } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: control.maxlength } }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
                 providers: [{
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => ControlMarkdownComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => ControlMarkdownComponent)),
                         multi: true,
                     }]
             }] }
@@ -352,7 +371,7 @@ ControlMarkdownComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlNumber extends ControlBase {
     /**
@@ -367,7 +386,7 @@ class ControlNumber extends ControlBase {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlNumberComponent extends ControlBaseComponent {
     /**
@@ -384,7 +403,10 @@ ControlNumberComponent.decorators = [
                 template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<input class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\" [attr.step]=\"control.step\" (input)=\"onInput($event)\" (focus)=\"onFocus($event)\" (blur)=\"onBlur($event)\" [value]=\"getFormattedValue()\">\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.min\">{{ 'errors.min' | label : null : { min: control.min } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.max\">{{ 'errors.max' | label : null : { max: control.max } }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
                 providers: [{
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => ControlNumberComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => ControlNumberComponent)),
                         multi: true,
                     }]
             }] }
@@ -399,7 +421,7 @@ ControlNumberComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlPassword extends ControlBase {
     /**
@@ -414,7 +436,7 @@ class ControlPassword extends ControlBase {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlPasswordComponent extends ControlBaseComponent {
     /**
@@ -431,7 +453,10 @@ ControlPasswordComponent.decorators = [
                 template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<div class=\"input-group\">\r\n\t\t<input class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\" #password>\r\n\t\t<input class=\"form-control--addon\" type=\"checkbox\" [attr.aria-label]=\"control.label | label\" (input)=\"password.setAttribute('type', reveal.checked ? 'text' : control.type)\" #reveal>\r\n\t</div>\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: control.minlength } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: control.maxlength } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
                 providers: [{
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => ControlPasswordComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => ControlPasswordComponent)),
                         multi: true,
                     }]
             }] }
@@ -446,7 +471,7 @@ ControlPasswordComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlRadio extends ControlBase {
     /**
@@ -461,7 +486,7 @@ class ControlRadio extends ControlBase {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlRadioComponent extends ControlBaseComponent {
     /**
@@ -478,7 +503,10 @@ ControlRadioComponent.decorators = [
                 template: "<div class=\"form-radio\" [formGroup]=\"form\">\r\n\t<label class=\"form-label\">\r\n\t\t<input class=\"form-radio__input\" type=\"radio\" [id]=\"control.key\" [formControlName]=\"control.key\">\r\n\t\t<span class=\"form-radio__label\">{{ control.label | label }}</span>\r\n\t</label>\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t</div>\r\n</div>\r\n",
                 providers: [{
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => ControlRadioComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => ControlRadioComponent)),
                         multi: true,
                     }]
             }] }
@@ -493,7 +521,7 @@ ControlRadioComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlSelect extends ControlBase {
     /**
@@ -509,7 +537,7 @@ class ControlSelect extends ControlBase {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlSelectComponent extends ControlBaseComponent {
     /**
@@ -526,7 +554,10 @@ ControlSelectComponent.decorators = [
                 template: "<div class=\"form-select\" [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<select class=\"form-select__select\" [id]=\"control.key\" [formControlName]=\"control.key\">\r\n\t\t<option *ngFor=\"let opt of control.options\" [value]=\"opt.key\">{{opt.value}}</option>\r\n\t</select>\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t</div>\r\n</div>\r\n",
                 providers: [{
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => ControlSelectComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => ControlSelectComponent)),
                         multi: true,
                     }]
             }] }
@@ -541,7 +572,7 @@ ControlSelectComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlText extends ControlBase {
     /**
@@ -556,7 +587,7 @@ class ControlText extends ControlBase {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlTextComponent extends ControlBaseComponent {
     /**
@@ -573,7 +604,10 @@ ControlTextComponent.decorators = [
                 template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<input class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [formControlName]=\"control.key\" [type]=\"control.type\">\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: control.minlength } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: control.maxlength } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
                 providers: [{
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => ControlTextComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => ControlTextComponent)),
                         multi: true,
                     }]
             }] }
@@ -588,7 +622,7 @@ ControlTextComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlTextarea extends ControlBase {
     /**
@@ -603,7 +637,7 @@ class ControlTextarea extends ControlBase {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlTextareaComponent extends ControlBaseComponent {
     /**
@@ -620,7 +654,10 @@ ControlTextareaComponent.decorators = [
                 template: "<ng-container [formGroup]=\"form\">\r\n\t<label class=\"form-label\" [attr.for]=\"control.key\">{{ control.label | label }}</label>\r\n\t<textarea class=\"form-control\" placeholder=\"{{ control.placeholder | label }}\" [id]=\"control.key\" [formControlName]=\"control.key\" rows=\"4\"></textarea>\r\n\t<div class=\"alert alert--danger\" *ngIf=\"controlRef.invalid && (controlRef.dirty || controlRef.touched)\">\r\n\t\t<div *ngIf=\"controlRef.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: control.minlength } }}</div>\r\n\t\t<div *ngIf=\"controlRef.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: control.maxlength } }}</div>\r\n\t</div>\r\n</ng-container>\r\n",
                 providers: [{
                         provide: NG_VALUE_ACCESSOR,
-                        useExisting: forwardRef(() => ControlTextareaComponent),
+                        useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => ControlTextareaComponent)),
                         multi: true,
                     }]
             }] }
@@ -635,7 +672,7 @@ ControlTextareaComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const entryComponents = [
@@ -706,7 +743,7 @@ const CONTROL_CONFIG = new InjectionToken('control.config');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlModuleComponent {
     constructor() {
@@ -729,7 +766,7 @@ ControlModuleComponent.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @param {?} otherKey
@@ -738,7 +775,11 @@ ControlModuleComponent.ctorParameters = () => [];
  * @return {?}
  */
 function matchValidator(otherKey, reverse = false, group) {
-    return (control) => {
+    return (/**
+     * @param {?} control
+     * @return {?}
+     */
+    (control) => {
         /** @type {?} */
         const otherControl = group.controls[otherKey];
         /** @type {?} */
@@ -765,12 +806,12 @@ function matchValidator(otherKey, reverse = false, group) {
             });
         }
         return null;
-    };
+    });
 }
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlService {
     /**
@@ -841,7 +882,11 @@ class ControlService {
     toFormGroup(controls) {
         /** @type {?} */
         const options = {};
-        controls.forEach(x => {
+        controls.forEach((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => {
             // group[x.key] = new FormControl(x.value, this.getValidators(x, group));
             /** @type {?} */
             const formControl = new FormControl(x.value);
@@ -850,16 +895,20 @@ class ControlService {
             }
             options[x.key] = formControl;
             // x.setControl(formControl); // !!!
-        });
+        }));
         /** @type {?} */
         const group = new FormGroup(options);
         // console.log(group);
-        controls.forEach(x => {
+        controls.forEach((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => {
             /** @type {?} */
             const validators = this.getValidators(x, group);
             // console.log(validators);
             group.controls[x.key].setValidators(validators);
-        });
+        }));
         return group;
     }
 }
@@ -876,7 +925,7 @@ ControlService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlOutletComponent extends DisposableComponent {
     /**
@@ -934,7 +983,7 @@ ControlOutletComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class ControlsComponent extends DisposableComponent {
 }
@@ -953,20 +1002,28 @@ ControlsComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const DEBOUNCE_TIME = 250;
 class ExistsValidator {
     constructor() {
         this.values = new BehaviorSubject(null);
-        this.debounced$ = this.values.pipe(debounceTime(DEBOUNCE_TIME), switchMap((value) => {
+        this.debounced$ = this.values.pipe(debounceTime(DEBOUNCE_TIME), switchMap((/**
+         * @param {?} value
+         * @return {?}
+         */
+        (value) => {
             // console.log('ExistsValidator.debounced$', value);
             return this.exists$(value);
-        }), catchError((response) => {
+        })), catchError((/**
+         * @param {?} response
+         * @return {?}
+         */
+        (response) => {
             console.log('ExistsValidator.debounced$.catchError', response);
             return of(null);
-        }), take(1));
+        })), take(1));
     }
     /**
      * @param {?} value
@@ -984,7 +1041,11 @@ class ExistsValidator {
     exists$(value) {
         if (typeof this.exists === 'function') {
             // console.log('ExistsValidator.exists$', value);
-            return this.exists(value).pipe(switchMap(exists => {
+            return this.exists(value).pipe(switchMap((/**
+             * @param {?} exists
+             * @return {?}
+             */
+            exists => {
                 if (exists) {
                     return of({
                         exists: true,
@@ -993,7 +1054,7 @@ class ExistsValidator {
                 else {
                     return of(null);
                 }
-            }));
+            })));
         }
         else {
             return of(null);
@@ -1012,7 +1073,10 @@ ExistsValidator.decorators = [
     { type: Directive, args: [{
                 selector: '[exists][formControlName],[exists][formControl],[exists][ngModel]',
                 providers: [
-                    { provide: NG_ASYNC_VALIDATORS, useExisting: forwardRef(() => ExistsValidator), multi: true },
+                    { provide: NG_ASYNC_VALIDATORS, useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => ExistsValidator)), multi: true },
                 ]
             },] }
 ];
@@ -1022,7 +1086,7 @@ ExistsValidator.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class MatchValidator {
     /**
@@ -1080,7 +1144,10 @@ MatchValidator.decorators = [
     { type: Directive, args: [{
                 selector: '[match][formControlName],[match][formControl],[match][ngModel]',
                 providers: [
-                    { provide: NG_VALIDATORS, useExisting: forwardRef(() => MatchValidator), multi: true }
+                    { provide: NG_VALIDATORS, useExisting: forwardRef((/**
+                         * @return {?}
+                         */
+                        () => MatchValidator)), multi: true }
                 ]
             },] }
 ];
@@ -1092,7 +1159,7 @@ MatchValidator.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class UppercaseDirective {
     constructor() {
@@ -1119,7 +1186,7 @@ UppercaseDirective.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class FormService {
     /**
@@ -1134,7 +1201,11 @@ class FormService {
      */
     getControlsFromOptions(options) {
         /** @type {?} */
-        const controls = options.map(o => {
+        const controls = options.map((/**
+         * @param {?} o
+         * @return {?}
+         */
+        o => {
             /** @type {?} */
             const control = this.controlService.options.controls[o.schema];
             if (control) {
@@ -1146,8 +1217,17 @@ class FormService {
                 console.error(`missing control for key ${o.schema}`);
                 return null;
             }
-        }).filter(x => x);
-        controls.sort((a, b) => a.order - b.order);
+        })).filter((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => x));
+        controls.sort((/**
+         * @param {?} a
+         * @param {?} b
+         * @return {?}
+         */
+        (a, b) => a.order - b.order));
         return controls;
     }
     /**
@@ -1184,7 +1264,7 @@ FormService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const services = [
@@ -1272,7 +1352,7 @@ ControlModule.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -1295,14 +1375,22 @@ class ValueAccessorBase {
     set value(value) {
         if (this.innerValue !== value) {
             this.innerValue = value;
-            this.changed.forEach(f => f(value));
+            this.changed.forEach((/**
+             * @param {?} f
+             * @return {?}
+             */
+            f => f(value)));
         }
     }
     /**
      * @return {?}
      */
     touch() {
-        this.touched.forEach(f => f());
+        this.touched.forEach((/**
+         * @param {?} f
+         * @return {?}
+         */
+        f => f()));
     }
     /**
      * @param {?} value
@@ -1329,12 +1417,12 @@ class ValueAccessorBase {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { ControlConfig, CONTROL_CONFIG, ControlModuleComponent, ControlModule, ControlBase, ControlBaseOptions, ControlBaseComponent, ControlCheckbox, ControlCheckboxComponent, ControlOutletComponent, ValueAccessorBase, ControlService, ControlsComponent, ControlEmail, ControlEmailComponent, ControlMarkdown, ControlMarkdownComponent, ControlNumber, ControlNumberComponent, ControlPassword, ControlPasswordComponent, ControlRadio, ControlRadioComponent, ControlSelect, ControlSelectComponent, ControlText, ControlTextComponent, ControlTextarea, ControlTextareaComponent, ExistsValidator, MatchValidator, matchValidator, UppercaseDirective, FormService, entryComponents as ɵa };

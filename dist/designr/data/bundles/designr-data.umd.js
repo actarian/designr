@@ -6,7 +6,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var DATA_CONFIG = new i0.InjectionToken('data.config');
@@ -23,7 +23,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var STATUS_CODE = {
@@ -499,7 +499,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var DataService = /** @class */ (function () {
         function DataService(config
@@ -562,14 +562,36 @@
                         case 'slug':
                             /** @type {?} */
                             var mnemonics = request.body;
-                            body = request.body.map(function (x) { return request.collection.find(function (c) { return c.mnemonic === x; }) || null; }).filter(function (x) { return x; });
+                            body = request.body.map(( /**
+                             * @param {?} x
+                             * @return {?}
+                             */function (x) {
+                                return request.collection.find(( /**
+                                 * @param {?} c
+                                 * @return {?}
+                                 */function (c) { return c.mnemonic === x; })) || null;
+                            })).filter(( /**
+                             * @param {?} x
+                             * @return {?}
+                             */function (x) { return x; }));
                             // console.log(item);
                             return { headers: request.headers, body: service.bodify(body), status: STATUS_CODE.OK };
                             break;
                         case 'label':
                             /** @type {?} */
-                            var ids = request.body.map(function (x) { return x.id; });
-                            body = request.body.map(function (x) { return request.collection.find(function (c) { return c.id === x.id; }) || x; });
+                            var ids = request.body.map(( /**
+                             * @param {?} x
+                             * @return {?}
+                             */function (x) { return x.id; }));
+                            body = request.body.map(( /**
+                             * @param {?} x
+                             * @return {?}
+                             */function (x) {
+                                return request.collection.find(( /**
+                                 * @param {?} c
+                                 * @return {?}
+                                 */function (c) { return c.id === x.id; })) || x;
+                            }));
                             // console.log(item);
                             return { headers: request.headers, body: service.bodify(body), status: STATUS_CODE.OK };
                             break;
@@ -594,7 +616,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var DataModuleComponent = /** @class */ (function () {
         function DataModuleComponent() {
@@ -665,7 +687,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * @template T
@@ -674,39 +696,56 @@
      * @return {?}
      */
     function delayResponse(response$, ms) {
-        return new rxjs.Observable(function (observer) {
+        return new rxjs.Observable(( /**
+         * @param {?} observer
+         * @return {?}
+         */function (observer) {
             /** @type {?} */
             var complete = false;
             /** @type {?} */
             var next = false;
             /** @type {?} */
-            var subscription = response$.subscribe(function (value) {
+            var subscription = response$.subscribe(( /**
+             * @param {?} value
+             * @return {?}
+             */function (value) {
                 next = true;
-                setTimeout(function () {
+                setTimeout(( /**
+                 * @return {?}
+                 */function () {
                     observer.next(value);
                     if (complete) {
                         observer.complete();
                     }
-                }, ms);
-            }, function (error) {
-                setTimeout(function () {
+                }), ms);
+            }), ( /**
+             * @param {?} error
+             * @return {?}
+             */function (error) {
+                setTimeout(( /**
+                 * @return {?}
+                 */function () {
                     observer.error(error);
-                }, ms);
-            }, function () {
+                }), ms);
+            }), ( /**
+             * @return {?}
+             */function () {
                 complete = true;
                 if (!next) {
                     observer.complete();
                 }
-            });
-            return function () {
+            }));
+            return ( /**
+             * @return {?}
+             */function () {
                 return subscription.unsubscribe();
-            };
-        });
+            });
+        }));
     }
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /**
      * Return information (UriInfo) about a URI
@@ -833,7 +872,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var BackendService = /** @class */ (function () {
         function BackendService(dataService, config, factory) {
@@ -859,7 +898,10 @@
                     this.databaseReadySubject = new rxjs.BehaviorSubject(false);
                     this.resetDb();
                 }
-                return this.databaseReadySubject.asObservable().pipe(operators.first(function (ready) { return ready; }));
+                return this.databaseReadySubject.asObservable().pipe(operators.first(( /**
+                 * @param {?} ready
+                 * @return {?}
+                 */function (ready) { return ready; })));
             },
             enumerable: true,
             configurable: true
@@ -945,7 +987,9 @@
             function (request) {
                 var _this = this;
                 //  handle the request when there is an in-memory database
-                return this.databaseReady.pipe(operators.concatMap(function () { return _this.handleRequest_(request); }));
+                return this.databaseReady.pipe(operators.concatMap(( /**
+                 * @return {?}
+                 */function () { return _this.handleRequest_(request); })));
             };
         /**
          * @protected
@@ -1007,11 +1051,15 @@
                 /** @type {?} */
                 var response = interceptor ? interceptor(memoryRequest, this) : null;
                 if (response) {
-                    return this.createResponse$(function () { return response; });
+                    return this.createResponse$(( /**
+                     * @return {?}
+                     */function () { return response; }));
                 }
                 if (this.database[collectionName]) {
                     // request is for a known collection of the MemoryDataService
-                    return this.createResponse$(function () { return _this.collectionHandler(memoryRequest); });
+                    return this.createResponse$(( /**
+                     * @return {?}
+                     */function () { return _this.collectionHandler(memoryRequest); }));
                 }
                 if (this.config.passThruUnknownUrl) {
                     // unknown collection; pass request thru to a "real" backend.
@@ -1019,7 +1067,9 @@
                 }
                 // 404 - can't handle this request
                 response = this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, "Collection '" + collectionName + "' not found");
-                return this.createResponse$(function () { return response; });
+                return this.createResponse$(( /**
+                 * @return {?}
+                 */function () { return response; }));
             };
         /**
          * Parses the request URL into a `ParsedRequestUrl` object.
@@ -1212,21 +1262,31 @@
                 var conditions = [];
                 /** @type {?} */
                 var caseSensitive = this.config.caseSensitiveSearch ? undefined : 'i';
-                query.forEach(function (value, name) {
-                    value.forEach(function (x) {
+                query.forEach(( /**
+                 * @param {?} value
+                 * @param {?} name
+                 * @return {?}
+                 */function (value, name) {
+                    value.forEach(( /**
+                     * @param {?} x
+                     * @return {?}
+                     */function (x) {
                         return conditions.push({
                             name: name,
                             regexp: new RegExp(decodeURI(x), caseSensitive)
                         });
-                    });
-                });
+                    }));
+                }));
                 /** @type {?} */
                 var length = conditions.length;
                 if (!length) {
                     return collection;
                 }
                 // AND the RegExp conditions
-                return collection.filter(function (row) {
+                return collection.filter(( /**
+                 * @param {?} row
+                 * @return {?}
+                 */function (row) {
                     /** @type {?} */
                     var has = true;
                     /** @type {?} */
@@ -1238,7 +1298,7 @@
                         has = cond.regexp.test(row[cond.name]);
                     }
                     return has;
-                });
+                }));
             };
         /**
          * Get a method from the `MemoryDataService` (if it exists), bound to that service
@@ -1394,7 +1454,10 @@
          */
             function (memoryResponseFactory) {
                 var _this = this;
-                return new rxjs.Observable(function (observer) {
+                return new rxjs.Observable(( /**
+                 * @param {?} observer
+                 * @return {?}
+                 */function (observer) {
                     /** @type {?} */
                     var response;
                     try {
@@ -1417,8 +1480,10 @@
                     else {
                         observer.error(response);
                     }
-                    return function () { }; // unsubscribe function
-                });
+                    return ( /**
+                     * @return {?}
+                     */function () { }); // unsubscribe function
+                }));
             };
         /**
          * Find first instance of item in collection by `item.id`
@@ -1442,7 +1507,10 @@
          * @return {?}
          */
             function (collection, id) {
-                return collection.find(function (item) { return item.id === id; });
+                return collection.find(( /**
+                 * @param {?} item
+                 * @return {?}
+                 */function (item) { return item.id === id; }));
             };
         /**
          * Generate the next available id for item in this collection
@@ -1513,9 +1581,13 @@
                 }
                 /** @type {?} */
                 var maxId = 0;
-                collection.reduce(function (prev, item) {
+                collection.reduce(( /**
+                 * @param {?} prev
+                 * @param {?} item
+                 * @return {?}
+                 */function (prev, item) {
                     maxId = Math.max(maxId, typeof item.id === 'number' ? item.id : maxId);
-                }, undefined);
+                }), undefined);
                 return maxId + 1;
             };
         /**
@@ -1577,7 +1649,10 @@
          * @return {?}
          */
             function (collection, id) {
-                return collection.findIndex(function (item) { return item.id === id; });
+                return collection.findIndex(( /**
+                 * @param {?} item
+                 * @return {?}
+                 */function (item) { return item.id === id; }));
             };
         /**
          * return true if can determine that the collection's `item.id` is a number
@@ -1657,10 +1732,13 @@
                 var database$ = database instanceof rxjs.Observable ? database :
                     typeof (( /** @type {?} */(database))).then === 'function' ? rxjs.from(( /** @type {?} */(database))) :
                         rxjs.of(database);
-                database$.pipe(operators.first()).subscribe(function (database) {
+                database$.pipe(operators.first()).subscribe(( /**
+                 * @param {?} database
+                 * @return {?}
+                 */function (database) {
                     _this.database = database;
                     _this.databaseReadySubject.next(true);
-                });
+                }));
                 return this.databaseReady;
             };
         /**
@@ -1733,7 +1811,13 @@
                 switch (command) {
                     case 'resetdb':
                         response.status = STATUS_CODE.NO_CONTENT;
-                        return this.resetDb(request).pipe(operators.concatMap(function () { return _this.createResponse$(function () { return response; }, false /* no latency delay */); }));
+                        return this.resetDb(request).pipe(operators.concatMap(( /**
+                         * @return {?}
+                         */function () {
+                            return _this.createResponse$(( /**
+                             * @return {?}
+                             */function () { return response; }), false /* no latency delay */);
+                        })));
                     case 'config':
                         if (method === 'get') {
                             response.status = STATUS_CODE.OK;
@@ -1751,7 +1835,9 @@
                     default:
                         response = this.createErrorResponse(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, "Unknown command \"" + command + "\"");
                 }
-                return this.createResponse$(function () { return response; }, false /* no latency delay */);
+                return this.createResponse$(( /**
+                 * @return {?}
+                 */function () { return response; }), false /* no latency delay */);
             };
         /**
          * @protected
@@ -1944,7 +2030,9 @@
                 catch (error) {
                     /** @type {?} */
                     var response_1 = this.createErrorResponse(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, "" + (error.message || error));
-                    return this.createResponse$(function () { return response_1; });
+                    return this.createResponse$(( /**
+                     * @return {?}
+                     */function () { return response_1; }));
                 }
             };
         /**
@@ -1963,7 +2051,10 @@
                 if (search) {
                     /** @type {?} */
                     var params_1 = new http.HttpParams({ fromString: search });
-                    params_1.keys().forEach(function (p) { return map.set(p, params_1.getAll(p)); });
+                    params_1.keys().forEach(( /**
+                     * @param {?} p
+                     * @return {?}
+                     */function (p) { return map.set(p, params_1.getAll(p)); }));
                 }
                 return map;
             };
@@ -1978,7 +2069,10 @@
          * @return {?}
          */
             function (response$) {
-                return response$.pipe(operators.map(function (options) { return new http.HttpResponse(options); }));
+                return response$.pipe(operators.map(( /**
+                 * @param {?} options
+                 * @return {?}
+                 */function (options) { return new http.HttpResponse(options); })));
             };
         /**
          * @protected
@@ -2013,7 +2107,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     // Internal - Creates the in-mem backend for the HttpClient module
     // AoT requires factory to be exported
@@ -2072,7 +2166,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var services = [
@@ -2131,12 +2225,12 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.DataConfig = DataConfig;

@@ -12,7 +12,7 @@ import { DisposableComponent, CoreModule } from '@designr/core';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var EDITOR_CONFIG = new InjectionToken('editor.config');
@@ -28,7 +28,7 @@ var EditorConfig = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var EditorService = /** @class */ (function () {
     function EditorService(options) {
@@ -51,7 +51,7 @@ var EditorService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var EditorRootComponent = /** @class */ (function (_super) {
     __extends(EditorRootComponent, _super);
@@ -84,9 +84,13 @@ var EditorRootComponent = /** @class */ (function (_super) {
             if (this._page) {
                 this.controls = this.formService.getControlsFromOptions(this.getControlsByPage(page));
                 this.group = this.formService.getGroupFromControls(this.controls);
-                this.group.valueChanges.subscribe(function (x) {
+                this.group.valueChanges.subscribe((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                function (x) {
                     _this.onAssign(x); // Object.assign(this._page, x);
-                });
+                }));
             }
             else {
                 this.controls = [];
@@ -121,7 +125,16 @@ var EditorRootComponent = /** @class */ (function (_super) {
      * @return {?}
      */
     function (page) {
-        return page ? Object.keys(page).filter(function (key) { return typeof page[key] !== 'object'; }).map(function (key, i) {
+        return page ? Object.keys(page).filter((/**
+         * @param {?} key
+         * @return {?}
+         */
+        function (key) { return typeof page[key] !== 'object'; })).map((/**
+         * @param {?} key
+         * @param {?} i
+         * @return {?}
+         */
+        function (key, i) {
             return {
                 key: key,
                 value: page[key],
@@ -131,7 +144,7 @@ var EditorRootComponent = /** @class */ (function (_super) {
                 required: false,
                 order: i + 1
             };
-        }) : [];
+        })) : [];
     };
     /**
      * @return {?}
@@ -142,10 +155,14 @@ var EditorRootComponent = /** @class */ (function (_super) {
     function () {
         var _this = this;
         if (isPlatformBrowser(this.platformId)) {
-            this.pageResolverService.events$.pipe(takeUntil(this.unsubscribe)).subscribe(function (resolver) {
+            this.pageResolverService.events$.pipe(takeUntil(this.unsubscribe)).subscribe((/**
+             * @param {?} resolver
+             * @return {?}
+             */
+            function (resolver) {
                 // console.log('EditorRootComponent.resolver', resolver);
                 _this.page = resolver ? resolver.page : null;
-            });
+            }));
         }
     };
     /**
@@ -157,9 +174,13 @@ var EditorRootComponent = /** @class */ (function (_super) {
     function () {
         var _this = this;
         // console.log('EditorRootComponent.onReset');
-        Object.keys(this.group.controls).forEach(function (key) {
+        Object.keys(this.group.controls).forEach((/**
+         * @param {?} key
+         * @return {?}
+         */
+        function (key) {
             _this.group.get(key).setValue(_this._pageCopy[key]);
-        });
+        }));
         /*
         const keys = this.controls.map(x => x.key);
         keys.forEach(k => {
@@ -191,7 +212,11 @@ var EditorRootComponent = /** @class */ (function (_super) {
      */
     function (model) {
         var _this = this;
-        Object.keys(this.group.controls).forEach(function (key) {
+        Object.keys(this.group.controls).forEach((/**
+         * @param {?} key
+         * @return {?}
+         */
+        function (key) {
             switch (key) {
                 case 'description':
                     _this._page[key] = _this.markdownService.compile(model[key]);
@@ -199,7 +224,7 @@ var EditorRootComponent = /** @class */ (function (_super) {
                 default:
                     _this._page[key] = model[key];
             }
-        });
+        }));
     };
     EditorRootComponent.decorators = [
         { type: Component, args: [{
@@ -222,7 +247,7 @@ var EditorRootComponent = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var services = [];
@@ -281,7 +306,7 @@ var EditorBundleModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var EditorModuleComponent = /** @class */ (function () {
     function EditorModuleComponent() {
@@ -308,7 +333,7 @@ var EditorModuleComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var PanelComponent = /** @class */ (function (_super) {
     __extends(PanelComponent, _super);
@@ -372,7 +397,7 @@ var PanelComponent = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var services$1 = [
@@ -429,12 +454,12 @@ var EditorModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { EditorConfig, EDITOR_CONFIG, EditorService, EditorBundleModule, EditorRootComponent, EditorModuleComponent, EditorModule, PanelComponent as ɵa };

@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, Provider, ReflectiveInjector, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { Component, ComponentFactoryResolver, ComponentRef, Injector, Input, OnDestroy, OnInit, Provider, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { DisposableComponent } from '@designr/core';
 import { Modal, ModalData } from './modal';
 
@@ -7,14 +7,38 @@ import { Modal, ModalData } from './modal';
 	templateUrl: './modal-view.component.html',
 	// styleUrls: ['./modal-view.component.scss'],
 	encapsulation: ViewEncapsulation.Emulated,
+	// changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalViewComponent extends DisposableComponent implements OnDestroy {
-
-	component: ComponentRef<any>;
+export class ModalViewComponent extends DisposableComponent implements OnInit, OnDestroy {
 
 	@ViewChild('modalContainer', { read: ViewContainerRef }) modalContainer: ViewContainerRef;
-
+	/*
 	@Input() set modal(modal: Modal) {
+		this.setModal(modal);
+	}
+	*/
+	@Input() modal: Modal;
+	component: ComponentRef<any>;
+
+	constructor(
+		private resolver: ComponentFactoryResolver,
+		// private changeDetector: ChangeDetectorRef,
+	) {
+		super();
+	}
+
+	ngOnInit() {
+		this.setModal(this.modal);
+	}
+
+	ngOnDestroy() {
+		if (this.component) {
+			this.component.destroy();
+			this.component = null;
+		}
+	}
+
+	setModal(modal: Modal) {
 		if (this.component) {
 			this.component.destroy();
 		}
@@ -29,25 +53,14 @@ export class ModalViewComponent extends DisposableComponent implements OnDestroy
 			{ provide: ModalData, useValue: modal.data },
 			{ provide: Modal, useValue: modal },
 		);
-		const resolvedInputs = ReflectiveInjector.resolve(providers);
-		const injector = ReflectiveInjector.fromResolvedProviders(resolvedInputs, this.modalContainer.parentInjector);
+		const injector = Injector.create({ providers });
+		// const resolvedInputs = ReflectiveInjector.resolve(providers);
+		// const injector = ReflectiveInjector.fromResolvedProviders(resolvedInputs, this.modalContainer.parentInjector);
 		const factory = this.resolver.resolveComponentFactory(modal.component);
 		const component = factory.create(injector);
 		this.modalContainer.insert(component.hostView);
 		this.component = component;
-	}
-
-	constructor(
-		private resolver: ComponentFactoryResolver
-	) {
-		super();
-	}
-
-	ngOnDestroy() {
-		if (this.component) {
-			this.component.destroy();
-			this.component = null;
-		}
+		// this.changeDetector.markForCheck();
 	}
 
 }

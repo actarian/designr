@@ -20,8 +20,8 @@ export declare class LabelService<T extends Label> extends ApiService<T> {
     private parseLabel;
     private missingLabel;
     private parseParams;
-    getKey(key: string, defaultValue?: string, params?: any): Observable<string>;
     register(): Observable<any>;
     collect(): void;
+    getKey(key: string, defaultValue?: string, params?: any): Observable<string>;
     private collectKeys;
 }

@@ -5,11 +5,11 @@ import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { DisposableComponent, CoreModule } from '@designr/core';
 import { BehaviorSubject, of, range, fromEvent, Observable } from 'rxjs';
 import { map, takeUntil, shareReplay, distinctUntilChanged, filter, tap } from 'rxjs/operators';
-import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, Output, NgModule, Optional, SkipSelf, defineInjectable, inject, ViewEncapsulation, ReflectiveInjector, ComponentFactoryResolver, ViewChild, ViewContainerRef, PLATFORM_ID, NgZone, Renderer2 } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, Output, NgModule, Optional, SkipSelf, defineInjectable, inject, ViewEncapsulation, PLATFORM_ID, NgZone, Injector, ComponentFactoryResolver, ViewChild, ViewContainerRef, Renderer2 } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var UIConfig = /** @class */ (function () {
     function UIConfig(options) {
@@ -25,7 +25,7 @@ var UI_CONFIG = new InjectionToken('ui.config');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var UIService = /** @class */ (function () {
     function UIService(options) {
@@ -48,7 +48,7 @@ var UIService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var UIModuleComponent = /** @class */ (function () {
     function UIModuleComponent() {
@@ -75,7 +75,7 @@ var UIModuleComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ClickOutsideDirective = /** @class */ (function () {
     function ClickOutsideDirective(eventManager, element) {
@@ -92,11 +92,18 @@ var ClickOutsideDirective = /** @class */ (function () {
      */
     function () {
         var _this = this;
-        this.eventManager.getZone().runOutsideAngular(function () {
-            _this.removeClick = _this.eventManager.addGlobalEventListener('document', 'click', function (e) {
+        this.eventManager.getZone().runOutsideAngular((/**
+         * @return {?}
+         */
+        function () {
+            _this.removeClick = _this.eventManager.addGlobalEventListener('document', 'click', (/**
+             * @param {?} e
+             * @return {?}
+             */
+            function (e) {
                 _this.onClick(e);
-            });
-        });
+            }));
+        }));
     };
     /**
      * @return {?}
@@ -131,9 +138,12 @@ var ClickOutsideDirective = /** @class */ (function () {
         if (!clickedInside) {
             if (this.initialFocus) {
                 this.initialFocus = false;
-                this.eventManager.getZone().run(function () {
+                this.eventManager.getZone().run((/**
+                 * @return {?}
+                 */
+                function () {
                     _this.clickOutside.emit(null);
-                });
+                }));
             }
         }
         else {
@@ -159,7 +169,7 @@ var ClickOutsideDirective = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // use require for polyfill
 var LazyImagesDirective = /** @class */ (function () {
@@ -180,10 +190,13 @@ var LazyImagesDirective = /** @class */ (function () {
         if (!isPlatformBrowser(this.platformId)) {
             return;
         }
-        this.zone.runOutsideAngular(function () {
+        this.zone.runOutsideAngular((/**
+         * @return {?}
+         */
+        function () {
             require('intersection-observer'); // use require for polyfill
             _this.onRegister();
-        });
+        }));
     };
     /**
      * @return {?}
@@ -206,7 +219,11 @@ var LazyImagesDirective = /** @class */ (function () {
         var _this = this;
         this.newIntersectionObserver();
         /** @type {?} */
-        var observer = new MutationObserver(function (mutations) { return _this.onChange(mutations); });
+        var observer = new MutationObserver((/**
+         * @param {?} mutations
+         * @return {?}
+         */
+        function (mutations) { return _this.onChange(mutations); }));
         /** @type {?} */
         var config = {
             attributes: true,
@@ -234,7 +251,11 @@ var LazyImagesDirective = /** @class */ (function () {
         }
         /** @type {?} */
         var images = Array.from(this.nativeElement.querySelectorAll('img[data-src], [data-srcset], [data-background-src]'));
-        images.forEach(function (image) { return _this.observer.observe(image); });
+        images.forEach((/**
+         * @param {?} image
+         * @return {?}
+         */
+        function (image) { return _this.observer.observe(image); }));
     };
     /**
      * @return {?}
@@ -246,12 +267,20 @@ var LazyImagesDirective = /** @class */ (function () {
         var _this = this;
         /** @type {?} */
         var config = this.lazyImages instanceof Object ? this.lazyImages : undefined;
-        this.observer = new IntersectionObserver(function (images) { return images.forEach(function (image) {
+        this.observer = new IntersectionObserver((/**
+         * @param {?} images
+         * @return {?}
+         */
+        function (images) { return images.forEach((/**
+         * @param {?} image
+         * @return {?}
+         */
+        function (image) {
             if (!image.isIntersecting) {
                 return;
             }
             _this.onAppearsInViewport(image.target);
-        }); }, config);
+        })); }), config);
         return this.observer;
     };
     /**
@@ -275,15 +304,25 @@ var LazyImagesDirective = /** @class */ (function () {
         else if (image.dataset.src) {
             /** @type {?} */
             var input = image.dataset.src;
-            this.onImagePreload(input, function (output) {
+            this.onImagePreload(input, (/**
+             * @param {?} output
+             * @return {?}
+             */
+            function (output) {
                 _this.renderer.setAttribute(image, 'src', output);
                 _this.renderer.removeAttribute(image, 'data-src');
-                _this.zone.runOutsideAngular(function () {
-                    setTimeout(function () {
+                _this.zone.runOutsideAngular((/**
+                 * @return {?}
+                 */
+                function () {
+                    setTimeout((/**
+                     * @return {?}
+                     */
+                    function () {
                         _this.renderer.addClass(image, 'ready');
-                    }, 1);
-                });
-            });
+                    }), 1);
+                }));
+            }));
         }
         if (image.dataset.backgroundSrc) {
             this.renderer.setStyle(image, 'background-image', "url(" + image.dataset.backgroundSrc + ")");
@@ -306,15 +345,22 @@ var LazyImagesDirective = /** @class */ (function () {
     function (src, callback) {
         /** @type {?} */
         var img = new Image();
-        img.onload = function () {
+        img.onload = (/**
+         * @return {?}
+         */
+        function () {
             if (typeof callback === 'function') {
                 callback(img.src);
             }
-        };
-        img.onerror = function (e) {
+        });
+        img.onerror = (/**
+         * @param {?} e
+         * @return {?}
+         */
+        function (e) {
             img.onerror = null;
             img.src = 'data:image/png;base64,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';
-        };
+        });
         img.src = src;
     };
     LazyImagesDirective.decorators = [
@@ -337,7 +383,7 @@ var LazyImagesDirective = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @enum {number} */
 var ModalEventType = {
@@ -401,7 +447,7 @@ var ModalData = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ModalService = /** @class */ (function () {
     function ModalService(platformId) {
@@ -415,9 +461,13 @@ var ModalService = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        return this.modals$.pipe(map(function (modals) {
+        return this.modals$.pipe(map((/**
+         * @param {?} modals
+         * @return {?}
+         */
+        function (modals) {
             return modals.length ? modals[modals.length - 1] : null;
-        }));
+        })));
     };
     /**
      * @param {?} name
@@ -601,7 +651,7 @@ var ModalService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ModalContainerComponent = /** @class */ (function (_super) {
     __extends(ModalContainerComponent, _super);
@@ -619,14 +669,22 @@ var ModalContainerComponent = /** @class */ (function (_super) {
      */
     function () {
         var _this = this;
-        this.modalService.modals$.pipe(takeUntil(this.unsubscribe), map(function (modals) {
+        this.modalService.modals$.pipe(takeUntil(this.unsubscribe), map((/**
+         * @param {?} modals
+         * @return {?}
+         */
+        function (modals) {
             _this.modalCount = modals.length;
             /** @type {?} */
             var modal = modals.length ? modals[modals.length - 1] : null;
             return modal;
-        })).subscribe(function (modal) {
+        }))).subscribe((/**
+         * @param {?} modal
+         * @return {?}
+         */
+        function (modal) {
             _this.className = modal ? modal.className : null;
-        });
+        }));
     };
     /**
      * @return {?}
@@ -662,7 +720,7 @@ var ModalContainerComponent = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ModalViewComponent = /** @class */ (function (_super) {
     __extends(ModalViewComponent, _super);
@@ -671,38 +729,15 @@ var ModalViewComponent = /** @class */ (function (_super) {
         _this.resolver = resolver;
         return _this;
     }
-    Object.defineProperty(ModalViewComponent.prototype, "modal", {
-        set: /**
-         * @param {?} modal
-         * @return {?}
-         */
-        function (modal) {
-            if (this.component) {
-                this.component.destroy();
-            }
-            if (!modal) {
-                this.component = null;
-                return;
-            }
-            /** @type {?} */
-            var providers = Object.keys(modal.providers).map(function (key) {
-                return { provide: key, useValue: modal.providers[key] };
-            });
-            providers.push({ provide: ModalData, useValue: modal.data }, { provide: Modal, useValue: modal });
-            /** @type {?} */
-            var resolvedInputs = ReflectiveInjector.resolve(providers);
-            /** @type {?} */
-            var injector = ReflectiveInjector.fromResolvedProviders(resolvedInputs, this.modalContainer.parentInjector);
-            /** @type {?} */
-            var factory = this.resolver.resolveComponentFactory(modal.component);
-            /** @type {?} */
-            var component = factory.create(injector);
-            this.modalContainer.insert(component.hostView);
-            this.component = component;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    /**
+     * @return {?}
+     */
+    ModalViewComponent.prototype.ngOnInit = /**
+     * @return {?}
+     */
+    function () {
+        this.setModal(this.modal);
+    };
     /**
      * @return {?}
      */
@@ -714,6 +749,43 @@ var ModalViewComponent = /** @class */ (function (_super) {
             this.component.destroy();
             this.component = null;
         }
+    };
+    /**
+     * @param {?} modal
+     * @return {?}
+     */
+    ModalViewComponent.prototype.setModal = /**
+     * @param {?} modal
+     * @return {?}
+     */
+    function (modal) {
+        if (this.component) {
+            this.component.destroy();
+        }
+        if (!modal) {
+            this.component = null;
+            return;
+        }
+        /** @type {?} */
+        var providers = Object.keys(modal.providers).map((/**
+         * @param {?} key
+         * @return {?}
+         */
+        function (key) {
+            return { provide: key, useValue: modal.providers[key] };
+        }));
+        providers.push({ provide: ModalData, useValue: modal.data }, { provide: Modal, useValue: modal });
+        /** @type {?} */
+        var injector = Injector.create({ providers: providers });
+        // const resolvedInputs = ReflectiveInjector.resolve(providers);
+        // const injector = ReflectiveInjector.fromResolvedProviders(resolvedInputs, this.modalContainer.parentInjector);
+        /** @type {?} */
+        var factory = this.resolver.resolveComponentFactory(modal.component);
+        /** @type {?} */
+        var component = factory.create(injector);
+        this.modalContainer.insert(component.hostView);
+        this.component = component;
+        // this.changeDetector.markForCheck();
     };
     ModalViewComponent.decorators = [
         { type: Component, args: [{
@@ -736,7 +808,7 @@ var ModalViewComponent = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var RafService = /** @class */ (function () {
     function RafService(platformId, zone) {
@@ -751,14 +823,17 @@ var RafService = /** @class */ (function () {
      */
     function () {
         var _this = this;
-        return this.zone.runOutsideAngular(function () {
+        return this.zone.runOutsideAngular((/**
+         * @return {?}
+         */
+        function () {
             if (isPlatformBrowser(_this.platformId)) {
                 return range(0, Number.POSITIVE_INFINITY, animationFrame).pipe(shareReplay());
             }
             else {
                 return of(null);
             }
-        });
+        }));
     };
     RafService.decorators = [
         { type: Injectable, args: [{
@@ -776,7 +851,7 @@ var RafService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var Point = /** @class */ (function () {
     function Point() {
@@ -942,7 +1017,7 @@ var Rect = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ParallaxDirective = /** @class */ (function (_super) {
     __extends(ParallaxDirective, _super);
@@ -966,7 +1041,10 @@ var ParallaxDirective = /** @class */ (function (_super) {
         if (!isPlatformBrowser(this.platformId)) {
             return;
         }
-        this.zone.runOutsideAngular(function () {
+        this.zone.runOutsideAngular((/**
+         * @return {?}
+         */
+        function () {
             /** @type {?} */
             var image = _this.elementRef.nativeElement.querySelector('img');
             _this.parallax$().pipe(
@@ -975,11 +1053,15 @@ var ParallaxDirective = /** @class */ (function (_super) {
                 return a.p !== b.p;
             }),
             */
-            takeUntil(_this.unsubscribe)).subscribe(function (parallax) {
+            takeUntil(_this.unsubscribe)).subscribe((/**
+             * @param {?} parallax
+             * @return {?}
+             */
+            function (parallax) {
                 // console.log(parallax);
                 image.setAttribute('style', "height: " + parallax.s * 100 + "%; top: 50%; left: 50%; transform: translateX(-50%) translateY(" + parallax.p + "%);");
-            });
-        });
+            }));
+        }));
     };
     /**
      * @return {?}
@@ -989,7 +1071,11 @@ var ParallaxDirective = /** @class */ (function (_super) {
      */
     function () {
         var _this = this;
-        return this.rafService.raf$().pipe(map(function (top) {
+        return this.rafService.raf$().pipe(map((/**
+         * @param {?} top
+         * @return {?}
+         */
+        function (top) {
             /** @type {?} */
             var windowRect = new Rect({
                 top: 0,
@@ -1028,7 +1114,11 @@ var ParallaxDirective = /** @class */ (function (_super) {
             else {
                 return null;
             }
-        }), filter(function (x) { return x !== null; }));
+        })), filter((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return x !== null; })));
     };
     /**
      * @return {?}
@@ -1037,7 +1127,15 @@ var ParallaxDirective = /** @class */ (function (_super) {
      * @return {?}
      */
     function () {
-        return this.rafService.raf$().pipe(map(function (x) { return window.pageYOffset; }), distinctUntilChanged(), tap(function (x) { return console.log(x); }));
+        return this.rafService.raf$().pipe(map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return window.pageYOffset; })), distinctUntilChanged(), tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return console.log(x); })));
     };
     ParallaxDirective.decorators = [
         { type: Directive, args: [{
@@ -1059,7 +1157,7 @@ var ParallaxDirective = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ScrollDirective = /** @class */ (function (_super) {
     __extends(ScrollDirective, _super);
@@ -1069,19 +1167,33 @@ var ScrollDirective = /** @class */ (function (_super) {
         _this.zone = zone;
         _this.elementRef = elementRef;
         _this.scroll = new EventEmitter();
-        _this.scrollEvent = new Observable(function (observer) {
-            return _this.zone.runOutsideAngular(function () {
+        _this.scrollEvent = new Observable((/**
+         * @param {?} observer
+         * @return {?}
+         */
+        function (observer) {
+            return _this.zone.runOutsideAngular((/**
+             * @return {?}
+             */
+            function () {
                 return fromEvent(_this.elementRef.nativeElement, 'scroll')
                     .pipe(takeUntil(_this.unsubscribe))
                     .subscribe(observer);
-            });
-        });
-        _this.scrollDocumentEvent = new Observable(function (observer) {
-            return _this.zone.runOutsideAngular(function () {
+            }));
+        }));
+        _this.scrollDocumentEvent = new Observable((/**
+         * @param {?} observer
+         * @return {?}
+         */
+        function (observer) {
+            return _this.zone.runOutsideAngular((/**
+             * @return {?}
+             */
+            function () {
                 return fromEvent(window.document, 'scroll')
                     .pipe(takeUntil(_this.unsubscribe))
                     .subscribe(observer);
-            });
+            }));
             /*
             this.zone.runOutsideAngular(() => {
                 this.renderer.listenGlobal('window', 'scroll', () => {
@@ -1089,7 +1201,7 @@ var ScrollDirective = /** @class */ (function (_super) {
                 });
             });
             */
-        });
+        }));
         return _this;
     }
     /**
@@ -1103,7 +1215,11 @@ var ScrollDirective = /** @class */ (function (_super) {
         if (!isPlatformBrowser(this.platformId)) {
             return;
         }
-        this.scrollDocumentEvent.subscribe(function (event) {
+        this.scrollDocumentEvent.subscribe((/**
+         * @param {?} event
+         * @return {?}
+         */
+        function (event) {
             /** @type {?} */
             var e = {
                 scrollHeight: document.scrollingElement.scrollHeight,
@@ -1113,7 +1229,7 @@ var ScrollDirective = /** @class */ (function (_super) {
                 originalEvent: event,
             };
             _this.scroll.emit(e);
-        });
+        }));
     };
     ScrollDirective.decorators = [
         { type: Directive, args: [{
@@ -1134,7 +1250,7 @@ var ScrollDirective = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var SpriteComponent = /** @class */ (function () {
     function SpriteComponent() {
@@ -1153,7 +1269,7 @@ var SpriteComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var services = [
@@ -1219,12 +1335,12 @@ var UIModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { UIConfig, UI_CONFIG, UIService, UIModuleComponent, UIModule, ClickOutsideDirective, LazyImagesDirective, ModalCompleteEvent, ModalData, ModalContainerComponent, ModalViewComponent, ModalService, ParallaxDirective, RafService, ScrollDirective, SpriteComponent as ɵa };

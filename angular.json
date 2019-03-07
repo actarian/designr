@@ -326,7 +326,9 @@
 							"vendorChunk": false,
 							"buildOptimizer": false,
 							"fileReplacements": [{ "replace": "projects/client/src/environments/environment.ts", "with": "projects/client/src/environments/environment.development.ts" }],
-							"serviceWorker": true
+							"serviceWorker": true,
+							"statsJson": true,
+							"es5BrowserSupport": true
 						},
 						"staging": {
 							"outputPath": "dist/staging/browser",
@@ -340,7 +342,9 @@
 							"vendorChunk": false,
 							"buildOptimizer": true,
 							"fileReplacements": [{ "replace": "projects/client/src/environments/environment.ts", "with": "projects/client/src/environments/environment.staging.ts" }],
-							"serviceWorker": true
+							"serviceWorker": true,
+							"statsJson": true,
+							"es5BrowserSupport": true
 						},
 						"production": {
 							"outputPath": "dist/production/browser",
@@ -354,7 +358,9 @@
 							"vendorChunk": false,
 							"buildOptimizer": true,
 							"fileReplacements": [{ "replace": "projects/client/src/environments/environment.ts", "with": "projects/client/src/environments/environment.production.ts" }],
-							"serviceWorker": true
+							"serviceWorker": true,
+							"statsJson": true,
+							"es5BrowserSupport": true
 						},
 						"docs": {
 							"baseHref": "/designr/",
@@ -371,6 +377,8 @@
 							"vendorChunk": false,
 							"buildOptimizer": true,
 							"serviceWorker": false,
+							"statsJson": true,
+							"es5BrowserSupport": true,
 							"budgets": [{ "type": "initial", "maximumWarning": "2mb", "maximumError": "5mb" }]
 						}
 					}

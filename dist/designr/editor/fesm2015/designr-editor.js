@@ -11,7 +11,7 @@ import { DisposableComponent, CoreModule } from '@designr/core';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const EDITOR_CONFIG = new InjectionToken('editor.config');
@@ -29,7 +29,7 @@ class EditorConfig {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class EditorService {
     /**
@@ -54,7 +54,7 @@ EditorService.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class EditorRootComponent extends DisposableComponent {
     /**
@@ -90,9 +90,13 @@ class EditorRootComponent extends DisposableComponent {
         if (this._page) {
             this.controls = this.formService.getControlsFromOptions(this.getControlsByPage(page));
             this.group = this.formService.getGroupFromControls(this.controls);
-            this.group.valueChanges.subscribe(x => {
+            this.group.valueChanges.subscribe((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => {
                 this.onAssign(x); // Object.assign(this._page, x);
-            });
+            }));
         }
         else {
             this.controls = [];
@@ -116,7 +120,16 @@ class EditorRootComponent extends DisposableComponent {
      * @return {?}
      */
     getControlsByPage(page) {
-        return page ? Object.keys(page).filter(key => typeof page[key] !== 'object').map((key, i) => {
+        return page ? Object.keys(page).filter((/**
+         * @param {?} key
+         * @return {?}
+         */
+        key => typeof page[key] !== 'object')).map((/**
+         * @param {?} key
+         * @param {?} i
+         * @return {?}
+         */
+        (key, i) => {
             return {
                 key: key,
                 value: page[key],
@@ -126,17 +139,21 @@ class EditorRootComponent extends DisposableComponent {
                 required: false,
                 order: i + 1
             };
-        }) : [];
+        })) : [];
     }
     /**
      * @return {?}
      */
     ngOnInit() {
         if (isPlatformBrowser(this.platformId)) {
-            this.pageResolverService.events$.pipe(takeUntil(this.unsubscribe)).subscribe((resolver) => {
+            this.pageResolverService.events$.pipe(takeUntil(this.unsubscribe)).subscribe((/**
+             * @param {?} resolver
+             * @return {?}
+             */
+            (resolver) => {
                 // console.log('EditorRootComponent.resolver', resolver);
                 this.page = resolver ? resolver.page : null;
-            });
+            }));
         }
     }
     /**
@@ -144,9 +161,13 @@ class EditorRootComponent extends DisposableComponent {
      */
     onReset() {
         // console.log('EditorRootComponent.onReset');
-        Object.keys(this.group.controls).forEach(key => {
+        Object.keys(this.group.controls).forEach((/**
+         * @param {?} key
+         * @return {?}
+         */
+        key => {
             this.group.get(key).setValue(this._pageCopy[key]);
-        });
+        }));
         /*
         const keys = this.controls.map(x => x.key);
         keys.forEach(k => {
@@ -169,7 +190,11 @@ class EditorRootComponent extends DisposableComponent {
      * @return {?}
      */
     onAssign(model) {
-        Object.keys(this.group.controls).forEach(key => {
+        Object.keys(this.group.controls).forEach((/**
+         * @param {?} key
+         * @return {?}
+         */
+        key => {
             switch (key) {
                 case 'description':
                     this._page[key] = this.markdownService.compile(model[key]);
@@ -177,7 +202,7 @@ class EditorRootComponent extends DisposableComponent {
                 default:
                     this._page[key] = model[key];
             }
-        });
+        }));
     }
 }
 EditorRootComponent.decorators = [
@@ -199,7 +224,7 @@ EditorRootComponent.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const services = [];
@@ -264,7 +289,7 @@ EditorBundleModule.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class EditorModuleComponent {
     constructor() {
@@ -287,7 +312,7 @@ EditorModuleComponent.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class PanelComponent extends DisposableComponent {
     /**
@@ -348,7 +373,7 @@ PanelComponent.propDecorators = {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 const services$1 = [
@@ -409,12 +434,12 @@ EditorModule.ctorParameters = () => [
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { EditorConfig, EDITOR_CONFIG, EditorService, EditorBundleModule, EditorRootComponent, EditorModuleComponent, EditorModule, PanelComponent as ɵa };

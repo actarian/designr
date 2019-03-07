@@ -5,13 +5,13 @@ import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
 import { __extends, __spread } from 'tslib';
-import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ElementRef, Renderer2, Pipe, ChangeDetectorRef, ViewEncapsulation, EventEmitter, WrappedValue, defineInjectable, inject, INJECTOR, ComponentFactoryResolver, ViewChild, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ElementRef, Renderer2, Pipe, ChangeDetectorRef, NgZone, ViewEncapsulation, EventEmitter, WrappedValue, defineInjectable, inject, INJECTOR, ComponentFactoryResolver, ViewChild, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
-import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, first, takeUntil } from 'rxjs/operators';
+import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, delay, first, takeUntil } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var TIMEOUT = 5 * 60 * 1000;
@@ -187,7 +187,12 @@ var CookieStorageService = /** @class */ (function () {
             /** @type {?} */
             var cache_1 = [];
             /** @type {?} */
-            var json = JSON.stringify(value, function (key, value) {
+            var json = JSON.stringify(value, (/**
+             * @param {?} key
+             * @param {?} value
+             * @return {?}
+             */
+            function (key, value) {
                 if (key === 'pool') {
                     return;
                 }
@@ -199,7 +204,7 @@ var CookieStorageService = /** @class */ (function () {
                     cache_1.push(value);
                 }
                 return value;
-            });
+            }));
             cache_1 = null;
             this.setter(name, btoa(encodeURIComponent(json)), days);
         }
@@ -407,7 +412,12 @@ var SessionStorageService = /** @class */ (function () {
             /** @type {?} */
             var cache_2 = [];
             /** @type {?} */
-            var json = JSON.stringify(value, function (key, value) {
+            var json = JSON.stringify(value, (/**
+             * @param {?} key
+             * @param {?} value
+             * @return {?}
+             */
+            function (key, value) {
                 if (key === 'pool') {
                     return;
                 }
@@ -419,7 +429,7 @@ var SessionStorageService = /** @class */ (function () {
                     cache_2.push(value);
                 }
                 return value;
-            });
+            }));
             cache_2 = null;
             window.sessionStorage.setItem(name, json);
         }
@@ -582,7 +592,12 @@ var LocalStorageService = /** @class */ (function () {
             /** @type {?} */
             var cache_3 = [];
             /** @type {?} */
-            var json = JSON.stringify(value, function (key, value) {
+            var json = JSON.stringify(value, (/**
+             * @param {?} key
+             * @param {?} value
+             * @return {?}
+             */
+            function (key, value) {
                 if (key === 'pool') {
                     return;
                 }
@@ -594,7 +609,7 @@ var LocalStorageService = /** @class */ (function () {
                     cache_3.push(value);
                 }
                 return value;
-            });
+            }));
             cache_3 = null;
             window.localStorage.setItem(name, json);
         }
@@ -646,7 +661,7 @@ var LocalStorageService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @enum {number} */
 var AuthStrategy = {
@@ -763,14 +778,14 @@ var AuthService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var BUNDLES = new InjectionToken('core.bundles');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var CoreTransitionConfig = /** @class */ (function () {
     function CoreTransitionConfig(options) {
@@ -810,7 +825,7 @@ var CORE_CONFIG = new InjectionToken('core.config');
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var CoreService = /** @class */ (function () {
     function CoreService(options) {
@@ -835,7 +850,7 @@ var CoreService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var DefaultContentDirective = /** @class */ (function () {
     function DefaultContentDirective(element, container, renderer) {
@@ -893,7 +908,7 @@ var DefaultContentDirective = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var CoreModuleComponent = /** @class */ (function () {
     function CoreModuleComponent() {
@@ -920,7 +935,7 @@ var CoreModuleComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var BundleDirective = /** @class */ (function () {
     function BundleDirective(bundles, injector, loader, container) {
@@ -937,7 +952,11 @@ var BundleDirective = /** @class */ (function () {
      */
     function () {
         var _this = this;
-        this.loader.load(this.bundles[this.bundle]).then(function (moduleFactory) {
+        this.loader.load(this.bundles[this.bundle]).then((/**
+         * @param {?} moduleFactory
+         * @return {?}
+         */
+        function (moduleFactory) {
             _this.moduleRef = moduleFactory.create(_this.injector);
             /** @type {?} */
             var rootComponentType = _this.moduleRef.injector.get('LAZY_ROOT_COMPONENT');
@@ -945,7 +964,7 @@ var BundleDirective = /** @class */ (function () {
             /** @type {?} */
             var factory = _this.moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
             _this.container.createComponent(factory);
-        });
+        }));
     };
     /**
      * @return {?}
@@ -978,7 +997,7 @@ var BundleDirective = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var DisposableComponent = /** @class */ (function () {
     function DisposableComponent() {
@@ -1005,7 +1024,7 @@ var DisposableComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var HighlightPipe = /** @class */ (function () {
     function HighlightPipe() {
@@ -1028,9 +1047,13 @@ var HighlightPipe = /** @class */ (function () {
         query = this.encodeHTML(query);
         /** @type {?} */
         var regExp = new RegExp('&[^;]+;|' + this.escapeRegexChars(query), 'gi');
-        return text.replace(regExp, function (match) {
+        return text.replace(regExp, (/**
+         * @param {?} match
+         * @return {?}
+         */
+        function (match) {
             return match.toLowerCase() === query.toLowerCase() ? '<strong>' + match + '</strong>' : match;
-        });
+        }));
     };
     /**
      * @param {?} text
@@ -1082,7 +1105,7 @@ var HighlightPipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LoggerError = /** @class */ (function (_super) {
     __extends(LoggerError, _super);
@@ -1217,7 +1240,7 @@ var Logger = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var SegmentPipe = /** @class */ (function () {
     function SegmentPipe(location) {
@@ -1260,7 +1283,7 @@ var SegmentPipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ApiRequestOptions = /** @class */ (function () {
     function ApiRequestOptions(options) {
@@ -1415,7 +1438,11 @@ var ApiService = /** @class */ (function () {
         var url = this.getUrl(method);
         /** @type {?} */
         var options = new ApiRequestOptions(params);
-        return this.http.get(url, options).pipe(tap(function (x) { return _this.logger.request(url); }));
+        return this.http.get(url, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this.logger.request(url); })));
     };
     /**
      * @param {?} first
@@ -1441,7 +1468,11 @@ var ApiService = /** @class */ (function () {
         var url = this.getUrl(method);
         /** @type {?} */
         var options = new ApiRequestOptions(params);
-        return this.http.post(url, model, options).pipe(tap(function (x) { return _this.logger.request(url); }));
+        return this.http.post(url, model, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this.logger.request(url); })));
     };
     /**
      * @param {?} first
@@ -1467,7 +1498,11 @@ var ApiService = /** @class */ (function () {
         var url = this.getUrl(method);
         /** @type {?} */
         var options = new ApiRequestOptions(params);
-        return this.http.put(url, model, options).pipe(tap(function (x) { return _this.logger.request(url); }));
+        return this.http.put(url, model, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this.logger.request(url); })));
     };
     /**
      * @param {?} first
@@ -1493,7 +1528,11 @@ var ApiService = /** @class */ (function () {
         var url = this.getUrl(method);
         /** @type {?} */
         var options = new ApiRequestOptions(params);
-        return this.http.patch(url, model, options).pipe(tap(function (x) { return _this.logger.request(url); }));
+        return this.http.patch(url, model, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this.logger.request(url); })));
     };
     /**
      * @param {?} first
@@ -1521,7 +1560,11 @@ var ApiService = /** @class */ (function () {
         var url = id !== null ? this.getUrl(method + "/" + id) : this.getUrl(method);
         /** @type {?} */
         var options = new ApiRequestOptions(params);
-        return this.http.delete(url, options).pipe(tap(function (x) { return _this.logger.request(url); }));
+        return this.http.delete(url, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this.logger.request(url); })));
     };
     /**
      * @param {?} input
@@ -1542,12 +1585,16 @@ var ApiService = /** @class */ (function () {
         /** @type {?} */
         var value;
         if (input instanceof Array) {
-            return input.map(function (value) {
+            return input.map((/**
+             * @param {?} value
+             * @return {?}
+             */
+            function (value) {
                 if (typeof value === 'object') {
                     value = _this.toCamelCase(value);
                 }
                 return value;
-            });
+            }));
         }
         else {
             output = {};
@@ -1580,7 +1627,12 @@ var ApiService = /** @class */ (function () {
      */
     function (url, model) {
         /** @type {?} */
-        var flatMap = function (s, x) {
+        var flatMap = (/**
+         * @param {?} s
+         * @param {?} x
+         * @return {?}
+         */
+        function (s, x) {
             if (typeof x === 'number') {
                 s += x.toString();
             }
@@ -1588,10 +1640,14 @@ var ApiService = /** @class */ (function () {
                 s += x.substr(0, 10);
             }
             else if (x && typeof x === 'object') {
-                s += '_' + Object.keys(x).map(function (k) { return k + '_' + flatMap('', x[k]); }).join('_');
+                s += '_' + Object.keys(x).map((/**
+                 * @param {?} k
+                 * @return {?}
+                 */
+                function (k) { return k + '_' + flatMap('', x[k]); })).join('_');
             }
             return s;
-        };
+        });
         url = flatMap(url, model);
         // console.log('ApiService.getStateKey.url', url);
         /** @type {?} */
@@ -1628,11 +1684,18 @@ var ApiService = /** @class */ (function () {
             return of(cached);
         }
         else {
-            return this.http.get(url, options).pipe(tap(function (x) {
+            return this.http.get(url, options).pipe(tap((/**
+             * @param {?} x
+             * @return {?}
+             */
+            function (x) {
                 if (isPlatformServer(_this.platformId)) {
-                    _this.state.onSerialize(stateKey, function () { return x; });
+                    _this.state.onSerialize(stateKey, (/**
+                     * @return {?}
+                     */
+                    function () { return x; }));
                 }
-            }));
+            })));
         }
     };
     /**
@@ -1668,11 +1731,18 @@ var ApiService = /** @class */ (function () {
             return of(cached);
         }
         else {
-            return this.http.post(url, model, options).pipe(tap(function (x) {
+            return this.http.post(url, model, options).pipe(tap((/**
+             * @param {?} x
+             * @return {?}
+             */
+            function (x) {
                 if (isPlatformServer(_this.platformId)) {
-                    _this.state.onSerialize(stateKey, function () { return x; });
+                    _this.state.onSerialize(stateKey, (/**
+                     * @return {?}
+                     */
+                    function () { return x; }));
                 }
-            }));
+            })));
         }
     };
     ApiService.decorators = [
@@ -1690,7 +1760,7 @@ var ApiService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -1709,9 +1779,13 @@ var TranslateService = /** @class */ (function (_super) {
         _this.languages = _this._languages.asObservable();
         _this._languages.next(_this.config.languages);
         _this._lang = _this.config.defaultLanguage;
-        _this.getTranslation(_this.lang).subscribe(function (x) {
+        _this.getTranslation(_this.lang).subscribe((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) {
             // console.log(x);
-        });
+        }));
         return _this;
     }
     Object.defineProperty(TranslateService.prototype, "collection", {
@@ -1739,7 +1813,11 @@ var TranslateService = /** @class */ (function (_super) {
             if (lang !== this._lang) {
                 this._lang = lang;
                 /** @type {?} */
-                var language = this._languages.getValue().find(function (x) { return x.lang === lang; });
+                var language = this._languages.getValue().find((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                function (x) { return x.lang === lang; }));
                 this._language.next(language);
             }
         },
@@ -1764,7 +1842,11 @@ var TranslateService = /** @class */ (function (_super) {
             return of(this.cache[lang]);
         }
         else {
-            return this.get({ lang: lang }).pipe(take(1), map(function (x) {
+            return this.get({ lang: lang }).pipe(take(1), map((/**
+             * @param {?} x
+             * @return {?}
+             */
+            function (x) {
                 if (x[0]) {
                     /** @type {?} */
                     var labels = x[0].labels;
@@ -1775,7 +1857,7 @@ var TranslateService = /** @class */ (function (_super) {
                 else {
                     return of(null);
                 }
-            }));
+            })));
         }
     };
     /**
@@ -1871,11 +1953,16 @@ var TranslateService = /** @class */ (function (_super) {
     function (value, params) {
         /** @type {?} */
         var TEMPLATE_REGEXP = /@([^{}\s]*)/g;
-        return value.replace(TEMPLATE_REGEXP, function (text, key) {
+        return value.replace(TEMPLATE_REGEXP, (/**
+         * @param {?} text
+         * @param {?} key
+         * @return {?}
+         */
+        function (text, key) {
             /** @type {?} */
             var replacer = (/** @type {?} */ (params[key]));
             return typeof replacer !== 'undefined' ? replacer : text;
-        });
+        }));
     };
     /**
      * @param {?} lang
@@ -1931,7 +2018,7 @@ var TranslateService = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // @dynamic
 var RouteService = /** @class */ (function () {
@@ -1974,7 +2061,11 @@ var RouteService = /** @class */ (function () {
             if (lang !== this._lang) {
                 this._lang = lang;
                 /** @type {?} */
-                var language = this._languages.getValue().find(function (x) { return x.lang === lang; });
+                var language = this._languages.getValue().find((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                function (x) { return x.lang === lang; }));
                 this._language.next(language);
                 this.translateService.use(lang);
                 // console.log('RouteService.set lang', lang, this.coreService.options.useLang);
@@ -2016,13 +2107,17 @@ var RouteService = /** @class */ (function () {
     function () {
         var _this = this;
         // console.log('RouteService.getPageParams', this.router.url);
-        return this.route.queryParams.pipe(distinctUntilChanged(), switchMap(function (params) {
+        return this.route.queryParams.pipe(distinctUntilChanged(), switchMap((/**
+         * @param {?} params
+         * @return {?}
+         */
+        function (params) {
             // console.log(params);
             /** @type {?} */
             var parsed = _this.parseParams(params);
             _this.pageParams$.next(parsed);
             return of(parsed);
-        }));
+        })));
     };
     /**
      * @param {?} params
@@ -2036,7 +2131,11 @@ var RouteService = /** @class */ (function () {
         var _this = this;
         /** @type {?} */
         var parsed = {};
-        Object.keys(params).forEach(function (k) { return parsed[k] = _this.parse(params[k]); });
+        Object.keys(params).forEach((/**
+         * @param {?} k
+         * @return {?}
+         */
+        function (k) { return parsed[k] = _this.parse(params[k]); }));
         /*
         for (const key in params) {
             if (typeof (params[key]) === 'string') {
@@ -2060,7 +2159,11 @@ var RouteService = /** @class */ (function () {
         var _this = this;
         /** @type {?} */
         var serialized = {};
-        Object.keys(params).forEach(function (k) { return serialized[k] = _this.serialize(params[k]); });
+        Object.keys(params).forEach((/**
+         * @param {?} k
+         * @return {?}
+         */
+        function (k) { return serialized[k] = _this.serialize(params[k]); }));
         return serialized;
     };
     /**
@@ -2158,13 +2261,21 @@ var RouteService = /** @class */ (function () {
         /** @type {?} */
         var segments = this.segment.transform(data);
         /** @type {?} */
-        var paths = segments.filter(function (x) {
+        var paths = segments.filter((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) {
             return typeof x === 'string';
-        });
+        }));
         /** @type {?} */
-        var datas = segments.filter(function (x) {
+        var datas = segments.filter((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) {
             return typeof x !== 'string';
-        });
+        }));
         if (this.coreService.options.useMarket) {
             /** @type {?} */
             var marketIndex = this.urlStrategy.split('/').indexOf(':market');
@@ -2286,7 +2397,11 @@ var RouteService = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        this.translateService.addLangs(this.coreService.options.languages ? this.coreService.options.languages.map(function (x) { return x.lang; }) : []);
+        this.translateService.addLangs(this.coreService.options.languages ? this.coreService.options.languages.map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return x.lang; })) : []);
         this.translateService.setDefaultLang(this.coreService.options.defaultLanguage);
         // this.setLanguage(this.detectLanguage(), true);
         this.setLanguage(this.coreService.options.defaultLanguage, true);
@@ -2306,7 +2421,15 @@ var RouteService = /** @class */ (function () {
      */
     function () {
         var _this = this;
-        this.router.events.pipe(filter(function (event) { return event instanceof NavigationStart; })).subscribe(function (event) {
+        this.router.events.pipe(filter((/**
+         * @param {?} event
+         * @return {?}
+         */
+        function (event) { return event instanceof NavigationStart; }))).subscribe((/**
+         * @param {?} event
+         * @return {?}
+         */
+        function (event) {
             /** @type {?} */
             var location = _this.location.normalize(event.url).split('/');
             if (_this.coreService.options.useMarket) {
@@ -2326,13 +2449,17 @@ var RouteService = /** @class */ (function () {
                 var lang_1 = location[langIndex];
                 if (lang_1 !== _this._lang) {
                     /** @type {?} */
-                    var language = _this._languages.getValue().find(function (x) { return x.lang === lang_1; });
+                    var language = _this._languages.getValue().find((/**
+                     * @param {?} x
+                     * @return {?}
+                     */
+                    function (x) { return x.lang === lang_1; }));
                     _this._language.next(language);
                     _this.translateService.use(lang_1);
                     // console.log('RouteService.setLang', lang, this._lang, langIndex, location, event.url);
                 }
             }
-        });
+        }));
     };
     /**
      * @private
@@ -2379,7 +2506,11 @@ var RouteService = /** @class */ (function () {
         /** @type {?} */
         var detectedLanguage = this.coreService.options.defaultLanguage;
         /** @type {?} */
-        var regexp = new RegExp("(" + (this.coreService.options.languages ? this.coreService.options.languages.map(function (x) { return x.lang; }).join('|') : '') + ")", 'gi');
+        var regexp = new RegExp("(" + (this.coreService.options.languages ? this.coreService.options.languages.map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return x.lang; })).join('|') : '') + ")", 'gi');
         /** @type {?} */
         var match = (acceptLanguage || '').match(regexp);
         detectedLanguage = match ? match[0] : detectedLanguage;
@@ -2443,7 +2574,7 @@ var RouteService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var HttpStatusCodeService = /** @class */ (function () {
     function HttpStatusCodeService() {
@@ -2493,7 +2624,7 @@ var HttpStatusCodeService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var HttpResponseInterceptor = /** @class */ (function () {
     function HttpResponseInterceptor(injector, statusCodeService) {
@@ -2553,7 +2684,11 @@ var HttpResponseInterceptor = /** @class */ (function () {
         var _this = this;
         // injecting request
         // parsing response
-        return next.handle(request).pipe(tap(function (event) {
+        return next.handle(request).pipe(tap((/**
+         * @param {?} event
+         * @return {?}
+         */
+        function (event) {
             // console.log('HttpResponseInterceptor', event);
             _this.logger.httpError = null;
             // this.logger.log(event);
@@ -2563,7 +2698,11 @@ var HttpResponseInterceptor = /** @class */ (function () {
                 // do stuff with response if you want
             }
             */
-        }), catchError(function (error) {
+        })), catchError((/**
+         * @param {?} error
+         * @return {?}
+         */
+        function (error) {
             // console.warn('HttpResponseInterceptor', error);
             if (error instanceof HttpErrorResponse) {
                 // this.statusCodeService.setStatusCode(error.status);
@@ -2584,7 +2723,7 @@ var HttpResponseInterceptor = /** @class */ (function () {
                 }
             }
             return throwError(error);
-        }));
+        })));
     };
     HttpResponseInterceptor.decorators = [
         { type: Injectable, args: [{
@@ -2602,7 +2741,7 @@ var HttpResponseInterceptor = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // import JSONFormatter from 'json-formatter-js';
 var JsonFormatterComponent = /** @class */ (function () {
@@ -2655,7 +2794,7 @@ var JsonFormatterComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -2722,13 +2861,13 @@ var LabelService = /** @class */ (function (_super) {
      * @return {?}
      */
     function (key) {
-        console.log('missingLabel', key, this.missingHandler);
+        // console.log('missingLabel', key, this.missingHandler);
         if (this.missingHandler) {
             return typeof this.missingHandler === 'function' ?
                 this.missingHandler(key) :
                 this.missingHandler;
         }
-        console.log('missingLabel', key);
+        // console.log('missingLabel', key);
         return key;
     };
     /**
@@ -2746,11 +2885,50 @@ var LabelService = /** @class */ (function (_super) {
     function (value, params) {
         /** @type {?} */
         var TEMPLATE_REGEXP = /@([^{}\s]*)/g;
-        return value.replace(TEMPLATE_REGEXP, function (text, key) {
+        return value.replace(TEMPLATE_REGEXP, (/**
+         * @param {?} text
+         * @param {?} key
+         * @return {?}
+         */
+        function (text, key) {
             /** @type {?} */
             var replacer = (/** @type {?} */ (params[key]));
             return typeof replacer !== 'undefined' ? replacer : text;
-        });
+        }));
+    };
+    /**
+     * @return {?}
+     */
+    LabelService.prototype.register = /**
+     * @return {?}
+     */
+    function () {
+        var _this = this;
+        return this.emitter.pipe(
+        // throttleTime(500),
+        tap((/**
+         * @return {?}
+         */
+        function () {
+            _this.collectKeys().pipe(first()).subscribe((/**
+             * @param {?} keys
+             * @return {?}
+             */
+            function (keys) {
+                // console.log('LabelService.collected', keys);
+            }));
+        })));
+    };
+    /**
+     * @return {?}
+     */
+    LabelService.prototype.collect = /**
+     * @return {?}
+     */
+    function () {
+        if (Object.keys(this.collectedKeys).length) {
+            this.emitter.emit();
+        }
     };
     /**
      * @param {?} key
@@ -2766,10 +2944,11 @@ var LabelService = /** @class */ (function (_super) {
      */
     function (key, defaultValue, params) {
         var _this = this;
+        // console.log('LabelService.getKey', key);
         if (this.cache.hasOwnProperty(key)) {
             /** @type {?} */
             var label = this.cache[key];
-            return of(label);
+            return of(label).pipe(delay(1));
         }
         else {
             Object.defineProperty(this.collectedKeys, key, {
@@ -2779,38 +2958,31 @@ var LabelService = /** @class */ (function (_super) {
             });
             this.cache[key] = null;
         }
-        this.parsers[key] = function (label) { return _this.parseLabel(label, key, defaultValue, params); };
+        this.parsers[key] = (/**
+         * @param {?} label
+         * @return {?}
+         */
+        function (label) { return _this.parseLabel(label, key, defaultValue, params); });
         // !!! never reach this, return of(null) ?
-        return this.labels$.pipe(map(function (items) { return items[key] || null; }), filter(function (label) { return label !== null; }), 
+        return this.labels$.pipe(map((/**
+         * @param {?} items
+         * @return {?}
+         */
+        function (items) { return items[key] || null; })), filter((/**
+         * @param {?} label
+         * @return {?}
+         */
+        function (label) { return label !== null; })), 
         // tap(label => console.log('getKey', key, label)),
-        map(function (label) { return _this.parseLabel(label, key, defaultValue, params); }), tap(function (label) { return _this.cache[key] = label; }));
-    };
-    /**
-     * @return {?}
-     */
-    LabelService.prototype.register = /**
-     * @return {?}
-     */
-    function () {
-        var _this = this;
-        return this.emitter.pipe(
-        // throttleTime(500),
-        tap(function () {
-            _this.collectKeys().pipe(first()).subscribe(function (keys) {
-                // console.log('LabelService.collected', keys);
-            });
-        }));
-    };
-    /**
-     * @return {?}
-     */
-    LabelService.prototype.collect = /**
-     * @return {?}
-     */
-    function () {
-        if (Object.keys(this.collectedKeys).length) {
-            this.emitter.emit();
-        }
+        map((/**
+         * @param {?} label
+         * @return {?}
+         */
+        function (label) { return _this.parseLabel(label, key, defaultValue, params); })), tap((/**
+         * @param {?} label
+         * @return {?}
+         */
+        function (label) { return _this.cache[key] = label; })));
     };
     /**
      * @private
@@ -2823,23 +2995,46 @@ var LabelService = /** @class */ (function (_super) {
     function () {
         var _this = this;
         /** @type {?} */
-        var keys = Object.keys(this.collectedKeys).map(function (x) { return _this.collectedKeys[x]; });
+        var keys = Object.keys(this.collectedKeys).map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this.collectedKeys[x]; }));
+        // console.log('LabelService.collectKeys', keys);
         this.collectedKeys = {};
         if (keys.length) {
-            return this.statePost(keys).pipe(map(function (keys) {
+            return this.statePost(keys).pipe(map((/**
+             * @param {?} keys
+             * @return {?}
+             */
+            function (keys) {
                 // console.log('LabelService.collectKeys', JSON.stringify(keys));
                 /** @type {?} */
                 var items = {};
-                keys.forEach(function (x) { return items[x.id] = _this.parsers[x.id](x.value || x.defaultValue || x.id); });
+                keys.forEach((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                function (x) { return items[x.id] = _this.parsers[x.id](x.value || x.defaultValue || x.id); }));
                 return items;
-            }), tap(function (items) {
+            })), tap((/**
+             * @param {?} items
+             * @return {?}
+             */
+            function (items) {
                 Object.assign(_this.cache, items);
                 _this.labels$.next(_this.cache);
                 // console.log('collectKeys', this.cache);
-            }), catchError(function (error) {
+            })), 
+            // shareReplay(),
+            catchError((/**
+             * @param {?} error
+             * @return {?}
+             */
+            function (error) {
                 // console.log('LabelService.collectKeys.error', error);
                 return of({});
-            }));
+            })));
             /*
             return this.post(`/api/i18n/labels`, keys).pipe(
                 map((keys: LabelKey[]) => {
@@ -2874,7 +3069,7 @@ var LabelService = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LabelDirective = /** @class */ (function (_super) {
     __extends(LabelDirective, _super);
@@ -2893,10 +3088,14 @@ var LabelDirective = /** @class */ (function (_super) {
     function () {
         var _this = this;
         // console.log('LabelDirective.ngOnInit', this.element.nativeElement.innerHTML);
-        this.labelService.getKey(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(takeUntil(this.unsubscribe)).subscribe(function (label) {
+        this.labelService.getKey(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(takeUntil(this.unsubscribe)).subscribe((/**
+         * @param {?} label
+         * @return {?}
+         */
+        function (label) {
             _this.element.nativeElement.innerHTML = label;
             // console.log('LabelDirective.ngOnInit', label);
-        });
+        }));
         // console.log('LabelDirective.ngOnInit', this.label, this.labelParams, this.template, this.view);
     };
     LabelDirective.decorators = [
@@ -2918,141 +3117,42 @@ var LabelDirective = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-var CustomAsyncPipe = /** @class */ (function () {
-    function CustomAsyncPipe(changeDetector) {
-        this.changeDetector = changeDetector;
-        this.subject = null;
-        this.subscription = null;
-        this.value = null;
-        this.cachedValue = null;
-    }
-    /**
-     * @param {?} subject
-     * @return {?}
-     */
-    CustomAsyncPipe.prototype.transform = /**
-     * @param {?} subject
-     * @return {?}
-     */
-    function (subject) {
-        return this.observableToValue(subject);
-    };
-    /**
-     * @private
-     * @param {?} subject
-     * @return {?}
-     */
-    CustomAsyncPipe.prototype.observableToValue = /**
-     * @private
-     * @param {?} subject
-     * @return {?}
-     */
-    function (subject) {
-        var _this = this;
-        if (subject !== this.subject) {
-            if (this.subject) {
-                this.dispose();
-            }
-            if (subject) {
-                this.subject = subject;
-                this.subscription = this.subject.subscribe(function (value) {
-                    // console.log('CustomAsyncPipe.A', value);
-                    _this.value = value;
-                    _this.changeDetector.markForCheck(); // mark pipe as dirty
-                });
-                this.cachedValue = this.value; // ???
-                return this.value;
-            }
-        }
-        // console.log('CustomAsyncPipe.B', this.value);
-        if (this.cachedValue !== this.value) {
-            this.cachedValue = this.value;
-            return WrappedValue.wrap(this.value); // notify that value has changed
-        }
-        return this.cachedValue; // return cachedValue
-    };
-    /**
-     * @return {?}
-     */
-    CustomAsyncPipe.prototype.dispose = /**
-     * @return {?}
-     */
-    function () {
-        if (this.subscription) {
-            this.subscription.unsubscribe();
-        }
-        this.value = null;
-        this.cachedValue = null;
-        this.subscription = null;
-        this.subject = null;
-    };
-    /**
-     * @return {?}
-     */
-    CustomAsyncPipe.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
-        this.dispose();
-    };
-    /**
-     * @private
-     * @param {?} subject
-     * @return {?}
-     */
-    CustomAsyncPipe.prototype._observableToValue = /**
-     * @private
-     * @param {?} subject
-     * @return {?}
-     */
-    function (subject) {
-        var _this = this;
-        if (!this.subject) {
-            if (subject) {
-                this.subject = subject;
-                this.subscription = this.subject.subscribe(function (value) {
-                    _this.value = value;
-                    _this.changeDetector.markForCheck(); // value has changed
-                });
-            }
-            this.cachedValue = this.value;
-            return this.value;
-        }
-        if (subject !== this.subject) {
-            this.dispose();
-            return this.transform((/** @type {?} */ (subject)));
-        }
-        if (this.value === this.cachedValue) {
-            return this.cachedValue;
-        }
-        this.cachedValue = this.value;
-        return WrappedValue.wrap(this.value); // value has changed
-    };
-    CustomAsyncPipe.decorators = [
-        { type: Pipe, args: [{
-                    name: 'customAsync',
-                    pure: false
-                },] }
-    ];
-    /** @nocollapse */
-    CustomAsyncPipe.ctorParameters = function () { return [
-        { type: ChangeDetectorRef }
-    ]; };
-    return CustomAsyncPipe;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LabelPipe = /** @class */ (function () {
-    function LabelPipe(changeDetector, labelService) {
+    function LabelPipe(zone, changeDetector, labelService) {
+        this.zone = zone;
         this.changeDetector = changeDetector;
         this.labelService = labelService;
-        this.asyncPipe = new CustomAsyncPipe(this.changeDetector);
+        // this.asyncPipe = new CustomAsyncPipe(this.changeDetector);
     }
+    /**
+     * @param {?} key
+     * @param {?} text
+     * @param {?} params
+     * @return {?}
+     */
+    LabelPipe.prototype.getKey = /**
+     * @param {?} key
+     * @param {?} text
+     * @param {?} params
+     * @return {?}
+     */
+    function (key, text, params) {
+        var _this = this;
+        if (this.key$) {
+            return;
+        }
+        this.key$ = this.labelService.getKey(key, text, params);
+        this.key$.pipe(first()).subscribe((/**
+         * @param {?} value
+         * @return {?}
+         */
+        function (value) {
+            _this.value = value;
+            // this.changeDetector.markForCheck();
+        }));
+    };
     /**
      * @param {?} key
      * @param {?=} text
@@ -3066,7 +3166,10 @@ var LabelPipe = /** @class */ (function () {
      * @return {?}
      */
     function (key, text, params) {
-        return this.asyncPipe.transform(this.labelService.getKey(key, text, params));
+        if (this.value) {
+            return this.value;
+        }
+        this.getKey(key, text, params); // this.asyncPipe.transform(this.labelService.getKey(key, text, params));
     };
     /**
      * @return {?}
@@ -3075,7 +3178,7 @@ var LabelPipe = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        this.asyncPipe.dispose();
+        // this.asyncPipe.dispose();
     };
     LabelPipe.decorators = [
         { type: Pipe, args: [{
@@ -3088,16 +3191,17 @@ var LabelPipe = /** @class */ (function () {
     ];
     /** @nocollapse */
     LabelPipe.ctorParameters = function () { return [
+        { type: NgZone },
         { type: ChangeDetectorRef },
         { type: LabelService }
     ]; };
-    /** @nocollapse */ LabelPipe.ngInjectableDef = defineInjectable({ factory: function LabelPipe_Factory() { return new LabelPipe(inject(ChangeDetectorRef), inject(LabelService)); }, token: LabelPipe, providedIn: "root" });
+    /** @nocollapse */ LabelPipe.ngInjectableDef = defineInjectable({ factory: function LabelPipe_Factory() { return new LabelPipe(inject(NgZone), inject(ChangeDetectorRef), inject(LabelService)); }, token: LabelPipe, providedIn: "root" });
     return LabelPipe;
 }());
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var LoggerComponent = /** @class */ (function () {
     function LoggerComponent(logger) {
@@ -3128,7 +3232,7 @@ var LoggerComponent = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var EventDispatcherService = /** @class */ (function () {
     function EventDispatcherService() {
@@ -3152,7 +3256,11 @@ var EventDispatcherService = /** @class */ (function () {
      * @return {?}
      */
     function () {
-        return this.emitter.pipe(tap(function (event) { return console.log('EventDispatcherService', event); }));
+        return this.emitter.pipe(tap((/**
+         * @param {?} event
+         * @return {?}
+         */
+        function (event) { return console.log('EventDispatcherService', event); })));
     };
     EventDispatcherService.decorators = [
         { type: Injectable, args: [{
@@ -3167,7 +3275,7 @@ var EventDispatcherService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -3209,7 +3317,11 @@ var IdentityService = /** @class */ (function (_super) {
      * @return {?}
      */
     function (id) {
-        return this.get({ id: id }).pipe(map(function (identities) { return identities[0]; }));
+        return this.get({ id: id }).pipe(map((/**
+         * @param {?} identities
+         * @return {?}
+         */
+        function (identities) { return identities[0]; })));
     };
     /**
      * @param {?} id
@@ -3259,7 +3371,7 @@ var IdentityService = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -3304,7 +3416,7 @@ var EntityService = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var MenuService = /** @class */ (function (_super) {
     __extends(MenuService, _super);
@@ -3338,7 +3450,7 @@ var MenuService = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 // export class OnceEvent extends Event { }
 var OnceService = /** @class */ (function () {
@@ -3378,15 +3490,28 @@ var OnceService = /** @class */ (function () {
                 var element = document.createElement('script');
                 element.type = 'text/javascript';
                 if (callback) {
-                    callback$ = from(new Promise(function (resolve, reject) {
-                        window[callbackName_1] = function (data) {
+                    callback$ = from(new Promise((/**
+                     * @param {?} resolve
+                     * @param {?} reject
+                     * @return {?}
+                     */
+                    function (resolve, reject) {
+                        window[callbackName_1] = (/**
+                         * @param {?} data
+                         * @return {?}
+                         */
+                        function (data) {
                             resolve(data);
-                        };
-                    }));
+                        });
+                    })));
                 }
                 else {
                     element.async = true;
-                    callback$ = fromEvent(element, 'load').pipe(map(function (x) { return (/** @type {?} */ (x)); }));
+                    callback$ = fromEvent(element, 'load').pipe(map((/**
+                     * @param {?} x
+                     * @return {?}
+                     */
+                    function (x) { return (/** @type {?} */ (x)); })));
                 }
                 /** @type {?} */
                 var scripts = document.getElementsByTagName('script');
@@ -3423,7 +3548,7 @@ var OnceService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var OUTLETS = new InjectionToken('core.outlets');
@@ -3435,7 +3560,7 @@ var Outlet = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var OutletDefaultComponent = /** @class */ (function (_super) {
     __extends(OutletDefaultComponent, _super);
@@ -3456,7 +3581,7 @@ var OutletDefaultComponent = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var OutletRepeaterComponent = /** @class */ (function (_super) {
     __extends(OutletRepeaterComponent, _super);
@@ -3477,7 +3602,7 @@ var OutletRepeaterComponent = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var OutletResolverService = /** @class */ (function () {
     function OutletResolverService(outlets) {
@@ -3517,7 +3642,7 @@ var OutletResolverService = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var OutletComponent = /** @class */ (function (_super) {
     __extends(OutletComponent, _super);
@@ -3578,7 +3703,7 @@ var OutletComponent = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var AssetPipe = /** @class */ (function () {
     function AssetPipe(coreService, segment) {
@@ -3623,7 +3748,142 @@ var AssetPipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var CustomAsyncPipe = /** @class */ (function () {
+    function CustomAsyncPipe(changeDetector) {
+        this.changeDetector = changeDetector;
+        this.subject = null;
+        this.subscription = null;
+        this.value = null;
+        this.cachedValue = null;
+    }
+    /**
+     * @param {?} subject
+     * @return {?}
+     */
+    CustomAsyncPipe.prototype.transform = /**
+     * @param {?} subject
+     * @return {?}
+     */
+    function (subject) {
+        return this.observableToValue(subject);
+    };
+    /**
+     * @private
+     * @param {?} subject
+     * @return {?}
+     */
+    CustomAsyncPipe.prototype.observableToValue = /**
+     * @private
+     * @param {?} subject
+     * @return {?}
+     */
+    function (subject) {
+        var _this = this;
+        if (subject !== this.subject) {
+            if (this.subject) {
+                this.dispose();
+            }
+            if (subject) {
+                this.subject = subject;
+                this.subscription = this.subject.subscribe((/**
+                 * @param {?} value
+                 * @return {?}
+                 */
+                function (value) {
+                    // console.log('CustomAsyncPipe.A', value);
+                    _this.value = value;
+                    _this.changeDetector.markForCheck(); // mark pipe as dirty
+                }));
+                this.cachedValue = this.value; // ???
+                return this.value;
+            }
+        }
+        // console.log('CustomAsyncPipe.B', this.value);
+        if (this.cachedValue !== this.value) {
+            this.cachedValue = this.value;
+            return WrappedValue.wrap(this.value); // notify that value has changed
+        }
+        return this.cachedValue; // return cachedValue
+    };
+    /**
+     * @return {?}
+     */
+    CustomAsyncPipe.prototype.dispose = /**
+     * @return {?}
+     */
+    function () {
+        if (this.subscription) {
+            this.subscription.unsubscribe();
+        }
+        this.value = null;
+        this.cachedValue = null;
+        this.subscription = null;
+        this.subject = null;
+    };
+    /**
+     * @return {?}
+     */
+    CustomAsyncPipe.prototype.ngOnDestroy = /**
+     * @return {?}
+     */
+    function () {
+        this.dispose();
+    };
+    /**
+     * @private
+     * @param {?} subject
+     * @return {?}
+     */
+    CustomAsyncPipe.prototype._observableToValue = /**
+     * @private
+     * @param {?} subject
+     * @return {?}
+     */
+    function (subject) {
+        var _this = this;
+        if (!this.subject) {
+            if (subject) {
+                this.subject = subject;
+                this.subscription = this.subject.subscribe((/**
+                 * @param {?} value
+                 * @return {?}
+                 */
+                function (value) {
+                    _this.value = value;
+                    _this.changeDetector.markForCheck(); // value has changed
+                }));
+            }
+            this.cachedValue = this.value;
+            return this.value;
+        }
+        if (subject !== this.subject) {
+            this.dispose();
+            return this.transform((/** @type {?} */ (subject)));
+        }
+        if (this.value === this.cachedValue) {
+            return this.cachedValue;
+        }
+        this.cachedValue = this.value;
+        return WrappedValue.wrap(this.value); // value has changed
+    };
+    CustomAsyncPipe.decorators = [
+        { type: Pipe, args: [{
+                    name: 'customAsync',
+                    pure: false
+                },] }
+    ];
+    /** @nocollapse */
+    CustomAsyncPipe.ctorParameters = function () { return [
+        { type: ChangeDetectorRef }
+    ]; };
+    return CustomAsyncPipe;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @enum {number} */
 var ImageType = {
@@ -3642,7 +3902,7 @@ var Image = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ImageUrlPipe = /** @class */ (function () {
     function ImageUrlPipe() {
@@ -3667,7 +3927,11 @@ var ImageUrlPipe = /** @class */ (function () {
         /** @type {?} */
         var image = null;
         if (images && images.length) {
-            image = images.find(function (i) { return i.type === imageType; }) || images[0];
+            image = images.find((/**
+             * @param {?} i
+             * @return {?}
+             */
+            function (i) { return i.type === imageType; })) || images[0];
         }
         return image ? (image.url + queryString).replace(/ /g, '%20') : null;
     };
@@ -3685,7 +3949,7 @@ var ImageUrlPipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var ImagePipe = /** @class */ (function () {
     function ImagePipe() {
@@ -3704,7 +3968,11 @@ var ImagePipe = /** @class */ (function () {
         type = type || 'Default';
         /** @type {?} */
         var imageType = ImageType[type] || ImageType.Default;
-        return (images && images.length) ? images.find(function (i) { return i.type === imageType; }) || null : null; // images[0]
+        return (images && images.length) ? images.find((/**
+         * @param {?} i
+         * @return {?}
+         */
+        function (i) { return i.type === imageType; })) || null : null; // images[0]
     };
     ImagePipe.decorators = [
         { type: Pipe, args: [{
@@ -3720,7 +3988,7 @@ var ImagePipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var PublicPipe = /** @class */ (function () {
     function PublicPipe(coreService, segment) {
@@ -3760,7 +4028,7 @@ var PublicPipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var RoutePipe = /** @class */ (function () {
     function RoutePipe(routeService) {
@@ -3796,7 +4064,7 @@ var RoutePipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var SlugService = /** @class */ (function (_super) {
     __extends(SlugService, _super);
@@ -3840,7 +4108,15 @@ var SlugService = /** @class */ (function (_super) {
             this.cache[key] = null;
         }
         // return observable of key
-        return this.slugs$.pipe(map(function (items) { return items[key]; }), filter(function (item) { return item !== null; }));
+        return this.slugs$.pipe(map((/**
+         * @param {?} items
+         * @return {?}
+         */
+        function (items) { return items[key]; })), filter((/**
+         * @param {?} item
+         * @return {?}
+         */
+        function (item) { return item !== null; })));
     };
     /**
      * @return {?}
@@ -3852,11 +4128,18 @@ var SlugService = /** @class */ (function (_super) {
         var _this = this;
         return this.emitter.pipe(
         // throttleTime(500),
-        tap(function () {
-            _this.collectKeys().pipe(first()).subscribe(function (keys) {
+        tap((/**
+         * @return {?}
+         */
+        function () {
+            _this.collectKeys().pipe(first()).subscribe((/**
+             * @param {?} keys
+             * @return {?}
+             */
+            function (keys) {
                 // console.log('SlugService.collected', keys);
-            });
-        }));
+            }));
+        })));
     };
     /**
      * @return {?}
@@ -3899,15 +4182,27 @@ var SlugService = /** @class */ (function (_super) {
         /** @type {?} */
         var keys = Object.keys(this.collectedKeys);
         this.collectedKeys = {};
-        return this.getSlugs(keys).pipe(map(function (items) {
+        return this.getSlugs(keys).pipe(map((/**
+         * @param {?} items
+         * @return {?}
+         */
+        function (items) {
             /** @type {?} */
             var dictionary = {};
-            items.forEach(function (x) { return dictionary[x.mnemonic] = [x.slug]; });
+            items.forEach((/**
+             * @param {?} x
+             * @return {?}
+             */
+            function (x) { return dictionary[x.mnemonic] = [x.slug]; }));
             return dictionary;
-        }), tap(function (dictionary) {
+        })), tap((/**
+         * @param {?} dictionary
+         * @return {?}
+         */
+        function (dictionary) {
             Object.assign(_this.cache, dictionary);
             _this.slugs$.next(_this.cache);
-        }));
+        })));
     };
     SlugService.decorators = [
         { type: Injectable, args: [{
@@ -3920,7 +4215,7 @@ var SlugService = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var SlugAsyncPipe = /** @class */ (function () {
     function SlugAsyncPipe(changeDetector, slugService, routePipe) {
@@ -3978,7 +4273,7 @@ var SlugAsyncPipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var SlugPipe = /** @class */ (function () {
     function SlugPipe(slugService) {
@@ -4016,7 +4311,7 @@ var SlugPipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var TranslateDirective = /** @class */ (function (_super) {
     __extends(TranslateDirective, _super);
@@ -4035,10 +4330,14 @@ var TranslateDirective = /** @class */ (function (_super) {
     function () {
         var _this = this;
         // console.log('TranslateDirective.ngOnInit', this.element.nativeElement.innerHTML);
-        this.translateService.getTranslate(this.translate, this.element.nativeElement.innerHTML, this.translateParams).pipe(takeUntil(this.unsubscribe)).subscribe(function (translate) {
+        this.translateService.getTranslate(this.translate, this.element.nativeElement.innerHTML, this.translateParams).pipe(takeUntil(this.unsubscribe)).subscribe((/**
+         * @param {?} translate
+         * @return {?}
+         */
+        function (translate) {
             _this.element.nativeElement.innerHTML = translate;
             // console.log('TranslateDirective.ngOnInit', translate);
-        });
+        }));
         // console.log('TranslateDirective.ngOnInit', this.translate, this.translateParams, this.template, this.view);
     };
     TranslateDirective.decorators = [
@@ -4060,14 +4359,18 @@ var TranslateDirective = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var TranslatePipe = /** @class */ (function () {
     function TranslatePipe(ref, translateService) {
         var _this = this;
         this.ref = ref;
         this.translateService = translateService;
-        this.translateService.events.subscribe(function (x) { return _this.ref.markForCheck(); });
+        this.translateService.events.subscribe((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this.ref.markForCheck(); }));
     }
     /**
      * @param {?} key
@@ -4108,7 +4411,7 @@ var TranslatePipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var SafeStylePipe = /** @class */ (function () {
     function SafeStylePipe(sanitizer) {
@@ -4143,7 +4446,7 @@ var SafeStylePipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var SafeUrlPipe = /** @class */ (function () {
     function SafeUrlPipe(sanitizer) {
@@ -4178,7 +4481,7 @@ var SafeUrlPipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var TrustPipe = /** @class */ (function () {
     function TrustPipe(sanitizer) {
@@ -4211,7 +4514,7 @@ var TrustPipe = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
 var services = [
@@ -4320,7 +4623,7 @@ var CoreModule = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var Label = /** @class */ (function () {
     function Label() {
@@ -4330,7 +4633,7 @@ var Label = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var Document = /** @class */ (function () {
     function Document() {
@@ -4345,7 +4648,7 @@ var DocumentIndex = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /**
  * @template T
@@ -4380,7 +4683,11 @@ var DocumentService = /** @class */ (function (_super) {
         }
         return this.get({ slug: slug }).pipe(
         // tap(x => this.logger.log(`found identities matching "${slug}"`)),
-        switchMap(function (x) { return of(x[0]); }));
+        switchMap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return of(x[0]); })));
     };
     DocumentService.decorators = [
         { type: Injectable, args: [{
@@ -4393,7 +4700,7 @@ var DocumentService = /** @class */ (function (_super) {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var Entity = /** @class */ (function () {
     function Entity() {
@@ -4403,7 +4710,7 @@ var Entity = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var Feature = /** @class */ (function () {
     function Feature() {
@@ -4414,7 +4721,7 @@ var Feature = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var Identity = /** @class */ (function () {
     function Identity() {
@@ -4424,14 +4731,18 @@ var Identity = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var MenuItem = /** @class */ (function () {
     function MenuItem(options) {
         if (options) {
             Object.assign(this, options);
             if (options.items) {
-                this.items = options.items.map(function (item) { return new MenuItem(item); });
+                this.items = options.items.map((/**
+                 * @param {?} item
+                 * @return {?}
+                 */
+                function (item) { return new MenuItem(item); }));
             }
         }
     }
@@ -4440,7 +4751,7 @@ var MenuItem = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var Taxonomy = /** @class */ (function () {
     function Taxonomy() {
@@ -4450,7 +4761,7 @@ var Taxonomy = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 var Translate = /** @class */ (function () {
     function Translate() {
@@ -4460,12 +4771,12 @@ var Translate = /** @class */ (function () {
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 /**
  * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
 export { AuthService, AuthStrategy, AuthToken, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Outlet, OUTLETS, OutletDefaultComponent, OutletRepeaterComponent, OutletComponent, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵb, BundleDirective as ɵd, OutletResolverService as ɵc };

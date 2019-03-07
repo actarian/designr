@@ -39,10 +39,19 @@ export class AppComponent extends DisposableComponent implements DoCheck {
 
 	ngDoCheck() {
 		// called whenever Angular runs change detection
-		console.log('AppComponent.ngDoCheck');
+		// console.log('AppComponent.ngDoCheck');
 		this.slugService.collect();
 		this.labelService.collect();
 	}
+
+	/*
+	ngAfterViewChecked() {
+		// called whenever Angular runs change detection
+		console.log('AppComponent.ngAfterViewChecked');
+		this.slugService.collect();
+		this.labelService.collect();
+	}
+	*/
 
 	prepareRoute(outlet: RouterOutlet) {
 		const snapshot = outlet.isActivated && outlet.activatedRoute && outlet.activatedRoute.snapshot;

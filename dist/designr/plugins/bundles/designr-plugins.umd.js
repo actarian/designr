@@ -6,7 +6,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PluginsConfig = /** @class */ (function () {
         function PluginsConfig(options) {
@@ -23,7 +23,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PluginsService = /** @class */ (function () {
         function PluginsService(options) {
@@ -50,7 +50,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PluginsModuleComponent = /** @class */ (function () {
         function PluginsModuleComponent() {
@@ -135,7 +135,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var FacebookConfig = /** @class */ (function () {
         function FacebookConfig() {
@@ -216,7 +216,10 @@
                         return rxjs.of(this.FB);
                     }
                     else {
-                        return this.onceService.script('//connect.facebook.net/' + this.routeService.currentLang + '/sdk.js', 'fbAsyncInit').pipe(operators.concatMap(function (x) {
+                        return this.onceService.script('//connect.facebook.net/' + this.routeService.currentLang + '/sdk.js', 'fbAsyncInit').pipe(operators.concatMap(( /**
+                         * @param {?} x
+                         * @return {?}
+                         */function (x) {
                             // console.log(x);
                             /** @type {?} */
                             var FB = window['FB'];
@@ -229,7 +232,7 @@
                             });
                             _this.FB = FB;
                             return rxjs.of(FB);
-                        }));
+                        })));
                     }
                 }
                 else {
@@ -244,9 +247,22 @@
          */
             function () {
                 var _this = this;
-                return this.facebook().pipe(operators.filter(function (f) { return f !== null; }), operators.concatMap(function (f) {
-                    return rxjs.from(new Promise(function (resolve, reject) {
-                        f.getLoginStatus(function (r) {
+                return this.facebook().pipe(operators.filter(( /**
+                 * @param {?} f
+                 * @return {?}
+                 */function (f) { return f !== null; })), operators.concatMap(( /**
+                 * @param {?} f
+                 * @return {?}
+                 */function (f) {
+                    return rxjs.from(new Promise(( /**
+                     * @param {?} resolve
+                     * @param {?} reject
+                     * @return {?}
+                     */function (resolve, reject) {
+                        f.getLoginStatus(( /**
+                         * @param {?} r
+                         * @return {?}
+                         */function (r) {
                             _this.authResponse = null;
                             if (r.status === 'connected') {
                                 _this.authResponse = r.authResponse;
@@ -260,9 +276,9 @@
                             else {
                                 reject(r);
                             }
-                        }, { scope: _this.options.scope });
-                    }));
-                }));
+                        }), { scope: _this.options.scope });
+                    })));
+                })));
                 /*
                 return from(new Promise((resolve, reject) => {
                     this.facebook().subscribe(x => {
@@ -291,9 +307,22 @@
          */
             function () {
                 var _this = this;
-                return this.facebook().pipe(operators.filter(function (f) { return f !== null; }), operators.concatMap(function (f) {
-                    return rxjs.from(new Promise(function (resolve, reject) {
-                        f.login(function (r) {
+                return this.facebook().pipe(operators.filter(( /**
+                 * @param {?} f
+                 * @return {?}
+                 */function (f) { return f !== null; })), operators.concatMap(( /**
+                 * @param {?} f
+                 * @return {?}
+                 */function (f) {
+                    return rxjs.from(new Promise(( /**
+                     * @param {?} resolve
+                     * @param {?} reject
+                     * @return {?}
+                     */function (resolve, reject) {
+                        f.login(( /**
+                         * @param {?} r
+                         * @return {?}
+                         */function (r) {
                             _this.authResponse = null;
                             if (r.status === 'connected') {
                                 _this.authResponse = r.authResponse;
@@ -307,9 +336,9 @@
                             else {
                                 reject(r);
                             }
-                        }, { scope: _this.options.scope });
-                    }));
-                }));
+                        }), { scope: _this.options.scope });
+                    })));
+                })));
                 /*
                 return from(new Promise((resolve, reject) => {
                     this.facebook().subscribe(x => {
@@ -338,15 +367,28 @@
          */
             function () {
                 var _this = this;
-                return this.facebook().pipe(operators.filter(function (f) { return f !== null; }), operators.concatMap(function (f) {
-                    return rxjs.from(new Promise(function (resolve, reject) {
+                return this.facebook().pipe(operators.filter(( /**
+                 * @param {?} f
+                 * @return {?}
+                 */function (f) { return f !== null; })), operators.concatMap(( /**
+                 * @param {?} f
+                 * @return {?}
+                 */function (f) {
+                    return rxjs.from(new Promise(( /**
+                     * @param {?} resolve
+                     * @param {?} reject
+                     * @return {?}
+                     */function (resolve, reject) {
                         // console.log('f', f);
-                        f.logout(function (r) {
+                        f.logout(( /**
+                         * @param {?} r
+                         * @return {?}
+                         */function (r) {
                             resolve(r);
                             _this.storage.delete('facebook');
-                        });
-                    }));
-                }));
+                        }));
+                    })));
+                })));
                 /*
                 return from(new Promise((resolve, reject) => {
                     this.facebook().subscribe(x => {
@@ -368,13 +410,23 @@
          */
             function (fields) {
                 var _this = this;
-                return this.login().pipe(operators.concatMap(function (l) {
-                    return rxjs.from(new Promise(function (resolve, reject) {
+                return this.login().pipe(operators.concatMap(( /**
+                 * @param {?} l
+                 * @return {?}
+                 */function (l) {
+                    return rxjs.from(new Promise(( /**
+                     * @param {?} resolve
+                     * @param {?} reject
+                     * @return {?}
+                     */function (resolve, reject) {
                         fields = fields || _this.options.fields;
                         _this.FB.api('/me', {
                             fields: fields,
                             accessToken: _this.options.tokenClient,
-                        }, function (r) {
+                        }, ( /**
+                         * @param {?} r
+                         * @return {?}
+                         */function (r) {
                             if (!r || r.error) {
                                 /** @type {?} */
                                 var error = r ? r.error : 'error';
@@ -389,9 +441,9 @@
                                 // console.log('FacebookService.getMe.success', user);
                                 resolve(user);
                             }
-                        });
-                    }));
-                }));
+                        }));
+                    })));
+                })));
             };
         FacebookService.decorators = [
             { type: i0.Injectable, args: [{
@@ -415,7 +467,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var GoogleTagManagerPageViewEvent = /** @class */ (function () {
         function GoogleTagManagerPageViewEvent() {
@@ -484,11 +536,14 @@
                         var dataLayer_1 = window['dataLayer'];
                         dataLayer_1.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
                         // console.log('GoogleTagManagerConfig.once', src, dataLayer);
-                        this.dataLayer$ = this.onceService.script(src).pipe(operators.map(function (x) {
+                        this.dataLayer$ = this.onceService.script(src).pipe(operators.map(( /**
+                         * @param {?} x
+                         * @return {?}
+                         */function (x) {
                             // console.log('dataLayer', dataLayer, x);
                             _this.dataLayer = dataLayer_1;
                             return dataLayer_1;
-                        }));
+                        })));
                         return this.dataLayer$;
                     }
                 }
@@ -506,20 +561,25 @@
          */
             function (payload) {
                 var _this = this;
-                this.zone.runOutsideAngular(function () {
+                this.zone.runOutsideAngular(( /**
+                 * @return {?}
+                 */function () {
                     if (_this.dataLayer) {
                         _this.dataLayer.push(payload);
                         _this.logger.log('GoogleTagManagerConfig.push', payload);
                     }
                     else {
-                        _this.once().pipe(operators.first()).subscribe(function (dataLayer) {
+                        _this.once().pipe(operators.first()).subscribe(( /**
+                         * @param {?} dataLayer
+                         * @return {?}
+                         */function (dataLayer) {
                             if (_this.dataLayer) {
                                 _this.dataLayer.push(payload);
                                 _this.logger.log('GoogleTagManagerConfig.push', payload);
                             }
-                        });
+                        }));
                     }
-                });
+                }));
             };
         GoogleTagManagerService.decorators = [
             { type: i0.Injectable, args: [{
@@ -542,7 +602,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var GoogleTagManagerComponent = /** @class */ (function (_super) {
         __extends(GoogleTagManagerComponent, _super);
@@ -565,7 +625,13 @@
             function () {
                 var _this = this;
                 if (common.isPlatformBrowser(this.platformId)) {
-                    this.router.events.pipe(operators.takeUntil(this.unsubscribe), operators.filter(function (e) { return e instanceof router.NavigationEnd; })).subscribe(function (e) {
+                    this.router.events.pipe(operators.takeUntil(this.unsubscribe), operators.filter(( /**
+                     * @param {?} e
+                     * @return {?}
+                     */function (e) { return e instanceof router.NavigationEnd; }))).subscribe(( /**
+                     * @param {?} e
+                     * @return {?}
+                     */function (e) {
                         /** @type {?} */
                         var url = "" + _this.pluginsService.options.origin + e.urlAfterRedirects;
                         // console.log('GoogleTagManagerComponent.NavigationEnd', e.id, e.url, e.urlAfterRedirects, url);
@@ -573,15 +639,18 @@
                             _this.pageView.emit({ dataLayer: _this.dataLayer, url: url });
                         }
                         else {
-                            _this.googleTagManager.once().pipe(operators.takeUntil(_this.unsubscribe)).subscribe(function (dataLayer) {
+                            _this.googleTagManager.once().pipe(operators.takeUntil(_this.unsubscribe)).subscribe(( /**
+                             * @param {?} dataLayer
+                             * @return {?}
+                             */function (dataLayer) {
                                 // console.log('dataLayer', dataLayer);
                                 _this.id = _this.googleTagManager.options.id;
                                 _this.iframeUrl = "https://www.googletagmanager.com/ns.html?id=" + _this.id;
                                 _this.dataLayer = dataLayer;
                                 _this.pageView.emit({ dataLayer: _this.dataLayer, url: url });
-                            });
+                            }));
                         }
-                    });
+                    }));
                 }
             };
         GoogleTagManagerComponent.decorators = [
@@ -607,7 +676,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var GoogleConfig = /** @class */ (function () {
         function GoogleConfig() {
@@ -671,14 +740,17 @@
             function () {
                 var _this = this;
                 if (common.isPlatformBrowser(this.platformId)) {
-                    return new rxjs.Observable().pipe(function (x) {
+                    return new rxjs.Observable().pipe(( /**
+                     * @param {?} x
+                     * @return {?}
+                     */function (x) {
                         if (_this.gapi) {
                             return rxjs.of(_this.gapi);
                         }
                         else {
                             return _this.once();
                         }
-                    });
+                    }));
                 }
                 else {
                     return rxjs.of(null);
@@ -692,7 +764,10 @@
          */
             function () {
                 var _this = this;
-                return this.login().pipe(operators.concatMap(function (x) {
+                return this.login().pipe(operators.concatMap(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) {
                     /** @type {?} */
                     var profile = _this.instance.currentUser.get().getBasicProfile();
                     /** @type {?} */
@@ -707,7 +782,7 @@
                         googleToken: _this.authResponse.access_token,
                     }));
                     return rxjs.of(user);
-                }));
+                })));
             };
         /**
          * @return {?}
@@ -717,9 +792,12 @@
          */
             function () {
                 var _this = this;
-                return this.auth2Instance().pipe(operators.concatMap(function (x) {
+                return this.auth2Instance().pipe(operators.concatMap(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) {
                     return _this.signin();
-                }));
+                })));
             };
         /**
          * @return {?}
@@ -729,18 +807,28 @@
          */
             function () {
                 var _this = this;
-                return this.auth2Instance().pipe(operators.concatMap(function (x) {
-                    return rxjs.from(new Promise(function (resolve, reject) {
+                return this.auth2Instance().pipe(operators.concatMap(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) {
+                    return rxjs.from(new Promise(( /**
+                     * @param {?} resolve
+                     * @param {?} reject
+                     * @return {?}
+                     */function (resolve, reject) {
                         if (_this.instance.isSignedIn && _this.instance.isSignedIn.get()) {
-                            _this.instance.signOut().then(function (signed) {
+                            _this.instance.signOut().then(( /**
+                             * @param {?} signed
+                             * @return {?}
+                             */function (signed) {
                                 resolve();
-                            }, reject);
+                            }), reject);
                         }
                         else {
                             resolve();
                         }
-                    }));
-                }));
+                    })));
+                })));
             };
         /**
          * @private
@@ -752,10 +840,13 @@
          */
             function () {
                 var _this = this;
-                return this.onceService.script('https://apis.google.com/js/api:client.js?onload={{callback}}', true).pipe(operators.concatMap(function (x) {
+                return this.onceService.script('https://apis.google.com/js/api:client.js?onload={{callback}}', true).pipe(operators.concatMap(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) {
                     _this.gapi = window['gapi'];
                     return rxjs.of(_this.gapi);
-                }));
+                })));
             };
         /**
          * @private
@@ -767,29 +858,46 @@
          */
             function () {
                 var _this = this;
-                return new rxjs.Observable().pipe(function (x) {
+                return new rxjs.Observable().pipe(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) {
                     if (_this.auth2) {
                         return rxjs.of(_this.auth2);
                     }
                     else {
-                        return _this.google().pipe(operators.concatMap(function (x) {
+                        return _this.google().pipe(operators.concatMap(( /**
+                         * @param {?} x
+                         * @return {?}
+                         */function (x) {
                             if (_this.gapi.auth2) {
                                 return _this.auth2init();
                             }
                             else {
-                                return rxjs.from(new Promise(function (resolve, reject) {
-                                    _this.gapi.load('auth2', function () {
-                                        setTimeout(function () {
+                                return rxjs.from(new Promise(( /**
+                                 * @param {?} resolve
+                                 * @param {?} reject
+                                 * @return {?}
+                                 */function (resolve, reject) {
+                                    _this.gapi.load('auth2', ( /**
+                                     * @return {?}
+                                     */function () {
+                                        setTimeout(( /**
+                                         * @return {?}
+                                         */function () {
                                             resolve();
-                                        }, 200);
-                                    }, reject);
-                                })).pipe(operators.concatMap(function (x) {
+                                        }), 200);
+                                    }), reject);
+                                }))).pipe(operators.concatMap(( /**
+                                 * @param {?} x
+                                 * @return {?}
+                                 */function (x) {
                                     return _this.auth2init();
-                                }));
+                                })));
                             }
-                        }));
+                        })));
                     }
-                });
+                }));
             };
         /**
          * @private
@@ -801,9 +909,15 @@
          */
             function () {
                 var _this = this;
-                return rxjs.from(new Promise(function (resolve, reject) {
+                return rxjs.from(new Promise(( /**
+                 * @param {?} resolve
+                 * @param {?} reject
+                 * @return {?}
+                 */function (resolve, reject) {
                     /** @type {?} */
-                    var readAccessToken = function () {
+                    var readAccessToken = ( /**
+                     * @return {?}
+                     */function () {
                         // console.log('GoogleLogin.readAccessToken');
                         try {
                             /** @type {?} */
@@ -820,21 +934,27 @@
                             _this.storage.delete('google');
                             reject(error);
                         }
-                    };
+                    });
                     if (_this.instance.isSignedIn && _this.instance.isSignedIn.get()) {
                         readAccessToken();
                     }
                     else {
                         _this.instance.signIn({
                             scope: 'profile email',
-                        }).then(function (signed) {
+                        }).then(( /**
+                         * @param {?} signed
+                         * @return {?}
+                         */function (signed) {
                             readAccessToken();
-                        }, function (error) {
+                        }), ( /**
+                         * @param {?} error
+                         * @return {?}
+                         */function (error) {
                             _this.storage.delete('google');
                             reject(error);
-                        });
+                        }));
                     }
-                }));
+                })));
             };
         /**
          * @private
@@ -846,19 +966,25 @@
          */
             function () {
                 var _this = this;
-                return rxjs.from(new Promise(function (resolve, reject) {
+                return rxjs.from(new Promise(( /**
+                 * @param {?} resolve
+                 * @param {?} reject
+                 * @return {?}
+                 */function (resolve, reject) {
                     _this.gapi.auth2.init({
                         client_id: _this.options.clientId,
                         cookiepolicy: 'single_host_origin',
                         scope: 'profile email',
                         fetch_basic_profile: true,
                         ux_mode: 'popup',
-                    }).then(function () {
+                    }).then(( /**
+                     * @return {?}
+                     */function () {
                         _this.auth2 = _this.gapi.auth2;
                         // console.log('Auth2Init.success', this.auth2);
                         resolve(_this.auth2);
-                    }, reject);
-                }));
+                    }), reject);
+                })));
             };
         /**
          * @return {?}
@@ -872,10 +998,13 @@
                     return rxjs.of(this.instance);
                 }
                 else {
-                    return this.getAuth2().pipe(operators.concatMap(function (x) {
+                    return this.getAuth2().pipe(operators.concatMap(( /**
+                     * @param {?} x
+                     * @return {?}
+                     */function (x) {
                         _this.instance = _this.auth2.getAuthInstance();
                         return rxjs.of(_this.instance);
-                    }));
+                    })));
                 }
             };
         GoogleService.decorators = [
@@ -898,7 +1027,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var MapboxService = /** @class */ (function () {
         function MapboxService() {
@@ -914,7 +1043,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PayPalConfig = /** @class */ (function () {
         function PayPalConfig() {
@@ -970,10 +1099,13 @@
                         /** @type {?} */
                         var src = "https://www.paypalobjects.com/api/checkout.js";
                         // console.log('PayPalConfig.once', src);
-                        this.paypal$ = this.onceService.script(src).pipe(operators.map(function (x) {
+                        this.paypal$ = this.onceService.script(src).pipe(operators.map(( /**
+                         * @param {?} x
+                         * @return {?}
+                         */function (x) {
                             _this.paypal = window['paypal'];
                             return _this.paypal;
-                        }));
+                        })));
                         return this.paypal$;
                     }
                 }
@@ -994,10 +1126,13 @@
             function (options, selector) {
                 var _this = this;
                 selector = selector || '#paypal-button';
-                return this.once().pipe(operators.mergeMap(function (paypal) {
+                return this.once().pipe(operators.mergeMap(( /**
+                 * @param {?} paypal
+                 * @return {?}
+                 */function (paypal) {
                     paypal.Button.render(_this.getOptions(paypal, options), selector);
                     return rxjs.of(paypal);
-                }));
+                })));
             };
         /**
          * @private
@@ -1014,14 +1149,33 @@
             function (paypal, options) {
                 /** @type {?} */
                 var payload = Object.assign(this.options, options);
-                payload.payment = function (data, actions) {
-                    return new paypal.Promise(function (resolve, reject) {
+                payload.payment = ( /**
+                 * @param {?} data
+                 * @param {?} actions
+                 * @return {?}
+                 */function (data, actions) {
+                    return new paypal.Promise(( /**
+                     * @param {?} resolve
+                     * @param {?} reject
+                     * @return {?}
+                     */function (resolve, reject) {
                         if (options.payment) {
-                            options.payment().pipe(operators.first(), operators.mergeMap(function (payload) {
+                            options.payment().pipe(operators.first(), operators.mergeMap(( /**
+                             * @param {?} payload
+                             * @return {?}
+                             */function (payload) {
                                 return rxjs.from(actions.payment.create(payload));
-                            })).subscribe(function (success) { return resolve(success); }, // actions.payment.create(success)
+                            }))).subscribe(( /**
+                             * @param {?} success
+                             * @return {?}
+                             */function (success) { return resolve(success); }), (
+                            // actions.payment.create(success)
+                            /**
+                             * @param {?} error
+                             * @return {?}
+                             */
                             function (// actions.payment.create(success)
-                            error) { return reject(error); });
+                            error) { return reject(error); }));
                         }
                         else {
                             console.log('PayPalService.payment callback not setted');
@@ -1034,16 +1188,26 @@
                         // jQuery.post('/my-api/create-payment')
                         // .done(function(data) { resolve(data.paymentID); })
                         // .fail(function(err)  { reject(err); });
-                    });
-                };
-                payload.onAuthorize = function (data, actions) {
+                    }));
+                });
+                payload.onAuthorize = ( /**
+                 * @param {?} data
+                 * @param {?} actions
+                 * @return {?}
+                 */function (data, actions) {
                     if (options.onAuthorize) {
-                        return actions.payment.execute().then(function (payment) { return options.onAuthorize(payment, null); }, function (error) { return options.onAuthorize(null, error); });
+                        return actions.payment.execute().then(( /**
+                         * @param {?} payment
+                         * @return {?}
+                         */function (payment) { return options.onAuthorize(payment, null); }), ( /**
+                         * @param {?} error
+                         * @return {?}
+                         */function (error) { return options.onAuthorize(null, error); }));
                     }
                     else {
                         console.log('PayPalService.onAuthorize callback not setted');
                     }
-                };
+                });
                 return payload;
             };
         PayPalService.decorators = [
@@ -1065,7 +1229,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var PayPalWidgetComponent = /** @class */ (function (_super) {
         __extends(PayPalWidgetComponent, _super);
@@ -1083,9 +1247,12 @@
          */
             function () {
                 if (common.isPlatformBrowser(this.platformId)) {
-                    this.paypalService.render(this.paypalOptions, '#paypal-widget-button').pipe(operators.takeUntil(this.unsubscribe)).subscribe(function (paypal) {
+                    this.paypalService.render(this.paypalOptions, '#paypal-widget-button').pipe(operators.takeUntil(this.unsubscribe)).subscribe(( /**
+                     * @param {?} paypal
+                     * @return {?}
+                     */function (paypal) {
                         // console.log('PayPalWidgetComponent.rendered', paypal)
-                    });
+                    }));
                 }
             };
         PayPalWidgetComponent.decorators = [
@@ -1109,7 +1276,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var SWIPER_CONFIG = new i0.InjectionToken('SWIPER_CONFIG');
@@ -1195,7 +1362,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var SwiperDirective = /** @class */ (function () {
         function SwiperDirective(platformId, zone, elementRef, differs, defaults) {
@@ -1300,24 +1467,34 @@
                     this.index_ = null;
                 }
                 params.on = {
-                    slideChange: function () {
+                    slideChange: ( /**
+                     * @return {?}
+                     */function () {
                         if (_this.swiper_ && _this.indexChange.observers.length) {
                             _this.emit(_this.indexChange, _this.swiper_.realIndex);
                         }
-                    }
+                    })
                 };
-                this.zone.runOutsideAngular(function () {
+                this.zone.runOutsideAngular(( /**
+                 * @return {?}
+                 */function () {
                     _this.swiper_ = new Swiper(_this.elementRef.nativeElement, params);
-                });
+                }));
                 if (params.init !== false && this.init.observers.length) {
                     this.emit(this.init, this.swiper_);
                 }
                 // Add native Swiper event handling
-                SwiperEvents.forEach(function (eventName) {
+                SwiperEvents.forEach(( /**
+                 * @param {?} eventName
+                 * @return {?}
+                 */function (eventName) {
                     /** @type {?} */
                     var swiperEvent = eventName.replace('swiper', '');
                     swiperEvent = swiperEvent.charAt(0).toLowerCase() + swiperEvent.slice(1);
-                    _this.swiper_.on(swiperEvent, function () {
+                    _this.swiper_.on(swiperEvent, ( /**
+                     * @param {...?} args
+                     * @return {?}
+                     */function () {
                         var args = [];
                         for (var _i = 0; _i < arguments.length; _i++) {
                             args[_i] = arguments[_i];
@@ -1330,8 +1507,8 @@
                         if (emitter.observers.length) {
                             _this.emit(emitter, args);
                         }
-                    });
-                });
+                    }));
+                }));
                 if (!this.config_) {
                     this.config_ = this.differs.find(this.config || {}).create();
                     this.config_.diff(this.config || {});
@@ -1346,9 +1523,11 @@
             function () {
                 var _this = this;
                 if (this.swiper_) {
-                    this.zone.runOutsideAngular(function () {
+                    this.zone.runOutsideAngular(( /**
+                     * @return {?}
+                     */function () {
                         _this.swiper_.destroy(true, _this.swiper_.initialized || false);
-                    });
+                    }));
                     this.swiper_ = null;
                 }
             };
@@ -1383,16 +1562,20 @@
                 if (this.swiper_ && changes['disabled']) {
                     if (changes['disabled'].currentValue !== changes['disabled'].previousValue) {
                         if (changes['disabled'].currentValue === true) {
-                            this.zone.runOutsideAngular(function () {
+                            this.zone.runOutsideAngular(( /**
+                             * @return {?}
+                             */function () {
                                 _this.ngOnDestroy();
                                 _this.ngAfterViewInit();
-                            });
+                            }));
                         }
                         else if (changes['disabled'].currentValue === false) {
-                            this.zone.runOutsideAngular(function () {
+                            this.zone.runOutsideAngular(( /**
+                             * @return {?}
+                             */function () {
                                 _this.ngOnDestroy();
                                 _this.ngAfterViewInit();
-                            });
+                            }));
                         }
                     }
                 }
@@ -1414,7 +1597,9 @@
                     emitter.emit(value);
                 }
                 else {
-                    this.zone.run(function () { return emitter.emit(value); });
+                    this.zone.run(( /**
+                     * @return {?}
+                     */function () { return emitter.emit(value); }));
                 }
             };
         /**
@@ -1435,9 +1620,11 @@
             function () {
                 var _this = this;
                 if (this.swiper_) {
-                    this.zone.runOutsideAngular(function () {
+                    this.zone.runOutsideAngular(( /**
+                     * @return {?}
+                     */function () {
                         _this.swiper_.init();
-                    });
+                    }));
                 }
             };
         /**
@@ -1448,13 +1635,17 @@
          */
             function () {
                 var _this = this;
-                setTimeout(function () {
+                setTimeout(( /**
+                 * @return {?}
+                 */function () {
                     if (_this.swiper_) {
-                        _this.zone.runOutsideAngular(function () {
+                        _this.zone.runOutsideAngular(( /**
+                         * @return {?}
+                         */function () {
                             _this.swiper_.update();
-                        });
+                        }));
                     }
-                }, 0);
+                }), 0);
             };
         /**
          * @param {?=} real
@@ -1495,9 +1686,11 @@
                     if (this.swiper_.params.loop) {
                         realIndex_1 += this.swiper_.loopedSlides;
                     }
-                    this.zone.runOutsideAngular(function () {
+                    this.zone.runOutsideAngular(( /**
+                     * @return {?}
+                     */function () {
                         _this.swiper_.slideTo(realIndex_1, speed, !silent);
-                    });
+                    }));
                 }
             };
         /**
@@ -1513,9 +1706,11 @@
             function (speed, silent) {
                 var _this = this;
                 if (this.swiper_) {
-                    this.zone.runOutsideAngular(function () {
+                    this.zone.runOutsideAngular(( /**
+                     * @return {?}
+                     */function () {
                         _this.swiper_.slidePrev(speed, !silent);
-                    });
+                    }));
                 }
             };
         /**
@@ -1531,9 +1726,11 @@
             function (speed, silent) {
                 var _this = this;
                 if (this.swiper_) {
-                    this.zone.runOutsideAngular(function () {
+                    this.zone.runOutsideAngular(( /**
+                     * @return {?}
+                     */function () {
                         _this.swiper_.slideNext(speed, !silent);
-                    });
+                    }));
                 }
             };
         /**
@@ -1550,9 +1747,11 @@
                     this.setIndex(0);
                 }
                 if (this.swiper_ && this.swiper_.autoplay) {
-                    this.zone.runOutsideAngular(function () {
+                    this.zone.runOutsideAngular(( /**
+                     * @return {?}
+                     */function () {
                         _this.swiper_.autoplay.stop();
-                    });
+                    }));
                 }
             };
         /**
@@ -1569,9 +1768,11 @@
                     this.setIndex(0);
                 }
                 if (this.swiper_ && this.swiper_.autoplay) {
-                    this.zone.runOutsideAngular(function () {
+                    this.zone.runOutsideAngular(( /**
+                     * @return {?}
+                     */function () {
                         _this.swiper_.autoplay.start();
-                    });
+                    }));
                 }
             };
         SwiperDirective.decorators = [
@@ -1641,7 +1842,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var SwiperComponent = /** @class */ (function () {
         function SwiperComponent(zone, cdRef, platformId, defaults) {
@@ -1729,20 +1930,29 @@
                 if (!common.isPlatformBrowser(this.platformId)) {
                     return;
                 }
-                this.zone.runOutsideAngular(function () {
+                this.zone.runOutsideAngular(( /**
+                 * @return {?}
+                 */function () {
                     _this.updateClasses();
                     if (_this.swiperSlides && typeof MutationObserver !== 'undefined') {
-                        _this.mo = new MutationObserver(function () {
+                        _this.mo = new MutationObserver(( /**
+                         * @return {?}
+                         */function () {
                             _this.updateClasses();
-                        });
+                        }));
                         _this.mo.observe(_this.swiperSlides.nativeElement, { childList: true });
                     }
-                });
-                window.setTimeout(function () {
+                }));
+                window.setTimeout(( /**
+                 * @return {?}
+                 */function () {
                     if (_this.directiveRef) {
                         _this.init.emit();
                         _this.directiveRef.indexChange = _this.indexChange;
-                        SwiperEvents.forEach(function (eventName) {
+                        SwiperEvents.forEach(( /**
+                         * @param {?} eventName
+                         * @return {?}
+                         */function (eventName) {
                             if (_this.directiveRef) {
                                 /** @type {?} */
                                 var directiveOutput = ( /** @type {?} */(eventName));
@@ -1750,9 +1960,9 @@
                                 var componentOutput = ( /** @type {?} */(eventName));
                                 _this.directiveRef[directiveOutput] = ( /** @type {?} */(_this[componentOutput]));
                             }
-                        });
+                        }));
                     }
-                }, 0);
+                }), 0);
             };
         /**
          * @return {?}
@@ -1787,7 +1997,11 @@
                         this.paginationBackup = this.config.pagination;
                         this.paginationConfig = {
                             el: '.swiper-pagination',
-                            renderBullet: function (index, className) {
+                            renderBullet: ( /**
+                             * @param {?} index
+                             * @param {?} className
+                             * @return {?}
+                             */function (index, className) {
                                 /** @type {?} */
                                 var children = _this.swiperSlides ? _this.swiperSlides.nativeElement.children : [];
                                 /** @type {?} */
@@ -1799,7 +2013,7 @@
                                     bullet = "<span class=\"" + className + " " + className + "-last\" index=\"" + index + "\"></span>";
                                 }
                                 return "<span class=\"swiper-pagination-handle\" index=\"" + index + "\">" + bullet + "</span>";
-                            }
+                            })
                         };
                     }
                     if (this.swiperConfig.pagination === true) {
@@ -1925,7 +2139,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var TrustPilotConfig = /** @class */ (function () {
         function TrustPilotConfig() {
@@ -1983,10 +2197,13 @@
                         /** @type {?} */
                         var src = "https://widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js";
                         // console.log('TrustPilotConfig.once', src);
-                        this.Trustpilot$ = this.onceService.script(src).pipe(operators.map(function (x) {
+                        this.Trustpilot$ = this.onceService.script(src).pipe(operators.map(( /**
+                         * @param {?} x
+                         * @return {?}
+                         */function (x) {
                             _this.Trustpilot = window['Trustpilot'];
                             return _this.Trustpilot;
-                        }));
+                        })));
                         return this.Trustpilot$;
                     }
                 }
@@ -2013,7 +2230,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var TrustPilotWidgetOptions = /** @class */ (function () {
         function TrustPilotWidgetOptions(options) {
@@ -2091,10 +2308,13 @@
                 // console.log('TrustPilotWidgetComponent.ngOnInit', this.options, this.loaded);
                 if (common.isPlatformBrowser(this.platformId) && this.elementRef.nativeElement.children.length) { // && environment.production
                     if (!this.loaded) {
-                        this.trustPilot.once().pipe(operators.takeUntil(this.unsubscribe)).subscribe(function (Trustpilot) {
+                        this.trustPilot.once().pipe(operators.takeUntil(this.unsubscribe)).subscribe(( /**
+                         * @param {?} Trustpilot
+                         * @return {?}
+                         */function (Trustpilot) {
                             Trustpilot.loadFromElement(_this.elementRef.nativeElement.firstElementChild);
                             _this.loaded = true;
-                        });
+                        }));
                     }
                 }
             };
@@ -2124,7 +2344,7 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     /** @type {?} */
     var services = [
@@ -2191,12 +2411,12 @@
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     /**
      * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
     exports.PluginsConfig = PluginsConfig;

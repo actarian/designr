@@ -5,7 +5,7 @@ import { AuthService, AuthToken, DisposableComponent } from '@designr/core';
 import { ModalCompleteEvent, ModalService } from '@designr/ui';
 // import { FormGroup } from '@angular/forms';
 import { finalize, first } from 'rxjs/operators';
-import { User, UserSignIn } from '../../shared/user/user';
+import { User } from '../../shared/user/user';
 import { UserService } from '../../shared/user/user.service';
 // import { ControlBase } from '../../core/forms';
 import { AuthForgottenComponent } from './auth-forgotten.component';
@@ -25,7 +25,7 @@ export class AuthSignInComponent extends DisposableComponent implements OnInit {
 	busy: boolean = false;
 	submitted: boolean = false;
 
-	model: UserSignIn = new UserSignIn({ passwordReveal: true });
+	// model: UserSignIn = new UserSignIn({ passwordReveal: true });
 
 	constructor(
 		private formService: FormService,
@@ -63,7 +63,7 @@ export class AuthSignInComponent extends DisposableComponent implements OnInit {
 			label: 'signIn.custom',
 			placeholder: 'signIn.custom',
 			order: 4
-		},]);
+		}]);
 		this.form = this.formService.getGroupFromControls(this.controls);
 	}
 
