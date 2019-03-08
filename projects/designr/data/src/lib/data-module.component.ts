@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DataModuleComponent implements OnInit {
 
-	version: string = '0.0.3';
+	version: string = '0.0.4';
 
 	constructor() { }
 

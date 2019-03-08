@@ -9,14 +9,8 @@ import { LabelService } from './label.service';
 })
 export class LabelDirective extends DisposableComponent implements OnInit {
 
-	key: string;
-	innerHTML: string;
-
-	/*
-	@Input() set label(key: string) {
-		// console.log('LabelDirective.label', this.key, this.labelParams, this.template, this.view);
-	}
-	*/
+	// key: string;
+	// innerHTML: string;
 	@Input() label: string;
 	@Input() labelParams: any;
 
@@ -28,13 +22,11 @@ export class LabelDirective extends DisposableComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// console.log('LabelDirective.ngOnInit', this.element.nativeElement.innerHTML);
-		this.labelService.getKey(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(
+		this.labelService.transform$(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(
 			takeUntil(this.unsubscribe)
 		).subscribe(label => {
 			this.element.nativeElement.innerHTML = label;
-			// console.log('LabelDirective.ngOnInit', label);
 		});
-		// console.log('LabelDirective.ngOnInit', this.label, this.labelParams, this.template, this.view);
 	}
+
 }

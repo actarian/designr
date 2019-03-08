@@ -41,7 +41,6 @@ export { PublicPipe } from './lib/pipes/public.pipe';
 export { SegmentPipe } from './lib/pipes/segment.pipe';
 export { RoutePipe } from './lib/route/route.pipe';
 export { RouteService } from './lib/route/route.service';
-export { SlugAsyncPipe } from './lib/slug/slug-async.pipe';
 export { SlugPipe } from './lib/slug/slug.pipe';
 export { SlugService } from './lib/slug/slug.service';
 export { CookieStorageService, LocalStorageService, SessionStorageService, StorageService } from './lib/storage/storage.service';

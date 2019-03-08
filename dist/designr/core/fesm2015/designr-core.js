@@ -4,9 +4,9 @@ import { HttpErrorResponse, HttpClient, HttpHeaders, HttpParams, HttpClientModul
 import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
-import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ComponentFactoryResolver, ViewChild, ElementRef, Renderer2, Pipe, ChangeDetectorRef, NgZone, ViewEncapsulation, EventEmitter, WrappedValue, defineInjectable, inject, INJECTOR, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ComponentFactoryResolver, ViewChild, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, INJECTOR, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
-import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, delay, first, takeUntil } from 'rxjs/operators';
+import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, debounceTime, takeUntil, first } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
@@ -792,7 +792,7 @@ DefaultContentDirective.propDecorators = {
  */
 class CoreModuleComponent {
     constructor() {
-        this.version = '0.0.3';
+        this.version = '0.0.4';
     }
     /**
      * @return {?}
@@ -2334,12 +2334,9 @@ class LabelService extends ApiService {
     constructor(injector) {
         super(injector);
         this.injector = injector;
-        // !!! new async pipe
-        this.collectedKeys = {};
-        this.cache = {};
-        this.parsers = {};
-        this.labels$ = new Subject();
-        this.emitter = new EventEmitter();
+        this.keys = {};
+        this.values$ = new BehaviorSubject({});
+        this.emitter$ = new EventEmitter();
     }
     /**
      * @return {?}
@@ -2348,198 +2345,173 @@ class LabelService extends ApiService {
         return '/api/label';
     }
     /**
-     * @private
-     * @param {?} value
      * @param {?} key
      * @param {?=} defaultValue
      * @param {?=} params
      * @return {?}
      */
-    parseLabel(value, key, defaultValue, params) {
-        if (value == null) {
-            value = defaultValue;
-        }
-        if (value == null) {
-            return this.missingLabel(key);
-        }
-        else if (params) {
-            return this.parseParams(value, params);
-        }
-        return value;
-    }
-    /**
-     * @private
-     * @param {?} key
-     * @return {?}
-     */
-    missingLabel(key) {
-        // console.log('missingLabel', key, this.missingHandler);
-        if (this.missingHandler) {
-            return typeof this.missingHandler === 'function' ?
-                this.missingHandler(key) :
-                this.missingHandler;
-        }
-        // console.log('missingLabel', key);
-        return key;
-    }
-    /**
-     * @private
-     * @param {?} value
-     * @param {?} params
-     * @return {?}
-     */
-    parseParams(value, params) {
+    transform(key, defaultValue, params) {
         /** @type {?} */
-        const TEMPLATE_REGEXP = /@([^{}\s]*)/g;
-        return value.replace(TEMPLATE_REGEXP, (/**
-         * @param {?} text
-         * @param {?} key
-         * @return {?}
-         */
-        (text, key) => {
-            /** @type {?} */
-            const replacer = (/** @type {?} */ (params[key]));
-            return typeof replacer !== 'undefined' ? replacer : text;
-        }));
-    }
-    /**
-     * @return {?}
-     */
-    register() {
-        return this.emitter.pipe(
-        // throttleTime(500),
-        tap((/**
-         * @return {?}
-         */
-        () => {
-            this.collectKeys().pipe(first()).subscribe((/**
-             * @param {?} keys
-             * @return {?}
-             */
-            (keys) => {
-                // console.log('LabelService.collected', keys);
-            }));
-        })));
-    }
-    /**
-     * @return {?}
-     */
-    collect() {
-        if (Object.keys(this.collectedKeys).length) {
-            this.emitter.emit();
+        const values = this.values$.getValue();
+        if (values.hasOwnProperty(key)) {
+            return this.parseLabel(values[key], params);
         }
-    }
-    /**
-     * @param {?} key
-     * @param {?=} defaultValue
-     * @param {?=} params
-     * @return {?}
-     */
-    getKey(key, defaultValue, params) {
-        // console.log('LabelService.getKey', key);
-        if (this.cache.hasOwnProperty(key)) {
-            /** @type {?} */
-            const label = this.cache[key];
-            return of(label).pipe(delay(1));
-        }
-        else {
-            Object.defineProperty(this.collectedKeys, key, {
+        else if (!this.keys.hasOwnProperty(key)) {
+            values[key] = null;
+            Object.defineProperty(this.keys, key, {
                 value: { id: key, defaultValue: defaultValue },
                 enumerable: true,
                 writable: false,
             });
-            this.cache[key] = null;
+            this.emitter$.emit();
+            return null;
         }
-        this.parsers[key] = (/**
-         * @param {?} label
-         * @return {?}
-         */
-        (label) => this.parseLabel(label, key, defaultValue, params));
-        // !!! never reach this, return of(null) ?
-        return this.labels$.pipe(map((/**
-         * @param {?} items
-         * @return {?}
-         */
-        items => items[key] || null)), filter((/**
-         * @param {?} label
-         * @return {?}
-         */
-        label => label !== null)), 
-        // tap(label => console.log('getKey', key, label)),
-        map((/**
-         * @param {?} label
-         * @return {?}
-         */
-        label => this.parseLabel(label, key, defaultValue, params))), tap((/**
-         * @param {?} label
-         * @return {?}
-         */
-        label => this.cache[key] = label)));
     }
     /**
-     * @private
+     * @param {?} key
+     * @param {?=} defaultValue
+     * @param {?=} params
      * @return {?}
      */
-    collectKeys() {
+    transform$(key, defaultValue, params) {
         /** @type {?} */
-        const keys = Object.keys(this.collectedKeys).map((/**
+        const values = this.values$.getValue();
+        if (values.hasOwnProperty(key)) {
+            return of(this.parseLabel(values[key], params));
+        }
+        else if (!this.keys.hasOwnProperty(key)) {
+            values[key] = null;
+            Object.defineProperty(this.keys, key, {
+                value: { id: key, defaultValue: defaultValue },
+                enumerable: true,
+                writable: false,
+            });
+            this.emitter$.emit();
+        }
+        return this.values$.pipe(map((/**
+         * @param {?} values
+         * @return {?}
+         */
+        values => this.parseLabel(values[key], params))));
+    }
+    /**
+     * @return {?}
+     */
+    observe$() {
+        return this.emitter$.pipe(debounceTime(1), switchMap((/**
          * @param {?} x
          * @return {?}
          */
-        x => this.collectedKeys[x]));
-        // console.log('LabelService.collectKeys', keys);
-        this.collectedKeys = {};
-        if (keys.length) {
-            return this.statePost(keys).pipe(map((/**
-             * @param {?} keys
+        x => this.collect$())), filter((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => x !== null)));
+    }
+    /**
+     * @return {?}
+     */
+    collect$() {
+        if (Object.keys(this.keys).length) {
+            /** @type {?} */
+            const keys = Object.keys(this.keys).map((/**
+             * @param {?} x
              * @return {?}
              */
-            (keys) => {
-                // console.log('LabelService.collectKeys', JSON.stringify(keys));
-                /** @type {?} */
-                const items = {};
-                keys.forEach((/**
+            x => this.keys[x]));
+            this.keys = {};
+            return this.statePost(keys).pipe(map((/**
+             * @param {?} labels
+             * @return {?}
+             */
+            (labels) => {
+                return labels.reduce((/**
+                 * @param {?} values
                  * @param {?} x
                  * @return {?}
                  */
-                x => items[x.id] = this.parsers[x.id](x.value || x.defaultValue || x.id)));
-                return items;
+                (values, x) => {
+                    values[x.id] = this.getLabel(x);
+                    return values;
+                }), {});
             })), tap((/**
-             * @param {?} items
+             * @param {?} labels
              * @return {?}
              */
-            (items) => {
-                Object.assign(this.cache, items);
-                this.labels$.next(this.cache);
-                // console.log('collectKeys', this.cache);
-            })), 
-            // shareReplay(),
-            catchError((/**
+            (labels) => {
+                /** @type {?} */
+                const values = this.values$.getValue();
+                Object.assign(values, labels);
+                this.values$.next(values);
+            })), catchError((/**
              * @param {?} error
              * @return {?}
              */
             error => {
-                // console.log('LabelService.collectKeys.error', error);
-                return of({});
+                console.log(error);
+                /** @type {?} */
+                const labels = keys.reduce((/**
+                 * @param {?} values
+                 * @param {?} x
+                 * @return {?}
+                 */
+                (values, x) => {
+                    values[x.id] = this.getLabel(x);
+                    return values;
+                }), {});
+                /** @type {?} */
+                const values = this.values$.getValue();
+                Object.assign(values, labels);
+                // return this.values$.next(values);
+                return of(null);
             })));
-            /*
-            return this.post(`/api/i18n/labels`, keys).pipe(
-                map((keys: LabelKey[]) => {
-                    const items = {};
-                    keys.forEach(x => items[x.id] = x.value || x.defaultValue);
-                    return items;
-                }),
-                tap((items: { [key: string]: string; }) => {
-                    Object.assign(this.cache, items);
-                    this.labels$.next(this.cache);
-                    // console.log('collectKeys', this.cache);
-                }),
-            );
-            */
         }
         else {
-            return of({});
+            return of(null);
         }
+    }
+    /**
+     * @param {?} value
+     * @param {?} params
+     * @return {?}
+     */
+    parseLabel(value, params) {
+        if (value && params) {
+            /** @type {?} */
+            const TEMPLATE_REGEXP = /@([^{}\s]*)/g;
+            return value.replace(TEMPLATE_REGEXP, (/**
+             * @param {?} text
+             * @param {?} key
+             * @return {?}
+             */
+            (text, key) => {
+                /** @type {?} */
+                const replacer = (/** @type {?} */ (params[key]));
+                return typeof replacer !== 'undefined' ? replacer : text;
+            }));
+        }
+        else {
+            return value;
+        }
+    }
+    /**
+     * @private
+     * @param {?} label
+     * @return {?}
+     */
+    getLabel(label) {
+        return label.value || label.defaultValue || this.getMissingLabel(label);
+    }
+    /**
+     * @private
+     * @param {?} label
+     * @return {?}
+     */
+    getMissingLabel(label) {
+        if (typeof this.missingHandler === 'function') {
+            return this.missingHandler(label);
+        }
+        return label.id;
     }
 }
 LabelService.decorators = [
@@ -2571,16 +2543,13 @@ class LabelDirective extends DisposableComponent {
      * @return {?}
      */
     ngOnInit() {
-        // console.log('LabelDirective.ngOnInit', this.element.nativeElement.innerHTML);
-        this.labelService.getKey(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(takeUntil(this.unsubscribe)).subscribe((/**
+        this.labelService.transform$(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(takeUntil(this.unsubscribe)).subscribe((/**
          * @param {?} label
          * @return {?}
          */
         label => {
             this.element.nativeElement.innerHTML = label;
-            // console.log('LabelDirective.ngOnInit', label);
         }));
-        // console.log('LabelDirective.ngOnInit', this.label, this.labelParams, this.template, this.view);
     }
 }
 LabelDirective.decorators = [
@@ -2604,53 +2573,19 @@ LabelDirective.propDecorators = {
  */
 class LabelPipe {
     /**
-     * @param {?} zone
-     * @param {?} changeDetector
      * @param {?} labelService
      */
-    constructor(zone, changeDetector, labelService) {
-        this.zone = zone;
-        this.changeDetector = changeDetector;
+    constructor(labelService) {
         this.labelService = labelService;
-        // this.asyncPipe = new CustomAsyncPipe(this.changeDetector);
     }
     /**
      * @param {?} key
-     * @param {?} text
-     * @param {?} params
-     * @return {?}
-     */
-    getKey(key, text, params) {
-        if (this.key$) {
-            return;
-        }
-        this.key$ = this.labelService.getKey(key, text, params);
-        this.key$.pipe(first()).subscribe((/**
-         * @param {?} value
-         * @return {?}
-         */
-        value => {
-            this.value = value;
-            // this.changeDetector.markForCheck();
-        }));
-    }
-    /**
-     * @param {?} key
-     * @param {?=} text
+     * @param {?=} defaultValue
      * @param {?=} params
      * @return {?}
      */
-    transform(key, text, params) {
-        if (this.value) {
-            return this.value;
-        }
-        this.getKey(key, text, params); // this.asyncPipe.transform(this.labelService.getKey(key, text, params));
-    }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() {
-        // this.asyncPipe.dispose();
+    transform(key, defaultValue, params) {
+        return this.labelService.transform(key, defaultValue, params);
     }
 }
 LabelPipe.decorators = [
@@ -2664,11 +2599,9 @@ LabelPipe.decorators = [
 ];
 /** @nocollapse */
 LabelPipe.ctorParameters = () => [
-    { type: NgZone },
-    { type: ChangeDetectorRef },
     { type: LabelService }
 ];
-/** @nocollapse */ LabelPipe.ngInjectableDef = defineInjectable({ factory: function LabelPipe_Factory() { return new LabelPipe(inject(NgZone), inject(ChangeDetectorRef), inject(LabelService)); }, token: LabelPipe, providedIn: "root" });
+/** @nocollapse */ LabelPipe.ngInjectableDef = defineInjectable({ factory: function LabelPipe_Factory() { return new LabelPipe(inject(LabelService)); }, token: LabelPipe, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -3422,12 +3355,15 @@ RoutePipe.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class SlugService extends EntityService {
-    constructor() {
-        super(...arguments);
-        this.collectedKeys = {};
-        this.cache = {};
-        this.slugs$ = new Subject();
-        this.emitter = new EventEmitter();
+    /**
+     * @param {?} injector
+     */
+    constructor(injector) {
+        super(injector);
+        this.injector = injector;
+        this.keys = {};
+        this.values$ = new BehaviorSubject({});
+        this.emitter$ = new EventEmitter();
     }
     /**
      * @return {?}
@@ -3439,98 +3375,121 @@ class SlugService extends EntityService {
      * @param {?} key
      * @return {?}
      */
-    getKey(key) {
-        if (this.cache.hasOwnProperty(key)) {
-            return of(this.cache[key]);
+    transform(key) {
+        /** @type {?} */
+        const values = this.values$.getValue();
+        if (values.hasOwnProperty(key)) {
+            return values[key];
         }
-        else {
-            // console.log('SlugService.getKey', key);
-            Object.defineProperty(this.collectedKeys, key, {
-                value: key,
+        else if (!this.keys.hasOwnProperty(key)) {
+            values[key] = null;
+            Object.defineProperty(this.keys, key, {
+                value: { mnemonic: key },
                 enumerable: true,
                 writable: false,
             });
-            this.cache[key] = null;
-        }
-        // return observable of key
-        return this.slugs$.pipe(map((/**
-         * @param {?} items
-         * @return {?}
-         */
-        items => items[key])), filter((/**
-         * @param {?} item
-         * @return {?}
-         */
-        item => item !== null)));
-    }
-    /**
-     * @return {?}
-     */
-    register() {
-        return this.emitter.pipe(
-        // throttleTime(500),
-        tap((/**
-         * @return {?}
-         */
-        () => {
-            this.collectKeys().pipe(first()).subscribe((/**
-             * @param {?} keys
-             * @return {?}
-             */
-            (keys) => {
-                // console.log('SlugService.collected', keys);
-            }));
-        })));
-    }
-    /**
-     * @return {?}
-     */
-    collect() {
-        if (Object.keys(this.collectedKeys).length) {
-            this.emitter.emit();
+            this.emitter$.emit();
+            return null;
         }
     }
     /**
-     * @private
-     * @param {?} keys
+     * @param {?} key
      * @return {?}
      */
-    getSlugs(keys) {
-        keys = keys || [];
-        return this.statePost(keys).pipe(
-        // tap(items => console.log(items)),
-        );
-    }
-    /**
-     * @private
-     * @return {?}
-     */
-    collectKeys() {
-        this.slugs$.next(this.cache);
+    transform$(key) {
         /** @type {?} */
-        const keys = Object.keys(this.collectedKeys);
-        this.collectedKeys = {};
-        return this.getSlugs(keys).pipe(map((/**
-         * @param {?} items
+        const values = this.values$.getValue();
+        if (values.hasOwnProperty(key)) {
+            return of(values[key]);
+        }
+        else if (!this.keys.hasOwnProperty(key)) {
+            Object.defineProperty(this.keys, key, {
+                value: { mnemonic: key },
+                enumerable: true,
+                writable: false,
+            });
+            this.emitter$.emit();
+        }
+        return this.values$.pipe(map((/**
+         * @param {?} values
          * @return {?}
          */
-        (items) => {
+        values => values[key])));
+    }
+    /**
+     * @return {?}
+     */
+    observe$() {
+        return this.emitter$.pipe(debounceTime(1), switchMap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.collect$())), filter((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => x !== null)), first());
+    }
+    /**
+     * @return {?}
+     */
+    collect$() {
+        if (Object.keys(this.keys).length) {
             /** @type {?} */
-            const dictionary = {};
-            items.forEach((/**
+            const keys = Object.keys(this.keys).map((/**
              * @param {?} x
              * @return {?}
              */
-            x => dictionary[x.mnemonic] = [x.slug]));
-            return dictionary;
-        })), tap((/**
-         * @param {?} dictionary
-         * @return {?}
-         */
-        (dictionary) => {
-            Object.assign(this.cache, dictionary);
-            this.slugs$.next(this.cache);
-        })));
+            x => this.keys[x]));
+            this.keys = {};
+            return this.statePost(keys).pipe(map((/**
+             * @param {?} items
+             * @return {?}
+             */
+            (items) => {
+                return items.reduce((/**
+                 * @param {?} values
+                 * @param {?} x
+                 * @return {?}
+                 */
+                (values, x) => {
+                    values[x.mnemonic] = [x.slug];
+                    return values;
+                }), {});
+            })), tap((/**
+             * @param {?} slugs
+             * @return {?}
+             */
+            (slugs) => {
+                /** @type {?} */
+                const values = this.values$.getValue();
+                Object.assign(values, slugs);
+                this.values$.next(values);
+            })), catchError((/**
+             * @param {?} error
+             * @return {?}
+             */
+            error => {
+                console.log(error);
+                /** @type {?} */
+                const labels = keys.reduce((/**
+                 * @param {?} values
+                 * @param {?} x
+                 * @return {?}
+                 */
+                (values, x) => {
+                    values[x.mnemonic] = null;
+                    return values;
+                }), {});
+                /** @type {?} */
+                const values = this.values$.getValue();
+                Object.assign(values, labels);
+                return of(null);
+            })));
+        }
+        else {
+            return of(null);
+        }
     }
 }
 SlugService.decorators = [
@@ -3538,61 +3497,11 @@ SlugService.decorators = [
                 providedIn: 'root'
             },] }
 ];
-/** @nocollapse */ SlugService.ngInjectableDef = defineInjectable({ factory: function SlugService_Factory() { return new SlugService(inject(INJECTOR)); }, token: SlugService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class SlugAsyncPipe {
-    /**
-     * @param {?} changeDetector
-     * @param {?} slugService
-     * @param {?} routePipe
-     */
-    constructor(changeDetector, slugService, routePipe) {
-        this.changeDetector = changeDetector;
-        this.slugService = slugService;
-        this.routePipe = routePipe;
-        this.asyncPipe = new CustomAsyncPipe(this.changeDetector);
-    }
-    /**
-     * @param {?} key
-     * @param {?=} segments
-     * @return {?}
-     */
-    transform(key, segments) {
-        /** @type {?} */
-        let slugs = this.routePipe.transform(this.asyncPipe.transform(this.slugService.getKey(key)));
-        // console.log('SlugAsyncPipe.transform', key, slugs);
-        if (slugs && segments) {
-            slugs = slugs.concat(segments);
-        }
-        return slugs;
-    }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() {
-        this.asyncPipe.dispose();
-    }
-}
-SlugAsyncPipe.decorators = [
-    { type: Pipe, args: [{
-                name: 'slugAsync',
-                pure: false
-            },] },
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
 /** @nocollapse */
-SlugAsyncPipe.ctorParameters = () => [
-    { type: ChangeDetectorRef },
-    { type: SlugService },
-    { type: RoutePipe }
+SlugService.ctorParameters = () => [
+    { type: Injector }
 ];
-/** @nocollapse */ SlugAsyncPipe.ngInjectableDef = defineInjectable({ factory: function SlugAsyncPipe_Factory() { return new SlugAsyncPipe(inject(ChangeDetectorRef), inject(SlugService), inject(RoutePipe)); }, token: SlugAsyncPipe, providedIn: "root" });
+/** @nocollapse */ SlugService.ngInjectableDef = defineInjectable({ factory: function SlugService_Factory() { return new SlugService(inject(INJECTOR)); }, token: SlugService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -3601,18 +3510,31 @@ SlugAsyncPipe.ctorParameters = () => [
 class SlugPipe {
     /**
      * @param {?} slugService
+     * @param {?} routePipe
      */
-    constructor(slugService) {
+    constructor(slugService, routePipe) {
         this.slugService = slugService;
+        this.routePipe = routePipe;
     }
     /**
      * @param {?} key
+     * @param {?=} segments
      * @return {?}
      */
-    transform(key) {
-        return this.slugService.getKey(key);
-        // return this.async.transform<any>(this.slugService.getKey(key));
-        // return this.routeService.toSlug(key);
+    transform(key, segments) {
+        /** @type {?} */
+        const slug = this.slugService.transform(key);
+        if (slug) {
+            /** @type {?} */
+            let slugs = this.routePipe.transform(slug);
+            if (slugs && segments) {
+                slugs = slugs.concat(segments);
+            }
+            return slugs;
+        }
+        else {
+            return [];
+        }
     }
 }
 SlugPipe.decorators = [
@@ -3626,9 +3548,10 @@ SlugPipe.decorators = [
 ];
 /** @nocollapse */
 SlugPipe.ctorParameters = () => [
-    { type: SlugService }
+    { type: SlugService },
+    { type: RoutePipe }
 ];
-/** @nocollapse */ SlugPipe.ngInjectableDef = defineInjectable({ factory: function SlugPipe_Factory() { return new SlugPipe(inject(SlugService)); }, token: SlugPipe, providedIn: "root" });
+/** @nocollapse */ SlugPipe.ngInjectableDef = defineInjectable({ factory: function SlugPipe_Factory() { return new SlugPipe(inject(SlugService), inject(RoutePipe)); }, token: SlugPipe, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -3870,7 +3793,6 @@ const pipes = [
     SafeStylePipe,
     SafeUrlPipe,
     SegmentPipe,
-    SlugAsyncPipe,
     SlugPipe,
     TranslatePipe,
     TrustPipe,
@@ -4066,6 +3988,6 @@ class Translate {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { AuthService, AuthStrategy, AuthToken, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Outlet, OUTLETS, OutletDefaultComponent, OutletRepeaterComponent, OutletComponent, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugAsyncPipe, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵb, BundleDirective as ɵd, OutletResolverService as ɵc };
+export { AuthService, AuthStrategy, AuthToken, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Outlet, OUTLETS, OutletDefaultComponent, OutletRepeaterComponent, OutletComponent, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵb, BundleDirective as ɵd, OutletResolverService as ɵc };
 
 //# sourceMappingURL=designr-core.js.map

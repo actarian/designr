@@ -810,7 +810,7 @@ var CONTROL_CONFIG = new InjectionToken('control.config');
  */
 var ControlModuleComponent = /** @class */ (function () {
     function ControlModuleComponent() {
-        this.version = '0.0.3';
+        this.version = '0.0.4';
     }
     /**
      * @return {?}

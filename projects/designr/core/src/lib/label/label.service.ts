@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable, Injector } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { catchError, delay, filter, first, map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, debounceTime, filter, map, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../api/api.service';
 import { Label } from './label';
 
@@ -19,16 +19,11 @@ export class LabelService<T extends Label> extends ApiService<T> {
 		return '/api/label';
 	}
 
-	// !!! new async pipe
-	private collectedKeys: { [key: string]: LabelKey; } = {};
-	// private cache: { [key: string]: string; } = {};
+	private keys: { [key: string]: LabelKey; } = {};
+	private values$: BehaviorSubject<{ [key: string]: string; }> = new BehaviorSubject({});
+	private emitter$: EventEmitter<any> = new EventEmitter();
 
 	public missingHandler?: Function;
-
-	public cache: {} = {};
-	public parsers: {} = {};
-	private labels$: Subject<{ [key: string]: string; }> = new Subject();
-	private emitter: EventEmitter<any> = new EventEmitter();
 
 	constructor(
 		protected injector: Injector,
@@ -36,122 +31,102 @@ export class LabelService<T extends Label> extends ApiService<T> {
 		super(injector);
 	}
 
-	private parseLabel(value: string | null, key: string, defaultValue?: string, params?: any): string | any {
-		if (value == null) {
-			value = defaultValue;
-		}
-		if (value == null) {
-			return this.missingLabel(key);
-		} else if (params) {
-			return this.parseParams(value, params);
-		}
-		return value;
-	}
-
-	private missingLabel(key: string): string {
-		// console.log('missingLabel', key, this.missingHandler);
-		if (this.missingHandler) {
-			return typeof this.missingHandler === 'function' ?
-				this.missingHandler(key) :
-				this.missingHandler;
-		}
-		// console.log('missingLabel', key);
-		return key;
-	}
-
-	private parseParams(value: string, params: any): string {
-		const TEMPLATE_REGEXP: RegExp = /@([^{}\s]*)/g; // /{{\@\s?([^{}\s]*)\s?/g;
-		return value.replace(TEMPLATE_REGEXP, (text: string, key: string) => {
-			const replacer: string = params[key] as string;
-			return typeof replacer !== 'undefined' ? replacer : text;
-		});
-	}
-
-	register(): Observable<any> {
-		return this.emitter.pipe(
-			// throttleTime(500),
-			tap(() => {
-				this.collectKeys().pipe(
-					first(),
-				).subscribe((keys) => {
-					// console.log('LabelService.collected', keys);
-				});
-			})
-		);
-	}
-
-	collect(): void {
-		if (Object.keys(this.collectedKeys).length) {
-			this.emitter.emit();
-		}
-	}
-
-	getKey(key: string, defaultValue?: string, params?: any): Observable<string> {
-		// console.log('LabelService.getKey', key);
-		if (this.cache.hasOwnProperty(key)) {
-			const label = this.cache[key];
-			return of(label).pipe(
-				delay(1)
-			);
-		} else {
-			Object.defineProperty(this.collectedKeys, key, {
+	transform(key: string, defaultValue?: string, params?: any): string | undefined {
+		const values = this.values$.getValue();
+		if (values.hasOwnProperty(key)) {
+			return this.parseLabel(values[key], params);
+		} else if (!this.keys.hasOwnProperty(key)) {
+			values[key] = null;
+			Object.defineProperty(this.keys, key, {
 				value: { id: key, defaultValue: defaultValue },
 				enumerable: true,
 				writable: false,
 			});
-			this.cache[key] = null;
+			this.emitter$.emit();
+			return null;
 		}
-		this.parsers[key] = (label) => this.parseLabel(label, key, defaultValue, params);
-		// !!! never reach this, return of(null) ?
-		return this.labels$.pipe(
-			map(items => items[key] || null),
-			filter(label => label !== null),
-			// tap(label => console.log('getKey', key, label)),
-			map(label => this.parseLabel(label, key, defaultValue, params)),
-			tap(label => this.cache[key] = label),
+	}
+
+	transform$(key: string, defaultValue?: string, params?: any): Observable<string | undefined> {
+		const values = this.values$.getValue();
+		if (values.hasOwnProperty(key)) {
+			return of(this.parseLabel(values[key], params));
+		} else if (!this.keys.hasOwnProperty(key)) {
+			values[key] = null;
+			Object.defineProperty(this.keys, key, {
+				value: { id: key, defaultValue: defaultValue },
+				enumerable: true,
+				writable: false,
+			});
+			this.emitter$.emit();
+		}
+		return this.values$.pipe(
+			map(values => this.parseLabel(values[key], params))
 		);
 	}
 
-	private collectKeys(): Observable<{ [key: string]: string; }> {
-		const keys = Object.keys(this.collectedKeys).map(x => this.collectedKeys[x]);
-		// console.log('LabelService.collectKeys', keys);
-		this.collectedKeys = {};
-		if (keys.length) {
+	observe$(): Observable<{ [key: string]: string; }> {
+		return this.emitter$.pipe(
+			debounceTime(1),
+			switchMap(x => this.collect$()),
+			filter(x => x !== null),
+		);
+	}
+
+	collect$(): Observable<{ [key: string]: string; }> {
+		if (Object.keys(this.keys).length) {
+			const keys = Object.keys(this.keys).map(x => this.keys[x]);
+			this.keys = {};
 			return this.statePost(keys).pipe(
-				map((keys: LabelKey[]) => {
-					// console.log('LabelService.collectKeys', JSON.stringify(keys));
-					const items = {};
-					keys.forEach(x => items[x.id] = this.parsers[x.id](x.value || x.defaultValue || x.id));
-					return items;
+				map((labels: LabelKey[]) => {
+					return labels.reduce((values, x) => {
+						values[x.id] = this.getLabel(x);
+						return values;
+					}, {});
 				}),
-				tap((items: { [key: string]: string; }) => {
-					Object.assign(this.cache, items);
-					this.labels$.next(this.cache);
-					// console.log('collectKeys', this.cache);
+				tap((labels: { [key: string]: string; }) => {
+					const values = this.values$.getValue();
+					Object.assign(values, labels);
+					this.values$.next(values);
 				}),
-				// shareReplay(),
 				catchError(error => {
-					// console.log('LabelService.collectKeys.error', error);
-					return of({});
+					console.log(error);
+					const labels = keys.reduce((values, x) => {
+						values[x.id] = this.getLabel(x);
+						return values;
+					}, {});
+					const values = this.values$.getValue();
+					Object.assign(values, labels);
+					// return this.values$.next(values);
+					return of(null);
 				}),
 			);
-			/*
-			return this.post(`/api/i18n/labels`, keys).pipe(
-				map((keys: LabelKey[]) => {
-					const items = {};
-					keys.forEach(x => items[x.id] = x.value || x.defaultValue);
-					return items;
-				}),
-				tap((items: { [key: string]: string; }) => {
-					Object.assign(this.cache, items);
-					this.labels$.next(this.cache);
-					// console.log('collectKeys', this.cache);
-				}),
-			);
-			*/
 		} else {
-			return of({});
+			return of(null);
 		}
+	}
+
+	public parseLabel(value: string, params: any): string {
+		if (value && params) {
+			const TEMPLATE_REGEXP: RegExp = /@([^{}\s]*)/g;
+			return value.replace(TEMPLATE_REGEXP, (text: string, key: string) => {
+				const replacer: string = params[key] as string;
+				return typeof replacer !== 'undefined' ? replacer : text;
+			});
+		} else {
+			return value;
+		}
+	}
+
+	private getLabel(label: LabelKey): string | undefined {
+		return label.value || label.defaultValue || this.getMissingLabel(label);
+	}
+
+	private getMissingLabel(label: LabelKey): string | undefined {
+		if (typeof this.missingHandler === 'function') {
+			return this.missingHandler(label);
+		}
+		return label.id;
 	}
 
 }

@@ -293,7 +293,7 @@ EditorBundleModule.ctorParameters = () => [
  */
 class EditorModuleComponent {
     constructor() {
-        this.version = '0.0.3';
+        this.version = '0.0.4';
     }
     /**
      * @return {?}

@@ -1,5 +1,5 @@
 import { Injectable, Pipe, PipeTransform } from '@angular/core';
-import { Observable } from 'rxjs';
+import { RoutePipe } from '../route/route.pipe';
 import { SlugService } from './slug.service';
 
 @Pipe({
@@ -13,14 +13,21 @@ import { SlugService } from './slug.service';
 export class SlugPipe implements PipeTransform {
 
 	constructor(
-		// private routeService: RouteService,
-		private slugService: SlugService
+		private slugService: SlugService,
+		private routePipe: RoutePipe,
 	) { }
 
-	transform(key: string): Observable<string[]> {
-		return this.slugService.getKey(key);
-		// return this.async.transform<any>(this.slugService.getKey(key));
-		// return this.routeService.toSlug(key);
+	transform(key: string, segments?: string[]): string[] {
+		const slug = this.slugService.transform(key);
+		if (slug) {
+			let slugs = this.routePipe.transform(slug);
+			if (slugs && segments) {
+				slugs = slugs.concat(segments);
+			}
+			return slugs;
+		} else {
+			return [];
+		}
 	}
 
 }

@@ -1,6 +1,6 @@
 <header class="header" [ngClass]="{ scrolled: scrolled }" (scroll)="onScroll($event)">
 	<div class="container">
-		<div class="brand" [routerLink]="'homepage' | slugAsync">
+		<div class="brand" [routerLink]="'homepage' | slug">
 			designr
 		</div>
 		<ul class="nav nav--header">

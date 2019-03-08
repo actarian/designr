@@ -4,7 +4,7 @@ import { DisposableComponent, CoreModule } from '@designr/core';
 import { BehaviorSubject, of } from 'rxjs';
 import { catchError, debounceTime, switchMap, take } from 'rxjs/operators';
 import { FormGroup, NG_VALUE_ACCESSOR, FormControl, Validators, NG_ASYNC_VALIDATORS, NG_VALIDATORS, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Component, forwardRef, Input, Renderer2, InjectionToken, Inject, Injectable, ComponentFactoryResolver, ViewChild, ViewContainerRef, Directive, Attribute, EventEmitter, HostListener, Output, defineInjectable, inject, NgModule, Optional, SkipSelf } from '@angular/core';
+import { Component, forwardRef, Input, Renderer2, InjectionToken, Inject, Injectable, ComponentFactoryResolver, ViewChild, ViewContainerRef, Directive, Attribute, EventEmitter, HostListener, Output, NgModule, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -747,7 +747,7 @@ const CONTROL_CONFIG = new InjectionToken('control.config');
  */
 class ControlModuleComponent {
     constructor() {
-        this.version = '0.0.3';
+        this.version = '0.0.4';
     }
     /**
      * @return {?}

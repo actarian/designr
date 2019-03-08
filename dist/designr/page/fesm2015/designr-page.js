@@ -33,7 +33,7 @@ const PAGE_CONFIG = new InjectionToken('page.config');
  */
 class PageModuleComponent {
     constructor() {
-        this.version = '0.0.3';
+        this.version = '0.0.4';
     }
     /**
      * @return {?}

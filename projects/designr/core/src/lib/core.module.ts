@@ -32,7 +32,6 @@ import { ImagePipe } from './pipes/image.pipe';
 import { PublicPipe } from './pipes/public.pipe';
 import { SegmentPipe } from './pipes/segment.pipe';
 import { RoutePipe } from './route/route.pipe';
-import { SlugAsyncPipe } from './slug/slug-async.pipe';
 import { SlugPipe } from './slug/slug.pipe';
 import { CookieStorageService, LocalStorageService, SessionStorageService, StorageService } from './storage/storage.service';
 import { TranslateDirective } from './translate/translate.directive';
@@ -87,7 +86,6 @@ const pipes = [
 	SafeStylePipe,
 	SafeUrlPipe,
 	SegmentPipe,
-	SlugAsyncPipe,
 	SlugPipe,
 	TranslatePipe,
 	TrustPipe,

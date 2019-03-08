@@ -1,83 +1,108 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
-import { filter, first, map, tap } from 'rxjs/operators';
+import { EventEmitter, Injectable, Injector } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, debounceTime, filter, first, map, switchMap, tap } from 'rxjs/operators';
 import { DocumentIndex } from '../models/document';
 import { EntityService } from '../models/entity.service';
+
+export class SlugKey {
+	id?: number;
+	mnemonic?: string;
+	slug?: string;
+}
 
 @Injectable({
 	providedIn: 'root'
 })
 export class SlugService extends EntityService<DocumentIndex> {
 
-	private collectedKeys: { [key: string]: string; } = {};
-	private cache: { [key: string]: string[]; } = {};
-	private slugs$: Subject<{ [key: string]: string[]; }> = new Subject();
-	private emitter: EventEmitter<any> = new EventEmitter();
-
 	get collection(): string {
 		return `/api/slug`;
 	}
 
-	getKey(key: string): Observable<string[]> {
-		if (this.cache.hasOwnProperty(key)) {
-			return of(this.cache[key]);
-		} else {
-			// console.log('SlugService.getKey', key);
-			Object.defineProperty(this.collectedKeys, key, {
-				value: key,
+	private keys: { [key: string]: SlugKey; } = {};
+	private values$: BehaviorSubject<{ [key: string]: string; }> = new BehaviorSubject({});
+	private emitter$: EventEmitter<any> = new EventEmitter();
+
+	public missingHandler?: Function;
+
+	constructor(
+		protected injector: Injector,
+	) {
+		super(injector);
+	}
+
+	transform(key: string): string | undefined {
+		const values = this.values$.getValue();
+		if (values.hasOwnProperty(key)) {
+			return values[key];
+		} else if (!this.keys.hasOwnProperty(key)) {
+			values[key] = null;
+			Object.defineProperty(this.keys, key, {
+				value: { mnemonic: key },
 				enumerable: true,
 				writable: false,
 			});
-			this.cache[key] = null;
-		}
-		// return observable of key
-		return this.slugs$.pipe(
-			map(items => items[key]),
-			filter(item => item !== null),
-		);
-	}
-
-	register(): Observable<any> {
-		return this.emitter.pipe(
-			// throttleTime(500),
-			tap(() => {
-				this.collectKeys().pipe(
-					first(),
-				).subscribe((keys) => {
-					// console.log('SlugService.collected', keys);
-				});
-			})
-		);
-	}
-
-	collect(): void {
-		if (Object.keys(this.collectedKeys).length) {
-			this.emitter.emit();
+			this.emitter$.emit();
+			return null;
 		}
 	}
 
-	private getSlugs(keys: string[]): Observable<DocumentIndex[]> {
-		keys = keys || [];
-		return this.statePost(keys).pipe(
-			// tap(items => console.log(items)),
+	transform$(key: string): Observable<string | undefined> {
+		const values = this.values$.getValue();
+		if (values.hasOwnProperty(key)) {
+			return of(values[key]);
+		} else if (!this.keys.hasOwnProperty(key)) {
+			Object.defineProperty(this.keys, key, {
+				value: { mnemonic: key },
+				enumerable: true,
+				writable: false,
+			});
+			this.emitter$.emit();
+		}
+		return this.values$.pipe(
+			map(values => values[key])
 		);
 	}
 
-	private collectKeys(): Observable<{ [key: string]: string; }> {
-		this.slugs$.next(this.cache);
-		const keys = Object.keys(this.collectedKeys);
-		this.collectedKeys = {};
-		return this.getSlugs(keys).pipe(
-			map((items: DocumentIndex[]) => {
-				const dictionary = {};
-				items.forEach(x => dictionary[x.mnemonic] = [x.slug]);
-				return dictionary;
-			}),
-			tap((dictionary: { [key: string]: string; }) => {
-				Object.assign(this.cache, dictionary);
-				this.slugs$.next(this.cache);
-			})
+	observe$(): Observable<{ [key: string]: string; }> {
+		return this.emitter$.pipe(
+			debounceTime(1),
+			switchMap(x => this.collect$()),
+			filter(x => x !== null),
+			first(), //
 		);
+	}
+
+	collect$(): Observable<{ [key: string]: string; }> {
+		if (Object.keys(this.keys).length) {
+			const keys = Object.keys(this.keys).map(x => this.keys[x]);
+			this.keys = {};
+			return this.statePost(keys).pipe(
+				map((items: DocumentIndex[]) => {
+					return items.reduce((values, x) => {
+						values[x.mnemonic] = [x.slug];
+						return values;
+					}, {});
+				}),
+				tap((slugs: { [key: string]: string; }) => {
+					const values = this.values$.getValue();
+					Object.assign(values, slugs);
+					this.values$.next(values);
+				}),
+				catchError(error => {
+					console.log(error);
+					const labels = keys.reduce((values, x) => {
+						values[x.mnemonic] = null;
+						return values;
+					}, {});
+					const values = this.values$.getValue();
+					Object.assign(values, labels);
+					return of(null);
+				}),
+			);
+		} else {
+			return of(null);
+		}
 	}
 
 }

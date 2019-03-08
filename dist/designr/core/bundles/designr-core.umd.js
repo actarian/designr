@@ -918,7 +918,7 @@
      */
     var CoreModuleComponent = /** @class */ (function () {
         function CoreModuleComponent() {
-            this.version = '0.0.3';
+            this.version = '0.0.4';
         }
         /**
          * @return {?}
@@ -2840,12 +2840,9 @@
         function LabelService(injector) {
             var _this = _super.call(this, injector) || this;
             _this.injector = injector;
-            // !!! new async pipe
-            _this.collectedKeys = {};
-            _this.cache = {};
-            _this.parsers = {};
-            _this.labels$ = new rxjs.Subject();
-            _this.emitter = new i0.EventEmitter();
+            _this.keys = {};
+            _this.values$ = new rxjs.BehaviorSubject({});
+            _this.emitter$ = new i0.EventEmitter();
             return _this;
         }
         Object.defineProperty(LabelService.prototype, "collection", {
@@ -2858,108 +2855,32 @@
             configurable: true
         });
         /**
-         * @private
-         * @param {?} value
          * @param {?} key
          * @param {?=} defaultValue
          * @param {?=} params
          * @return {?}
          */
-        LabelService.prototype.parseLabel = /**
-         * @private
-         * @param {?} value
+        LabelService.prototype.transform = /**
          * @param {?} key
          * @param {?=} defaultValue
          * @param {?=} params
          * @return {?}
          */
-            function (value, key, defaultValue, params) {
-                if (value == null) {
-                    value = defaultValue;
-                }
-                if (value == null) {
-                    return this.missingLabel(key);
-                }
-                else if (params) {
-                    return this.parseParams(value, params);
-                }
-                return value;
-            };
-        /**
-         * @private
-         * @param {?} key
-         * @return {?}
-         */
-        LabelService.prototype.missingLabel = /**
-         * @private
-         * @param {?} key
-         * @return {?}
-         */
-            function (key) {
-                // console.log('missingLabel', key, this.missingHandler);
-                if (this.missingHandler) {
-                    return typeof this.missingHandler === 'function' ?
-                        this.missingHandler(key) :
-                        this.missingHandler;
-                }
-                // console.log('missingLabel', key);
-                return key;
-            };
-        /**
-         * @private
-         * @param {?} value
-         * @param {?} params
-         * @return {?}
-         */
-        LabelService.prototype.parseParams = /**
-         * @private
-         * @param {?} value
-         * @param {?} params
-         * @return {?}
-         */
-            function (value, params) {
+            function (key, defaultValue, params) {
                 /** @type {?} */
-                var TEMPLATE_REGEXP = /@([^{}\s]*)/g;
-                return value.replace(TEMPLATE_REGEXP, ( /**
-                 * @param {?} text
-                 * @param {?} key
-                 * @return {?}
-                 */function (text, key) {
-                    /** @type {?} */
-                    var replacer = ( /** @type {?} */(params[key]));
-                    return typeof replacer !== 'undefined' ? replacer : text;
-                }));
-            };
-        /**
-         * @return {?}
-         */
-        LabelService.prototype.register = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return this.emitter.pipe(
-                // throttleTime(500),
-                operators.tap(( /**
-                 * @return {?}
-                 */function () {
-                    _this.collectKeys().pipe(operators.first()).subscribe(( /**
-                     * @param {?} keys
-                     * @return {?}
-                     */function (keys) {
-                        // console.log('LabelService.collected', keys);
-                    }));
-                })));
-            };
-        /**
-         * @return {?}
-         */
-        LabelService.prototype.collect = /**
-         * @return {?}
-         */
-            function () {
-                if (Object.keys(this.collectedKeys).length) {
-                    this.emitter.emit();
+                var values = this.values$.getValue();
+                if (values.hasOwnProperty(key)) {
+                    return this.parseLabel(values[key], params);
+                }
+                else if (!this.keys.hasOwnProperty(key)) {
+                    values[key] = null;
+                    Object.defineProperty(this.keys, key, {
+                        value: { id: key, defaultValue: defaultValue },
+                        enumerable: true,
+                        writable: false,
+                    });
+                    this.emitter$.emit();
+                    return null;
                 }
             };
         /**
@@ -2968,7 +2889,7 @@
          * @param {?=} params
          * @return {?}
          */
-        LabelService.prototype.getKey = /**
+        LabelService.prototype.transform$ = /**
          * @param {?} key
          * @param {?=} defaultValue
          * @param {?=} params
@@ -2976,105 +2897,157 @@
          */
             function (key, defaultValue, params) {
                 var _this = this;
-                // console.log('LabelService.getKey', key);
-                if (this.cache.hasOwnProperty(key)) {
-                    /** @type {?} */
-                    var label = this.cache[key];
-                    return rxjs.of(label).pipe(operators.delay(1));
+                /** @type {?} */
+                var values = this.values$.getValue();
+                if (values.hasOwnProperty(key)) {
+                    return rxjs.of(this.parseLabel(values[key], params));
                 }
-                else {
-                    Object.defineProperty(this.collectedKeys, key, {
+                else if (!this.keys.hasOwnProperty(key)) {
+                    values[key] = null;
+                    Object.defineProperty(this.keys, key, {
                         value: { id: key, defaultValue: defaultValue },
                         enumerable: true,
                         writable: false,
                     });
-                    this.cache[key] = null;
+                    this.emitter$.emit();
                 }
-                this.parsers[key] = ( /**
-                 * @param {?} label
+                return this.values$.pipe(operators.map(( /**
+                 * @param {?} values
                  * @return {?}
-                 */function (label) { return _this.parseLabel(label, key, defaultValue, params); });
-                // !!! never reach this, return of(null) ?
-                return this.labels$.pipe(operators.map(( /**
-                 * @param {?} items
-                 * @return {?}
-                 */function (items) { return items[key] || null; })), operators.filter(( /**
-                 * @param {?} label
-                 * @return {?}
-                 */function (label) { return label !== null; })), 
-                // tap(label => console.log('getKey', key, label)),
-                operators.map(( /**
-                 * @param {?} label
-                 * @return {?}
-                 */function (label) { return _this.parseLabel(label, key, defaultValue, params); })), operators.tap(( /**
-                 * @param {?} label
-                 * @return {?}
-                 */function (label) { return _this.cache[key] = label; })));
+                 */function (values) { return _this.parseLabel(values[key], params); })));
             };
         /**
-         * @private
          * @return {?}
          */
-        LabelService.prototype.collectKeys = /**
-         * @private
+        LabelService.prototype.observe$ = /**
          * @return {?}
          */
             function () {
                 var _this = this;
-                /** @type {?} */
-                var keys = Object.keys(this.collectedKeys).map(( /**
+                return this.emitter$.pipe(operators.debounceTime(1), operators.switchMap(( /**
                  * @param {?} x
                  * @return {?}
-                 */function (x) { return _this.collectedKeys[x]; }));
-                // console.log('LabelService.collectKeys', keys);
-                this.collectedKeys = {};
-                if (keys.length) {
-                    return this.statePost(keys).pipe(operators.map(( /**
-                     * @param {?} keys
+                 */function (x) { return _this.collect$(); })), operators.filter(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) { return x !== null; })));
+            };
+        /**
+         * @return {?}
+         */
+        LabelService.prototype.collect$ = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                if (Object.keys(this.keys).length) {
+                    /** @type {?} */
+                    var keys_1 = Object.keys(this.keys).map(( /**
+                     * @param {?} x
                      * @return {?}
-                     */function (keys) {
-                        // console.log('LabelService.collectKeys', JSON.stringify(keys));
-                        /** @type {?} */
-                        var items = {};
-                        keys.forEach(( /**
+                     */function (x) { return _this.keys[x]; }));
+                    this.keys = {};
+                    return this.statePost(keys_1).pipe(operators.map(( /**
+                     * @param {?} labels
+                     * @return {?}
+                     */function (labels) {
+                        return labels.reduce(( /**
+                         * @param {?} values
                          * @param {?} x
                          * @return {?}
-                         */function (x) { return items[x.id] = _this.parsers[x.id](x.value || x.defaultValue || x.id); }));
-                        return items;
+                         */function (values, x) {
+                            values[x.id] = _this.getLabel(x);
+                            return values;
+                        }), {});
                     })), operators.tap(( /**
-                     * @param {?} items
+                     * @param {?} labels
                      * @return {?}
-                     */function (items) {
-                        Object.assign(_this.cache, items);
-                        _this.labels$.next(_this.cache);
-                        // console.log('collectKeys', this.cache);
-                    })), 
-                    // shareReplay(),
-                    operators.catchError(( /**
+                     */function (labels) {
+                        /** @type {?} */
+                        var values = _this.values$.getValue();
+                        Object.assign(values, labels);
+                        _this.values$.next(values);
+                    })), operators.catchError(( /**
                      * @param {?} error
                      * @return {?}
                      */function (error) {
-                        // console.log('LabelService.collectKeys.error', error);
-                        return rxjs.of({});
+                        console.log(error);
+                        /** @type {?} */
+                        var labels = keys_1.reduce(( /**
+                         * @param {?} values
+                         * @param {?} x
+                         * @return {?}
+                         */function (values, x) {
+                            values[x.id] = _this.getLabel(x);
+                            return values;
+                        }), {});
+                        /** @type {?} */
+                        var values = _this.values$.getValue();
+                        Object.assign(values, labels);
+                        // return this.values$.next(values);
+                        return rxjs.of(null);
                     })));
-                    /*
-                    return this.post(`/api/i18n/labels`, keys).pipe(
-                        map((keys: LabelKey[]) => {
-                            const items = {};
-                            keys.forEach(x => items[x.id] = x.value || x.defaultValue);
-                            return items;
-                        }),
-                        tap((items: { [key: string]: string; }) => {
-                            Object.assign(this.cache, items);
-                            this.labels$.next(this.cache);
-                            // console.log('collectKeys', this.cache);
-                        }),
-                    );
-                    */
                 }
                 else {
-                    return rxjs.of({});
+                    return rxjs.of(null);
                 }
+            };
+        /**
+         * @param {?} value
+         * @param {?} params
+         * @return {?}
+         */
+        LabelService.prototype.parseLabel = /**
+         * @param {?} value
+         * @param {?} params
+         * @return {?}
+         */
+            function (value, params) {
+                if (value && params) {
+                    /** @type {?} */
+                    var TEMPLATE_REGEXP = /@([^{}\s]*)/g;
+                    return value.replace(TEMPLATE_REGEXP, ( /**
+                     * @param {?} text
+                     * @param {?} key
+                     * @return {?}
+                     */function (text, key) {
+                        /** @type {?} */
+                        var replacer = ( /** @type {?} */(params[key]));
+                        return typeof replacer !== 'undefined' ? replacer : text;
+                    }));
+                }
+                else {
+                    return value;
+                }
+            };
+        /**
+         * @private
+         * @param {?} label
+         * @return {?}
+         */
+        LabelService.prototype.getLabel = /**
+         * @private
+         * @param {?} label
+         * @return {?}
+         */
+            function (label) {
+                return label.value || label.defaultValue || this.getMissingLabel(label);
+            };
+        /**
+         * @private
+         * @param {?} label
+         * @return {?}
+         */
+        LabelService.prototype.getMissingLabel = /**
+         * @private
+         * @param {?} label
+         * @return {?}
+         */
+            function (label) {
+                if (typeof this.missingHandler === 'function') {
+                    return this.missingHandler(label);
+                }
+                return label.id;
             };
         LabelService.decorators = [
             { type: i0.Injectable, args: [{
@@ -3111,15 +3084,12 @@
          */
             function () {
                 var _this = this;
-                // console.log('LabelDirective.ngOnInit', this.element.nativeElement.innerHTML);
-                this.labelService.getKey(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(operators.takeUntil(this.unsubscribe)).subscribe(( /**
+                this.labelService.transform$(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(operators.takeUntil(this.unsubscribe)).subscribe(( /**
                  * @param {?} label
                  * @return {?}
                  */function (label) {
                     _this.element.nativeElement.innerHTML = label;
-                    // console.log('LabelDirective.ngOnInit', label);
                 }));
-                // console.log('LabelDirective.ngOnInit', this.label, this.labelParams, this.template, this.view);
             };
         LabelDirective.decorators = [
             { type: i0.Directive, args: [{
@@ -3145,64 +3115,23 @@
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
     var LabelPipe = /** @class */ (function () {
-        function LabelPipe(zone, changeDetector, labelService) {
-            this.zone = zone;
-            this.changeDetector = changeDetector;
+        function LabelPipe(labelService) {
             this.labelService = labelService;
-            // this.asyncPipe = new CustomAsyncPipe(this.changeDetector);
         }
         /**
          * @param {?} key
-         * @param {?} text
-         * @param {?} params
-         * @return {?}
-         */
-        LabelPipe.prototype.getKey = /**
-         * @param {?} key
-         * @param {?} text
-         * @param {?} params
-         * @return {?}
-         */
-            function (key, text, params) {
-                var _this = this;
-                if (this.key$) {
-                    return;
-                }
-                this.key$ = this.labelService.getKey(key, text, params);
-                this.key$.pipe(operators.first()).subscribe(( /**
-                 * @param {?} value
-                 * @return {?}
-                 */function (value) {
-                    _this.value = value;
-                    // this.changeDetector.markForCheck();
-                }));
-            };
-        /**
-         * @param {?} key
-         * @param {?=} text
+         * @param {?=} defaultValue
          * @param {?=} params
          * @return {?}
          */
         LabelPipe.prototype.transform = /**
          * @param {?} key
-         * @param {?=} text
+         * @param {?=} defaultValue
          * @param {?=} params
          * @return {?}
          */
-            function (key, text, params) {
-                if (this.value) {
-                    return this.value;
-                }
-                this.getKey(key, text, params); // this.asyncPipe.transform(this.labelService.getKey(key, text, params));
-            };
-        /**
-         * @return {?}
-         */
-        LabelPipe.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                // this.asyncPipe.dispose();
+            function (key, defaultValue, params) {
+                return this.labelService.transform(key, defaultValue, params);
             };
         LabelPipe.decorators = [
             { type: i0.Pipe, args: [{
@@ -3216,12 +3145,10 @@
         /** @nocollapse */
         LabelPipe.ctorParameters = function () {
             return [
-                { type: i0.NgZone },
-                { type: i0.ChangeDetectorRef },
                 { type: LabelService }
             ];
         };
-        /** @nocollapse */ LabelPipe.ngInjectableDef = i0.defineInjectable({ factory: function LabelPipe_Factory() { return new LabelPipe(i0.inject(i0.NgZone), i0.inject(i0.ChangeDetectorRef), i0.inject(LabelService)); }, token: LabelPipe, providedIn: "root" });
+        /** @nocollapse */ LabelPipe.ngInjectableDef = i0.defineInjectable({ factory: function LabelPipe_Factory() { return new LabelPipe(i0.inject(LabelService)); }, token: LabelPipe, providedIn: "root" });
         return LabelPipe;
     }());
 
@@ -4102,12 +4029,12 @@
      */
     var SlugService = /** @class */ (function (_super) {
         __extends(SlugService, _super);
-        function SlugService() {
-            var _this = _super !== null && _super.apply(this, arguments) || this;
-            _this.collectedKeys = {};
-            _this.cache = {};
-            _this.slugs$ = new rxjs.Subject();
-            _this.emitter = new i0.EventEmitter();
+        function SlugService(injector) {
+            var _this = _super.call(this, injector) || this;
+            _this.injector = injector;
+            _this.keys = {};
+            _this.values$ = new rxjs.BehaviorSubject({});
+            _this.emitter$ = new i0.EventEmitter();
             return _this;
         }
         Object.defineProperty(SlugService.prototype, "collection", {
@@ -4123,118 +4050,140 @@
          * @param {?} key
          * @return {?}
          */
-        SlugService.prototype.getKey = /**
+        SlugService.prototype.transform = /**
          * @param {?} key
          * @return {?}
          */
             function (key) {
-                if (this.cache.hasOwnProperty(key)) {
-                    return rxjs.of(this.cache[key]);
+                /** @type {?} */
+                var values = this.values$.getValue();
+                if (values.hasOwnProperty(key)) {
+                    return values[key];
                 }
-                else {
-                    // console.log('SlugService.getKey', key);
-                    Object.defineProperty(this.collectedKeys, key, {
-                        value: key,
+                else if (!this.keys.hasOwnProperty(key)) {
+                    values[key] = null;
+                    Object.defineProperty(this.keys, key, {
+                        value: { mnemonic: key },
                         enumerable: true,
                         writable: false,
                     });
-                    this.cache[key] = null;
-                }
-                // return observable of key
-                return this.slugs$.pipe(operators.map(( /**
-                 * @param {?} items
-                 * @return {?}
-                 */function (items) { return items[key]; })), operators.filter(( /**
-                 * @param {?} item
-                 * @return {?}
-                 */function (item) { return item !== null; })));
-            };
-        /**
-         * @return {?}
-         */
-        SlugService.prototype.register = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return this.emitter.pipe(
-                // throttleTime(500),
-                operators.tap(( /**
-                 * @return {?}
-                 */function () {
-                    _this.collectKeys().pipe(operators.first()).subscribe(( /**
-                     * @param {?} keys
-                     * @return {?}
-                     */function (keys) {
-                        // console.log('SlugService.collected', keys);
-                    }));
-                })));
-            };
-        /**
-         * @return {?}
-         */
-        SlugService.prototype.collect = /**
-         * @return {?}
-         */
-            function () {
-                if (Object.keys(this.collectedKeys).length) {
-                    this.emitter.emit();
+                    this.emitter$.emit();
+                    return null;
                 }
             };
         /**
-         * @private
-         * @param {?} keys
+         * @param {?} key
          * @return {?}
          */
-        SlugService.prototype.getSlugs = /**
-         * @private
-         * @param {?} keys
+        SlugService.prototype.transform$ = /**
+         * @param {?} key
          * @return {?}
          */
-            function (keys) {
-                keys = keys || [];
-                return this.statePost(keys).pipe(
-                // tap(items => console.log(items)),
-                );
-            };
-        /**
-         * @private
-         * @return {?}
-         */
-        SlugService.prototype.collectKeys = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                this.slugs$.next(this.cache);
+            function (key) {
                 /** @type {?} */
-                var keys = Object.keys(this.collectedKeys);
-                this.collectedKeys = {};
-                return this.getSlugs(keys).pipe(operators.map(( /**
-                 * @param {?} items
+                var values = this.values$.getValue();
+                if (values.hasOwnProperty(key)) {
+                    return rxjs.of(values[key]);
+                }
+                else if (!this.keys.hasOwnProperty(key)) {
+                    Object.defineProperty(this.keys, key, {
+                        value: { mnemonic: key },
+                        enumerable: true,
+                        writable: false,
+                    });
+                    this.emitter$.emit();
+                }
+                return this.values$.pipe(operators.map(( /**
+                 * @param {?} values
                  * @return {?}
-                 */function (items) {
+                 */function (values) { return values[key]; })));
+            };
+        /**
+         * @return {?}
+         */
+        SlugService.prototype.observe$ = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                return this.emitter$.pipe(operators.debounceTime(1), operators.switchMap(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) { return _this.collect$(); })), operators.filter(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) { return x !== null; })), operators.first());
+            };
+        /**
+         * @return {?}
+         */
+        SlugService.prototype.collect$ = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                if (Object.keys(this.keys).length) {
                     /** @type {?} */
-                    var dictionary = {};
-                    items.forEach(( /**
+                    var keys_1 = Object.keys(this.keys).map(( /**
                      * @param {?} x
                      * @return {?}
-                     */function (x) { return dictionary[x.mnemonic] = [x.slug]; }));
-                    return dictionary;
-                })), operators.tap(( /**
-                 * @param {?} dictionary
-                 * @return {?}
-                 */function (dictionary) {
-                    Object.assign(_this.cache, dictionary);
-                    _this.slugs$.next(_this.cache);
-                })));
+                     */function (x) { return _this.keys[x]; }));
+                    this.keys = {};
+                    return this.statePost(keys_1).pipe(operators.map(( /**
+                     * @param {?} items
+                     * @return {?}
+                     */function (items) {
+                        return items.reduce(( /**
+                         * @param {?} values
+                         * @param {?} x
+                         * @return {?}
+                         */function (values, x) {
+                            values[x.mnemonic] = [x.slug];
+                            return values;
+                        }), {});
+                    })), operators.tap(( /**
+                     * @param {?} slugs
+                     * @return {?}
+                     */function (slugs) {
+                        /** @type {?} */
+                        var values = _this.values$.getValue();
+                        Object.assign(values, slugs);
+                        _this.values$.next(values);
+                    })), operators.catchError(( /**
+                     * @param {?} error
+                     * @return {?}
+                     */function (error) {
+                        console.log(error);
+                        /** @type {?} */
+                        var labels = keys_1.reduce(( /**
+                         * @param {?} values
+                         * @param {?} x
+                         * @return {?}
+                         */function (values, x) {
+                            values[x.mnemonic] = null;
+                            return values;
+                        }), {});
+                        /** @type {?} */
+                        var values = _this.values$.getValue();
+                        Object.assign(values, labels);
+                        return rxjs.of(null);
+                    })));
+                }
+                else {
+                    return rxjs.of(null);
+                }
             };
         SlugService.decorators = [
             { type: i0.Injectable, args: [{
                         providedIn: 'root'
                     },] }
         ];
+        /** @nocollapse */
+        SlugService.ctorParameters = function () {
+            return [
+                { type: i0.Injector }
+            ];
+        };
         /** @nocollapse */ SlugService.ngInjectableDef = i0.defineInjectable({ factory: function SlugService_Factory() { return new SlugService(i0.inject(i0.INJECTOR)); }, token: SlugService, providedIn: "root" });
         return SlugService;
     }(EntityService));
@@ -4243,82 +4192,35 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    var SlugAsyncPipe = /** @class */ (function () {
-        function SlugAsyncPipe(changeDetector, slugService, routePipe) {
-            this.changeDetector = changeDetector;
+    var SlugPipe = /** @class */ (function () {
+        function SlugPipe(slugService, routePipe) {
             this.slugService = slugService;
             this.routePipe = routePipe;
-            this.asyncPipe = new CustomAsyncPipe(this.changeDetector);
         }
         /**
          * @param {?} key
          * @param {?=} segments
          * @return {?}
          */
-        SlugAsyncPipe.prototype.transform = /**
+        SlugPipe.prototype.transform = /**
          * @param {?} key
          * @param {?=} segments
          * @return {?}
          */
             function (key, segments) {
                 /** @type {?} */
-                var slugs = this.routePipe.transform(this.asyncPipe.transform(this.slugService.getKey(key)));
-                // console.log('SlugAsyncPipe.transform', key, slugs);
-                if (slugs && segments) {
-                    slugs = slugs.concat(segments);
+                var slug = this.slugService.transform(key);
+                if (slug) {
+                    /** @type {?} */
+                    var slugs = this.routePipe.transform(slug);
+                    if (slugs && segments) {
+                        slugs = slugs.concat(segments);
+                    }
+                    return slugs;
                 }
-                return slugs;
-            };
-        /**
-         * @return {?}
-         */
-        SlugAsyncPipe.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                this.asyncPipe.dispose();
-            };
-        SlugAsyncPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'slugAsync',
-                        pure: false
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        SlugAsyncPipe.ctorParameters = function () {
-            return [
-                { type: i0.ChangeDetectorRef },
-                { type: SlugService },
-                { type: RoutePipe }
-            ];
-        };
-        /** @nocollapse */ SlugAsyncPipe.ngInjectableDef = i0.defineInjectable({ factory: function SlugAsyncPipe_Factory() { return new SlugAsyncPipe(i0.inject(i0.ChangeDetectorRef), i0.inject(SlugService), i0.inject(RoutePipe)); }, token: SlugAsyncPipe, providedIn: "root" });
-        return SlugAsyncPipe;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var SlugPipe = /** @class */ (function () {
-        function SlugPipe(slugService) {
-            this.slugService = slugService;
-        }
-        /**
-         * @param {?} key
-         * @return {?}
-         */
-        SlugPipe.prototype.transform = /**
-         * @param {?} key
-         * @return {?}
-         */
-            function (key) {
-                return this.slugService.getKey(key);
-                // return this.async.transform<any>(this.slugService.getKey(key));
-                // return this.routeService.toSlug(key);
+                else {
+                    return [];
+                }
             };
         SlugPipe.decorators = [
             { type: i0.Pipe, args: [{
@@ -4332,10 +4234,11 @@
         /** @nocollapse */
         SlugPipe.ctorParameters = function () {
             return [
-                { type: SlugService }
+                { type: SlugService },
+                { type: RoutePipe }
             ];
         };
-        /** @nocollapse */ SlugPipe.ngInjectableDef = i0.defineInjectable({ factory: function SlugPipe_Factory() { return new SlugPipe(i0.inject(SlugService)); }, token: SlugPipe, providedIn: "root" });
+        /** @nocollapse */ SlugPipe.ngInjectableDef = i0.defineInjectable({ factory: function SlugPipe_Factory() { return new SlugPipe(i0.inject(SlugService), i0.inject(RoutePipe)); }, token: SlugPipe, providedIn: "root" });
         return SlugPipe;
     }());
 
@@ -4600,7 +4503,6 @@
         SafeStylePipe,
         SafeUrlPipe,
         SegmentPipe,
-        SlugAsyncPipe,
         SlugPipe,
         TranslatePipe,
         TrustPipe,
@@ -4865,7 +4767,6 @@
     exports.SegmentPipe = SegmentPipe;
     exports.RoutePipe = RoutePipe;
     exports.RouteService = RouteService;
-    exports.SlugAsyncPipe = SlugAsyncPipe;
     exports.SlugPipe = SlugPipe;
     exports.SlugService = SlugService;
     exports.CookieStorageService = CookieStorageService;

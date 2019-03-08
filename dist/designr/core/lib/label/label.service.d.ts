@@ -10,18 +10,20 @@ export declare class LabelKey {
 export declare class LabelService<T extends Label> extends ApiService<T> {
     protected injector: Injector;
     readonly collection: string;
-    private collectedKeys;
+    private keys;
+    private values$;
+    private emitter$;
     missingHandler?: Function;
-    cache: {};
-    parsers: {};
-    private labels$;
-    private emitter;
     constructor(injector: Injector);
-    private parseLabel;
-    private missingLabel;
-    private parseParams;
-    register(): Observable<any>;
-    collect(): void;
-    getKey(key: string, defaultValue?: string, params?: any): Observable<string>;
-    private collectKeys;
+    transform(key: string, defaultValue?: string, params?: any): string | undefined;
+    transform$(key: string, defaultValue?: string, params?: any): Observable<string | undefined>;
+    observe$(): Observable<{
+        [key: string]: string;
+    }>;
+    collect$(): Observable<{
+        [key: string]: string;
+    }>;
+    parseLabel(value: string, params: any): string;
+    private getLabel;
+    private getMissingLabel;
 }

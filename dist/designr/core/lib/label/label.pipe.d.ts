@@ -1,15 +1,8 @@
-import { ChangeDetectorRef, NgZone, OnDestroy, PipeTransform } from '@angular/core';
+import { PipeTransform } from '@angular/core';
 import { Label } from './label';
 import { LabelService } from './label.service';
-export declare class LabelPipe implements OnDestroy, PipeTransform {
-    private zone;
-    private changeDetector;
+export declare class LabelPipe implements PipeTransform {
     private labelService;
-    private asyncPipe;
-    private value;
-    constructor(zone: NgZone, changeDetector: ChangeDetectorRef, labelService: LabelService<Label>);
-    private key$;
-    getKey(key: string, text: string, params: any): void;
-    transform(key: string, text?: string, params?: any): string | undefined;
-    ngOnDestroy(): void;
+    constructor(labelService: LabelService<Label>);
+    transform(key: string, defaultValue?: string, params?: any): string | undefined;
 }

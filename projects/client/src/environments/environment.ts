@@ -5,10 +5,10 @@ export const environment = {
 	core: {
 		authStrategy: AuthStrategy.Cookie,
 		assets: '/assets',
-		defaultLanguage: 'it',
-		defaultMarket: 'it',
+		defaultLanguage: 'en',
+		defaultMarket: 'en',
 		languages: [
-			{ id: 1, name: 'Italiano', lang: 'it' }
+			{ id: 1, name: 'English', lang: 'en' }
 		],
 		public: '/',
 		preboot: {

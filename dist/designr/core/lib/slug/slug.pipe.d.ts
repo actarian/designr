@@ -1,8 +1,9 @@
 import { PipeTransform } from '@angular/core';
-import { Observable } from 'rxjs';
+import { RoutePipe } from '../route/route.pipe';
 import { SlugService } from './slug.service';
 export declare class SlugPipe implements PipeTransform {
     private slugService;
-    constructor(slugService: SlugService);
-    transform(key: string): Observable<string[]>;
+    private routePipe;
+    constructor(slugService: SlugService, routePipe: RoutePipe);
+    transform(key: string, segments?: string[]): string[];
 }
