@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ControlBase, FormService } from '@designr/control';
+import { ControlOption, FormService } from '@designr/control';
 import { DisposableComponent } from '@designr/core';
 import { ModalService } from '@designr/ui';
 import { finalize, first } from 'rxjs/operators';
@@ -15,7 +15,7 @@ import { UserService } from '../../shared/user/user.service';
 
 export class AuthForgottenComponent extends DisposableComponent implements OnInit {
 
-	controls: ControlBase<any>[];
+	options: ControlOption<any>[];
 	form: FormGroup;
 	busy: boolean = false;
 	submitted: boolean = false;
@@ -31,7 +31,7 @@ export class AuthForgottenComponent extends DisposableComponent implements OnIni
 	}
 
 	ngOnInit() {
-		this.controls = this.formService.getControlsFromOptions([{
+		this.options = this.formService.getOptions([{
 			key: 'email',
 			schema: 'email',
 			label: 'signIn.email',
@@ -39,7 +39,7 @@ export class AuthForgottenComponent extends DisposableComponent implements OnIni
 			required: true,
 			order: 1
 		},]);
-		this.form = this.formService.getGroupFromControls(this.controls);
+		this.form = this.formService.getFormGroup(this.options);
 	}
 
 	onSubmit(model): void {

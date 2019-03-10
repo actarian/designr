@@ -1,7 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ControlBase, ControlBaseOptions, FormService } from '@designr/control';
+import { ControlOption, FormService } from '@designr/control';
 import { DisposableComponent } from '@designr/core';
 import { Page, PageResolver, PageResolverService, PageService } from '@designr/page';
 import { MarkdownService } from 'ngx-markdown';
@@ -18,7 +18,7 @@ export class EditorRootComponent extends DisposableComponent implements OnInit {
 	private _pageCopy: Page;
 	private _page: Page;
 
-	controls: ControlBase<any>[];
+	options: ControlOption<any>[];
 	group: FormGroup;
 
 	busy: boolean = false;
@@ -42,13 +42,13 @@ export class EditorRootComponent extends DisposableComponent implements OnInit {
 		this._pageCopy = Object.assign({}, page);
 		this._page = page;
 		if (this._page) {
-			this.controls = this.formService.getControlsFromOptions(this.getControlsByPage(page));
-			this.group = this.formService.getGroupFromControls(this.controls);
+			this.options = this.formService.getOptions(this.getControlsByPage(page));
+			this.group = this.formService.getFormGroup(this.options);
 			this.group.valueChanges.subscribe(x => {
 				this.onAssign(x); // Object.assign(this._page, x);
 			});
 		} else {
-			this.controls = [];
+			this.options = [];
 			this.group = null;
 		}
 	}
@@ -62,7 +62,7 @@ export class EditorRootComponent extends DisposableComponent implements OnInit {
 		}
 	}
 
-	getControlsByPage(page: Page): ControlBaseOptions<any>[] {
+	getControlsByPage(page: Page): ControlOption<any>[] {
 		return page ? Object.keys(page).filter(key => typeof page[key] !== 'object').map((key: string, i: number) => {
 			return {
 				key: key,

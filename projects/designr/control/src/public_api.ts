@@ -1,14 +1,13 @@
-export { ControlConfig, CONTROL_CONFIG } from './lib/config/control.config';
+export { ControlConfig, Controls, CONTROL_CONFIG } from './lib/config/control.config';
 export { ControlModuleComponent } from './lib/control-module.component';
 export { ControlModule } from './lib/control.module';
-export { ControlBase, ControlBaseOptions } from './lib/control/base/control-base';
-export { ControlBaseComponent } from './lib/control/base/control-base.component';
 export { ControlCheckbox } from './lib/control/checkbox/control-checkbox';
 export { ControlCheckboxComponent } from './lib/control/checkbox/control-checkbox.component';
+export { ControlOption } from './lib/control/control-option';
 export { ControlOutletComponent } from './lib/control/control-outlet.component';
-export { ValueAccessorBase } from './lib/control/control-value.accessor';
+export { ControlAccessor } from './lib/control/control.accessor';
+export { ControlComponent } from './lib/control/control.component';
 export { ControlService } from './lib/control/control.service';
-export { Controls } from './lib/control/controls';
 export { ControlsComponent } from './lib/control/controls.component';
 export { ControlEmail } from './lib/control/email/control-email';
 export { ControlEmailComponent } from './lib/control/email/control-email.component';

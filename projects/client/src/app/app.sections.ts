@@ -34,7 +34,9 @@ export const SECTIONS: Sections = {
 			sections: SECTIONS,
 		}),
 	],
-	exports: [SectionModule]
+	exports: [
+		SectionModule,
+	],
 })
 
 export class AppSections { }

@@ -3,11 +3,11 @@
 	<div class="container">
 		<div class="group group--form">
 			<form class="form" name="group" [formGroup]="group" (ngSubmit)="group.valid && onSubmit(group.value)" #form="ngForm" role="form" novalidate autocomplete="off">
-				<controls-component class="fieldset" [controls]="controls" [form]="group"></controls-component>
+				<controls-component class="fieldset" [options]="options" [form]="group"></controls-component>
 				<!--
 				<div class="fieldset">
-					<ng-container *ngFor="let control of controls">
-						<control-outlet class="form-group" [control]="control" [form]="group"></control-outlet>
+					<ng-container *ngFor="let option of options">
+						<control-outlet class="form-group" [option]="option" [form]="group"></control-outlet>
 					</ng-container>
 				</div>
 				-->

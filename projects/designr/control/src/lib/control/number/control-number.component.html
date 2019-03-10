@@ -1,9 +1,9 @@
 <ng-container [formGroup]="form">
-	<label class="form-label" [attr.for]="control.key">{{ control.label | label }}</label>
-	<input class="form-control" placeholder="{{ control.placeholder | label }}" [id]="control.key" [formControlName]="control.key" [type]="control.type" [attr.step]="control.step" (input)="onInput($event)" (focus)="onFocus($event)" (blur)="onBlur($event)" [value]="getFormattedValue()">
-	<div class="alert alert--danger" *ngIf="controlRef.invalid && (controlRef.dirty || controlRef.touched)">
-		<div *ngIf="controlRef.errors.required">{{ 'errors.required' | label }}</div>
-		<div *ngIf="controlRef.errors.min">{{ 'errors.min' | label : null : { min: control.min } }}</div>
-		<div *ngIf="controlRef.errors.max">{{ 'errors.max' | label : null : { max: control.max } }}</div>
+	<label class="form-label" [attr.for]="option.key">{{ option.label | label }}</label>
+	<input class="form-control" placeholder="{{ option.placeholder | label }}" [id]="option.key" [formControlName]="option.key" [type]="option.type" [attr.step]="option.step">
+	<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">
+		<div *ngIf="control.errors.required">{{ 'errors.required' | label }}</div>
+		<div *ngIf="control.errors.min">{{ 'errors.min' | label : null : { min: option.min } }}</div>
+		<div *ngIf="control.errors.max">{{ 'errors.max' | label : null : { max: option.max } }}</div>
 	</div>
 </ng-container>

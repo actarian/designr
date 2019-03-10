@@ -2,17 +2,15 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DisposableComponent } from '@designr/core';
-import { ControlBase } from './base/control-base';
+import { ControlOption } from './control-option';
 
 @Component({
 	selector: 'controls-component',
-	template: `<ng-container *ngFor="let control of controls">
-	<control-outlet class="form-group" [control]="control" [form]="form"></control-outlet>
+	template: `<ng-container *ngFor="let option of options">
+	<control-outlet class="form-group" [option]="option" [form]="form"></control-outlet>
 </ng-container>`,
 })
 export class ControlsComponent extends DisposableComponent {
-
-	@Input() controls: ControlBase<any>[];
+	@Input() options: ControlOption<any>[];
 	@Input() form: FormGroup;
-
 }

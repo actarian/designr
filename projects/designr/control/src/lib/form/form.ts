@@ -1,8 +1,8 @@
-import { ControlBase } from '../control/base/control-base';
+import { ControlOption } from '../control/control-option';
 
 export class Form {
 
-	controls: ControlBase<any>[];
+	options: ControlOption<any>[];
 
 	constructor(options?: Form) {
 		if (options) {

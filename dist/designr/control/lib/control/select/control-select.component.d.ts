@@ -1,9 +1,5 @@
-import { Renderer2 } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
-import { ControlBaseComponent } from '../base/control-base.component';
+import { ControlComponent } from '../control.component';
 import { ControlSelect } from './control-select';
-export declare class ControlSelectComponent extends ControlBaseComponent implements ControlValueAccessor {
-    protected renderer: Renderer2;
-    control: ControlSelect;
-    constructor(renderer: Renderer2);
+export declare class ControlSelectComponent extends ControlComponent {
+    option: ControlSelect;
 }

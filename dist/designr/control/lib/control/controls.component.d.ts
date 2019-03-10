@@ -1,7 +1,7 @@
 import { FormGroup } from '@angular/forms';
 import { DisposableComponent } from '@designr/core';
-import { ControlBase } from './base/control-base';
+import { ControlOption } from './control-option';
 export declare class ControlsComponent extends DisposableComponent {
-    controls: ControlBase<any>[];
+    options: ControlOption<any>[];
     form: FormGroup;
 }

@@ -1,11 +1,5 @@
-import { ControlBase, ControlBaseOptions } from '../base/control-base';
+import { ControlOption } from '../control-option';
 
-export class ControlRadio extends ControlBase<boolean> {
-
-	readonly schema: string = 'radio';
-
-	constructor(options: ControlBaseOptions<boolean> = {}) {
-		super(options);
-		this.type = options.type || this.type;
-	}
+export class ControlRadio extends ControlOption<boolean> {
+	schema?: string = 'radio';
 }

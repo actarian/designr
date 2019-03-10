@@ -27,7 +27,9 @@ export const PAGES: Pages = {
 			notFoundPage: NotFoundComponent,
 		}),
 	],
-	exports: [PageModule]
+	exports: [
+		PageModule,
+	],
 })
 
 export class AppPages { }

@@ -1,25 +1,13 @@
-import { Component, forwardRef, Input, Renderer2 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ControlBaseComponent } from '../base/control-base.component';
+import { Component, Input } from '@angular/core';
+import { ControlComponent } from '../control.component';
 import { ControlRadio } from './control-radio';
 
 @Component({
 	selector: 'control-radio-component',
-	templateUrl: './control-radio.component.html',
-	providers: [{
-		provide: NG_VALUE_ACCESSOR,
-		useExisting: forwardRef(() => ControlRadioComponent),
-		multi: true,
-	}],
+	templateUrl: 'control-radio.component.html',
 })
-export class ControlRadioComponent extends ControlBaseComponent implements ControlValueAccessor {
+export class ControlRadioComponent extends ControlComponent {
 
-	@Input() control: ControlRadio;
-
-	constructor(
-		protected renderer: Renderer2
-	) {
-		super(renderer);
-	}
+	@Input() option: ControlRadio;
 
 }

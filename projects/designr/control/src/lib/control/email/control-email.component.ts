@@ -1,25 +1,13 @@
-import { Component, forwardRef, Input, Renderer2 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ControlBaseComponent } from '../base/control-base.component';
+import { Component, Input } from '@angular/core';
+import { ControlComponent } from '../control.component';
 import { ControlEmail } from './control-email';
 
 @Component({
 	selector: 'control-email-component',
-	templateUrl: './control-email.component.html',
-	providers: [{
-		provide: NG_VALUE_ACCESSOR,
-		useExisting: forwardRef(() => ControlEmailComponent),
-		multi: true,
-	}],
+	templateUrl: 'control-email.component.html',
 })
-export class ControlEmailComponent extends ControlBaseComponent implements ControlValueAccessor {
+export class ControlEmailComponent extends ControlComponent {
 
-	@Input() control: ControlEmail;
-
-	constructor(
-		protected renderer: Renderer2
-	) {
-		super(renderer);
-	}
+	@Input() option: ControlEmail;
 
 }

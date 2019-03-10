@@ -622,7 +622,7 @@ var DataService = /** @class */ (function () {
  */
 var DataModuleComponent = /** @class */ (function () {
     function DataModuleComponent() {
-        this.version = '0.0.4';
+        this.version = '0.0.5';
     }
     /**
      * @return {?}

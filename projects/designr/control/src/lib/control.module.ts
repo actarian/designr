@@ -5,8 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CoreModule } from '@designr/core';
 import { ControlConfig, CONTROL_CONFIG, entryComponents } from './config/control.config';
 import { ControlModuleComponent } from './control-module.component';
-import { ControlBaseComponent } from './control/base/control-base.component';
 import { ControlOutletComponent } from './control/control-outlet.component';
+import { ControlAccessor } from './control/control.accessor';
+import { ControlComponent } from './control/control.component';
 import { ControlService } from './control/control.service';
 import { ControlsComponent } from './control/controls.component';
 import { ExistsValidator } from './directives/exists.directive';
@@ -23,12 +24,13 @@ const components = [
 	ControlsComponent,
 	ControlModuleComponent,
 	ControlOutletComponent,
-	ControlBaseComponent,
+	ControlComponent,
 	...entryComponents,
 ];
 
 const directives = [
 	UppercaseDirective,
+	ControlAccessor,
 ];
 
 const pipes = [

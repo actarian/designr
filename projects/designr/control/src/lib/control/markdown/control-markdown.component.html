@@ -1,9 +1,9 @@
 <ng-container [formGroup]="form">
-	<label class="form-label" [attr.for]="control.key">{{ control.label | label }}</label>
-	<textarea class="form-control" placeholder="{{ control.placeholder | label }}" [id]="control.key" [formControlName]="control.key" rows="4"></textarea>
-	<div class="alert alert--danger" *ngIf="controlRef.invalid && (controlRef.dirty || controlRef.touched)">
-		<div *ngIf="controlRef.errors.required">{{ 'errors.required' | label }}</div>
-		<div *ngIf="controlRef.errors.minlength">{{ 'errors.minlength' | label : null : { minlength: control.minlength } }}</div>
-		<div *ngIf="controlRef.errors.maxlength">{{ 'errors.maxlength' | label : null : { maxlength: control.maxlength } }}</div>
+	<label class="form-label" [attr.for]="option.key">{{ option.label | label }}</label>
+	<textarea class="form-control" placeholder="{{ option.placeholder | label }}" [id]="option.key" [formControlName]="option.key" rows="4"></textarea>
+	<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">
+		<div *ngIf="control.errors.required">{{ 'errors.required' | label }}</div>
+		<div *ngIf="control.errors.minlength">{{ 'errors.minlength' | label : null : { minlength: option.minlength } }}</div>
+		<div *ngIf="control.errors.maxlength">{{ 'errors.maxlength' | label : null : { maxlength: option.maxlength } }}</div>
 	</div>
 </ng-container>

@@ -1,7 +1,8 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, Type } from '@angular/core';
 import { ControlCheckbox } from '../control/checkbox/control-checkbox';
 import { ControlCheckboxComponent } from '../control/checkbox/control-checkbox.component';
-import { Controls } from '../control/controls';
+import { ControlOption } from '../control/control-option';
+import { ControlComponent } from '../control/control.component';
 import { ControlEmail } from '../control/email/control-email';
 import { ControlEmailComponent } from '../control/email/control-email.component';
 import { ControlMarkdown } from '../control/markdown/control-markdown';
@@ -19,6 +20,13 @@ import { ControlTextComponent } from '../control/text/control-text.component';
 import { ControlTextarea } from '../control/textarea/control-textarea';
 import { ControlTextareaComponent } from '../control/textarea/control-textarea.component';
 
+export interface ControlInterface {
+	component: Type<ControlComponent>;
+	model: Type<ControlOption<any>>;
+}
+
+export interface Controls { [key: string]: ControlInterface; }
+
 export const entryComponents = [
 	ControlCheckboxComponent,
 	ControlEmailComponent,
@@ -31,7 +39,7 @@ export const entryComponents = [
 	ControlTextareaComponent,
 ];
 
-export const BaseControls: Controls = {
+export const controls: Controls = {
 	'checkbox': {
 		component: ControlCheckboxComponent,
 		model: ControlCheckbox
@@ -79,7 +87,7 @@ export class ControlConfig {
 		if (options) {
 			Object.assign(this, options);
 			this.controls = {
-				...BaseControls,
+				...controls,
 				...(options.controls || {})
 			};
 		}

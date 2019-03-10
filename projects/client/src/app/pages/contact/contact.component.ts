@@ -1,6 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ControlBase, FormService } from '@designr/control';
+import { ControlOption, FormService } from '@designr/control';
 import { PageComponent } from '@designr/page';
 
 @Component({
@@ -9,7 +9,7 @@ import { PageComponent } from '@designr/page';
 })
 export class ContactComponent extends PageComponent implements OnInit {
 
-	controls: ControlBase<any>[];
+	options: ControlOption<any>[];
 	group: FormGroup;
 	submitted: boolean = false;
 	busy: boolean = false;
@@ -22,7 +22,7 @@ export class ContactComponent extends PageComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.controls = this.formService.getControlsFromOptions([{
+		this.options = this.formService.getOptions([{
 			key: 'email',
 			schema: 'email',
 			label: 'signIn.email',
@@ -65,7 +65,7 @@ export class ContactComponent extends PageComponent implements OnInit {
 			placeholder: 'signIn.rememberMe',
 			order: 5
 		}]);
-		this.group = this.formService.getGroupFromControls(this.controls);
+		this.group = this.formService.getFormGroup(this.options);
 	}
 
 	onReset() {

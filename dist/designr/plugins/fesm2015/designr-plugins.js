@@ -2,7 +2,7 @@ import { PageService } from '@designr/page';
 import { NavigationEnd, Router } from '@angular/router';
 import * as Swiper from 'swiper/dist/js/swiper.js';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { InjectionToken, Inject, Injectable, Component, defineInjectable, inject, NgModule, Optional, SkipSelf, PLATFORM_ID, Input, NgZone, EventEmitter, Output, ViewEncapsulation, ElementRef, ChangeDetectorRef, ViewChild, Directive, KeyValueDiffers } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, defineInjectable, inject, NgModule, Optional, SkipSelf, PLATFORM_ID, Input, EventEmitter, Output, NgZone, ViewEncapsulation, ElementRef, ChangeDetectorRef, ViewChild, Directive, KeyValueDiffers } from '@angular/core';
 import { LocalStorageService, OnceService, RouteService, CoreModule, DisposableComponent, Logger } from '@designr/core';
 import { from, of, Observable } from 'rxjs';
 import { concatMap, filter, first, map, takeUntil, mergeMap } from 'rxjs/operators';
@@ -59,7 +59,7 @@ PluginsService.ctorParameters = () => [
  */
 class PluginsModuleComponent {
     constructor() {
-        this.version = '0.0.4';
+        this.version = '0.0.5';
     }
     /**
      * @return {?}

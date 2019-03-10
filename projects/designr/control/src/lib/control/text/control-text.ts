@@ -1,11 +1,5 @@
-import { ControlBase, ControlBaseOptions } from '../base/control-base';
+import { ControlOption } from '../control-option';
 
-export class ControlText extends ControlBase<string> {
-
-	readonly schema: string = 'text';
-
-	constructor(options: ControlBaseOptions<string> = {}) {
-		super(options);
-		this.type = options.type || this.type;
-	}
+export class ControlText extends ControlOption<string> {
+	schema?: string = 'text';
 }

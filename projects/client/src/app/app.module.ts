@@ -6,7 +6,7 @@ import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-bro
 import { DisposableComponent } from '@designr/core';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
-import { AppControls, controls } from './app.controls';
+import { AppControls } from './app.controls';
 import { AppCore } from './app.core';
 import { AppDatas } from './app.datas';
 import { AppEditor } from './app.editor';
@@ -83,17 +83,22 @@ const guards = [
 		BrowserTransferStateModule,
 		...modules,
 	],
-	providers: [],
+	providers: [
+		...pipes,
+		...validators,
+		...guards,
+	],
 	declarations: [
 		AppComponent,
-		...controls,
+		...directives,
 		...pages,
 		...sections,
 		...shared,
 		...auth,
+		...pipes,
+		...validators,
 	],
 	entryComponents: [
-		...controls,
 		...pages,
 		...sections,
 		...auth,

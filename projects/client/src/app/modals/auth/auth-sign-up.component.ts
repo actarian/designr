@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ControlBase, FormService } from '@designr/control';
+import { ControlOption, FormService } from '@designr/control';
 import { DisposableComponent } from '@designr/core';
 import { FacebookService, FacebookUser, GoogleService, GoogleUser } from '@designr/plugins';
 import { ModalCompleteEvent, ModalData, ModalService } from '@designr/ui';
@@ -18,7 +18,7 @@ import { AuthSignInComponent } from './auth-sign-in.component';
 
 export class AuthSignUpComponent extends DisposableComponent implements OnInit {
 
-	controls: ControlBase<any>[];
+	options: ControlOption<any>[];
 	form: FormGroup;
 	user: User;
 	facebook: FacebookUser;
@@ -44,7 +44,7 @@ export class AuthSignUpComponent extends DisposableComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.controls = this.formService.getControlsFromOptions([{
+		this.options = this.formService.getOptions([{
 			key: 'firstName',
 			schema: 'text',
 			label: 'signUp.firstName',
@@ -84,7 +84,7 @@ export class AuthSignUpComponent extends DisposableComponent implements OnInit {
 			minlength: 6,
 			order: 5
 		}]);
-		this.form = this.formService.getGroupFromControls(this.controls);
+		this.form = this.formService.getFormGroup(this.options);
 		const data: any = this.modalData;
 		if (data) {
 			console.log('AuthSignUpComponent.data', data);

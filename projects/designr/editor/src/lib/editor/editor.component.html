@@ -13,21 +13,9 @@
 				<p [innerHTML]="page.description"></p>
 				-->
 				<hr>
-				<!--
-				<div class="fieldset">
-					<div class="form-group">
-						<label>Label</label>
-						<input placeholder="placeholder" type="text" class="form-control" required [(ngModel)]="model.title" name="title" #title="ngModel" autocomplete="title">
-						<div *ngIf="title.invalid && (form.submitted || title.dirty || title.touched)" class="alert alert--danger">
-							<div *ngIf="title.errors.required">{{ 'errors.required' | translate }}</div>
-						</div>
-					</div>
+				<div *ngFor="let option of options">
+					<control-outlet [option]="option" [form]="group"></control-outlet>
 				</div>
-				-->
-				<div *ngFor="let control of controls">
-					<control-outlet [control]="control" [form]="group"></control-outlet>
-				</div>
-				<!-- <control-editable formControlName="email"></control-editable> -->
 				<div class="action-bar">
 					<button type="text" class="btn btn--secondary" [disabled]="submitted || !group.valid" (click)="onReset()" title="Annulla"><span>Annulla</span></button>
 					<button type="submit" class="btn btn--primary" [disabled]="submitted || !group.valid" [ngClass]="{ 'btn--busy': busy }" title="Salva"><span>Salva</span></button>

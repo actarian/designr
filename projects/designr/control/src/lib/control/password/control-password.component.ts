@@ -1,25 +1,15 @@
-import { Component, forwardRef, Input, Renderer2 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ControlBaseComponent } from '../base/control-base.component';
+import { Component, Input } from '@angular/core';
+import { ControlComponent } from '../control.component';
 import { ControlPassword } from './control-password';
 
 @Component({
 	selector: 'control-password-component',
-	templateUrl: './control-password.component.html',
-	providers: [{
-		provide: NG_VALUE_ACCESSOR,
-		useExisting: forwardRef(() => ControlPasswordComponent),
-		multi: true,
-	}],
+	templateUrl: 'control-password.component.html',
 })
-export class ControlPasswordComponent extends ControlBaseComponent implements ControlValueAccessor {
+export class ControlPasswordComponent extends ControlComponent {
 
-	@Input() control: ControlPassword;
+	reveal: { checked: boolean } = { checked: false };
 
-	constructor(
-		protected renderer: Renderer2
-	) {
-		super(renderer);
-	}
+	@Input() option: ControlPassword;
 
 }

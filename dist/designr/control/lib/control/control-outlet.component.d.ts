@@ -1,12 +1,11 @@
 import { ComponentFactoryResolver, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { DisposableComponent } from '@designr/core';
-import { ControlBase } from './base/control-base';
+import { ControlOption } from './control-option';
 import { ControlService } from './control.service';
-export declare class ControlOutletComponent extends DisposableComponent implements OnInit, OnDestroy {
+export declare class ControlOutletComponent implements OnInit, OnDestroy {
     private componentFactoryResolver;
     private controlService;
-    control: ControlBase<any>;
+    option: ControlOption<any>;
     form: FormGroup;
     viewContainerRef: ViewContainerRef;
     private componentRef;

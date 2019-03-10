@@ -1,13 +1,6 @@
-import { ControlBase, ControlBaseOptions } from '../base/control-base';
+import { ControlOption } from '../control-option';
 
-export class ControlEmail extends ControlBase<string> {
-
-	readonly schema: string = 'email';
-
-	constructor(options: ControlBaseOptions<string> = {}) {
-		super(options);
-		this.type = options.type || this.type;
-		this.email = true;
-		this.pattern = options.pattern || '[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
-	}
+export class ControlEmail extends ControlOption<string> {
+	schema?: string = 'email';
+	pattern?: string = '[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}';
 }

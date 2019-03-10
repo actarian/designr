@@ -1,25 +1,13 @@
-import { Component, forwardRef, Input, Renderer2 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ControlBaseComponent } from '../base/control-base.component';
+import { Component, Input } from '@angular/core';
+import { ControlComponent } from '../control.component';
 import { ControlTextarea } from './control-textarea';
 
 @Component({
 	selector: 'control-textarea-component',
-	templateUrl: './control-textarea.component.html',
-	providers: [{
-		provide: NG_VALUE_ACCESSOR,
-		useExisting: forwardRef(() => ControlTextareaComponent),
-		multi: true,
-	}],
+	templateUrl: 'control-textarea.component.html',
 })
-export class ControlTextareaComponent extends ControlBaseComponent implements ControlValueAccessor {
+export class ControlTextareaComponent extends ControlComponent {
 
-	@Input() control: ControlTextarea;
-
-	constructor(
-		protected renderer: Renderer2
-	) {
-		super(renderer);
-	}
+	@Input() option: ControlTextarea;
 
 }

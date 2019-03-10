@@ -1,25 +1,13 @@
-import { Component, forwardRef, Input, Renderer2 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ControlBaseComponent } from '../base/control-base.component';
+import { Component, Input } from '@angular/core';
+import { ControlComponent } from '../control.component';
 import { ControlNumber } from './control-number';
 
 @Component({
 	selector: 'control-number-component',
-	templateUrl: './control-number.component.html',
-	providers: [{
-		provide: NG_VALUE_ACCESSOR,
-		useExisting: forwardRef(() => ControlNumberComponent),
-		multi: true,
-	}],
+	templateUrl: 'control-number.component.html',
 })
-export class ControlNumberComponent extends ControlBaseComponent implements ControlValueAccessor {
+export class ControlNumberComponent extends ControlComponent {
 
-	@Input() control: ControlNumber;
-
-	constructor(
-		protected renderer: Renderer2
-	) {
-		super(renderer);
-	}
+	@Input() option: ControlNumber;
 
 }

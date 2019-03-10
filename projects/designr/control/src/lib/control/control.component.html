@@ -1,0 +1,7 @@
+<ng-container [formGroup]="form">
+	<label class="form-label" [attr.for]="option.key">{{ option.label | label }}</label>
+	<input class="form-control" placeholder="{{ option.placeholder | label }}" [id]="option.key" [formControlName]="option.key" [type]="option.type">
+	<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">
+		<div *ngIf="control.errors.required">{{ 'errors.required' | label }}</div>
+	</div>
+</ng-container>

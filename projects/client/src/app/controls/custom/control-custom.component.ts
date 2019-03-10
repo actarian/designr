@@ -1,34 +1,35 @@
-import { Component, forwardRef, Input, Renderer2 } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import { ControlBaseComponent } from '@designr/control';
+import { Component, Input, OnInit } from '@angular/core';
+import { ControlComponent } from '@designr/control';
 import { ControlCustom } from './control-custom';
 
 @Component({
 	selector: 'control-custom-component',
 	templateUrl: 'control-custom.component.html',
-	providers: [{
-		provide: NG_VALUE_ACCESSOR,
-		useExisting: forwardRef(() => ControlCustomComponent),
-		multi: true,
-	}],
 })
-export class ControlCustomComponent extends ControlBaseComponent {
+export class ControlCustomComponent extends ControlComponent implements OnInit {
 
-	@Input() control: ControlCustom;
+	@Input() option: ControlCustom;
 
-	constructor(
-		protected renderer: Renderer2
-	) {
-		super(renderer);
+	ngOnInit() {
+		/*
+		this.form.valueChanges.pipe(
+			tap(value => {
+				value[this.control.key] = value[this.control.key].replace('a', '');
+			}),
+			takeUntil(this.unsubscribe),
+		).subscribe((value) => {
+		});
+		*/
 	}
 
-	protected formatValue(value: any): void {
-		console.log('ControlCustomComponent.formatValue', value);
-		this.renderer.setProperty(this.element, 'value', value.replace(/a/g, ''));
+	onInput(event) {
+		// event.target.value = this.form.value[this.control.key];
 	}
 
-	protected onChange = (value: any) => {
-		console.log('ControlCustomComponent.onChange', value);
-	};
+	/*
+	protected onChange(event) {
+		event.target.value = this.form.value[this.control.key];
+	}
+	*/
 
 }

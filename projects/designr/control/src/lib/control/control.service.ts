@@ -2,8 +2,8 @@ import { Inject, Injectable, Type } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ControlConfig, CONTROL_CONFIG } from '../config/control.config';
 import { matchValidator } from '../directives/match.validator';
-import { ControlBase } from './base/control-base';
-import { ControlBaseComponent } from './base/control-base.component';
+import { ControlOption } from './control-option';
+import { ControlComponent } from './control.component';
 
 @Injectable({
 	providedIn: 'root'
@@ -16,67 +16,66 @@ export class ControlService {
 		@Inject(CONTROL_CONFIG) options: ControlConfig
 	) {
 		// console.log('ControlService', options);
-		options = options || {};
-		this.options = new ControlConfig(options);
+		this.options = new ControlConfig(options || {});
 	}
 
-	resolve(control: ControlBase<any>): Type<ControlBaseComponent> {
-		let component: Type<ControlBaseComponent>;
-		if (control) {
-			component = this.options.controls[control.schema].component || ControlBaseComponent;
+	resolve(options: ControlOption<any>): Type<ControlComponent> {
+		let component: Type<ControlComponent>;
+		if (options) {
+			component = this.options.controls[options.schema].component || ControlComponent;
 		} else {
-			component = ControlBaseComponent;
+			component = ControlComponent;
 		}
 		return component;
 	}
 
-	getValidators(control: ControlBase<any>, group: FormGroup): ValidatorFn[] {
+	getValidators(options: ControlOption<any>, group: FormGroup): ValidatorFn[] {
 		const validators: ValidatorFn[] = [];
-		if (control.min) {
-			validators.push(Validators.min(control.min));
+		if (options.min) {
+			validators.push(Validators.min(options.min));
 		}
-		if (control.max) {
-			validators.push(Validators.max(control.max));
+		if (options.max) {
+			validators.push(Validators.max(options.max));
 		}
-		if (control.required) {
+		if (options.required) {
 			validators.push(Validators.required);
 		}
-		if (control.requiredTrue) {
+		if (options.requiredTrue) {
 			validators.push(Validators.requiredTrue);
 		}
-		if (control.email) {
+		if (options.email) {
 			validators.push(Validators.email);
 		}
-		if (control.minlength) {
-			validators.push(Validators.minLength(control.minlength));
+		if (options.minlength) {
+			validators.push(Validators.minLength(options.minlength));
 		}
-		if (control.maxlength) {
-			validators.push(Validators.maxLength(control.maxlength));
+		if (options.maxlength) {
+			validators.push(Validators.maxLength(options.maxlength));
 		}
-		if (control.pattern) {
-			validators.push(Validators.pattern(control.pattern));
+		if (options.pattern) {
+			validators.push(Validators.pattern(options.pattern));
 		}
-		if (control.match) {
-			validators.push(matchValidator(control.match, control.reverse, group));
+		if (options.match) {
+			validators.push(matchValidator(options.match, options.reverse, group));
 		}
-		// console.log(control.key, validators);
+		// console.log(options.key, validators);
 		return validators;
 	}
 
-	toFormGroup(controls: ControlBase<any>[]): FormGroup {
-		const options: any = {};
-		controls.forEach(x => {
+	toFormGroup(options: ControlOption<any>[]): FormGroup {
+		const controls: { [key: string]: FormControl } = {};
+		options.forEach(x => {
 			// group[x.key] = new FormControl(x.value, this.getValidators(x, group));
-			const formControl: FormControl = new FormControl(x.value);
+			const control: FormControl = new FormControl(x.value);
 			if (x.disabled) {
-				formControl.disable();
+				control.disable();
 			}
-			options[x.key] = formControl;
-			// x.setControl(formControl); // !!!
+			controls[x.key] = control;
+			// x.setControl(control); // !!!
 		});
-		const group: FormGroup = new FormGroup(options);
+		const group: FormGroup = new FormGroup(controls);
 		// console.log(group);
-		controls.forEach(x => {
+		options.forEach(x => {
 			const validators = this.getValidators(x, group);
 			// console.log(validators);
 			group.controls[x.key].setValidators(validators);
