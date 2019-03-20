@@ -1,9 +1,8 @@
-import { Inject, Injectable, Injector } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Meta, MetaDefinition, Title } from '@angular/platform-browser';
 import { EntityService, HttpStatusCodeService, Image, ImageType } from '@designr/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { PageConfig, PAGE_CONFIG } from '../config/page.config';
 import { LinkDefinition, LinkService } from './link.service';
 import { Page } from './page';
 
@@ -12,7 +11,6 @@ import { Page } from './page';
 })
 export class PageService extends EntityService<Page> {
 
-	public options: PageConfig;
 	public page: Page;
 
 	get collection(): string {
@@ -20,7 +18,6 @@ export class PageService extends EntityService<Page> {
 	}
 
 	constructor(
-		@Inject(PAGE_CONFIG) options: PageConfig,
 		protected injector: Injector,
 		private titleService: Title,
 		private metaService: Meta,
@@ -29,10 +26,6 @@ export class PageService extends EntityService<Page> {
 	) {
 		super(injector);
 		// console.log('PageService', options);
-		options = options || {};
-		// options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
-		// options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;
-		this.options = new PageConfig(options);
 	}
 
 	getStatePageBySlug(slug: string): Observable<Page> {

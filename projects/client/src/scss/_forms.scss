@@ -38,7 +38,9 @@ label {
 	justify-content: center;
 }
 
-.form-control {
+.form-control,
+.form-select__select {
+	appearance: none;
 	border-radius: 4px;
 	font-size: 16px;
 	display: block;
@@ -61,6 +63,24 @@ label {
 		color: #007aff;
 		outline: none;
 		box-shadow: none;
+	}
+}
+
+.form-select {
+	position: relative;
+
+	&:after {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 62%;
+		right: 17px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 7px 5px 0 5px;
+		border-color: #007aff transparent transparent transparent;
+		pointer-events: none;
 	}
 }
 

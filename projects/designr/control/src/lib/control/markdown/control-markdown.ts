@@ -1,5 +1,5 @@
 import { ControlOption } from '../control-option';
 
 export class ControlMarkdown extends ControlOption<string> {
-	schema?: string = 'markdown';
+	schema: string = 'markdown';
 }

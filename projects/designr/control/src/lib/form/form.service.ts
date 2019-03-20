@@ -1,7 +1,7 @@
 import { Injectable, Type } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ControlInterface } from '../config/control.config';
-import { ControlOption } from '../control/control-option';
+import { ControlOption, IControlOption } from '../control/control-option';
 import { ControlService } from '../control/control.service';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class FormService {
 		return this.controlService.toFormGroup(options);
 	}
 
-	getOptions(data: ControlOption<any>[]): ControlOption<any>[] {
+	getOptions(data: IControlOption<any>[]): ControlOption<any>[] {
 		const options: ControlOption<any>[] = data.map(o => {
 			const control: ControlInterface = this.controlService.options.controls[o.schema];
 			if (control) {
@@ -32,7 +32,7 @@ export class FormService {
 		return options;
 	}
 
-	getFormGroupFromOptions(options: ControlOption<any>[]): FormGroup {
+	getFormGroupFromOptions(options: IControlOption<any>[]): FormGroup {
 		return this.getFormGroup(this.getOptions(options));
 	}
 

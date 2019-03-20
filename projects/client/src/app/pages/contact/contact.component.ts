@@ -25,8 +25,8 @@ export class ContactComponent extends PageComponent implements OnInit {
 		this.options = this.formService.getOptions([{
 			key: 'email',
 			schema: 'email',
-			label: 'signIn.email',
-			placeholder: 'signIn.email',
+			label: 'contact.email',
+			placeholder: 'contact.email',
 			required: true,
 			match: 'emailConfirm',
 			reverse: true,
@@ -34,35 +34,39 @@ export class ContactComponent extends PageComponent implements OnInit {
 		}, {
 			key: 'emailConfirm',
 			schema: 'email',
-			label: 'signIn.emailConfirm',
-			placeholder: 'signIn.emailConfirm',
+			label: 'contact.emailConfirm',
+			placeholder: 'contact.emailConfirm',
 			required: true,
 			match: 'email',
 			order: 2,
 		}, {
 			key: 'password',
 			schema: 'password',
-			label: 'signIn.password',
-			placeholder: 'signIn.password',
+			label: 'contact.password',
+			placeholder: 'contact.password',
 			required: true,
 			minlength: 6,
 			order: 3
 		}, {
-			key: 'hours',
-			schema: 'number',
-			label: 'signIn.hours',
-			placeholder: 'signIn.hours',
-			required: true,
-			min: 0,
-			max: 24,
-			step: 1,
-			format: 'H',
+			key: 'type',
+			schema: 'select',
+			label: 'contact.type',
+			options: [{
+				label: 'Any',
+				value: null,
+			}, {
+				label: 'Yes',
+				value: true,
+			}, {
+				label: 'No',
+				value: false,
+			}],
 			order: 3
 		}, {
-			key: 'rememberMe',
+			key: 'privacy',
 			schema: 'checkbox',
-			label: 'signIn.rememberMe',
-			placeholder: 'signIn.rememberMe',
+			label: 'contact.privacy',
+			placeholder: 'contact.privacy',
 			order: 5
 		}]);
 		this.group = this.formService.getFormGroup(this.options);

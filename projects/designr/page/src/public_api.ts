@@ -1,4 +1,7 @@
 export { PageConfig, PAGE_CONFIG } from './lib/config/page.config';
+export { ILayoutComponent, Layouts } from './lib/layout/layout';
+export { LayoutComponent } from './lib/layout/layout.component';
+export { UseLayoutDirective } from './lib/layout/use-layout.directive';
 export { PageModuleComponent } from './lib/page-module.component';
 export { PageModule } from './lib/page.module';
 export { PageRouting } from './lib/page.routing';

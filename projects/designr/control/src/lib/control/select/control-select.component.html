@@ -1,7 +1,7 @@
 <div class="form-select" [formGroup]="form">
 	<label class="form-label" [attr.for]="option.key">{{ option.label | label }}</label>
 	<select class="form-select__select" [id]="option.key" [formControlName]="option.key">
-		<option *ngFor="let opt of option.options" [value]="opt.key">{{opt.value}}</option>
+		<option *ngFor="let item of option.options" [ngValue]="item?.value">{{item?.label}}</option>
 	</select>
 	<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">
 		<div *ngIf="control.errors.required">{{ 'errors.required' | label }}</div>

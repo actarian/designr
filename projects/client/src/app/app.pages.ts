@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
-import { PageModule, Pages } from '@designr/page';
+import { NgModule, Type } from '@angular/core';
+import { ILayoutComponent, PageModule, Pages } from '@designr/page';
+import { MainLayoutComponent } from './layouts/main/main-layout.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { DefaultComponent } from './pages/default/default.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -19,9 +20,19 @@ export const PAGES: Pages = {
 	'NotFoundComponent': NotFoundComponent,
 };
 
+export const layouts = [
+	MainLayoutComponent,
+];
+
+export const LAYOUTS: { [key: string]: Type<ILayoutComponent> } = {
+	'MainLayoutComponent': MainLayoutComponent,
+};
+
 @NgModule({
 	imports: [
 		PageModule.forRoot({
+			layouts: LAYOUTS,
+			defaultLayout: MainLayoutComponent,
 			pages: PAGES,
 			defaultPage: DefaultComponent,
 			notFoundPage: NotFoundComponent,

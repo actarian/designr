@@ -3,7 +3,7 @@ export { ControlModuleComponent } from './lib/control-module.component';
 export { ControlModule } from './lib/control.module';
 export { ControlCheckbox } from './lib/control/checkbox/control-checkbox';
 export { ControlCheckboxComponent } from './lib/control/checkbox/control-checkbox.component';
-export { ControlOption } from './lib/control/control-option';
+export { ControlOption, IControlOption } from './lib/control/control-option';
 export { ControlOutletComponent } from './lib/control/control-outlet.component';
 export { ControlAccessor } from './lib/control/control.accessor';
 export { ControlComponent } from './lib/control/control.component';

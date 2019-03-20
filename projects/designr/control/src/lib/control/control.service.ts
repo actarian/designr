@@ -2,7 +2,7 @@ import { Inject, Injectable, Type } from '@angular/core';
 import { FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ControlConfig, CONTROL_CONFIG } from '../config/control.config';
 import { matchValidator } from '../directives/match.validator';
-import { ControlOption } from './control-option';
+import { IControlOption } from './control-option';
 import { ControlComponent } from './control.component';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class ControlService {
 		this.options = new ControlConfig(options || {});
 	}
 
-	resolve(options: ControlOption<any>): Type<ControlComponent> {
+	resolve(options: IControlOption<any>): Type<ControlComponent> {
 		let component: Type<ControlComponent>;
 		if (options) {
 			component = this.options.controls[options.schema].component || ControlComponent;
@@ -29,7 +29,7 @@ export class ControlService {
 		return component;
 	}
 
-	getValidators(options: ControlOption<any>, group: FormGroup): ValidatorFn[] {
+	getValidators(options: IControlOption<any>, group: FormGroup): ValidatorFn[] {
 		const validators: ValidatorFn[] = [];
 		if (options.min) {
 			validators.push(Validators.min(options.min));
@@ -43,9 +43,6 @@ export class ControlService {
 		if (options.requiredTrue) {
 			validators.push(Validators.requiredTrue);
 		}
-		if (options.email) {
-			validators.push(Validators.email);
-		}
 		if (options.minlength) {
 			validators.push(Validators.minLength(options.minlength));
 		}
@@ -58,11 +55,14 @@ export class ControlService {
 		if (options.match) {
 			validators.push(matchValidator(options.match, options.reverse, group));
 		}
+		if (options.schema === 'email') {
+			validators.push(Validators.email);
+		}
 		// console.log(options.key, validators);
 		return validators;
 	}
 
-	toFormGroup(options: ControlOption<any>[]): FormGroup {
+	toFormGroup(options: IControlOption<any>[]): FormGroup {
 		const controls: { [key: string]: FormControl } = {};
 		options.forEach(x => {
 			// group[x.key] = new FormControl(x.value, this.getValidators(x, group));

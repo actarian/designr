@@ -4,7 +4,7 @@ import { isPlatformBrowser, DOCUMENT, CommonModule } from '@angular/common';
 import { DisposableComponent, RouteService, EntityService, HttpStatusCodeService, ImageType, CoreModule } from '@designr/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { InjectionToken, Component, Injector, Input, PLATFORM_ID, ViewEncapsulation, Inject, Injectable, NgModule, ComponentFactoryResolver, ViewChild, ViewContainerRef, defineInjectable, inject, Optional, SkipSelf, INJECTOR } from '@angular/core';
+import { InjectionToken, Input, TemplateRef, Component, Inject, Injectable, NgModule, Injector, ViewEncapsulation, ComponentFactoryResolver, ViewChild, ViewContainerRef, Directive, defineInjectable, inject, Optional, SkipSelf, PLATFORM_ID, INJECTOR } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -16,8 +16,11 @@ class PageConfig {
      */
     constructor(options) {
         this.pages = {};
+        this.layouts = {};
         // console.log('PageConfig', options);
         if (options) {
+            this.layouts = options.layouts || {};
+            this.defaultLayout = options.defaultLayout;
             this.pages = options.pages || {};
             this.defaultPage = options.defaultPage;
             this.notFoundPage = options.notFoundPage;
@@ -31,24 +34,52 @@ const PAGE_CONFIG = new InjectionToken('page.config');
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class PageModuleComponent {
-    constructor() {
-        this.version = '0.0.5';
-    }
-    /**
-     * @return {?}
-     */
-    ngOnInit() {
-    }
+class ILayoutComponent {
 }
-PageModuleComponent.decorators = [
+ILayoutComponent.propDecorators = {
+    template: [{ type: Input }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class LayoutComponent {
+}
+LayoutComponent.decorators = [
     { type: Component, args: [{
-                selector: 'page-module',
-                template: `<span class="page-module">page {{version}}</span>`
+                selector: 'layout-component',
+                template: `<div [ngClass]="page?.component">
+	<ng-container *ngTemplateOutlet="template"></ng-container>
+</div>`
             }] }
 ];
+LayoutComponent.propDecorators = {
+    template: [{ type: Input }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ConfigService {
+    /**
+     * @param {?} options
+     */
+    constructor(options) {
+        this.options = new PageConfig(options || {});
+    }
+}
+ConfigService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
 /** @nocollapse */
-PageModuleComponent.ctorParameters = () => [];
+ConfigService.ctorParameters = () => [
+    { type: PageConfig, decorators: [{ type: Inject, args: [PAGE_CONFIG,] }] }
+];
+/** @nocollapse */ ConfigService.ngInjectableDef = defineInjectable({ factory: function ConfigService_Factory() { return new ConfigService(inject(PAGE_CONFIG)); }, token: ConfigService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -174,6 +205,87 @@ class Page {
         return groups;
     }
 }
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class UseLayoutDirective {
+    /**
+     * @param {?} templateRef
+     * @param {?} viewContainerRef
+     * @param {?} componentFactoryResolver
+     * @param {?} configService
+     */
+    constructor(templateRef, viewContainerRef, componentFactoryResolver, configService) {
+        this.templateRef = templateRef;
+        this.viewContainerRef = viewContainerRef;
+        this.componentFactoryResolver = componentFactoryResolver;
+        this.configService = configService;
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        /** @type {?} */
+        const options = this.configService.options;
+        /** @type {?} */
+        const component = options.layouts[this.layoutKey] || options.defaultLayout || LayoutComponent;
+        /** @type {?} */
+        const containerFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+        this.container = this.viewContainerRef.createComponent(containerFactory);
+        this.container.instance.template = this.templateRef;
+        this.container.instance.page = this.page;
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        if (this.container) {
+            this.container.destroy();
+            this.container = null;
+        }
+    }
+}
+UseLayoutDirective.decorators = [
+    { type: Directive, args: [{
+                selector: '[useLayout]'
+            },] }
+];
+/** @nocollapse */
+UseLayoutDirective.ctorParameters = () => [
+    { type: TemplateRef },
+    { type: ViewContainerRef },
+    { type: ComponentFactoryResolver },
+    { type: ConfigService }
+];
+UseLayoutDirective.propDecorators = {
+    layoutKey: [{ type: Input, args: ['useLayout',] }],
+    page: [{ type: Input }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class PageModuleComponent {
+    constructor() {
+        this.version = '0.0.5';
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+    }
+}
+PageModuleComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'page-module',
+                template: `<span class="page-module">page {{version}}</span>`
+            }] }
+];
+/** @nocollapse */
+PageModuleComponent.ctorParameters = () => [];
 
 /**
  * @fileoverview added by tsickle
@@ -375,14 +487,13 @@ LinkService.ctorParameters = () => [
  */
 class PageService extends EntityService {
     /**
-     * @param {?} options
      * @param {?} injector
      * @param {?} titleService
      * @param {?} metaService
      * @param {?} linkService
      * @param {?} statusCodeService
      */
-    constructor(options, injector, titleService, metaService, linkService, statusCodeService) {
+    constructor(injector, titleService, metaService, linkService, statusCodeService) {
         super(injector);
         this.injector = injector;
         this.titleService = titleService;
@@ -390,10 +501,6 @@ class PageService extends EntityService {
         this.linkService = linkService;
         this.statusCodeService = statusCodeService;
         // console.log('PageService', options);
-        options = options || {};
-        // options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
-        // options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;
-        this.options = new PageConfig(options);
     }
     /**
      * @return {?}
@@ -595,14 +702,13 @@ PageService.decorators = [
 ];
 /** @nocollapse */
 PageService.ctorParameters = () => [
-    { type: PageConfig, decorators: [{ type: Inject, args: [PAGE_CONFIG,] }] },
     { type: Injector },
     { type: Title },
     { type: Meta },
     { type: LinkService },
     { type: HttpStatusCodeService }
 ];
-/** @nocollapse */ PageService.ngInjectableDef = defineInjectable({ factory: function PageService_Factory() { return new PageService(inject(PAGE_CONFIG), inject(INJECTOR), inject(Title), inject(Meta), inject(LinkService), inject(HttpStatusCodeService)); }, token: PageService, providedIn: "root" });
+/** @nocollapse */ PageService.ngInjectableDef = defineInjectable({ factory: function PageService_Factory() { return new PageService(inject(INJECTOR), inject(Title), inject(Meta), inject(LinkService), inject(HttpStatusCodeService)); }, token: PageService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -718,18 +824,18 @@ PageOutletComponent.propDecorators = {
  */
 class PageResolver {
     /**
-     * @param {?} pageService
+     * @param {?} configService
      * @param {?} page
      */
-    constructor(pageService, page) {
-        this.pageService = pageService;
+    constructor(configService, page) {
+        this.configService = configService;
         this.page = page;
         this.component = PageComponent;
-        if (page && this.pageService.options.pages) {
-            this.component = this.pageService.options.pages[page.component] || this.pageService.options.defaultPage;
+        if (page && this.configService.options.pages) {
+            this.component = this.configService.options.pages[page.component] || this.configService.options.defaultPage;
         }
         else {
-            this.component = this.pageService.options.notFoundPage || PageNotFoundComponent;
+            this.component = this.configService.options.notFoundPage || PageNotFoundComponent;
         }
     }
 }
@@ -740,10 +846,12 @@ class PageResolver {
  */
 class PageResolverService {
     /**
+     * @param {?} configService
      * @param {?} pageService
      * @param {?} routeService
      */
-    constructor(pageService, routeService) {
+    constructor(configService, pageService, routeService) {
+        this.configService = configService;
         this.pageService = pageService;
         this.routeService = routeService;
         this.events$ = new BehaviorSubject(null);
@@ -754,7 +862,7 @@ class PageResolverService {
      */
     pageToPageResolver(page) {
         /** @type {?} */
-        const pageResolver = new PageResolver(this.pageService, page);
+        const pageResolver = new PageResolver(this.configService, page);
         this.events$.next(pageResolver);
         return pageResolver;
     }
@@ -819,10 +927,11 @@ PageResolverService.decorators = [
 ];
 /** @nocollapse */
 PageResolverService.ctorParameters = () => [
+    { type: ConfigService },
     { type: PageService },
     { type: RouteService }
 ];
-/** @nocollapse */ PageResolverService.ngInjectableDef = defineInjectable({ factory: function PageResolverService_Factory() { return new PageResolverService(inject(PageService), inject(RouteService)); }, token: PageResolverService, providedIn: "root" });
+/** @nocollapse */ PageResolverService.ngInjectableDef = defineInjectable({ factory: function PageResolverService_Factory() { return new PageResolverService(inject(ConfigService), inject(PageService), inject(RouteService)); }, token: PageResolverService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -948,6 +1057,7 @@ PageRouting.decorators = [
  */
 /** @type {?} */
 const services = [
+    ConfigService,
     PageService,
 ];
 /** @type {?} */
@@ -956,6 +1066,11 @@ const components = [
     PageComponent,
     PageNotFoundComponent,
     PageOutletComponent,
+    LayoutComponent,
+];
+/** @type {?} */
+const directives = [
+    UseLayoutDirective
 ];
 /** @type {?} */
 const guards = [
@@ -997,6 +1112,7 @@ PageModule.decorators = [
                 ],
                 declarations: [
                     ...components,
+                    ...directives,
                 ],
                 entryComponents: [
                     ...components,
@@ -1005,6 +1121,7 @@ PageModule.decorators = [
                     CoreModule,
                     PageRouting,
                     ...components,
+                    ...directives,
                 ],
             },] }
 ];
@@ -1023,6 +1140,6 @@ PageModule.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PageConfig, PAGE_CONFIG, PageModuleComponent, PageModule, PageRouting, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, LinkService as ɵa };
+export { PageConfig, PAGE_CONFIG, ILayoutComponent, LayoutComponent, UseLayoutDirective, PageModuleComponent, PageModule, PageRouting, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, ConfigService as ɵa, LinkService as ɵb };
 
 //# sourceMappingURL=designr-page.js.map

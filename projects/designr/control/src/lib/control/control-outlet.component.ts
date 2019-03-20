@@ -1,6 +1,6 @@
 import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ControlOption } from './control-option';
+import { IControlOption } from './control-option';
 import { ControlComponent } from './control.component';
 import { ControlService } from './control.service';
 
@@ -10,7 +10,7 @@ import { ControlService } from './control.service';
 })
 export class ControlOutletComponent implements OnInit, OnDestroy {
 
-	@Input() option: ControlOption<any>;
+	@Input() option: IControlOption<any>;
 	@Input() form: FormGroup;
 
 	@ViewChild('outlet', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;

@@ -1,11 +1,11 @@
 import { InjectionToken, Type } from '@angular/core';
 import { ControlCheckboxComponent } from '../control/checkbox/control-checkbox.component';
-import { ControlOption } from '../control/control-option';
+import { IControlOption } from '../control/control-option';
 import { ControlComponent } from '../control/control.component';
 import { ControlMarkdownComponent } from '../control/markdown/control-markdown.component';
 export interface ControlInterface {
     component: Type<ControlComponent>;
-    model: Type<ControlOption<any>>;
+    model: Type<IControlOption<any>>;
 }
 export interface Controls {
     [key: string]: ControlInterface;

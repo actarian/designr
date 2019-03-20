@@ -10,7 +10,7 @@ import { AppControls } from './app.controls';
 import { AppCore } from './app.core';
 import { AppDatas } from './app.datas';
 import { AppEditor } from './app.editor';
-import { AppPages, pages } from './app.pages';
+import { AppPages, layouts, pages } from './app.pages';
 import { AppPlugins } from './app.plugins';
 import { AppRouting } from './app.routing';
 import { AppSections, sections } from './app.sections';
@@ -91,6 +91,7 @@ const guards = [
 	declarations: [
 		AppComponent,
 		...directives,
+		...layouts,
 		...pages,
 		...sections,
 		...shared,
@@ -99,6 +100,7 @@ const guards = [
 		...validators,
 	],
 	entryComponents: [
+		...layouts,
 		...pages,
 		...sections,
 		...auth,

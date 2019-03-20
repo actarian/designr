@@ -1,25 +1,27 @@
-<hero-component [section]="page"></hero-component>
-<section class="section section--form">
-	<div class="container">
-		<div class="group group--form">
-			<form class="form" name="group" [formGroup]="group" (ngSubmit)="group.valid && onSubmit(group.value)" #form="ngForm" role="form" novalidate autocomplete="off">
-				<controls-component class="fieldset" [options]="options" [form]="group"></controls-component>
-				<!--
-				<div class="fieldset">
-					<ng-container *ngFor="let option of options">
-						<control-outlet class="form-group" [option]="option" [form]="group"></control-outlet>
-					</ng-container>
-				</div>
-				-->
-				<div class="group group--inline">
-					<button type="text" class="btn btn--secondary" [disabled]="submitted || !group.valid" (click)="onReset()"><span>Cancel</span></button>
-					<button type="submit" class="btn btn--primary" [disabled]="submitted || !group.valid" [ngClass]="{ 'btn--busy': busy }"><span>Save</span></button>
-				</div>
-			</form>
+<ng-container *useLayout="'MainLayoutComponent'">
+	<hero-component [section]="page"></hero-component>
+	<section class="section section--form">
+		<div class="container">
+			<div class="group group--form">
+				<form class="form" name="group" [formGroup]="group" (ngSubmit)="group.valid && onSubmit(group.value)" #form="ngForm" role="form" novalidate autocomplete="off">
+					<controls-component class="fieldset" [options]="options" [form]="group"></controls-component>
+					<!--
+					<div class="fieldset">
+						<ng-container *ngFor="let option of options">
+							<control-outlet class="form-group" [option]="option" [form]="group"></control-outlet>
+						</ng-container>
+					</div>
+					-->
+					<div class="group group--inline">
+						<button type="text" class="btn btn--secondary" [disabled]="submitted || !group.valid" (click)="onReset()"><span>Cancel</span></button>
+						<button type="submit" class="btn btn--primary" [disabled]="submitted || !group.valid" [ngClass]="{ 'btn--busy': busy }"><span>Save</span></button>
+					</div>
+				</form>
+			</div>
 		</div>
-	</div>
-</section>
-<content-component [page]="page"></content-component>
-<section-sections [sections]="page.related"></section-sections>
-<!-- <related-component [page]="page"></related-component> -->
-<footer-component></footer-component>
+	</section>
+	<content-component [page]="page"></content-component>
+	<section-sections [sections]="page.related"></section-sections>
+	<!-- <related-component [page]="page"></related-component> -->
+	<footer-component></footer-component>
+</ng-container>

@@ -1,7 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, ElementRef, Inject, Input, OnChanges, PLATFORM_ID, ViewChild, ViewEncapsulation } from '@angular/core';
+// require('json-formatter-js').default
+import JSONFormatter from 'json-formatter-js';
 import { isArray, isObject } from 'util';
-// import JSONFormatter from 'json-formatter-js';
 
 @Component({
 	selector: 'json-formatter',
@@ -29,7 +30,7 @@ export class JsonFormatterComponent implements OnChanges {
 			if (this.elementRef) {
 				this.input.nativeElement.removeChild(this.elementRef.nativeElement);
 			}
-			const JSONFormatter = require('json-formatter-js').default;
+			// const JSONFormatter = require('json-formatter-js').default;
 			const formatter = new JSONFormatter(this.json);
 			const elementRef = formatter.render();
 			this.input.nativeElement.appendChild(elementRef);

@@ -1,7 +1,7 @@
 import { InjectionToken, Type } from '@angular/core';
 import { ControlCheckbox } from '../control/checkbox/control-checkbox';
 import { ControlCheckboxComponent } from '../control/checkbox/control-checkbox.component';
-import { ControlOption } from '../control/control-option';
+import { IControlOption } from '../control/control-option';
 import { ControlComponent } from '../control/control.component';
 import { ControlEmail } from '../control/email/control-email';
 import { ControlEmailComponent } from '../control/email/control-email.component';
@@ -22,7 +22,7 @@ import { ControlTextareaComponent } from '../control/textarea/control-textarea.c
 
 export interface ControlInterface {
 	component: Type<ControlComponent>;
-	model: Type<ControlOption<any>>;
+	model: Type<IControlOption<any>>;
 }
 
 export interface Controls { [key: string]: ControlInterface; }

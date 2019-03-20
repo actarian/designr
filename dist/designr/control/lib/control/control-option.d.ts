@@ -1,29 +1,29 @@
-export declare class ControlOption<T> {
-    static uid: number;
-    protected _originalValue?: T;
+export interface IControlOption<T> {
+    schema: string;
     value?: T;
+    order?: number;
     key?: string;
     label?: string;
     placeholder?: string;
-    order?: number;
-    schema?: string;
-    type?: string;
-    min?: number;
-    max?: number;
+    disabled?: boolean;
     required?: boolean;
-    requiredTrue?: boolean;
-    email?: boolean;
+    match?: string;
+    reverse?: boolean;
+    [x: string]: any;
+}
+export declare class ControlOption<T> {
+    schema: string;
+    value?: T;
+    order?: number;
+    key?: string;
+    label?: string;
+    placeholder?: string;
+    disabled?: boolean;
+    required?: boolean;
+    match?: string;
+    reverse?: boolean;
     minlength?: number;
     maxlength?: number;
     pattern?: string | RegExp;
-    match?: string;
-    reverse?: boolean;
-    options?: {
-        key: string;
-        value: string;
-    }[];
-    disabled?: boolean;
-    step?: number;
-    format?: string;
-    constructor(options?: ControlOption<T>);
+    constructor(options?: IControlOption<T>);
 }

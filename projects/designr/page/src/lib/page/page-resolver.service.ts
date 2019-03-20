@@ -4,6 +4,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { RouteService } from '@designr/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ConfigService } from '../config/config.service';
 import { Page } from './page';
 import { PageResolver } from './page-resolver';
 import { PageService } from './page.service';
@@ -16,12 +17,13 @@ export class PageResolverService implements Resolve<PageResolver> {
 	public events$: BehaviorSubject<PageResolver> = new BehaviorSubject<PageResolver>(null);
 
 	constructor(
+		private configService: ConfigService,
 		private pageService: PageService,
 		private routeService: RouteService,
 	) { }
 
 	pageToPageResolver(page: Page): PageResolver {
-		const pageResolver = new PageResolver(this.pageService, page);
+		const pageResolver = new PageResolver(this.configService, page);
 		this.events$.next(pageResolver);
 		return pageResolver;
 	}

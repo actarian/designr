@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { DisposableComponent } from '@designr/core';
-import { ControlOption } from './control-option';
+import { IControlOption } from './control-option';
 
 @Component({
 	selector: 'control-component',
@@ -9,7 +9,7 @@ import { ControlOption } from './control-option';
 })
 export class ControlComponent extends DisposableComponent {
 
-	@Input() option: ControlOption<any>;
+	@Input() option: IControlOption<any>;
 	@Input() form: FormGroup;
 
 	get control(): AbstractControl {
