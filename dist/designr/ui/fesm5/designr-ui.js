@@ -52,7 +52,7 @@ var UIService = /** @class */ (function () {
  */
 var UIModuleComponent = /** @class */ (function () {
     function UIModuleComponent() {
-        this.version = '0.0.5';
+        this.version = '0.0.6';
     }
     /**
      * @return {?}
@@ -1343,6 +1343,6 @@ var UIModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { UIConfig, UI_CONFIG, UIService, UIModuleComponent, UIModule, ClickOutsideDirective, LazyImagesDirective, ModalCompleteEvent, ModalData, ModalContainerComponent, ModalViewComponent, ModalService, ParallaxDirective, RafService, ScrollDirective, SpriteComponent as ɵa };
+export { UIConfig, UI_CONFIG, UIService, UIModuleComponent, UIModule, ClickOutsideDirective, LazyImagesDirective, Modal, ModalCloseEvent, ModalCompleteEvent, ModalData, ModalEventType, ModalContainerComponent, ModalViewComponent, ModalService, ParallaxDirective, RafService, ScrollDirective, SpriteComponent as ɵa };
 
 //# sourceMappingURL=designr-ui.js.map

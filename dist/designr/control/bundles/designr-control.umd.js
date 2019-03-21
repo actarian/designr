@@ -533,7 +533,7 @@
      */
     var ControlModuleComponent = /** @class */ (function () {
         function ControlModuleComponent() {
-            this.version = '0.0.5';
+            this.version = '0.0.6';
         }
         /**
          * @return {?}

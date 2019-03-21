@@ -1,8 +1,10 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/forms'), require('@angular/router'), require('@angular/common/http'), require('util'), require('@angular/common'), require('@angular/platform-browser'), require('@angular/core'), require('rxjs'), require('rxjs/operators')) :
-    typeof define === 'function' && define.amd ? define('@designr/core', ['exports', '@angular/forms', '@angular/router', '@angular/common/http', 'util', '@angular/common', '@angular/platform-browser', '@angular/core', 'rxjs', 'rxjs/operators'], factory) :
-    (factory((global.designr = global.designr || {}, global.designr.core = {}),global.ng.forms,global.ng.router,global.ng.common.http,global.util,global.ng.common,global.ng.platformBrowser,global.ng.core,global.rxjs,global.rxjs.operators));
-}(this, (function (exports,forms,i4,http,util,i1,i1$1,i0,rxjs,operators) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/forms'), require('@angular/router'), require('@angular/common/http'), require('json-formatter-js'), require('util'), require('@angular/common'), require('@angular/platform-browser'), require('@angular/core'), require('rxjs'), require('rxjs/operators')) :
+    typeof define === 'function' && define.amd ? define('@designr/core', ['exports', '@angular/forms', '@angular/router', '@angular/common/http', 'json-formatter-js', 'util', '@angular/common', '@angular/platform-browser', '@angular/core', 'rxjs', 'rxjs/operators'], factory) :
+    (factory((global.designr = global.designr || {}, global.designr.core = {}),global.ng.forms,global.ng.router,global.ng.common.http,global.JSONFormatter,global.util,global.ng.common,global.ng.platformBrowser,global.ng.core,global.rxjs,global.rxjs.operators));
+}(this, (function (exports,forms,i4,http,JSONFormatter,util,i1,i1$1,i0,rxjs,operators) { 'use strict';
+
+    JSONFormatter = JSONFormatter && JSONFormatter.hasOwnProperty('default') ? JSONFormatter['default'] : JSONFormatter;
 
     /**
      * @fileoverview added by tsickle
@@ -918,7 +920,7 @@
      */
     var CoreModuleComponent = /** @class */ (function () {
         function CoreModuleComponent() {
-            this.version = '0.0.5';
+            this.version = '0.0.6';
         }
         /**
          * @return {?}
@@ -2777,7 +2779,6 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
-    // import JSONFormatter from 'json-formatter-js';
     var JsonFormatterComponent = /** @class */ (function () {
         function JsonFormatterComponent(platformId) {
             this.platformId = platformId;
@@ -2797,8 +2798,7 @@
                     if (this.elementRef) {
                         this.input.nativeElement.removeChild(this.elementRef.nativeElement);
                     }
-                    /** @type {?} */
-                    var JSONFormatter = require('json-formatter-js').default;
+                    // const JSONFormatter = require('json-formatter-js').default;
                     /** @type {?} */
                     var formatter = new JSONFormatter(this.json);
                     /** @type {?} */

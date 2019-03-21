@@ -5,7 +5,7 @@ import { isPlatformBrowser, DOCUMENT, CommonModule } from '@angular/common';
 import { DisposableComponent, RouteService, EntityService, HttpStatusCodeService, ImageType, CoreModule } from '@designr/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { InjectionToken, Input, TemplateRef, Component, Inject, Injectable, NgModule, ComponentFactoryResolver, Directive, ViewContainerRef, defineInjectable, inject, Optional, SkipSelf, ViewEncapsulation, Injector, ViewChild, PLATFORM_ID, INJECTOR } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, NgModule, Input, TemplateRef, ComponentFactoryResolver, Directive, ViewContainerRef, defineInjectable, inject, Optional, SkipSelf, ViewEncapsulation, Injector, ViewChild, PLATFORM_ID, INJECTOR } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -28,6 +28,27 @@ var PageConfig = /** @class */ (function () {
 }());
 /** @type {?} */
 var PAGE_CONFIG = new InjectionToken('page.config');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var ConfigService = /** @class */ (function () {
+    function ConfigService(options) {
+        this.options = new PageConfig(options || {});
+    }
+    ConfigService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */
+    ConfigService.ctorParameters = function () { return [
+        { type: PageConfig, decorators: [{ type: Inject, args: [PAGE_CONFIG,] }] }
+    ]; };
+    /** @nocollapse */ ConfigService.ngInjectableDef = defineInjectable({ factory: function ConfigService_Factory() { return new ConfigService(inject(PAGE_CONFIG)); }, token: ConfigService, providedIn: "root" });
+    return ConfigService;
+}());
 
 /**
  * @fileoverview added by tsickle
@@ -59,27 +80,6 @@ var LayoutComponent = /** @class */ (function () {
         template: [{ type: Input }]
     };
     return LayoutComponent;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-var ConfigService = /** @class */ (function () {
-    function ConfigService(options) {
-        this.options = new PageConfig(options || {});
-    }
-    ConfigService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    ConfigService.ctorParameters = function () { return [
-        { type: PageConfig, decorators: [{ type: Inject, args: [PAGE_CONFIG,] }] }
-    ]; };
-    /** @nocollapse */ ConfigService.ngInjectableDef = defineInjectable({ factory: function ConfigService_Factory() { return new ConfigService(inject(PAGE_CONFIG)); }, token: ConfigService, providedIn: "root" });
-    return ConfigService;
 }());
 
 /**
@@ -292,7 +292,7 @@ var UseLayoutDirective = /** @class */ (function () {
  */
 var PageModuleComponent = /** @class */ (function () {
     function PageModuleComponent() {
-        this.version = '0.0.5';
+        this.version = '0.0.6';
     }
     /**
      * @return {?}
@@ -1306,6 +1306,6 @@ var PageModule = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PageConfig, PAGE_CONFIG, ILayoutComponent, LayoutComponent, UseLayoutDirective, PageModuleComponent, PageModule, PageRouting, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, ConfigService as ɵa, LinkService as ɵb };
+export { ConfigService, PageConfig, PAGE_CONFIG, ILayoutComponent, LayoutComponent, UseLayoutDirective, PageModuleComponent, PageModule, PageRouting, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, LinkService as ɵa };
 
 //# sourceMappingURL=designr-page.js.map

@@ -4,7 +4,7 @@ import { isPlatformBrowser, DOCUMENT, CommonModule } from '@angular/common';
 import { DisposableComponent, RouteService, EntityService, HttpStatusCodeService, ImageType, CoreModule } from '@designr/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { InjectionToken, Input, TemplateRef, Component, Inject, Injectable, NgModule, Injector, ViewEncapsulation, ComponentFactoryResolver, ViewChild, ViewContainerRef, Directive, defineInjectable, inject, Optional, SkipSelf, PLATFORM_ID, INJECTOR } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, NgModule, Injector, ViewEncapsulation, Input, TemplateRef, ComponentFactoryResolver, Directive, ViewContainerRef, ViewChild, defineInjectable, inject, Optional, SkipSelf, PLATFORM_ID, INJECTOR } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -34,6 +34,29 @@ const PAGE_CONFIG = new InjectionToken('page.config');
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class ConfigService {
+    /**
+     * @param {?} options
+     */
+    constructor(options) {
+        this.options = new PageConfig(options || {});
+    }
+}
+ConfigService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+ConfigService.ctorParameters = () => [
+    { type: PageConfig, decorators: [{ type: Inject, args: [PAGE_CONFIG,] }] }
+];
+/** @nocollapse */ ConfigService.ngInjectableDef = defineInjectable({ factory: function ConfigService_Factory() { return new ConfigService(inject(PAGE_CONFIG)); }, token: ConfigService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class ILayoutComponent {
 }
 ILayoutComponent.propDecorators = {
@@ -57,29 +80,6 @@ LayoutComponent.decorators = [
 LayoutComponent.propDecorators = {
     template: [{ type: Input }]
 };
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class ConfigService {
-    /**
-     * @param {?} options
-     */
-    constructor(options) {
-        this.options = new PageConfig(options || {});
-    }
-}
-ConfigService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-ConfigService.ctorParameters = () => [
-    { type: PageConfig, decorators: [{ type: Inject, args: [PAGE_CONFIG,] }] }
-];
-/** @nocollapse */ ConfigService.ngInjectableDef = defineInjectable({ factory: function ConfigService_Factory() { return new ConfigService(inject(PAGE_CONFIG)); }, token: ConfigService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -270,7 +270,7 @@ UseLayoutDirective.propDecorators = {
  */
 class PageModuleComponent {
     constructor() {
-        this.version = '0.0.5';
+        this.version = '0.0.6';
     }
     /**
      * @return {?}
@@ -1140,6 +1140,6 @@ PageModule.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { PageConfig, PAGE_CONFIG, ILayoutComponent, LayoutComponent, UseLayoutDirective, PageModuleComponent, PageModule, PageRouting, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, ConfigService as ɵa, LinkService as ɵb };
+export { ConfigService, PageConfig, PAGE_CONFIG, ILayoutComponent, LayoutComponent, UseLayoutDirective, PageModuleComponent, PageModule, PageRouting, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, LinkService as ɵa };
 
 //# sourceMappingURL=designr-page.js.map

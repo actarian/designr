@@ -30,6 +30,29 @@
      * @fileoverview added by tsickle
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
+    var ConfigService = /** @class */ (function () {
+        function ConfigService(options) {
+            this.options = new PageConfig(options || {});
+        }
+        ConfigService.decorators = [
+            { type: i0.Injectable, args: [{
+                        providedIn: 'root'
+                    },] }
+        ];
+        /** @nocollapse */
+        ConfigService.ctorParameters = function () {
+            return [
+                { type: PageConfig, decorators: [{ type: i0.Inject, args: [PAGE_CONFIG,] }] }
+            ];
+        };
+        /** @nocollapse */ ConfigService.ngInjectableDef = i0.defineInjectable({ factory: function ConfigService_Factory() { return new ConfigService(i0.inject(PAGE_CONFIG)); }, token: ConfigService, providedIn: "root" });
+        return ConfigService;
+    }());
+
+    /**
+     * @fileoverview added by tsickle
+     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+     */
     var ILayoutComponent = /** @class */ (function () {
         function ILayoutComponent() {
         }
@@ -56,29 +79,6 @@
             template: [{ type: i0.Input }]
         };
         return LayoutComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var ConfigService = /** @class */ (function () {
-        function ConfigService(options) {
-            this.options = new PageConfig(options || {});
-        }
-        ConfigService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        ConfigService.ctorParameters = function () {
-            return [
-                { type: PageConfig, decorators: [{ type: i0.Inject, args: [PAGE_CONFIG,] }] }
-            ];
-        };
-        /** @nocollapse */ ConfigService.ngInjectableDef = i0.defineInjectable({ factory: function ConfigService_Factory() { return new ConfigService(i0.inject(PAGE_CONFIG)); }, token: ConfigService, providedIn: "root" });
-        return ConfigService;
     }());
 
     /**
@@ -148,7 +148,7 @@
      */
     var PageModuleComponent = /** @class */ (function () {
         function PageModuleComponent() {
-            this.version = '0.0.5';
+            this.version = '0.0.6';
         }
         /**
          * @return {?}
@@ -1350,6 +1350,7 @@
      * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
      */
 
+    exports.ConfigService = ConfigService;
     exports.PageConfig = PageConfig;
     exports.PAGE_CONFIG = PAGE_CONFIG;
     exports.ILayoutComponent = ILayoutComponent;
@@ -1370,8 +1371,7 @@
     exports.PageGuard = PageGuard;
     exports.PageService = PageService;
     exports.StaticGuard = StaticGuard;
-    exports.ɵa = ConfigService;
-    exports.ɵb = LinkService;
+    exports.ɵa = LinkService;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

@@ -1,6 +1,6 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormService, ControlModule } from '@designr/control';
-import { PageResolverService, PageService } from '@designr/page';
+import { ConfigService, PageResolverService } from '@designr/page';
 import { MarkdownService, MarkdownModule, MarkedOptions } from 'ngx-markdown';
 export { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { takeUntil } from 'rxjs/operators';
@@ -55,10 +55,10 @@ var EditorService = /** @class */ (function () {
  */
 var EditorRootComponent = /** @class */ (function (_super) {
     __extends(EditorRootComponent, _super);
-    function EditorRootComponent(platformId, pageService, markdownService, formService, pageResolverService) {
+    function EditorRootComponent(platformId, configService, markdownService, formService, pageResolverService) {
         var _this = _super.call(this) || this;
         _this.platformId = platformId;
-        _this.pageService = pageService;
+        _this.configService = configService;
         _this.markdownService = markdownService;
         _this.formService = formService;
         _this.pageResolverService = pageResolverService;
@@ -107,7 +107,7 @@ var EditorRootComponent = /** @class */ (function (_super) {
         function () {
             if (this._page) {
                 /** @type {?} */
-                var component = this.pageService.options.pages[this._page.component];
+                var component = this.configService.options.pages[this._page.component];
                 if (component) {
                     return component.name;
                 }
@@ -237,7 +237,7 @@ var EditorRootComponent = /** @class */ (function (_super) {
     /** @nocollapse */
     EditorRootComponent.ctorParameters = function () { return [
         { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-        { type: PageService },
+        { type: ConfigService },
         { type: MarkdownService },
         { type: FormService },
         { type: PageResolverService }
@@ -310,7 +310,7 @@ var EditorBundleModule = /** @class */ (function () {
  */
 var EditorModuleComponent = /** @class */ (function () {
     function EditorModuleComponent() {
-        this.version = '0.0.5';
+        this.version = '0.0.6';
     }
     /**
      * @return {?}

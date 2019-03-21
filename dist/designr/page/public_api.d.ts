@@ -1,3 +1,4 @@
+export { ConfigService } from './lib/config/config.service';
 export { PageConfig, PAGE_CONFIG } from './lib/config/page.config';
 export { ILayoutComponent, Layouts } from './lib/layout/layout';
 export { LayoutComponent } from './lib/layout/layout.component';

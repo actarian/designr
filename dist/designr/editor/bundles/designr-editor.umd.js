@@ -109,10 +109,10 @@
      */
     var EditorRootComponent = /** @class */ (function (_super) {
         __extends(EditorRootComponent, _super);
-        function EditorRootComponent(platformId, pageService, markdownService, formService, pageResolverService) {
+        function EditorRootComponent(platformId, configService, markdownService, formService, pageResolverService) {
             var _this = _super.call(this) || this;
             _this.platformId = platformId;
-            _this.pageService = pageService;
+            _this.configService = configService;
             _this.markdownService = markdownService;
             _this.formService = formService;
             _this.pageResolverService = pageResolverService;
@@ -157,7 +157,7 @@
              */ function () {
                 if (this._page) {
                     /** @type {?} */
-                    var component = this.pageService.options.pages[this._page.component];
+                    var component = this.configService.options.pages[this._page.component];
                     if (component) {
                         return component.name;
                     }
@@ -283,7 +283,7 @@
         EditorRootComponent.ctorParameters = function () {
             return [
                 { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: page.PageService },
+                { type: page.ConfigService },
                 { type: ngxMarkdown.MarkdownService },
                 { type: control.FormService },
                 { type: page.PageResolverService }
@@ -359,7 +359,7 @@
      */
     var EditorModuleComponent = /** @class */ (function () {
         function EditorModuleComponent() {
-            this.version = '0.0.5';
+            this.version = '0.0.6';
         }
         /**
          * @return {?}

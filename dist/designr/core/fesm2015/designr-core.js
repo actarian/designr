@@ -1,10 +1,11 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { HttpErrorResponse, HttpClient, HttpHeaders, HttpParams, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import JSONFormatter from 'json-formatter-js';
 import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
-import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ComponentFactoryResolver, ViewChild, Pipe, ElementRef, Renderer2, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, INJECTOR, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, InjectionToken, Component, ComponentFactoryResolver, ViewChild, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, INJECTOR, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
 import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, debounceTime, takeUntil, first } from 'rxjs/operators';
 
@@ -792,7 +793,7 @@ DefaultContentDirective.propDecorators = {
  */
 class CoreModuleComponent {
     constructor() {
-        this.version = '0.0.5';
+        this.version = '0.0.6';
     }
     /**
      * @return {?}
@@ -2272,7 +2273,6 @@ HttpResponseInterceptor.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-// import JSONFormatter from 'json-formatter-js';
 class JsonFormatterComponent {
     /**
      * @param {?} platformId
@@ -2292,8 +2292,7 @@ class JsonFormatterComponent {
             if (this.elementRef) {
                 this.input.nativeElement.removeChild(this.elementRef.nativeElement);
             }
-            /** @type {?} */
-            const JSONFormatter = require('json-formatter-js').default;
+            // const JSONFormatter = require('json-formatter-js').default;
             /** @type {?} */
             const formatter = new JSONFormatter(this.json);
             /** @type {?} */

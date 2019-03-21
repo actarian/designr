@@ -1,6 +1,7 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { HttpErrorResponse, HttpClient, HttpHeaders, HttpParams, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import JSONFormatter from 'json-formatter-js';
 import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
@@ -912,7 +913,7 @@ var DefaultContentDirective = /** @class */ (function () {
  */
 var CoreModuleComponent = /** @class */ (function () {
     function CoreModuleComponent() {
-        this.version = '0.0.5';
+        this.version = '0.0.6';
     }
     /**
      * @return {?}
@@ -2743,7 +2744,6 @@ var HttpResponseInterceptor = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-// import JSONFormatter from 'json-formatter-js';
 var JsonFormatterComponent = /** @class */ (function () {
     function JsonFormatterComponent(platformId) {
         this.platformId = platformId;
@@ -2763,8 +2763,7 @@ var JsonFormatterComponent = /** @class */ (function () {
             if (this.elementRef) {
                 this.input.nativeElement.removeChild(this.elementRef.nativeElement);
             }
-            /** @type {?} */
-            var JSONFormatter = require('json-formatter-js').default;
+            // const JSONFormatter = require('json-formatter-js').default;
             /** @type {?} */
             var formatter = new JSONFormatter(this.json);
             /** @type {?} */

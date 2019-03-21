@@ -2,11 +2,11 @@ import { OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ControlOption, FormService } from '@designr/control';
 import { DisposableComponent } from '@designr/core';
-import { Page, PageResolverService, PageService } from '@designr/page';
+import { ConfigService, Page, PageResolverService } from '@designr/page';
 import { MarkdownService } from 'ngx-markdown';
 export declare class EditorRootComponent extends DisposableComponent implements OnInit {
     private platformId;
-    private pageService;
+    private configService;
     private markdownService;
     private formService;
     private pageResolverService;
@@ -16,7 +16,7 @@ export declare class EditorRootComponent extends DisposableComponent implements 
     group: FormGroup;
     busy: boolean;
     submitted: boolean;
-    constructor(platformId: string, pageService: PageService, markdownService: MarkdownService, formService: FormService, pageResolverService: PageResolverService);
+    constructor(platformId: string, configService: ConfigService, markdownService: MarkdownService, formService: FormService, pageResolverService: PageResolverService);
     page: Page;
     readonly componentName: string;
     getControlsByPage(page: Page): ControlOption<any>[];

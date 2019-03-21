@@ -3,7 +3,7 @@ import { Component, Inject, OnInit, PLATFORM_ID, ViewEncapsulation } from '@angu
 import { FormGroup } from '@angular/forms';
 import { ControlOption, FormService } from '@designr/control';
 import { DisposableComponent } from '@designr/core';
-import { Page, PageResolver, PageResolverService, PageService } from '@designr/page';
+import { ConfigService, Page, PageResolver, PageResolverService } from '@designr/page';
 import { MarkdownService } from 'ngx-markdown';
 import { takeUntil } from 'rxjs/operators';
 
@@ -26,7 +26,7 @@ export class EditorRootComponent extends DisposableComponent implements OnInit {
 
 	constructor(
 		@Inject(PLATFORM_ID) private platformId: string,
-		private pageService: PageService,
+		private configService: ConfigService,
 		private markdownService: MarkdownService,
 		private formService: FormService,
 		private pageResolverService: PageResolverService,
@@ -55,7 +55,7 @@ export class EditorRootComponent extends DisposableComponent implements OnInit {
 
 	get componentName(): string {
 		if (this._page) {
-			const component = this.pageService.options.pages[this._page.component];
+			const component = this.configService.options.pages[this._page.component];
 			if (component) {
 				return component.name;
 			}

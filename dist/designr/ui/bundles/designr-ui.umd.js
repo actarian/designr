@@ -51,7 +51,7 @@
      */
     var UIModuleComponent = /** @class */ (function () {
         function UIModuleComponent() {
-            this.version = '0.0.5';
+            this.version = '0.0.6';
         }
         /**
          * @return {?}
@@ -1400,8 +1400,11 @@
     exports.UIModule = UIModule;
     exports.ClickOutsideDirective = ClickOutsideDirective;
     exports.LazyImagesDirective = LazyImagesDirective;
+    exports.Modal = Modal;
+    exports.ModalCloseEvent = ModalCloseEvent;
     exports.ModalCompleteEvent = ModalCompleteEvent;
     exports.ModalData = ModalData;
+    exports.ModalEventType = ModalEventType;
     exports.ModalContainerComponent = ModalContainerComponent;
     exports.ModalViewComponent = ModalViewComponent;
     exports.ModalService = ModalService;

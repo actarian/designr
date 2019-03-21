@@ -1,6 +1,6 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormService, ControlModule } from '@designr/control';
-import { PageResolverService, PageService } from '@designr/page';
+import { ConfigService, PageResolverService } from '@designr/page';
 import { MarkdownService, MarkdownModule, MarkedOptions } from 'ngx-markdown';
 export { MarkdownModule, MarkedOptions } from 'ngx-markdown';
 import { takeUntil } from 'rxjs/operators';
@@ -59,15 +59,15 @@ EditorService.ctorParameters = () => [
 class EditorRootComponent extends DisposableComponent {
     /**
      * @param {?} platformId
-     * @param {?} pageService
+     * @param {?} configService
      * @param {?} markdownService
      * @param {?} formService
      * @param {?} pageResolverService
      */
-    constructor(platformId, pageService, markdownService, formService, pageResolverService) {
+    constructor(platformId, configService, markdownService, formService, pageResolverService) {
         super();
         this.platformId = platformId;
-        this.pageService = pageService;
+        this.configService = configService;
         this.markdownService = markdownService;
         this.formService = formService;
         this.pageResolverService = pageResolverService;
@@ -109,7 +109,7 @@ class EditorRootComponent extends DisposableComponent {
     get componentName() {
         if (this._page) {
             /** @type {?} */
-            const component = this.pageService.options.pages[this._page.component];
+            const component = this.configService.options.pages[this._page.component];
             if (component) {
                 return component.name;
             }
@@ -216,7 +216,7 @@ EditorRootComponent.decorators = [
 /** @nocollapse */
 EditorRootComponent.ctorParameters = () => [
     { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: PageService },
+    { type: ConfigService },
     { type: MarkdownService },
     { type: FormService },
     { type: PageResolverService }
@@ -293,7 +293,7 @@ EditorBundleModule.ctorParameters = () => [
  */
 class EditorModuleComponent {
     constructor() {
-        this.version = '0.0.5';
+        this.version = '0.0.6';
     }
     /**
      * @return {?}
