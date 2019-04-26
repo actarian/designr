@@ -4,13 +4,12 @@ import { StateKey, TransferState } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { CoreConfig } from '../config/core.config';
 import { Logger } from '../logger/logger';
-import { Identity } from '../models/identity';
 export declare class ApiRequestOptions {
     headers?: HttpHeaders;
     params?: HttpParams;
     constructor(options?: {});
 }
-export declare class ApiService<T extends Identity> {
+export declare class ApiService<T> {
     protected injector: Injector;
     readonly collection: string;
     private _logger;
@@ -34,7 +33,7 @@ export declare class ApiService<T extends Identity> {
     patch(first: string | T, second?: T | {}, third?: {}): Observable<any>;
     delete(first: string | T | number, second?: T | number | {}, third?: {}): Observable<any>;
     toCamelCase(input: any): any;
-    getStateKey(url: string, model: {}): StateKey<T>;
+    getStateKey(url: string, model: {}): StateKey<any>;
     stateGet(first?: string | {}, second?: {}): Observable<any>;
     statePost(first: string | {}, second?: {}, third?: {}): Observable<any>;
 }

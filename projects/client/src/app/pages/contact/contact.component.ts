@@ -67,9 +67,14 @@ export class ContactComponent extends PageComponent implements OnInit {
 			schema: 'checkbox',
 			label: 'contact.privacy',
 			placeholder: 'contact.privacy',
+			requiredTrue: true,
 			order: 5
 		}]);
 		this.group = this.formService.getFormGroup(this.options);
+		this.group.reset({
+			password: 'aaaaaaadsds',
+			type: true
+		});
 	}
 
 	onReset() {

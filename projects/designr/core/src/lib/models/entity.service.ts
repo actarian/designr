@@ -12,7 +12,7 @@ export class EntityService<T extends Entity> extends IdentityService<T> {
 		return '/api/entity';
 	}
 
-	getDetailByName(name: string): Observable<T[]> {
+	getDetailByName(name: string): Observable<any> {
 		if (!name.trim()) {
 			return of([]);
 		}

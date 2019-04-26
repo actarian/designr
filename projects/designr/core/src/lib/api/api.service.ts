@@ -7,7 +7,6 @@ import { tap } from 'rxjs/operators';
 import { CoreConfig } from '../config/core.config';
 import { CoreService } from '../config/core.service';
 import { Logger } from '../logger/logger';
-import { Identity } from '../models/identity';
 
 export class ApiRequestOptions {
 	headers?: HttpHeaders;
@@ -23,7 +22,7 @@ export class ApiRequestOptions {
 @Injectable({
 	providedIn: 'root'
 })
-export class ApiService<T extends Identity> {
+export class ApiService<T> {
 
 	get collection(): string {
 		return '/api';
@@ -99,7 +98,7 @@ export class ApiService<T extends Identity> {
 		const params: {} = (typeof first === 'object' ? first : second);
 		const url: string = this.getUrl(method);
 		const options = new ApiRequestOptions(params);
-		return this.http.get<T>(url, options).pipe(
+		return this.http.get<T[]>(url, options).pipe(
 			tap(x => this.logger.request(url)),
 		);
 	}
@@ -140,7 +139,7 @@ export class ApiService<T extends Identity> {
 	delete(first: string | T | number, second?: T | number | {}, third?: {}): Observable<any> {
 		const method: string = (typeof first === 'string' ? first : '');
 		const identity: T | number = (typeof first !== 'string' ? first : second) as T | number;
-		const id = identity ? (typeof identity === 'number' ? identity : identity.id) : null;
+		const id = identity ? (typeof identity === 'number' ? identity : (identity as any).id) : null;
 		const params: {} = (typeof second === 'object' ? second : third);
 		const url: string = id !== null ? this.getUrl(`${method}/${id}`) : this.getUrl(method);
 		const options = new ApiRequestOptions(params);
@@ -176,7 +175,7 @@ export class ApiService<T extends Identity> {
 
 	// TRANSFER STATE
 
-	getStateKey(url: string, model: {}): StateKey<T> {
+	getStateKey(url: string, model: {}): StateKey<any> {
 		const flatMap = (s: string, x: any) => {
 			if (typeof x === 'number') {
 				s += x.toString();
@@ -205,7 +204,7 @@ export class ApiService<T extends Identity> {
 			this.state.remove(stateKey);
 			return of(cached);
 		} else {
-			return this.http.get<T>(url, options).pipe(
+			return this.http.get<any>(url, options).pipe(
 				tap(x => {
 					if (isPlatformServer(this.platformId)) {
 						this.state.onSerialize(stateKey, () => x);

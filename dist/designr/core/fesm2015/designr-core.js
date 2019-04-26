@@ -5,7 +5,7 @@ import JSONFormatter from 'json-formatter-js';
 import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
-import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, InjectionToken, Component, ComponentFactoryResolver, ViewChild, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, INJECTOR, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ComponentFactoryResolver, ViewChild, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, INJECTOR, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
 import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, debounceTime, takeUntil, first } from 'rxjs/operators';
 
@@ -1292,7 +1292,7 @@ class ApiService {
         /** @type {?} */
         const identity = (/** @type {?} */ ((typeof first$$1 !== 'string' ? first$$1 : second)));
         /** @type {?} */
-        const id = identity ? (typeof identity === 'number' ? identity : identity.id) : null;
+        const id = identity ? (typeof identity === 'number' ? identity : ((/** @type {?} */ (identity))).id) : null;
         /** @type {?} */
         const params = (typeof second === 'object' ? second : third);
         /** @type {?} */
@@ -2689,43 +2689,11 @@ class IdentityService extends ApiService {
         return '/api/identity';
     }
     /**
-     * @return {?}
-     */
-    getList() {
-        return this.get();
-    }
-    /**
-     * @template Data
-     * @param {?} id
-     * @return {?}
-     */
-    getDetailByIdNo404(id) {
-        return this.get({ id }).pipe(map((/**
-         * @param {?} identities
-         * @return {?}
-         */
-        (identities) => identities[0])));
-    }
-    /**
      * @param {?} id
      * @return {?}
      */
     getDetailById(id) {
         return this.get({ id });
-    }
-    /**
-     * @param {?} identity
-     * @return {?}
-     */
-    add(identity) {
-        return this.post(identity);
-    }
-    /**
-     * @param {?} identity
-     * @return {?}
-     */
-    update(identity) {
-        return this.put(identity);
     }
 }
 IdentityService.decorators = [

@@ -19,4 +19,14 @@ export class ControlComponent extends DisposableComponent {
 
 	get isValid() { return this.control.valid; }
 
+	get classes() {
+		return {
+			valid: this.control.valid,
+			invalid: this.control.invalid,
+			dirty: this.control.dirty,
+			empty: (this.control.value == null),
+			required: (this.option.required || this.option.requiredTrue)
+		};
+	}
+
 }

@@ -1,10 +1,12 @@
-<div class="form-checkbox" [formGroup]="form">
-	<label class="form-label">
-		<input class="form-checkbox__input" type="checkbox" [id]="option.key" [formControlName]="option.key">
-		<span class="form-checkbox__label">{{ option.label | label }}</span>
-	</label>
-	<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">
-		<div *ngIf="control.errors.required">{{ 'errors.required' | label }}</div>
-		<div *ngIf="control.errors.requiredTrue">{{ 'errors.required' | label }}</div>
+<ng-container [formGroup]="form">
+	<div class="form-checkbox" [ngClass]="classes">
+		<label class="form-label">
+			<input class="form-checkbox__input" type="checkbox" [id]="option.key" [formControlName]="option.key">
+			<span class="form-checkbox__label">{{ option.label | label }}</span>
+		</label>
+		<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">
+			<div *ngIf="control.errors.required">{{ 'errors.required' | label }}</div>
+			<div *ngIf="control.errors.requiredTrue">{{ 'errors.required' | label }}</div>
+		</div>
 	</div>
-</div>
+</ng-container>

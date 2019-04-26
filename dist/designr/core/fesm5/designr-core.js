@@ -1554,7 +1554,7 @@ var ApiService = /** @class */ (function () {
         /** @type {?} */
         var identity = (/** @type {?} */ ((typeof first$$1 !== 'string' ? first$$1 : second)));
         /** @type {?} */
-        var id = identity ? (typeof identity === 'number' ? identity : identity.id) : null;
+        var id = identity ? (typeof identity === 'number' ? identity : ((/** @type {?} */ (identity))).id) : null;
         /** @type {?} */
         var params = (typeof second === 'object' ? second : third);
         /** @type {?} */
@@ -3220,32 +3220,6 @@ var IdentityService = /** @class */ (function (_super) {
         configurable: true
     });
     /**
-     * @return {?}
-     */
-    IdentityService.prototype.getList = /**
-     * @return {?}
-     */
-    function () {
-        return this.get();
-    };
-    /**
-     * @template Data
-     * @param {?} id
-     * @return {?}
-     */
-    IdentityService.prototype.getDetailByIdNo404 = /**
-     * @template Data
-     * @param {?} id
-     * @return {?}
-     */
-    function (id) {
-        return this.get({ id: id }).pipe(map((/**
-         * @param {?} identities
-         * @return {?}
-         */
-        function (identities) { return identities[0]; })));
-    };
-    /**
      * @param {?} id
      * @return {?}
      */
@@ -3255,28 +3229,6 @@ var IdentityService = /** @class */ (function (_super) {
      */
     function (id) {
         return this.get({ id: id });
-    };
-    /**
-     * @param {?} identity
-     * @return {?}
-     */
-    IdentityService.prototype.add = /**
-     * @param {?} identity
-     * @return {?}
-     */
-    function (identity) {
-        return this.post(identity);
-    };
-    /**
-     * @param {?} identity
-     * @return {?}
-     */
-    IdentityService.prototype.update = /**
-     * @param {?} identity
-     * @return {?}
-     */
-    function (identity) {
-        return this.put(identity);
     };
     IdentityService.decorators = [
         { type: Injectable, args: [{

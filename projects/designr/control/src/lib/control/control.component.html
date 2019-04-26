@@ -1,7 +1,14 @@
 <ng-container [formGroup]="form">
-	<label class="form-label" [attr.for]="option.key">{{ option.label | label }}</label>
-	<input class="form-control" placeholder="{{ option.placeholder | label }}" [id]="option.key" [formControlName]="option.key" type="text">
-	<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">
-		<div *ngIf="control.errors.required">{{ 'errors.required' | label }}</div>
+	<div class="form-input" [ngClass]="{
+			valid: control.valid,
+			invalid: control.invalid,
+			dirty: control.dirty,
+			empty: !control.value
+		}">
+		<label class="form-label" [attr.for]="option.key">{{ option.label | label }}</label>
+		<input class="form-control" placeholder="{{ option.placeholder | label }}" [id]="option.key" [formControlName]="option.key" type="text">
+		<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">
+			<div *ngIf="control.errors.required">{{ 'errors.required' | label }}</div>
+		</div>
 	</div>
 </ng-container>
