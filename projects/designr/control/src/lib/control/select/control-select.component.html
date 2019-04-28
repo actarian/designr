@@ -2,8 +2,8 @@
 	<div class="form-select" [ngClass]="classes">
 		<label class="form-label" [attr.for]="option.key">{{ option.label | label }}</label>
 		<div class="form-select__select">
-			<select [id]="option.key" [formControlName]="option.key">
-				<option *ngFor="let item of options" [ngValue]="item?.value">{{item?.label}}</option>
+			<select [id]="option.key" [formControlName]="option.key" [compareWith]="compareWith">
+				<option *ngFor="let item of options" [ngValue]="getValue(item)">{{item?.name}}</option>
 			</select>
 		</div>
 		<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">

@@ -52,15 +52,31 @@ export class ContactComponent extends PageComponent implements OnInit {
 			schema: 'select',
 			label: 'contact.type',
 			options: [{
-				label: 'Any',
-				value: null,
+				id: null,
+				name: 'Any',
 			}, {
-				label: 'Yes',
-				value: true,
+				id: true,
+				name: 'Yes',
 			}, {
-				label: 'No',
-				value: false,
+				id: false,
+				name: 'No',
 			}],
+			order: 3
+		}, {
+			key: 'type2',
+			schema: 'select',
+			label: 'contact.type',
+			options: [{
+				id: null,
+				name: 'Any',
+			}, {
+				id: true,
+				name: 'Yes',
+			}, {
+				id: false,
+				name: 'No',
+			}],
+			asObject: true,
 			order: 3
 		}, {
 			key: 'privacy',
@@ -72,8 +88,11 @@ export class ContactComponent extends PageComponent implements OnInit {
 		}]);
 		this.group = this.formService.getFormGroup(this.options);
 		this.group.reset({
-			password: 'aaaaaaadsds',
-			type: true
+			password: 'password',
+			type: true,
+			type2: {
+				id: null,
+			}
 		});
 	}
 

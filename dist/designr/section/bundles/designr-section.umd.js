@@ -28,7 +28,7 @@
      */
     var SectionModuleComponent = /** @class */ (function () {
         function SectionModuleComponent() {
-            this.version = '0.0.6';
+            this.version = '0.0.7';
         }
         /**
          * @return {?}

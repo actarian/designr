@@ -259,6 +259,8 @@ class ControlSelectComponent extends ControlComponent {
     constructor() {
         super();
         this.options = [];
+        this.getValue = this.getValue_.bind(this);
+        this.compareWith = this.compareWith_.bind(this);
     }
     /**
      * @return {?}
@@ -291,11 +293,35 @@ class ControlSelectComponent extends ControlComponent {
             return of([]);
         }
     }
+    /**
+     * @param {?} item
+     * @return {?}
+     */
+    getValue_(item) {
+        return this.option.asObject ? item : item.id;
+    }
+    /**
+     * @param {?} a
+     * @param {?} b
+     * @return {?}
+     */
+    compareWith_(a, b) {
+        if (this.option.asObject) {
+            a = (/** @type {?} */ (a));
+            b = (/** @type {?} */ (b));
+            // b = (b as ControlSelectOption) || { id: null, name: 'Any' };
+            // console.log(a, b);
+            return b ? a.id === b.id : a.id === null;
+        }
+        else {
+            return b ? a === b : a === null;
+        }
+    }
 }
 ControlSelectComponent.decorators = [
     { type: Component, args: [{
                 selector: 'control-select-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<div class=\"form-select\" [ngClass]=\"classes\">\r\n\t\t<label class=\"form-label\" [attr.for]=\"option.key\">{{ option.label | label }}</label>\r\n\t\t<div class=\"form-select__select\">\r\n\t\t\t<select [id]=\"option.key\" [formControlName]=\"option.key\">\r\n\t\t\t\t<option *ngFor=\"let item of options\" [ngValue]=\"item?.value\">{{item?.label}}</option>\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t\t<div class=\"alert alert--danger\" *ngIf=\"control.invalid && (control.dirty || control.touched)\">\r\n\t\t\t<div *ngIf=\"control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t</div>\r\n\t</div>\r\n</ng-container>\r\n"
+                template: "<ng-container [formGroup]=\"form\">\r\n\t<div class=\"form-select\" [ngClass]=\"classes\">\r\n\t\t<label class=\"form-label\" [attr.for]=\"option.key\">{{ option.label | label }}</label>\r\n\t\t<div class=\"form-select__select\">\r\n\t\t\t<select [id]=\"option.key\" [formControlName]=\"option.key\" [compareWith]=\"compareWith\">\r\n\t\t\t\t<option *ngFor=\"let item of options\" [ngValue]=\"getValue(item)\">{{item?.name}}</option>\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t\t<div class=\"alert alert--danger\" *ngIf=\"control.invalid && (control.dirty || control.touched)\">\r\n\t\t\t<div *ngIf=\"control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t</div>\r\n\t</div>\r\n</ng-container>\r\n"
             }] }
 ];
 /** @nocollapse */
@@ -435,7 +461,7 @@ const CONTROL_CONFIG = new InjectionToken('control.config');
  */
 class ControlModuleComponent {
     constructor() {
-        this.version = '0.0.6';
+        this.version = '0.0.7';
     }
     /**
      * @return {?}

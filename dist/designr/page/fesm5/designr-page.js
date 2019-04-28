@@ -292,7 +292,7 @@ var UseLayoutDirective = /** @class */ (function () {
  */
 var PageModuleComponent = /** @class */ (function () {
     function PageModuleComponent() {
-        this.version = '0.0.6';
+        this.version = '0.0.7';
     }
     /**
      * @return {?}

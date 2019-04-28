@@ -52,7 +52,7 @@ var UIService = /** @class */ (function () {
  */
 var UIModuleComponent = /** @class */ (function () {
     function UIModuleComponent() {
-        this.version = '0.0.6';
+        this.version = '0.0.7';
     }
     /**
      * @return {?}

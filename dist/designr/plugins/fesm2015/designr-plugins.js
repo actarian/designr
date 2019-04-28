@@ -59,7 +59,7 @@ PluginsService.ctorParameters = () => [
  */
 class PluginsModuleComponent {
     constructor() {
-        this.version = '0.0.6';
+        this.version = '0.0.7';
     }
     /**
      * @return {?}
