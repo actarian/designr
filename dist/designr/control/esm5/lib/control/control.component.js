@@ -3,7 +3,7 @@
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 import * as tslib_1 from "tslib";
-import { Component, Input } from '@angular/core';
+import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DisposableComponent } from '@designr/core';
 var ControlComponent = /** @class */ (function (_super) {
@@ -11,6 +11,16 @@ var ControlComponent = /** @class */ (function (_super) {
     function ControlComponent() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    Object.defineProperty(ControlComponent.prototype, "context", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return this;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(ControlComponent.prototype, "control", {
         get: /**
          * @return {?}
@@ -40,7 +50,8 @@ var ControlComponent = /** @class */ (function (_super) {
                 invalid: this.control.invalid,
                 dirty: this.control.dirty,
                 empty: (this.control.value == null),
-                required: (this.option.required || this.option.requiredTrue)
+                required: Boolean(this.option.required || this.option.requiredTrue),
+                disabled: this.option.disabled,
             };
         },
         enumerable: true,
@@ -49,10 +60,14 @@ var ControlComponent = /** @class */ (function (_super) {
     ControlComponent.decorators = [
         { type: Component, args: [{
                     selector: 'control-component',
-                    template: "<ng-container [formGroup]=\"form\">\r\n\t<div class=\"form-input\" [ngClass]=\"{\r\n\t\t\tvalid: control.valid,\r\n\t\t\tinvalid: control.invalid,\r\n\t\t\tdirty: control.dirty,\r\n\t\t\tempty: !control.value\r\n\t\t}\">\r\n\t\t<label class=\"form-label\" [attr.for]=\"option.key\">{{ option.label | label }}</label>\r\n\t\t<input class=\"form-control\" placeholder=\"{{ option.placeholder | label }}\" [id]=\"option.key\" [formControlName]=\"option.key\" type=\"text\">\r\n\t\t<div class=\"alert alert--danger\" *ngIf=\"control.invalid && (control.dirty || control.touched)\">\r\n\t\t\t<div *ngIf=\"control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t</div>\r\n\t</div>\r\n</ng-container>\r\n"
+                    template: "<ng-container [formGroup]=\"form\">\r\n\r\n\t<ng-template #controlDef let-context>\r\n\t\t<div class=\"control\" [ngClass]=\"context.classes\">\r\n\t\t\t<ng-container *ngTemplateOutlet=\"context.labelRef || labelDef; context: { $implicit: context }\"></ng-container>\r\n\t\t\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t\t\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n\t\t</div>\r\n\t</ng-template>\r\n\r\n\t<ng-template #labelDef let-context>\r\n\t\t<label class=\"form-label\" [attr.for]=\"context.option.key\">{{ context.option.label | label }}</label>\r\n\t</ng-template>\r\n\r\n\t<ng-template #inputDef let-context>\r\n\t\t<input class=\"form-control\" placeholder=\"{{ context.option.placeholder | label }}\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\" type=\"text\">\r\n\t</ng-template>\r\n\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"alert alert--danger\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\r\n\t<ng-container *ngTemplateOutlet=\"controlRef || controlDef; context: { $implicit: context }\"></ng-container>\r\n\r\n</ng-container>\r\n"
                 }] }
     ];
     ControlComponent.propDecorators = {
+        controlRef: [{ type: ContentChild, args: ['controlRef',] }],
+        labelRef: [{ type: ContentChild, args: ['labelRef',] }],
+        inputRef: [{ type: ContentChild, args: ['inputRef',] }],
+        errorRef: [{ type: ContentChild, args: ['errorRef',] }],
         option: [{ type: Input }],
         form: [{ type: Input }]
     };
@@ -61,8 +76,16 @@ var ControlComponent = /** @class */ (function (_super) {
 export { ControlComponent };
 if (false) {
     /** @type {?} */
+    ControlComponent.prototype.controlRef;
+    /** @type {?} */
+    ControlComponent.prototype.labelRef;
+    /** @type {?} */
+    ControlComponent.prototype.inputRef;
+    /** @type {?} */
+    ControlComponent.prototype.errorRef;
+    /** @type {?} */
     ControlComponent.prototype.option;
     /** @type {?} */
     ControlComponent.prototype.form;
 }
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29udHJvbC5jb21wb25lbnQuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AZGVzaWduci9jb250cm9sLyIsInNvdXJjZXMiOlsibGliL2NvbnRyb2wvY29udHJvbC5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLEtBQUssRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUNqRCxPQUFPLEVBQW1CLFNBQVMsRUFBRSxNQUFNLGdCQUFnQixDQUFDO0FBQzVELE9BQU8sRUFBRSxtQkFBbUIsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUdwRDtJQUlzQyw0Q0FBbUI7SUFKekQ7O0lBMEJBLENBQUM7SUFqQkEsc0JBQUkscUNBQU87Ozs7UUFBWDtZQUNDLCtEQUErRDtZQUMvRCxPQUFPLElBQUksQ0FBQyxJQUFJLENBQUMsUUFBUSxDQUFDLElBQUksQ0FBQyxNQUFNLENBQUMsR0FBRyxDQUFDLENBQUM7UUFDNUMsQ0FBQzs7O09BQUE7SUFFRCxzQkFBSSxxQ0FBTzs7OztRQUFYLGNBQWdCLE9BQU8sSUFBSSxDQUFDLE9BQU8sQ0FBQyxLQUFLLENBQUMsQ0FBQyxDQUFDOzs7T0FBQTtJQUU1QyxzQkFBSSxxQ0FBTzs7OztRQUFYO1lBQ0MsT0FBTztnQkFDTixLQUFLLEVBQUUsSUFBSSxDQUFDLE9BQU8sQ0FBQyxLQUFLO2dCQUN6QixPQUFPLEVBQUUsSUFBSSxDQUFDLE9BQU8sQ0FBQyxPQUFPO2dCQUM3QixLQUFLLEVBQUUsSUFBSSxDQUFDLE9BQU8sQ0FBQyxLQUFLO2dCQUN6QixLQUFLLEVBQUUsQ0FBQyxJQUFJLENBQUMsT0FBTyxDQUFDLEtBQUssSUFBSSxJQUFJLENBQUM7Z0JBQ25DLFFBQVEsRUFBRSxDQUFDLElBQUksQ0FBQyxNQUFNLENBQUMsUUFBUSxJQUFJLElBQUksQ0FBQyxNQUFNLENBQUMsWUFBWSxDQUFDO2FBQzVELENBQUM7UUFDSCxDQUFDOzs7T0FBQTs7Z0JBeEJELFNBQVMsU0FBQztvQkFDVixRQUFRLEVBQUUsbUJBQW1CO29CQUM3QixvdEJBQXFDO2lCQUNyQzs7O3lCQUdDLEtBQUs7dUJBQ0wsS0FBSzs7SUFtQlAsdUJBQUM7Q0FBQSxBQTFCRCxDQUlzQyxtQkFBbUIsR0FzQnhEO1NBdEJZLGdCQUFnQjs7O0lBRTVCLGtDQUFxQzs7SUFDckMsZ0NBQXlCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBJbnB1dCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgQWJzdHJhY3RDb250cm9sLCBGb3JtR3JvdXAgfSBmcm9tICdAYW5ndWxhci9mb3Jtcyc7XG5pbXBvcnQgeyBEaXNwb3NhYmxlQ29tcG9uZW50IH0gZnJvbSAnQGRlc2lnbnIvY29yZSc7XG5pbXBvcnQgeyBJQ29udHJvbE9wdGlvbiB9IGZyb20gJy4vY29udHJvbC1vcHRpb24nO1xuXG5AQ29tcG9uZW50KHtcblx0c2VsZWN0b3I6ICdjb250cm9sLWNvbXBvbmVudCcsXG5cdHRlbXBsYXRlVXJsOiAnY29udHJvbC5jb21wb25lbnQuaHRtbCcsXG59KVxuZXhwb3J0IGNsYXNzIENvbnRyb2xDb21wb25lbnQgZXh0ZW5kcyBEaXNwb3NhYmxlQ29tcG9uZW50IHtcblxuXHRASW5wdXQoKSBvcHRpb246IElDb250cm9sT3B0aW9uPGFueT47XG5cdEBJbnB1dCgpIGZvcm06IEZvcm1Hcm91cDtcblxuXHRnZXQgY29udHJvbCgpOiBBYnN0cmFjdENvbnRyb2wge1xuXHRcdC8vIGNvbnNvbGUubG9nKCdjb250cm9sJywgdGhpcy5vcHRpb24ua2V5LCB0aGlzLmZvcm0uY29udHJvbHMpO1xuXHRcdHJldHVybiB0aGlzLmZvcm0uY29udHJvbHNbdGhpcy5vcHRpb24ua2V5XTtcblx0fVxuXG5cdGdldCBpc1ZhbGlkKCkgeyByZXR1cm4gdGhpcy5jb250cm9sLnZhbGlkOyB9XG5cblx0Z2V0IGNsYXNzZXMoKSB7XG5cdFx0cmV0dXJuIHtcblx0XHRcdHZhbGlkOiB0aGlzLmNvbnRyb2wudmFsaWQsXG5cdFx0XHRpbnZhbGlkOiB0aGlzLmNvbnRyb2wuaW52YWxpZCxcblx0XHRcdGRpcnR5OiB0aGlzLmNvbnRyb2wuZGlydHksXG5cdFx0XHRlbXB0eTogKHRoaXMuY29udHJvbC52YWx1ZSA9PSBudWxsKSxcblx0XHRcdHJlcXVpcmVkOiAodGhpcy5vcHRpb24ucmVxdWlyZWQgfHwgdGhpcy5vcHRpb24ucmVxdWlyZWRUcnVlKVxuXHRcdH07XG5cdH1cblxufVxuIl19
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29udHJvbC5jb21wb25lbnQuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AZGVzaWduci9jb250cm9sLyIsInNvdXJjZXMiOlsibGliL2NvbnRyb2wvY29udHJvbC5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFDQSxPQUFPLEVBQUUsU0FBUyxFQUFFLFlBQVksRUFBRSxLQUFLLEVBQUUsV0FBVyxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQzVFLE9BQU8sRUFBbUIsU0FBUyxFQUFFLE1BQU0sZ0JBQWdCLENBQUM7QUFDNUQsT0FBTyxFQUFFLG1CQUFtQixFQUFFLE1BQU0sZUFBZSxDQUFDO0FBR3BEO0lBSXNDLDRDQUFtQjtJQUp6RDs7SUFvQ0EsQ0FBQztJQXRCQSxzQkFBSSxxQ0FBTzs7OztRQUFYO1lBQ0MsT0FBTyxJQUFJLENBQUM7UUFDYixDQUFDOzs7T0FBQTtJQUVELHNCQUFJLHFDQUFPOzs7O1FBQVg7WUFDQywrREFBK0Q7WUFDL0QsT0FBTyxJQUFJLENBQUMsSUFBSSxDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsTUFBTSxDQUFDLEdBQUcsQ0FBQyxDQUFDO1FBQzVDLENBQUM7OztPQUFBO0lBRUQsc0JBQUkscUNBQU87Ozs7UUFBWCxjQUFnQixPQUFPLElBQUksQ0FBQyxPQUFPLENBQUMsS0FBSyxDQUFDLENBQUMsQ0FBQzs7O09BQUE7SUFFNUMsc0JBQUkscUNBQU87Ozs7UUFBWDtZQUNDLE9BQU87Z0JBQ04sS0FBSyxFQUFFLElBQUksQ0FBQyxPQUFPLENBQUMsS0FBSztnQkFDekIsT0FBTyxFQUFFLElBQUksQ0FBQyxPQUFPLENBQUMsT0FBTztnQkFDN0IsS0FBSyxFQUFFLElBQUksQ0FBQyxPQUFPLENBQUMsS0FBSztnQkFDekIsS0FBSyxFQUFFLENBQUMsSUFBSSxDQUFDLE9BQU8sQ0FBQyxLQUFLLElBQUksSUFBSSxDQUFDO2dCQUNuQyxRQUFRLEVBQUUsT0FBTyxDQUFDLElBQUksQ0FBQyxNQUFNLENBQUMsUUFBUSxJQUFJLElBQUksQ0FBQyxNQUFNLENBQUMsWUFBWSxDQUFDO2dCQUNuRSxRQUFRLEVBQUUsSUFBSSxDQUFDLE1BQU0sQ0FBQyxRQUFRO2FBQzlCLENBQUM7UUFDSCxDQUFDOzs7T0FBQTs7Z0JBbENELFNBQVMsU0FBQztvQkFDVixRQUFRLEVBQUUsbUJBQW1CO29CQUM3QiwwMkRBQXFDO2lCQUNyQzs7OzZCQUdDLFlBQVksU0FBQyxZQUFZOzJCQUN6QixZQUFZLFNBQUMsVUFBVTsyQkFDdkIsWUFBWSxTQUFDLFVBQVU7MkJBQ3ZCLFlBQVksU0FBQyxVQUFVO3lCQUV2QixLQUFLO3VCQUNMLEtBQUs7O0lBd0JQLHVCQUFDO0NBQUEsQUFwQ0QsQ0FJc0MsbUJBQW1CLEdBZ0N4RDtTQWhDWSxnQkFBZ0I7OztJQUU1QixzQ0FBc0Y7O0lBQ3RGLG9DQUFrRjs7SUFDbEYsb0NBQWtGOztJQUNsRixvQ0FBa0Y7O0lBRWxGLGtDQUFxQzs7SUFDckMsZ0NBQXlCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgTmdGb3JPZkNvbnRleHQgfSBmcm9tICdAYW5ndWxhci9jb21tb24nO1xuaW1wb3J0IHsgQ29tcG9uZW50LCBDb250ZW50Q2hpbGQsIElucHV0LCBUZW1wbGF0ZVJlZiB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgQWJzdHJhY3RDb250cm9sLCBGb3JtR3JvdXAgfSBmcm9tICdAYW5ndWxhci9mb3Jtcyc7XG5pbXBvcnQgeyBEaXNwb3NhYmxlQ29tcG9uZW50IH0gZnJvbSAnQGRlc2lnbnIvY29yZSc7XG5pbXBvcnQgeyBJQ29udHJvbE9wdGlvbiB9IGZyb20gJy4vY29udHJvbC1vcHRpb24nO1xuXG5AQ29tcG9uZW50KHtcblx0c2VsZWN0b3I6ICdjb250cm9sLWNvbXBvbmVudCcsXG5cdHRlbXBsYXRlVXJsOiAnY29udHJvbC5jb21wb25lbnQuaHRtbCcsXG59KVxuZXhwb3J0IGNsYXNzIENvbnRyb2xDb21wb25lbnQgZXh0ZW5kcyBEaXNwb3NhYmxlQ29tcG9uZW50IHtcblxuXHRAQ29udGVudENoaWxkKCdjb250cm9sUmVmJykgY29udHJvbFJlZjogVGVtcGxhdGVSZWY8TmdGb3JPZkNvbnRleHQ8Q29udHJvbENvbXBvbmVudD4+O1xuXHRAQ29udGVudENoaWxkKCdsYWJlbFJlZicpIGxhYmVsUmVmOiBUZW1wbGF0ZVJlZjxOZ0Zvck9mQ29udGV4dDxDb250cm9sQ29tcG9uZW50Pj47XG5cdEBDb250ZW50Q2hpbGQoJ2lucHV0UmVmJykgaW5wdXRSZWY6IFRlbXBsYXRlUmVmPE5nRm9yT2ZDb250ZXh0PENvbnRyb2xDb21wb25lbnQ+Pjtcblx0QENvbnRlbnRDaGlsZCgnZXJyb3JSZWYnKSBlcnJvclJlZjogVGVtcGxhdGVSZWY8TmdGb3JPZkNvbnRleHQ8Q29udHJvbENvbXBvbmVudD4+O1xuXG5cdEBJbnB1dCgpIG9wdGlvbjogSUNvbnRyb2xPcHRpb248YW55Pjtcblx0QElucHV0KCkgZm9ybTogRm9ybUdyb3VwO1xuXG5cdGdldCBjb250ZXh0KCk6IENvbnRyb2xDb21wb25lbnQge1xuXHRcdHJldHVybiB0aGlzO1xuXHR9XG5cblx0Z2V0IGNvbnRyb2woKTogQWJzdHJhY3RDb250cm9sIHtcblx0XHQvLyBjb25zb2xlLmxvZygnY29udHJvbCcsIHRoaXMub3B0aW9uLmtleSwgdGhpcy5mb3JtLmNvbnRyb2xzKTtcblx0XHRyZXR1cm4gdGhpcy5mb3JtLmNvbnRyb2xzW3RoaXMub3B0aW9uLmtleV07XG5cdH1cblxuXHRnZXQgaXNWYWxpZCgpIHsgcmV0dXJuIHRoaXMuY29udHJvbC52YWxpZDsgfVxuXG5cdGdldCBjbGFzc2VzKCkge1xuXHRcdHJldHVybiB7XG5cdFx0XHR2YWxpZDogdGhpcy5jb250cm9sLnZhbGlkLFxuXHRcdFx0aW52YWxpZDogdGhpcy5jb250cm9sLmludmFsaWQsXG5cdFx0XHRkaXJ0eTogdGhpcy5jb250cm9sLmRpcnR5LFxuXHRcdFx0ZW1wdHk6ICh0aGlzLmNvbnRyb2wudmFsdWUgPT0gbnVsbCksXG5cdFx0XHRyZXF1aXJlZDogQm9vbGVhbih0aGlzLm9wdGlvbi5yZXF1aXJlZCB8fCB0aGlzLm9wdGlvbi5yZXF1aXJlZFRydWUpLFxuXHRcdFx0ZGlzYWJsZWQ6IHRoaXMub3B0aW9uLmRpc2FibGVkLFxuXHRcdH07XG5cdH1cblxufVxuIl19

@@ -1,12 +1,21 @@
 import { Component, ComponentFactory, ComponentFactoryResolver, ComponentRef, Input, OnDestroy, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { IControlOption } from './control-option';
 import { ControlComponent } from './control.component';
 import { ControlService } from './control.service';
 
 @Component({
 	selector: 'control-outlet',
-	template: '<ng-template #outlet></ng-template>',
+	template: `
+	<!--
+	<div class="control" [ngClass]="classes">
+		<label class="form-label" [attr.for]="option.key">{{ option.label | label }}</label>
+		<input class="form-control" placeholder="{{ option.placeholder | label }}" [id]="option.key" type="text">
+	</div>
+	-->
+	<!-- [formControlName]="option.key" -->
+	<ng-template #outlet></ng-template>
+	`,
 })
 export class ControlOutletComponent implements OnInit, OnDestroy {
 
@@ -15,6 +24,16 @@ export class ControlOutletComponent implements OnInit, OnDestroy {
 
 	@ViewChild('outlet', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
 	private componentRef: ComponentRef<ControlComponent>;
+
+	get classes(): { [key: string]: boolean } {
+		// console.log('control', this.option.key, this.form.controls);
+		return this.componentRef ? this.componentRef.instance.classes : null;
+	}
+
+	get control(): AbstractControl {
+		// console.log('control', this.option.key, this.form.controls);
+		return this.componentRef ? this.componentRef.instance.control : null;
+	}
 
 	constructor(
 		private componentFactoryResolver: ComponentFactoryResolver,

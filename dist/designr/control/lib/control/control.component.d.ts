@@ -1,9 +1,16 @@
+import { NgForOfContext } from '@angular/common';
+import { TemplateRef } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { DisposableComponent } from '@designr/core';
 import { IControlOption } from './control-option';
 export declare class ControlComponent extends DisposableComponent {
+    controlRef: TemplateRef<NgForOfContext<ControlComponent>>;
+    labelRef: TemplateRef<NgForOfContext<ControlComponent>>;
+    inputRef: TemplateRef<NgForOfContext<ControlComponent>>;
+    errorRef: TemplateRef<NgForOfContext<ControlComponent>>;
     option: IControlOption<any>;
     form: FormGroup;
+    readonly context: ControlComponent;
     readonly control: AbstractControl;
     readonly isValid: boolean;
     readonly classes: {
@@ -11,6 +18,7 @@ export declare class ControlComponent extends DisposableComponent {
         invalid: boolean;
         dirty: boolean;
         empty: boolean;
-        required: any;
+        required: boolean;
+        disabled: boolean;
     };
 }

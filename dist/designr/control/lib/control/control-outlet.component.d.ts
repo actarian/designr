@@ -1,5 +1,5 @@
 import { ComponentFactoryResolver, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { IControlOption } from './control-option';
 import { ControlService } from './control.service';
 export declare class ControlOutletComponent implements OnInit, OnDestroy {
@@ -9,6 +9,10 @@ export declare class ControlOutletComponent implements OnInit, OnDestroy {
     form: FormGroup;
     viewContainerRef: ViewContainerRef;
     private componentRef;
+    readonly classes: {
+        [key: string]: boolean;
+    };
+    readonly control: AbstractControl;
     constructor(componentFactoryResolver: ComponentFactoryResolver, controlService: ControlService);
     ngOnInit(): void;
     ngOnDestroy(): void;
