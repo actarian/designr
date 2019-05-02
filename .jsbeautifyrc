@@ -11,5 +11,5 @@
 	"datalist", "del", "dfn", "em", "embed", "i", "iframe", "ins", "kbd", "keygen", "label", "map",
 	"mark", "math", "meter", "noscript", "object", "output", "progress", "q", "ruby", "s", "samp", "small",
 	"strong", "sub", "sup", "template", "textarea", "time", "u", "var", "video", "wbr", "text", "acronym",
-	"address", "big", "dt", "ins", "small", "strike", "tt", "pre", "h1", "h2", "h3", "h4", "h5", "h6"]
+	"address", "big", "dt", "ins", "small", "strike", "tt", "pre", "h1", "h2", "h3", "h4", "h5", "h6", "use"]
 }

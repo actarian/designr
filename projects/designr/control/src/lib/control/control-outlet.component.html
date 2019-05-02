@@ -1,0 +1,13 @@
+<ng-template #labelDef let-context>
+	<label class="control__label control__label--{{context.option.schema}}" [attr.for]="context.option.key">{{ context.option.label | label }}</label>
+</ng-template>
+<ng-template #descriptionDef let-context>
+	<div class="control__description control__description--{{context.option.schema}}" *ngIf="context.option.description">
+		{{ context.option.description | label }}
+	</div>
+</ng-template>
+<div class="control control--{{context.option.schema}}" [ngClass]="context.classes">
+	<ng-container *ngTemplateOutlet="context.labelRef || labelDef; context: { $implicit: context }"></ng-container>
+	<ng-template #outlet></ng-template>
+</div>
+<ng-container *ngTemplateOutlet="context.descriptionRef || descriptionDef; context: { $implicit: context }"></ng-container>

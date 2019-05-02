@@ -1,23 +1,9 @@
 <ng-container [formGroup]="form">
-
-	<ng-template #controlDef let-context>
-		<div class="control" [ngClass]="context.classes">
-			<ng-container *ngTemplateOutlet="context.labelRef || labelDef; context: { $implicit: context }"></ng-container>
-			<ng-container *ngTemplateOutlet="context.inputRef || inputDef; context: { $implicit: context }"></ng-container>
-			<ng-container *ngTemplateOutlet="context.errorRef || errorDef; context: { $implicit: context }"></ng-container>
-		</div>
-	</ng-template>
-
-	<ng-template #labelDef let-context>
-		<label class="form-label" [attr.for]="context.option.key">{{ context.option.label | label }}</label>
-	</ng-template>
-
 	<ng-template #inputDef let-context>
-		<input class="form-control" placeholder="{{ context.option.placeholder | label }}" [id]="context.option.key" [formControlName]="context.option.key" type="email">
+		<input class="control__input control__input--email" placeholder="{{ context.option.placeholder | label }}" [id]="context.option.key" [formControlName]="context.option.key" type="email">
 	</ng-template>
-
 	<ng-template #errorDef let-context>
-		<div class="alert alert--danger" *ngIf="context.control.invalid && (context.control.dirty || context.control.touched)">
+		<div class="control__error control__error--email" *ngIf="context.control.invalid && (context.control.dirty || context.control.touched)">
 			<div *ngIf="context.control.errors.required">{{ 'errors.required' | label }}</div>
 			<div *ngIf="context.control.errors.email">{{ 'errors.email' | label }}</div>
 			<div *ngIf="context.control.errors.minlength">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>
@@ -26,7 +12,6 @@
 			<div *ngIf="context.control.errors.match">{{ 'errors.match' | label }}</div>
 		</div>
 	</ng-template>
-
-	<ng-container *ngTemplateOutlet="controlRef || controlDef; context: { $implicit: context }"></ng-container>
-
+	<ng-container *ngTemplateOutlet="context.inputRef || inputDef; context: { $implicit: context }"></ng-container>
+	<ng-container *ngTemplateOutlet="context.errorRef || errorDef; context: { $implicit: context }"></ng-container>
 </ng-container>

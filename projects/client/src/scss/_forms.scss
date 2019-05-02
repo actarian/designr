@@ -1,45 +1,48 @@
 // .form {}
 
-.fieldset {
-	padding: 0;
-	margin: 0;
-	border: 0;
-	appearance: none;
-}
-
-@media (min-width:768px) {
-	.fieldset {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		width: 100%;
-	}
-
-	.form-group {
-		width: calc(50% - 10px);
-		flex: 0 0 calc(50% - 10px);
-
-		&:last-child:nth-child(odd) {
-			width: 100%;
-			flex: 1 0 100%;
-		}
+input,
+textarea,
+select {
+	&:-webkit-autofill {
+		background: #e7f4ff !important;
+		border-color: #afd1f6 !important;
+		color: #007aff !important;
 	}
 }
 
-label {
+textarea {
+	&.form-control {
+		resize: none;
+		overflow-x: hidden;
+		overflow-y: auto;
+	}
+}
+
+.control {
+	display: block;
+}
+
+.control__label {
 	color: #55555a;
 	font-weight: 700;
 	font-size: 12px;
 }
 
-.input-group {
+.control__group {
 	display: flex;
+	justify-content: flex-start;
 	align-items: center;
-	justify-content: center;
 }
 
-.form-control,
-.form-select__select {
+.control__group--checkbox,
+.control__group--radio {
+	box-sizing: border-box;
+	width: 100%;
+	margin: 10px 0;
+	padding: 20px 0;
+}
+
+.control__input {
 	appearance: none;
 	border-radius: 4px;
 	font-size: 16px;
@@ -66,7 +69,7 @@ label {
 	}
 }
 
-.form-select__select {
+.control__input--select {
 	position: relative;
 	padding: 0;
 
@@ -105,36 +108,52 @@ label {
 	}
 }
 
-input,
-textarea,
-select {
-	&:-webkit-autofill {
-		background: #e7f4ff !important;
-		border-color: #afd1f6 !important;
-		color: #007aff !important;
-	}
-}
-
-textarea {
-	&.form-control {
-		resize: none;
-		overflow-x: hidden;
-		overflow-y: auto;
-	}
-}
-
-.alert {
+.control__error {
 	padding: 5px 10px;
 	margin: 0 0 10px 0;
 	border-radius: 4px;
 	font-size: 13px;
+	background: #fdf1bd;
+	color: #ff6d22;
+}
 
-	&--danger {
-		background: #fdf1bd;
-		color: #ff6d22;
+.control__info {
+	font-size: 15px;
+}
+
+.control__description {
+	font-size: 14px;
+	line-height: 1.5;
+	margin-bottom: 10px;
+}
+
+.fieldset {
+	padding: 0;
+	margin: 0;
+	border: 0;
+	appearance: none;
+}
+
+@media (min-width:768px) {
+	.fieldset {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		width: 100%;
+	}
+
+	.fieldset__field {
+		width: calc(50% - 10px);
+		flex: 0 0 calc(50% - 10px);
+
+		&:last-child:nth-child(odd) {
+			width: 100%;
+			flex: 1 0 100%;
+		}
 	}
 }
 
+// !!!
 .headline {
 	font-size: 1.5em;
 	padding: 10px;

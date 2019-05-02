@@ -7,6 +7,7 @@ export interface IControlOption<T> {
 	key?: string;
 	label?: string;
 	placeholder?: string;
+	description?: string;
 	disabled?: boolean;
 	required?: boolean;
 	match?: string;
@@ -21,6 +22,7 @@ export class ControlOption<T> {
 	key?: string;
 	label?: string;
 	placeholder?: string;
+	description?: string;
 	disabled?: boolean;
 	required?: boolean;
 	match?: string;

@@ -1,11 +1,14 @@
 <ng-container [formGroup]="form">
-	<div class="form-input" [ngClass]="classes">
-		<label class="form-label" [attr.for]="option.key">{{ option.label | label }}</label>
-		<input class="form-control" placeholder="{{ option.placeholder | label }}" [id]="option.key" [formControlName]="option.key" type="number" [attr.step]="option.step">
-		<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">
-			<div *ngIf="control.errors.required">{{ 'errors.required' | label }}</div>
-			<div *ngIf="control.errors.min">{{ 'errors.min' | label : null : { min: option.min } }}</div>
-			<div *ngIf="control.errors.max">{{ 'errors.max' | label : null : { max: option.max } }}</div>
+	<ng-template #inputDef let-context>
+		<input class="control__input control__input--number" placeholder="{{ context.option.placeholder | label }}" [id]="context.option.key" [formControlName]="context.option.key" type="number" [attr.step]="context.option.step">
+	</ng-template>
+	<ng-template #errorDef let-context>
+		<div class="control__error control__error--number" *ngIf="context.control.invalid && (context.control.dirty || context.control.touched)">
+			<div *ngIf="context.control.errors.required">{{ 'errors.required' | label }}</div>
+			<div *ngIf="context.control.errors.min">{{ 'errors.min' | label : null : { min: context.option.min } }}</div>
+			<div *ngIf="context.control.errors.max">{{ 'errors.max' | label : null : { max: context.option.max } }}</div>
 		</div>
-	</div>
+	</ng-template>
+	<ng-container *ngTemplateOutlet="context.inputRef || inputDef; context: { $implicit: context }"></ng-container>
+	<ng-container *ngTemplateOutlet="context.errorRef || errorDef; context: { $implicit: context }"></ng-container>
 </ng-container>

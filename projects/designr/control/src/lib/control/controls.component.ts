@@ -7,7 +7,15 @@ import { IControlOption } from './control-option';
 @Component({
 	selector: 'controls-component',
 	template: `<ng-container *ngFor="let option of options">
-	<control-outlet class="form-group" [option]="option" [form]="form"></control-outlet>
+	<control-outlet class="fieldset__field" [option]="option" [form]="form">
+	<!--
+	<ng-template #errorRef let-context>
+		<div class="control__error control__error--{{context.option.schema}}">
+			AAA
+		</div>
+	</ng-template>
+	-->
+	</control-outlet>
 </ng-container>`,
 })
 export class ControlsComponent extends DisposableComponent {

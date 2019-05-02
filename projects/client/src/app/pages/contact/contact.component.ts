@@ -13,6 +13,13 @@ export class ContactComponent extends PageComponent implements OnInit {
 	group: FormGroup;
 	submitted: boolean = false;
 	busy: boolean = false;
+	defaults = {
+		password: 'password',
+		type: true,
+		type2: {
+			id: null,
+		}
+	};
 
 	constructor(
 		protected injector: Injector,
@@ -26,7 +33,7 @@ export class ContactComponent extends PageComponent implements OnInit {
 			key: 'email',
 			schema: 'email',
 			label: 'contact.email',
-			placeholder: 'contact.email',
+			placeholder: 'contact.emailPlaceholder',
 			required: true,
 			match: 'emailConfirm',
 			reverse: true,
@@ -35,7 +42,7 @@ export class ContactComponent extends PageComponent implements OnInit {
 			key: 'emailConfirm',
 			schema: 'email',
 			label: 'contact.emailConfirm',
-			placeholder: 'contact.emailConfirm',
+			placeholder: 'contact.emailConfirmPlaceholder',
 			required: true,
 			match: 'email',
 			order: 2,
@@ -43,7 +50,7 @@ export class ContactComponent extends PageComponent implements OnInit {
 			key: 'password',
 			schema: 'password',
 			label: 'contact.password',
-			placeholder: 'contact.password',
+			placeholder: 'contact.passwordPlaceholder',
 			required: true,
 			minlength: 6,
 			order: 3
@@ -51,6 +58,7 @@ export class ContactComponent extends PageComponent implements OnInit {
 			key: 'type',
 			schema: 'select',
 			label: 'contact.type',
+			description: 'Lorem ipsum dolor sit amet',
 			options: [{
 				id: null,
 				name: 'Any',
@@ -82,22 +90,18 @@ export class ContactComponent extends PageComponent implements OnInit {
 			key: 'privacy',
 			schema: 'checkbox',
 			label: 'contact.privacy',
-			placeholder: 'contact.privacy',
+			description: 'Lorem ipsum dolor sit amet',
 			requiredTrue: true,
-			order: 5
+			order: 5,
+			type: 'aaa'
 		}]);
 		this.group = this.formService.getFormGroup(this.options);
-		this.group.reset({
-			password: 'password',
-			type: true,
-			type2: {
-				id: null,
-			}
-		});
+		this.group.reset(this.defaults);
 	}
 
 	onReset() {
 		console.log('onReset');
+		this.group.reset(this.defaults);
 	}
 
 	onSubmit(model: any) {

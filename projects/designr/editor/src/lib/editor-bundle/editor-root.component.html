@@ -12,7 +12,7 @@
 				-->
 		<hr>
 		<div *ngFor="let option of options">
-			<control-outlet class="form-group" [option]="option" [form]="group"></control-outlet>
+			<control-outlet class="fieldset__field" [option]="option" [form]="group"></control-outlet>
 		</div>
 		<!-- <control-editable formControlName="email"></control-editable> -->
 		<div class="action-bar">

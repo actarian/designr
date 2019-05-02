@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoreModuleComponent implements OnInit {
 
-	version: string = '0.0.7';
+	version: string = '0.0.8';
 
 	constructor() { }
 

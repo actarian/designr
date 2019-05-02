@@ -1,13 +1,17 @@
 <ng-container [formGroup]="form">
-	<div class="form-select" [ngClass]="classes">
-		<label class="form-label" [attr.for]="option.key">{{ option.label | label }}</label>
-		<div class="form-select__select">
-			<select [id]="option.key" [formControlName]="option.key" [compareWith]="compareWith">
-				<option *ngFor="let item of options" [ngValue]="getValue(item)">{{item?.name}}</option>
+	<ng-template #inputDef let-context>
+		<div class="control__input control__input--select">
+			<select [id]="context.option.key" [formControlName]="context.option.key" [compareWith]="context.compareWith">
+				<option *ngFor="let item of options" [ngValue]="context.getValue(item)">{{item?.name}}</option>
 			</select>
+			<!-- control__accessory -->
 		</div>
-		<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">
-			<div *ngIf="control.errors.required">{{ 'errors.required' | label }}</div>
+	</ng-template>
+	<ng-template #errorDef let-context>
+		<div class="control__error control__error--select" *ngIf="context.control.invalid && (context.control.dirty || context.control.touched)">
+			<div *ngIf="context.control.errors.required">{{ 'errors.required' | label }}</div>
 		</div>
-	</div>
+	</ng-template>
+	<ng-container *ngTemplateOutlet="context.inputRef || inputDef; context: { $implicit: context }"></ng-container>
+	<ng-container *ngTemplateOutlet="context.errorRef || errorDef; context: { $implicit: context }"></ng-container>
 </ng-container>

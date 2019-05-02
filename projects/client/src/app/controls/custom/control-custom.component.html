@@ -1,9 +1,16 @@
 <ng-container [formGroup]="form">
-	<label class="form-label" [attr.for]="option.key">{{ option.label | label }}</label>
-	<input custom class="form-control" placeholder="{{ option.placeholder | label }}" [id]="option.key" [formControlName]="option.key" type="text">
-	<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">
-		<div *ngIf="control.errors.required">{{ 'errors.required' | label }}</div>
-		<div *ngIf="control.errors.minlength">{{ 'errors.minlength' | label : null : { minlength: option.minlength } }}</div>
-		<div *ngIf="control.errors.maxlength">{{ 'errors.maxlength' | label : null : { maxlength: option.maxlength } }}</div>
-	</div>
+	<ng-template #inputDef let-context>
+		<input custom class="control__input control__input--custom" placeholder="{{ context.option.placeholder | label }}" [id]="context.option.key" [formControlName]="context.option.key" type="text">
+	</ng-template>
+	<ng-template #errorDef let-context>
+		<div class="control__error control__error--custom" *ngIf="context.control.invalid && (context.control.dirty || context.control.touched)">
+			<div *ngIf="context.control.errors.required">{{ 'errors.required' | label }}</div>
+			<div *ngIf="context.control.errors.minlength">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>
+			<div *ngIf="context.control.errors.maxlength">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>
+			<div *ngIf="context.control.errors.pattern">{{ 'errors.pattern' | label }}</div>
+			<div *ngIf="context.control.errors.match">{{ 'errors.match' | label }}</div>
+		</div>
+	</ng-template>
+	<ng-container *ngTemplateOutlet="context.inputRef || inputDef; context: { $implicit: context }"></ng-container>
+	<ng-container *ngTemplateOutlet="context.errorRef || errorDef; context: { $implicit: context }"></ng-container>
 </ng-container>

@@ -3,10 +3,10 @@
 	<div class="modal__page" [ngClass]="className">
 		<div class="modal__header">
 			<button type="button" class="btn btn--prev" (click)="doPrev()" *ngIf="modalCount > 1" [title]="'modal.back' | label : 'back'">
-				<span sprite="ico-prev"></span> <span>{{'modal.back' | label : 'back'}}</span>
+				<svg><use xlink:href="#prev" /></svg> <span>{{'modal.back' | label : 'back'}}</span>
 			</button>
 			<button type="button" class="btn btn--close" (click)="doClose()" title="'modal.close' | label : 'close'">
-				<span sprite="ico-close"></span> <span>{{'modal.close' | label : 'close'}}</span>
+				<svg><use xlink:href="#close" /></svg> <span>{{'modal.close' | label : 'close'}}</span>
 			</button>
 		</div>
 		<div class="modal__content">

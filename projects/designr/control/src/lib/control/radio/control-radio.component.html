@@ -1,11 +1,15 @@
 <ng-container [formGroup]="form">
-	<div class="form-radio" [ngClass]="classes">
-		<label class="form-label">
-			<input class="form-radio__input" type="radio" [id]="option.key" [formControlName]="option.key">
-			<span class="form-radio__label">{{ option.label | label }}</span>
+	<ng-template #inputDef let-context>
+		<label class="control__group control__group--radio">
+			<input class="control__radio" type="radio" [id]="context.option.key" [formControlName]="context.option.key">
+			<span class="control__info">{{ context.option.description | label }}</span>
 		</label>
-		<div class="alert alert--danger" *ngIf="control.invalid && (control.dirty || control.touched)">
-			<div *ngIf="control.errors.required">{{ 'errors.required' | label }}</div>
+	</ng-template>
+	<ng-template #errorDef let-context>
+		<div class="control__error control__error--radio" *ngIf="context.control.invalid && (context.control.dirty || context.control.touched)">
+			<div *ngIf="context.control.errors.required">{{ 'errors.required' | label }}</div>
 		</div>
-	</div>
+	</ng-template>
+	<ng-container *ngTemplateOutlet="context.inputRef || inputDef; context: { $implicit: context }"></ng-container>
+	<ng-container *ngTemplateOutlet="context.errorRef || errorDef; context: { $implicit: context }"></ng-container>
 </ng-container>
