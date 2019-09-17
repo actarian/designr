@@ -83,8 +83,8 @@ var EditorRootComponent = /** @class */ (function (_super) {
             this._page = page;
             if (this._page) {
                 this.options = this.formService.getOptions(this.getControlsByPage(page));
-                this.group = this.formService.getFormGroup(this.options);
-                this.group.valueChanges.subscribe((/**
+                this.form = this.formService.getFormGroup(this.options);
+                this.form.valueChanges.subscribe((/**
                  * @param {?} x
                  * @return {?}
                  */
@@ -94,7 +94,7 @@ var EditorRootComponent = /** @class */ (function (_super) {
             }
             else {
                 this.options = [];
-                this.group = null;
+                this.form = null;
             }
         },
         enumerable: true,
@@ -174,12 +174,12 @@ var EditorRootComponent = /** @class */ (function (_super) {
     function () {
         var _this = this;
         // console.log('EditorRootComponent.onReset');
-        Object.keys(this.group.controls).forEach((/**
+        Object.keys(this.form.controls).forEach((/**
          * @param {?} key
          * @return {?}
          */
         function (key) {
-            _this.group.get(key).setValue(_this._pageCopy[key]);
+            _this.form.get(key).setValue(_this._pageCopy[key]);
         }));
         /*
         const keys = this.controls.map(x => x.key);
@@ -212,7 +212,7 @@ var EditorRootComponent = /** @class */ (function (_super) {
      */
     function (model) {
         var _this = this;
-        Object.keys(this.group.controls).forEach((/**
+        Object.keys(this.form.controls).forEach((/**
          * @param {?} key
          * @return {?}
          */
@@ -229,7 +229,7 @@ var EditorRootComponent = /** @class */ (function (_super) {
     EditorRootComponent.decorators = [
         { type: Component, args: [{
                     selector: 'editor-root-component',
-                    template: "<ng-container *ngIf=\"page\">\n\t<form class=\"form\" name=\"group\" [formGroup]=\"group\" (ngSubmit)=\"group.valid && onSubmit(group.value)\" #form=\"ngForm\" role=\"form\" novalidate autocomplete=\"off\">\n\t\t<div class=\"info\">\n\t\t\t<span class=\"id\">{{page.id}}</span>\n\t\t\t<span class=\"status\" [ngClass]=\"{ active: page.active }\">{{page.active ? 'active' : 'inactive'}}</span>\n\t\t\t<span class=\"component\">{{componentName}}</span>\n\t\t</div>\n\t\t<hr>\n\t\t<h2 class=\"h1\" [innerHTML]=\"page.title\"></h2>\n\t\t<!--\n\t\t\t\t<p [innerHTML]=\"page.description\"></p>\n\t\t\t\t-->\n\t\t<hr>\n\t\t<div *ngFor=\"let option of options\">\n\t\t\t<control-outlet class=\"fieldset__field\" [option]=\"option\" [form]=\"group\"></control-outlet>\n\t\t</div>\n\t\t<!-- <control-editable formControlName=\"email\"></control-editable> -->\n\t\t<div class=\"action-bar\">\n\t\t\t<button type=\"text\" class=\"btn btn--secondary\" [disabled]=\"submitted || !group.valid\" (click)=\"onReset()\" title=\"Annulla\"><span>Annulla</span></button>\n\t\t\t<button type=\"submit\" class=\"btn btn--primary\" [disabled]=\"submitted || !group.valid\" [ngClass]=\"{ 'btn--busy': busy }\" title=\"Salva\"><span>Salva</span></button>\n\t\t</div>\n\t</form>\n</ng-container>\n",
+                    template: "<ng-container *ngIf=\"page\">\n\t<form class=\"form\" name=\"form\" [formGroup]=\"form\" (ngSubmit)=\"form.valid && onSubmit(form.value)\" #form=\"ngForm\" role=\"form\" novalidate autocomplete=\"off\">\n\t\t<div class=\"info\">\n\t\t\t<span class=\"id\">{{page.id}}</span>\n\t\t\t<span class=\"status\" [ngClass]=\"{ active: page.active }\">{{page.active ? 'active' : 'inactive'}}</span>\n\t\t\t<span class=\"component\">{{componentName}}</span>\n\t\t</div>\n\t\t<hr>\n\t\t<h2 class=\"h1\" [innerHTML]=\"page.title\"></h2>\n\t\t<!--\n\t\t\t\t<p [innerHTML]=\"page.description\"></p>\n\t\t\t\t-->\n\t\t<hr>\n\t\t<div *ngFor=\"let option of options\">\n\t\t\t<control-outlet class=\"fieldset__field fieldset__field--{{option.schema}}\" [option]=\"option\" [form]=\"form\"></control-outlet>\n\t\t</div>\n\t\t<!-- <control-editable formControlName=\"email\"></control-editable> -->\n\t\t<div class=\"action-bar\">\n\t\t\t<button type=\"text\" class=\"btn btn--secondary\" [disabled]=\"submitted || !form.valid\" (click)=\"onReset()\" title=\"Annulla\"><span>Annulla</span></button>\n\t\t\t<button type=\"submit\" class=\"btn btn--primary\" [disabled]=\"submitted || !form.valid\" [ngClass]=\"{ 'btn--busy': busy }\" title=\"Salva\"><span>Salva</span></button>\n\t\t</div>\n\t</form>\n</ng-container>\n",
                     encapsulation: ViewEncapsulation.Emulated,
                     styles: [":host{font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;background:#fafafa;color:#55555a}.h1{color:#55555a;font-size:19px}form{margin:0}label{display:block;width:100%;color:#55555a;font-weight:700;font-size:12px}.id{display:inline-block;padding:4px 6px;background:#0875c2;color:#fff;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status{display:inline-block;padding:4px 6px;background:#fff;color:#000;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status.active{background:green;color:#fff}.component{display:inline-block;font-size:14px;font-style:italic}"]
                 }] }
@@ -310,7 +310,7 @@ var EditorBundleModule = /** @class */ (function () {
  */
 var EditorModuleComponent = /** @class */ (function () {
     function EditorModuleComponent() {
-        this.version = '0.0.8';
+        this.version = '0.0.9';
     }
     /**
      * @return {?}

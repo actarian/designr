@@ -5,9 +5,9 @@ import JSONFormatter from 'json-formatter-js';
 import { isArray, isObject } from 'util';
 import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
-import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ComponentFactoryResolver, ViewChild, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, INJECTOR, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, InjectionToken, Component, ComponentFactoryResolver, ViewChild, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, INJECTOR, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
-import { tap, map, take, distinctUntilChanged, filter, switchMap, catchError, debounceTime, takeUntil, first } from 'rxjs/operators';
+import { tap, filter, map, switchMap, distinctUntilChanged, catchError, debounceTime, takeUntil, first } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
@@ -793,7 +793,7 @@ DefaultContentDirective.propDecorators = {
  */
 class CoreModuleComponent {
     constructor() {
-        this.version = '0.0.8';
+        this.version = '0.0.9';
     }
     /**
      * @return {?}
@@ -836,21 +836,31 @@ class BundleDirective {
          * @return {?}
          */
         (moduleFactory) => {
-            this.moduleRef = moduleFactory.create(this.injector);
             /** @type {?} */
-            const rootComponentType = this.moduleRef.injector.get('LAZY_ROOT_COMPONENT');
-            console.log(rootComponentType);
+            const moduleRef = moduleFactory.create(this.injector);
+            this.moduleRef_ = moduleRef;
             /** @type {?} */
-            const factory = this.moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
-            this.container.createComponent(factory);
+            const rootComponentType = moduleRef.injector.get('LAZY_ROOT_COMPONENT');
+            // console.log(rootComponentType);
+            /** @type {?} */
+            const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
+            /** @type {?} */
+            const componentRef = this.container.createComponent(factory);
+            /** @type {?} */
+            const instance = componentRef.instance;
+            // instance.data = this.data; // !!!
+            this.componentRef_ = componentRef;
         }));
     }
     /**
      * @return {?}
      */
     ngOnDestroy() {
-        if (this.moduleRef) {
-            this.moduleRef.destroy();
+        if (this.componentRef_) {
+            this.componentRef_.destroy();
+        }
+        if (this.moduleRef_) {
+            this.moduleRef_.destroy();
         }
     }
 }
@@ -867,7 +877,8 @@ BundleDirective.ctorParameters = () => [
     { type: ViewContainerRef }
 ];
 BundleDirective.propDecorators = {
-    bundle: [{ type: Input }]
+    bundle: [{ type: Input }],
+    data: [{ type: Input }]
 };
 
 /**
@@ -1484,22 +1495,11 @@ class TranslateService extends ApiService {
     constructor(injector) {
         super(injector);
         this.injector = injector;
-        // private cache: { [key: string]: string; } = {};
         this.events = new EventEmitter();
-        this.cache = {};
-        this._language = new BehaviorSubject({});
-        this.language = this._language.asObservable();
-        this._languages = new BehaviorSubject([]);
-        this.languages = this._languages.asObservable();
-        this._languages.next(this.config.languages);
-        this._lang = this.config.defaultLanguage;
-        this.getTranslation(this.lang).subscribe((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => {
-            // console.log(x);
-        }));
+        this.language_ = new BehaviorSubject(undefined);
+        this.languages_ = new BehaviorSubject([]);
+        this.cache_ = {};
+        this.languages_.next(this.config.languages);
     }
     /**
      * @return {?}
@@ -1511,23 +1511,53 @@ class TranslateService extends ApiService {
      * @return {?}
      */
     get lang() {
-        return this._lang;
+        return this.lang_;
     }
     /**
      * @param {?} lang
      * @return {?}
      */
     set lang(lang) {
-        if (lang !== this._lang) {
-            this._lang = lang;
+        if (lang !== this.lang_) {
+            this.lang_ = lang;
             /** @type {?} */
-            const language = this._languages.getValue().find((/**
-             * @param {?} x
-             * @return {?}
-             */
-            x => x.lang === lang));
-            this._language.next(language);
+            const languages = this.languages_.getValue();
+            if (languages.length) {
+                /** @type {?} */
+                const language = languages.find((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                x => x.lang === lang));
+                this.language_.next(language);
+            }
         }
+    }
+    /**
+     * @return {?}
+     */
+    get language() {
+        return this.language_.getValue();
+    }
+    /**
+     * @return {?}
+     */
+    get languages() {
+        return this.languages_.getValue();
+    }
+    /**
+     * @return {?}
+     */
+    observe$() {
+        return this.language_.pipe(filter((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => x !== undefined)), switchMap((/**
+         * @param {?} language
+         * @return {?}
+         */
+        (language) => this.getTranslation(language.lang))));
     }
     /**
      * @param {?} lang
@@ -1537,20 +1567,22 @@ class TranslateService extends ApiService {
         if (!lang || !lang.trim()) {
             return of(null);
         }
-        this.lang = lang;
-        if (this.cache[lang]) {
-            return of(this.cache[lang]);
+        this.lang_ = lang;
+        if (this.cache_[lang]) {
+            return of(this.cache_[lang]);
         }
         else {
-            return this.get({ lang }).pipe(take(1), map((/**
+            return this.get(`?lang=${lang}`, { lang }).pipe(
+            // take(1),
+            map((/**
              * @param {?} x
              * @return {?}
              */
             (x) => {
-                if (x[0]) {
+                if (x.length && x[0]) {
                     /** @type {?} */
                     const labels = x[0].labels;
-                    this.cache[lang] = labels;
+                    this.cache_[lang] = labels;
                     this.events.emit(labels);
                     return labels;
                 }
@@ -1567,22 +1599,40 @@ class TranslateService extends ApiService {
      * @return {?}
      */
     getTranslate(key, defaultValue, params) {
-        /** @type {?} */
-        let value = null;
-        /** @type {?} */
-        let labels = this.cache[this.lang];
-        if (labels) {
+        // console.log('TranslateService.getTranslate', key, this.cache_, this.lang_);
+        if (key) {
             /** @type {?} */
-            const keys = key.split('.');
+            let value = null;
             /** @type {?} */
-            let k = keys.shift();
-            while (keys.length > 0 && labels[k]) {
-                labels = labels[k];
-                k = keys.shift();
+            let labels = this.cache_[this.lang_];
+            // console.log('labels', this.lang_, this.cache_, labels);
+            if (labels) {
+                /** @type {?} */
+                const keys = key.split('.');
+                /** @type {?} */
+                let k = keys.shift();
+                while (keys.length > 0 && labels[k]) {
+                    labels = labels[k];
+                    k = keys.shift();
+                }
+                value = labels[k]; // || `{${k}}`;
+                if (typeof value !== 'string') {
+                    value = null;
+                }
             }
-            value = labels[k] || `{${k}}`;
+            return this.parseTranslate(value, key, defaultValue, params);
         }
-        return this.parseTranslate(value, key, defaultValue, params);
+    }
+    /**
+     * @param {?} key
+     * @param {?=} defaultValue
+     * @param {?=} params
+     * @return {?}
+     */
+    transform(key, defaultValue, params) {
+        /** @type {?} */
+        const value = this.getTranslate(key, defaultValue, params);
+        return value;
     }
     /**
      * @private
@@ -1594,10 +1644,7 @@ class TranslateService extends ApiService {
      */
     parseTranslate(value, key, defaultValue, params) {
         if (value == null) {
-            value = defaultValue;
-        }
-        if (value == null) {
-            return this.missingTranslate(key);
+            return defaultValue || this.missingTranslate(key);
         }
         else if (params) {
             return this.parseParams(value, params);
@@ -1610,13 +1657,11 @@ class TranslateService extends ApiService {
      * @return {?}
      */
     missingTranslate(key) {
-        console.log('missingTranslate', key, this.missingHandler);
         if (this.missingHandler) {
             return typeof this.missingHandler === 'function' ?
                 this.missingHandler(key) :
                 this.missingHandler;
         }
-        console.log('missingTranslate', key);
         return key;
     }
     /**
@@ -1661,7 +1706,46 @@ class TranslateService extends ApiService {
      * @return {?}
      */
     getBrowserLang() {
-        return 'it';
+        if (isPlatformBrowser(this.platformId)) {
+            /** @type {?} */
+            const lang = this.getFirstBrowserLang() || this.config.defaultLanguage;
+            // console.log('getBrowserLang', lang, navigator.languages);
+            return lang;
+        }
+        else {
+            return this.config.defaultLanguage;
+        }
+    }
+    /**
+     * @return {?}
+     */
+    getFirstBrowserLang() {
+        /** @type {?} */
+        const lang = this.getFirstBrowserLocale();
+        if (lang) {
+            return lang.split('-')[0];
+        }
+    }
+    /**
+     * @return {?}
+     */
+    getFirstBrowserLocale() {
+        /** @type {?} */
+        const navigator = window.navigator;
+        /** @type {?} */
+        const properties = ['language', 'browserLanguage', 'systemLanguage', 'userLanguage'];
+        /** @type {?} */
+        let lang;
+        if (Array.isArray(navigator.languages)) {
+            lang = navigator.languages[0];
+        }
+        /** @type {?} */
+        let i = 0;
+        while (!lang && i < properties.length) {
+            lang = navigator[properties[i]];
+            i++;
+        }
+        return lang;
     }
 }
 TranslateService.decorators = [
@@ -3221,9 +3305,10 @@ class ImagePipe {
     /**
      * @param {?} images
      * @param {?=} type
+     * @param {?=} queryString
      * @return {?}
      */
-    transform(images, type) {
+    transform(images, type, queryString) {
         type = type || 'Default';
         /** @type {?} */
         const imageType = ImageType[type] || ImageType.Default;
@@ -3232,6 +3317,36 @@ class ImagePipe {
          * @return {?}
          */
         i => i.type === imageType)) || null : null; // images[0]
+    }
+    // 21 marzo 2019
+    /**
+     * @param {?} images
+     * @param {?=} type
+     * @param {?=} queryString
+     * @return {?}
+     */
+    transform__(images, type, queryString) {
+        type = type || 'Default';
+        queryString = queryString ? `?${queryString}` : '';
+        /** @type {?} */
+        const imageType = ImageType[type] || ImageType.Default;
+        /** @type {?} */
+        let image = null;
+        if (images && images.length) {
+            image = images.find((/**
+             * @param {?} i
+             * @return {?}
+             */
+            i => i.type === imageType)); // || images[0];
+            if (!image && imageType !== ImageType.Default) {
+                image = images.find((/**
+                 * @param {?} i
+                 * @return {?}
+                 */
+                i => i.type === ImageType.Default));
+            }
+        }
+        return image ? (image.url + queryString).replace(/ /g, '%20') : null;
     }
 }
 ImagePipe.decorators = [

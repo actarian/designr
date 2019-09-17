@@ -1,0 +1,11 @@
+<ng-container *ngFor="let option of options">
+	<control-outlet class="fieldset__field fieldset__field--{{option.schema}}" [option]="option" [form]="form">
+		<!--
+		<ng-template #errorRef let-context>
+			<div class="control__error control__error--{{context.option.schema}}">
+				AAA
+			</div>
+		</ng-template>
+		-->
+	</control-outlet>
+</ng-container>

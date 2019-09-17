@@ -29,7 +29,14 @@ export class ControlComponent extends DisposableComponent {
 
 	get isValid() { return this.control.valid; }
 
-	get classes() {
+	get classes(): {
+		valid?: boolean,
+		invalid?: boolean,
+		dirty?: boolean,
+		empty?: boolean,
+		required?: boolean,
+		disabled?: boolean
+	} {
 		return {
 			valid: this.control.valid,
 			invalid: this.control.invalid,

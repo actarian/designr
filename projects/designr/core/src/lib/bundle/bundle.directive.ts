@@ -1,4 +1,4 @@
-import { Directive, Inject, Injector, Input, NgModuleFactory, NgModuleFactoryLoader, NgModuleRef, OnDestroy, OnInit, Type, ViewContainerRef } from '@angular/core';
+import { ComponentRef, Directive, Inject, Injector, Input, NgModuleFactory, NgModuleFactoryLoader, NgModuleRef, OnDestroy, OnInit, Type, ViewContainerRef } from '@angular/core';
 import { Bundles, BUNDLES } from './bundle';
 
 export type ModuleWithRoot = Type<any> & { rootComponent: Type<any> };
@@ -9,7 +9,9 @@ export type ModuleWithRoot = Type<any> & { rootComponent: Type<any> };
 export class BundleDirective implements OnInit, OnDestroy {
 
 	@Input() bundle: keyof Bundles;
-	private moduleRef: NgModuleRef<any>;
+	@Input() data?: any;
+	private moduleRef_: NgModuleRef<any>;
+	private componentRef_: ComponentRef<any>;
 
 	constructor(
 		@Inject(BUNDLES) private bundles,
@@ -21,17 +23,24 @@ export class BundleDirective implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.loader.load(this.bundles[this.bundle]).then((moduleFactory: NgModuleFactory<any>) => {
-			this.moduleRef = moduleFactory.create(this.injector);
-			const rootComponentType = this.moduleRef.injector.get('LAZY_ROOT_COMPONENT');
-			console.log(rootComponentType);
-			const factory = this.moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
-			this.container.createComponent(factory);
+			const moduleRef = moduleFactory.create(this.injector);
+			this.moduleRef_ = moduleRef;
+			const rootComponentType = moduleRef.injector.get('LAZY_ROOT_COMPONENT');
+			// console.log(rootComponentType);
+			const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
+			const componentRef = this.container.createComponent(factory);
+			const instance = componentRef.instance;
+			// instance.data = this.data; // !!!
+			this.componentRef_ = componentRef;
 		});
 	}
 
 	ngOnDestroy() {
-		if (this.moduleRef) {
-			this.moduleRef.destroy();
+		if (this.componentRef_) {
+			this.componentRef_.destroy();
+		}
+		if (this.moduleRef_) {
+			this.moduleRef_.destroy();
 		}
 	}
 

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { DisposableComponent, CoreModule } from '@designr/core';
 import { isObservable, of, BehaviorSubject } from 'rxjs';
-import { takeUntil, catchError, debounceTime, switchMap, take } from 'rxjs/operators';
+import { takeUntil, tap, catchError, debounceTime, switchMap, take } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators, NG_VALUE_ACCESSOR, NG_ASYNC_VALIDATORS, NG_VALIDATORS, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Component, ContentChild, Input, InjectionToken, Inject, Injectable, Directive, ElementRef, forwardRef, Renderer2, Attribute, EventEmitter, HostListener, Output, ComponentFactoryResolver, ViewChild, ViewContainerRef, defineInjectable, inject, NgModule, Optional, SkipSelf } from '@angular/core';
 
@@ -22,14 +22,6 @@ class ControlOption {
         if (options) {
             Object.assign(this, options);
         }
-        /*
-        const name = `${options.key || 'Control'} ${++UNIQUE_ID}`;
-        this.label = this.label || name;
-        this.placeholder = this.placeholder || name;
-        this.order = this.order === undefined ? 1 : this.order;
-        this.schema = this.schema || 'text';
-        this.type = this.type || this.schema;
-        */
     }
 }
 
@@ -130,10 +122,82 @@ class ControlEmailComponent extends ControlComponent {
 ControlEmailComponent.decorators = [
     { type: Component, args: [{
                 selector: 'control-email-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<input class=\"control__input control__input--email\" placeholder=\"{{ context.option.placeholder | label }}\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\" type=\"email\">\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--email\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.email\">{{ 'errors.email' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
+                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<input class=\"control__input control__input--email\" placeholder=\"{{ context.option.placeholder | label }}\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\" type=\"email\" [exists]=\"context.option.exists\">\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--email\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.email\">{{ 'errors.email' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.exists\">{{ 'errors.exists' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
             }] }
 ];
 ControlEmailComponent.propDecorators = {
+    option: [{ type: Input }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlGroup extends ControlOption {
+    constructor() {
+        super(...arguments);
+        this.schema = 'group';
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlGroupComponent extends ControlComponent {
+}
+ControlGroupComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'control-group-component',
+                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<div class=\"control__title\" *ngIf=\"context.option.title\">{{ context.option.title | label }}</div>\r\n\t\t<div class=\"control__abstract\" *ngIf=\"context.option.abstract\">{{ context.option.abstract | label }}</div>\r\n\t\t<div class=\"fieldset\" *ngIf=\"context.option.options.length\">\r\n\t\t\t<ng-container *ngFor=\"let option of context.option.options\">\r\n\t\t\t\t<control-outlet class=\"fieldset__field fieldset__field--{{option.schema}}\" [option]=\"option\" [form]=\"context.control\"></control-outlet>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context></ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
+            }] }
+];
+ControlGroupComponent.propDecorators = {
+    option: [{ type: Input }]
+};
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlInfo extends ControlOption {
+    constructor() {
+        super(...arguments);
+        this.schema = 'info';
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ControlInfoComponent extends ControlComponent {
+    /**
+     * @return {?}
+     */
+    get control() {
+        return null;
+    }
+    /**
+     * @return {?}
+     */
+    get isValid() {
+        return true;
+    }
+    /**
+     * @return {?}
+     */
+    get classes() {
+        return {};
+    }
+}
+ControlInfoComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'control-info-component',
+                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<div class=\"control__title\" *ngIf=\"context.option.title\">{{ context.option.title | label }}</div>\r\n\t\t<div class=\"control__abstract\" *ngIf=\"context.option.abstract\">{{ context.option.abstract | label }}</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
+            }] }
+];
+ControlInfoComponent.propDecorators = {
     option: [{ type: Input }]
 };
 
@@ -215,7 +279,7 @@ class ControlPasswordComponent extends ControlComponent {
 ControlPasswordComponent.decorators = [
     { type: Component, args: [{
                 selector: 'control-password-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<div class=\"control__group control__group--password\">\r\n\t\t\t<input class=\"control__input control__input--password\" placeholder=\"{{ context.option.placeholder | label }}\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\" type=\"password\" #password>\r\n\t\t\t<div class=\"control__addon\">\r\n\t\t\t\t<input class=\"control__checkbox\" type=\"checkbox\" [attr.aria-label]=\"context.option.label | label\" (input)=\"password.setAttribute('type', reveal.checked ? 'text' : 'password')\" #reveal>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--password\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
+                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<div class=\"control__group control__group--password\">\r\n\t\t\t<input class=\"control__input control__input--password\" placeholder=\"{{ context.option.placeholder | label }}\" [formControlName]=\"context.option.key\" type=\"password\" #password>\r\n\t\t\t<div class=\"control__addon\">\r\n\t\t\t\t<input class=\"control__checkbox\" type=\"checkbox\" [attr.aria-label]=\"context.option.label | label\" (input)=\"password.setAttribute('type', reveal.checked ? 'text' : 'password')\" #reveal>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--password\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
             }] }
 ];
 ControlPasswordComponent.propDecorators = {
@@ -275,7 +339,23 @@ class ControlSelectComponent extends ControlComponent {
      * @return {?}
      */
     ngOnInit() {
-        this.options$().pipe(takeUntil(this.unsubscribe)).subscribe((/**
+        this.options$().pipe(takeUntil(this.unsubscribe), tap((/**
+         * @param {?} options
+         * @return {?}
+         */
+        options => {
+            if (this.option.asObject && this.control.value === null) {
+                /** @type {?} */
+                const firstNullOptions = options.find((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                x => x.id === null));
+                if (firstNullOptions !== undefined) {
+                    this.control.setValue(firstNullOptions);
+                }
+            }
+        }))).subscribe((/**
          * @param {?} options
          * @return {?}
          */
@@ -318,9 +398,7 @@ class ControlSelectComponent extends ControlComponent {
         if (this.option.asObject) {
             a = (/** @type {?} */ (a));
             b = (/** @type {?} */ (b));
-            // b = (b as ControlSelectOption) || { id: null, name: 'Any' };
-            // console.log(a, b);
-            return b ? a.id === b.id : a.id === null;
+            return (b && b.id !== undefined) ? a.id === b.id : a.id === b;
         }
         else {
             return b ? a === b : a === null;
@@ -359,7 +437,7 @@ class ControlTextComponent extends ControlComponent {
 ControlTextComponent.decorators = [
     { type: Component, args: [{
                 selector: 'control-text-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<input class=\"control__input control__input--text\" placeholder=\"{{ context.option.placeholder | label }}\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\" type=\"text\">\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--text\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
+                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<input class=\"control__input control__input--text\" placeholder=\"{{ context.option.placeholder | label }}\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\" [exists]=\"context.option.exists\" type=\"text\">\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--text\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.exists\">{{ 'errors.exists' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
             }] }
 ];
 ControlTextComponent.propDecorators = {
@@ -401,6 +479,8 @@ ControlTextareaComponent.propDecorators = {
 const entryComponents = [
     ControlCheckboxComponent,
     ControlEmailComponent,
+    ControlGroupComponent,
+    ControlInfoComponent,
     ControlMarkdownComponent,
     ControlNumberComponent,
     ControlPasswordComponent,
@@ -418,6 +498,14 @@ const controls = {
     'email': {
         component: ControlEmailComponent,
         model: ControlEmail
+    },
+    'group': {
+        component: ControlGroupComponent,
+        model: ControlGroup
+    },
+    'info': {
+        component: ControlInfoComponent,
+        model: ControlInfo
     },
     'markdown': {
         component: ControlMarkdownComponent,
@@ -470,7 +558,7 @@ const CONTROL_CONFIG = new InjectionToken('control.config');
  */
 class ControlModuleComponent {
     constructor() {
-        this.version = '0.0.8';
+        this.version = '0.0.9';
     }
     /**
      * @return {?}
@@ -548,16 +636,46 @@ class ControlService {
      * @param {?} options
      * @return {?}
      */
-    resolve(options) {
+    toFormGroup(options) {
         /** @type {?} */
-        let component;
-        if (options) {
-            component = this.options.controls[options.schema].component || ControlComponent;
-        }
-        else {
-            component = ControlComponent;
-        }
-        return component;
+        const controls$$1 = {};
+        options.forEach((/**
+         * @param {?} option
+         * @return {?}
+         */
+        (option) => {
+            // group[x.key] = new FormControl(x.value, this.getValidators(x, group));
+            if (option instanceof ControlGroup) {
+                /** @type {?} */
+                const group = this.toFormGroup(option.options);
+                controls$$1[option.key] = group;
+            }
+            else if (!(option instanceof ControlInfo)) {
+                /** @type {?} */
+                const control = new FormControl(option.value);
+                if (option.disabled) {
+                    control.disable();
+                }
+                controls$$1[option.key] = control;
+                // x.setControl(control); // !!!
+            }
+        }));
+        /** @type {?} */
+        const group = new FormGroup(controls$$1);
+        // console.log(group);
+        options.forEach((/**
+         * @param {?} option
+         * @return {?}
+         */
+        (option) => {
+            if (!(option instanceof ControlInfo)) {
+                /** @type {?} */
+                const validators = this.getValidators(option, group);
+                // console.log(validators);
+                group.controls[option.key].setValidators(validators);
+            }
+        }));
+        return group;
     }
     /**
      * @param {?} options
@@ -601,37 +719,16 @@ class ControlService {
      * @param {?} options
      * @return {?}
      */
-    toFormGroup(options) {
+    resolve(options) {
         /** @type {?} */
-        const controls$$1 = {};
-        options.forEach((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => {
-            // group[x.key] = new FormControl(x.value, this.getValidators(x, group));
-            /** @type {?} */
-            const control = new FormControl(x.value);
-            if (x.disabled) {
-                control.disable();
-            }
-            controls$$1[x.key] = control;
-            // x.setControl(control); // !!!
-        }));
-        /** @type {?} */
-        const group = new FormGroup(controls$$1);
-        // console.log(group);
-        options.forEach((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => {
-            /** @type {?} */
-            const validators = this.getValidators(x, group);
-            // console.log(validators);
-            group.controls[x.key].setValidators(validators);
-        }));
-        return group;
+        let component;
+        if (options) {
+            component = this.options.controls[options.schema].component || ControlComponent;
+        }
+        else {
+            component = ControlComponent;
+        }
+        return component;
     }
 }
 ControlService.decorators = [
@@ -857,17 +954,7 @@ class ControlsComponent extends DisposableComponent {
 ControlsComponent.decorators = [
     { type: Component, args: [{
                 selector: 'controls-component',
-                template: `<ng-container *ngFor="let option of options">
-	<control-outlet class="fieldset__field" [option]="option" [form]="form">
-	<!--
-	<ng-template #errorRef let-context>
-		<div class="control__error control__error--{{context.option.schema}}">
-			AAA
-		</div>
-	</ng-template>
-	-->
-	</control-outlet>
-</ng-container>`
+                template: "<ng-container *ngFor=\"let option of options\">\r\n\t<control-outlet class=\"fieldset__field fieldset__field--{{option.schema}}\" [option]=\"option\" [form]=\"form\">\r\n\t\t<!--\r\n\t\t<ng-template #errorRef let-context>\r\n\t\t\t<div class=\"control__error control__error--{{context.option.schema}}\">\r\n\t\t\t\tAAA\r\n\t\t\t</div>\r\n\t\t</ng-template>\r\n\t\t-->\r\n\t</control-outlet>\r\n</ng-container>\r\n"
             }] }
 ];
 ControlsComponent.propDecorators = {
@@ -883,8 +970,8 @@ ControlsComponent.propDecorators = {
 const DEBOUNCE_TIME = 250;
 class ExistsValidator {
     constructor() {
-        this.values = new BehaviorSubject(null);
-        this.debounced$ = this.values.pipe(debounceTime(DEBOUNCE_TIME), switchMap((/**
+        this.value$ = new BehaviorSubject(null);
+        this.debounced$ = this.value$.pipe(debounceTime(DEBOUNCE_TIME), switchMap((/**
          * @param {?} value
          * @return {?}
          */
@@ -905,8 +992,9 @@ class ExistsValidator {
      * @return {?}
      */
     set value(value) {
-        if (value && value.trim() !== '') {
-            this.values.next(value);
+        // console.log('value', value);
+        if (value && String(value).trim() !== '') {
+            this.value$.next(value);
         }
     }
     /**
@@ -915,24 +1003,40 @@ class ExistsValidator {
      */
     exists$(value) {
         if (typeof this.exists === 'function') {
-            // console.log('ExistsValidator.exists$', value);
-            return this.exists(value).pipe(switchMap((/**
-             * @param {?} exists
-             * @return {?}
-             */
-            exists => {
-                if (exists) {
-                    return of({
-                        exists: true,
-                    });
-                }
-                else {
-                    return of(null);
-                }
-            })));
+            /** @type {?} */
+            const exists = this.exists(value);
+            if (isObservable(exists)) {
+                // console.log('ExistsValidator.exists$', value);
+                return exists.pipe(switchMap((/**
+                 * @param {?} exists
+                 * @return {?}
+                 */
+                exists => {
+                    // console.log('ExistsValidator.exists$', exists);
+                    return of(this.getValidationError(Boolean(exists)));
+                })));
+            }
+            else {
+                return of(this.getValidationError(Boolean(exists)));
+            }
         }
         else {
-            return of(null);
+            return of(this.getValidationError(value ? true : false));
+        }
+    }
+    /**
+     * @param {?} exists
+     * @return {?}
+     */
+    getValidationError(exists) {
+        // console.log('ExistsValidator.getValidationError', exists);
+        if (exists) {
+            return {
+                exists: true,
+            };
+        }
+        else {
+            return null;
         }
     }
     /**
@@ -941,6 +1045,7 @@ class ExistsValidator {
      */
     validate(control) {
         this.value = control.value;
+        // console.log('ExistsValidator.validate', control.value, control);
         return this.debounced$;
     }
 }
@@ -1071,32 +1176,38 @@ class FormService {
         this.controlService = controlService;
     }
     /**
-     * @param {?} options
-     * @return {?}
-     */
-    getFormGroup(options) {
-        return this.controlService.toFormGroup(options);
-    }
-    /**
      * @param {?} data
      * @return {?}
      */
     getOptions(data) {
         /** @type {?} */
         const options = data.map((/**
-         * @param {?} o
+         * @param {?} option
          * @return {?}
          */
-        o => {
+        (option) => {
             /** @type {?} */
-            const control = this.controlService.options.controls[o.schema];
+            const control = this.controlService.options.controls[option.schema];
             if (control) {
                 /** @type {?} */
                 const optionModel = control.model;
-                return new optionModel(o);
+                /** @type {?} */
+                const optionModelInstance = new optionModel(option);
+                if (optionModelInstance instanceof ControlGroup) {
+                    /** @type {?} */
+                    const options = this.getOptions(optionModelInstance.options);
+                    options.sort((/**
+                     * @param {?} a
+                     * @param {?} b
+                     * @return {?}
+                     */
+                    (a, b) => a.order - b.order));
+                    optionModelInstance.options = options;
+                }
+                return optionModelInstance;
             }
             else {
-                console.error(`missing option for key ${o.schema}`);
+                console.error(`missing option for key ${option.schema}`);
                 return null;
             }
         })).filter((/**
@@ -1111,6 +1222,13 @@ class FormService {
          */
         (a, b) => a.order - b.order));
         return options;
+    }
+    /**
+     * @param {?} options
+     * @return {?}
+     */
+    getFormGroup(options) {
+        return this.controlService.toFormGroup(options);
     }
     /**
      * @param {?} options
@@ -1230,6 +1348,6 @@ ControlModule.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { ControlConfig, CONTROL_CONFIG, ControlModuleComponent, ControlModule, ControlCheckbox, ControlCheckboxComponent, ControlOption, ControlOutletComponent, ControlAccessor, ControlComponent, ControlService, ControlsComponent, ControlEmail, ControlEmailComponent, ControlMarkdown, ControlMarkdownComponent, ControlNumber, ControlNumberComponent, ControlPassword, ControlPasswordComponent, ControlRadio, ControlRadioComponent, ControlSelect, ControlSelectComponent, ControlText, ControlTextComponent, ControlTextarea, ControlTextareaComponent, ExistsValidator, MatchValidator, matchValidator, UppercaseDirective, FormService, entryComponents as ɵa, CONTROL_VALUE_ACCESSOR as ɵb };
+export { ControlConfig, CONTROL_CONFIG, ControlModuleComponent, ControlModule, ControlCheckbox, ControlCheckboxComponent, ControlOption, ControlOutletComponent, ControlAccessor, ControlComponent, ControlService, ControlsComponent, ControlEmail, ControlEmailComponent, ControlGroup, ControlGroupComponent, ControlInfo, ControlInfoComponent, ControlMarkdown, ControlMarkdownComponent, ControlNumber, ControlNumberComponent, ControlPassword, ControlPasswordComponent, ControlRadio, ControlRadioComponent, ControlSelect, ControlSelectComponent, ControlText, ControlTextComponent, ControlTextarea, ControlTextareaComponent, ExistsValidator, MatchValidator, matchValidator, UppercaseDirective, FormService, entryComponents as ɵa, CONTROL_VALUE_ACCESSOR as ɵb };
 
 //# sourceMappingURL=designr-control.js.map

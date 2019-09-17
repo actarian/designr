@@ -87,7 +87,7 @@ export class AuthSignUpComponent extends DisposableComponent implements OnInit {
 		this.form = this.formService.getFormGroup(this.options);
 		const data: any = this.modalData;
 		if (data) {
-			console.log('AuthSignUpComponent.data', data);
+			// console.log('AuthSignUpComponent.data', data);
 			if (data.facebook) {
 				this.facebook = data.facebook as FacebookUser;
 				this.form.setValue({

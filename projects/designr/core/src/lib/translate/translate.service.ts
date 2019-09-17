@@ -1,6 +1,7 @@
+import { isPlatformBrowser } from '@angular/common';
 import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { filter, map, switchMap } from 'rxjs/operators';
 import { ApiService } from '../api/api.service';
 import { Translate } from './translate';
 
@@ -13,89 +14,106 @@ export class TranslateService<T extends Translate> extends ApiService<T> {
 		return '/api/translate';
 	}
 
-	// private cache: { [key: string]: string; } = {};
 	public events: EventEmitter<any> = new EventEmitter();
 	public missingHandler?: Function;
-	public cache: {} = {};
 
-	private _language: any = new BehaviorSubject({});
-	public readonly language: Observable<any> = this._language.asObservable();
-	private _languages: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
-	public readonly languages: Observable<any[]> = this._languages.asObservable();
+	private lang_: string;
+	private language_: any = new BehaviorSubject<any>(undefined);
+	private languages_: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
+	private cache_: { [key: string]: string; } = {};
 
-	private _lang: string;
 	public get lang(): string {
-		return this._lang;
+		return this.lang_;
 	}
+
 	public set lang(lang: string) {
-		if (lang !== this._lang) {
-			this._lang = lang;
-			const language = this._languages.getValue().find(x => x.lang === lang);
-			this._language.next(language);
+		if (lang !== this.lang_) {
+			this.lang_ = lang;
+			const languages = this.languages_.getValue();
+			if (languages.length) {
+				const language = languages.find(x => x.lang === lang);
+				this.language_.next(language);
+			}
 		}
+	}
+
+	public get language() {
+		return this.language_.getValue();
+	}
+
+	public get languages() {
+		return this.languages_.getValue();
 	}
 
 	constructor(
 		protected injector: Injector
 	) {
 		super(injector);
-		this._languages.next(this.config.languages);
-		this._lang = this.config.defaultLanguage;
-		this.getTranslation(this.lang).subscribe(x => {
-			// console.log(x);
-		});
+		this.languages_.next(this.config.languages);
+	}
+
+	public observe$(): Observable<{}> {
+		return this.language_.pipe(
+			filter(x => x !== undefined),
+			switchMap((language: any) => this.getTranslation(language.lang)),
+		);
 	}
 
 	public getTranslation(lang: string): Observable<{}> {
 		if (!lang || !lang.trim()) {
 			return of(null);
 		}
-		this.lang = lang;
-		if (this.cache[lang]) {
-			return of(this.cache[lang]);
+		this.lang_ = lang;
+		if (this.cache_[lang]) {
+			return of(this.cache_[lang]);
 		} else {
-			return this.get({ lang }).pipe(
-				take(1),
+			return this.get(`?lang=${lang}`, { lang }).pipe(
+				// take(1),
 				map((x: Translate[]) => {
-					if (x[0]) {
+					if (x.length && x[0]) {
 						const labels = x[0].labels;
-						this.cache[lang] = labels;
+						this.cache_[lang] = labels;
 						this.events.emit(labels);
 						return labels;
 					} else {
 						return of(null);
 					}
 				}),
-				/*
-				tap(x => {
-					// this.logger.log(`found label matching "${lang}"`);
-				})
-				*/
+				// tap(x => this.logger.log(`found label matching "${lang}"`))
 			);
 		}
 	}
 
 	public getTranslate(key: string, defaultValue?: string, params?: any): string | any {
-		let value: string | null = null;
-		let labels: any = this.cache[this.lang];
-		if (labels) {
-			const keys: string[] = key.split('.');
-			let k = keys.shift();
-			while (keys.length > 0 && labels[k]) {
-				labels = labels[k];
-				k = keys.shift();
+		// console.log('TranslateService.getTranslate', key, this.cache_, this.lang_);
+		if (key) {
+			let value: string | null = null;
+			let labels: any = this.cache_[this.lang_];
+			// console.log('labels', this.lang_, this.cache_, labels);
+			if (labels) {
+				const keys: string[] = key.split('.');
+				let k = keys.shift();
+				while (keys.length > 0 && labels[k]) {
+					labels = labels[k];
+					k = keys.shift();
+				}
+				value = labels[k]; // || `{${k}}`;
+				if (typeof value !== 'string') {
+					value = null;
+				}
 			}
-			value = labels[k] || `{${k}}`;
+			return this.parseTranslate(value, key, defaultValue, params);
 		}
-		return this.parseTranslate(value, key, defaultValue, params);
+	}
+
+	public transform(key: string, defaultValue?: string, params?: any): string | undefined {
+		const value = this.getTranslate(key, defaultValue, params);
+		return value;
 	}
 
 	private parseTranslate(value: string | null, key: string, defaultValue?: string, params?: any): string | any {
 		if (value == null) {
-			value = defaultValue;
-		}
-		if (value == null) {
-			return this.missingTranslate(key);
+			return defaultValue || this.missingTranslate(key);
 		} else if (params) {
 			return this.parseParams(value, params);
 		}
@@ -103,13 +121,11 @@ export class TranslateService<T extends Translate> extends ApiService<T> {
 	}
 
 	private missingTranslate(key: string): string {
-		console.log('missingTranslate', key, this.missingHandler);
 		if (this.missingHandler) {
 			return typeof this.missingHandler === 'function' ?
 				this.missingHandler(key) :
 				this.missingHandler;
 		}
-		console.log('missingTranslate', key);
 		return key;
 	}
 
@@ -134,11 +150,35 @@ export class TranslateService<T extends Translate> extends ApiService<T> {
 	}
 
 	public getBrowserLang(): string {
-		return 'it';
+		if (isPlatformBrowser(this.platformId)) {
+			const lang = this.getFirstBrowserLang() || this.config.defaultLanguage; // navigator.languages ? navigator.languages[0] : (navigator.language || navigator['userLanguage'] || this.config.defaultLanguage);
+			// console.log('getBrowserLang', lang, navigator.languages);
+			return lang;
+		} else {
+			return this.config.defaultLanguage;
+		}
 	}
-}
 
-// !!!
-export function CustomTranslateLoader(injector: Injector) {
-	return new TranslateService(injector);
+	public getFirstBrowserLang() {
+		const lang = this.getFirstBrowserLocale();
+		if (lang) {
+			return lang.split('-')[0];
+		}
+	}
+
+	public getFirstBrowserLocale() {
+		const navigator = window.navigator;
+		const properties = ['language', 'browserLanguage', 'systemLanguage', 'userLanguage'];
+		let lang;
+		if (Array.isArray(navigator.languages)) {
+			lang = navigator.languages[0];
+		}
+		let i = 0;
+		while (!lang && i < properties.length) {
+			lang = navigator[properties[i]];
+			i++;
+		}
+		return lang;
+	}
+
 }

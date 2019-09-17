@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SectionModuleComponent implements OnInit {
 
-	version: string = '0.0.8';
+	version: string = '0.0.9';
 
 	constructor() { }
 

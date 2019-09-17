@@ -11,5 +11,5 @@ export declare class ControlSelectComponent extends ControlComponent implements 
     ngOnInit(): void;
     options$(): Observable<ControlSelectOption[]>;
     getValue_(item: ControlSelectOption): any;
-    compareWith_(a: ControlSelectOption | number, b: ControlSelectOption | number): boolean;
+    compareWith_(a: ControlSelectOption | string | number, b: ControlSelectOption | string | number): boolean;
 }

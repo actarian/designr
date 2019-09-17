@@ -1,4 +1,5 @@
-let UNIQUE_ID: number = 0;
+
+// let UNIQUE_ID: number = 0;
 
 export interface IControlOption<T> {
 	schema: string;
@@ -7,11 +8,18 @@ export interface IControlOption<T> {
 	key?: string;
 	label?: string;
 	placeholder?: string;
+	title?: string;
+	abstract?: string;
 	description?: string;
+	hidden?: boolean;
 	disabled?: boolean;
 	required?: boolean;
+	exists?: Function;
 	match?: string;
 	reverse?: boolean;
+	minlength?: number;
+	maxlength?: number;
+	pattern?: string | RegExp;
 	[x: string]: any;
 }
 
@@ -22,9 +30,13 @@ export class ControlOption<T> {
 	key?: string;
 	label?: string;
 	placeholder?: string;
+	title?: string;
+	abstract?: string;
 	description?: string;
+	hidden?: boolean;
 	disabled?: boolean;
 	required?: boolean;
+	exists?: Function;
 	match?: string;
 	reverse?: boolean;
 	minlength?: number;
@@ -35,14 +47,6 @@ export class ControlOption<T> {
 		if (options) {
 			Object.assign(this, options);
 		}
-		/*
-		const name = `${options.key || 'Control'} ${++UNIQUE_ID}`;
-		this.label = this.label || name;
-		this.placeholder = this.placeholder || name;
-		this.order = this.order === undefined ? 1 : this.order;
-		this.schema = this.schema || 'text';
-		this.type = this.type || this.schema;
-		*/
 	}
 
 }

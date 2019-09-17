@@ -1,0 +1,14 @@
+<ng-container [formGroup]="form">
+	<ng-template #inputDef let-context>
+		<div class="control__title" *ngIf="context.option.title">{{ context.option.title | label }}</div>
+		<div class="control__abstract" *ngIf="context.option.abstract">{{ context.option.abstract | label }}</div>
+		<div class="fieldset" *ngIf="context.option.options.length">
+			<ng-container *ngFor="let option of context.option.options">
+				<control-outlet class="fieldset__field fieldset__field--{{option.schema}}" [option]="option" [form]="context.control"></control-outlet>
+			</ng-container>
+		</div>
+	</ng-template>
+	<ng-template #errorDef let-context></ng-template>
+	<ng-container *ngTemplateOutlet="context.inputRef || inputDef; context: { $implicit: context }"></ng-container>
+	<ng-container *ngTemplateOutlet="context.errorRef || errorDef; context: { $implicit: context }"></ng-container>
+</ng-container>

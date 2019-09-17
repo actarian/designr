@@ -68,7 +68,7 @@ export class AuthSignInComponent extends DisposableComponent implements OnInit {
 	}
 
 	onSubmit(model): void {
-		console.log('onSubmit', model);
+		// console.log('onSubmit', model);
 		this.submitted = true;
 		this.error = null;
 		this.busy = true;

@@ -5,6 +5,10 @@ import { IControlOption } from '../control/control-option';
 import { ControlComponent } from '../control/control.component';
 import { ControlEmail } from '../control/email/control-email';
 import { ControlEmailComponent } from '../control/email/control-email.component';
+import { ControlGroup } from '../control/group/control-group';
+import { ControlGroupComponent } from '../control/group/control-group.component';
+import { ControlInfo } from '../control/info/control-info';
+import { ControlInfoComponent } from '../control/info/control-info.component';
 import { ControlMarkdown } from '../control/markdown/control-markdown';
 import { ControlMarkdownComponent } from '../control/markdown/control-markdown.component';
 import { ControlNumber } from '../control/number/control-number';
@@ -30,6 +34,8 @@ export interface Controls { [key: string]: ControlInterface; }
 export const entryComponents = [
 	ControlCheckboxComponent,
 	ControlEmailComponent,
+	ControlGroupComponent,
+	ControlInfoComponent,
 	ControlMarkdownComponent,
 	ControlNumberComponent,
 	ControlPasswordComponent,
@@ -47,6 +53,14 @@ export const controls: Controls = {
 	'email': {
 		component: ControlEmailComponent,
 		model: ControlEmail
+	},
+	'group': {
+		component: ControlGroupComponent,
+		model: ControlGroup
+	},
+	'info': {
+		component: ControlInfoComponent,
+		model: ControlInfo
 	},
 	'markdown': {
 		component: ControlMarkdownComponent,

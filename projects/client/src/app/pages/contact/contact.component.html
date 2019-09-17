@@ -2,15 +2,15 @@
 	<hero-component [section]="page"></hero-component>
 	<section class="section section--form">
 		<div class="container">
-			<div class="group group--form">
-				<form class="form" name="group" [formGroup]="group" (ngSubmit)="group.valid && onSubmit(group.value)" #form="ngForm" role="form" novalidate autocomplete="off">
+			<div class="group group--form" *ngIf="form">
+				<form class="form" name="form" [formGroup]="form" (ngSubmit)="onValidate() && onSubmit(form.value)" role="form" novalidate autocomplete="off">
 					<!-- -->
-					<controls-component class="fieldset" [options]="options" [form]="group"></controls-component>
+					<controls-component class="fieldset" [options]="options" [form]="form"></controls-component>
 					<!-- -->
 					<!--
 					<div class="fieldset">
 						<ng-container *ngFor="let option of options">
-							<control-outlet class="fieldset__field" [option]="option" [form]="group">
+							<control-outlet class="fieldset__field fieldset__field--{{option.schema}}" [option]="option" [form]="form">
 								<ng-template #labelRef let-context>
 									<label class="control__label control__label--{{context.option.schema}}" [attr.for]="context.option.key">
 									{{ context.option.label | label }} - {{ context.option.type | label }}
@@ -22,7 +22,7 @@
 					-->
 					<div class="group group--inline">
 						<button type="text" class="btn btn--secondary" [disabled]="submitted" (click)="onReset()"><span>Cancel</span></button>
-						<button type="submit" class="btn btn--primary" [disabled]="submitted || !group.valid" [ngClass]="{ 'btn--busy': busy }"><span>Save</span></button>
+						<button type="submit" class="btn btn--primary" [disabled]="busy || submitted" [ngClass]="{ 'btn--busy': busy }"><span>Save</span></button>
 					</div>
 				</form>
 			</div>

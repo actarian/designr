@@ -6,7 +6,7 @@ import { ControlComponent } from './control.component';
 export declare class ControlService {
     options: ControlConfig;
     constructor(options: ControlConfig);
-    resolve(options: IControlOption<any>): Type<ControlComponent>;
-    getValidators(options: IControlOption<any>, group: FormGroup): ValidatorFn[];
     toFormGroup(options: IControlOption<any>[]): FormGroup;
+    getValidators(options: IControlOption<any>, group: FormGroup): ValidatorFn[];
+    resolve(options: IControlOption<any>): Type<ControlComponent>;
 }

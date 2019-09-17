@@ -2,6 +2,7 @@ import { InjectionToken, Type } from '@angular/core';
 import { IControlOption } from '../control/control-option';
 import { ControlComponent } from '../control/control.component';
 import { ControlEmailComponent } from '../control/email/control-email.component';
+import { ControlInfoComponent } from '../control/info/control-info.component';
 import { ControlRadioComponent } from '../control/radio/control-radio.component';
 export interface ControlInterface {
     component: Type<ControlComponent>;
@@ -10,7 +11,7 @@ export interface ControlInterface {
 export interface Controls {
     [key: string]: ControlInterface;
 }
-export declare const entryComponents: (typeof ControlEmailComponent | typeof ControlRadioComponent)[];
+export declare const entryComponents: (typeof ControlEmailComponent | typeof ControlInfoComponent | typeof ControlRadioComponent)[];
 export declare const controls: Controls;
 export declare class ControlConfig {
     controls?: Controls;

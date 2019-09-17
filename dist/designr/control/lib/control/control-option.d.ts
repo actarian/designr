@@ -5,11 +5,18 @@ export interface IControlOption<T> {
     key?: string;
     label?: string;
     placeholder?: string;
+    title?: string;
+    abstract?: string;
     description?: string;
+    hidden?: boolean;
     disabled?: boolean;
     required?: boolean;
+    exists?: Function;
     match?: string;
     reverse?: boolean;
+    minlength?: number;
+    maxlength?: number;
+    pattern?: string | RegExp;
     [x: string]: any;
 }
 export declare class ControlOption<T> {
@@ -19,9 +26,13 @@ export declare class ControlOption<T> {
     key?: string;
     label?: string;
     placeholder?: string;
+    title?: string;
+    abstract?: string;
     description?: string;
+    hidden?: boolean;
     disabled?: boolean;
     required?: boolean;
+    exists?: Function;
     match?: string;
     reverse?: boolean;
     minlength?: number;

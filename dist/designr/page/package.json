@@ -1,6 +1,15 @@
 {
   "name": "@designr/page",
-  "version": "0.0.8",
+  "version": "0.0.9",
+  "keywords": [
+    "designr",
+    "page",
+    "angular"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/actarian/designr.git"
+  },
   "peerDependencies": {
     "@angular/common": "~7.2.4",
     "@angular/core": "~7.2.4"

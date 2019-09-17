@@ -920,7 +920,7 @@
      */
     var CoreModuleComponent = /** @class */ (function () {
         function CoreModuleComponent() {
-            this.version = '0.0.8';
+            this.version = '0.0.9';
         }
         /**
          * @return {?}
@@ -1022,13 +1022,20 @@
                  * @param {?} moduleFactory
                  * @return {?}
                  */function (moduleFactory) {
-                    _this.moduleRef = moduleFactory.create(_this.injector);
                     /** @type {?} */
-                    var rootComponentType = _this.moduleRef.injector.get('LAZY_ROOT_COMPONENT');
-                    console.log(rootComponentType);
+                    var moduleRef = moduleFactory.create(_this.injector);
+                    _this.moduleRef_ = moduleRef;
                     /** @type {?} */
-                    var factory = _this.moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
-                    _this.container.createComponent(factory);
+                    var rootComponentType = moduleRef.injector.get('LAZY_ROOT_COMPONENT');
+                    // console.log(rootComponentType);
+                    /** @type {?} */
+                    var factory = moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
+                    /** @type {?} */
+                    var componentRef = _this.container.createComponent(factory);
+                    /** @type {?} */
+                    var instance = componentRef.instance;
+                    // instance.data = this.data; // !!!
+                    _this.componentRef_ = componentRef;
                 }));
             };
         /**
@@ -1038,8 +1045,11 @@
          * @return {?}
          */
             function () {
-                if (this.moduleRef) {
-                    this.moduleRef.destroy();
+                if (this.componentRef_) {
+                    this.componentRef_.destroy();
+                }
+                if (this.moduleRef_) {
+                    this.moduleRef_.destroy();
                 }
             };
         BundleDirective.decorators = [
@@ -1057,7 +1067,8 @@
             ];
         };
         BundleDirective.propDecorators = {
-            bundle: [{ type: i0.Input }]
+            bundle: [{ type: i0.Input }],
+            data: [{ type: i0.Input }]
         };
         return BundleDirective;
     }());
@@ -1824,21 +1835,11 @@
         function TranslateService(injector) {
             var _this = _super.call(this, injector) || this;
             _this.injector = injector;
-            // private cache: { [key: string]: string; } = {};
             _this.events = new i0.EventEmitter();
-            _this.cache = {};
-            _this._language = new rxjs.BehaviorSubject({});
-            _this.language = _this._language.asObservable();
-            _this._languages = new rxjs.BehaviorSubject([]);
-            _this.languages = _this._languages.asObservable();
-            _this._languages.next(_this.config.languages);
-            _this._lang = _this.config.defaultLanguage;
-            _this.getTranslation(_this.lang).subscribe(( /**
-             * @param {?} x
-             * @return {?}
-             */function (x) {
-                // console.log(x);
-            }));
+            _this.language_ = new rxjs.BehaviorSubject(undefined);
+            _this.languages_ = new rxjs.BehaviorSubject([]);
+            _this.cache_ = {};
+            _this.languages_.next(_this.config.languages);
             return _this;
         }
         Object.defineProperty(TranslateService.prototype, "collection", {
@@ -1854,25 +1855,63 @@
             get: /**
              * @return {?}
              */ function () {
-                return this._lang;
+                return this.lang_;
             },
             set: /**
              * @param {?} lang
              * @return {?}
              */ function (lang) {
-                if (lang !== this._lang) {
-                    this._lang = lang;
+                if (lang !== this.lang_) {
+                    this.lang_ = lang;
                     /** @type {?} */
-                    var language = this._languages.getValue().find(( /**
-                     * @param {?} x
-                     * @return {?}
-                     */function (x) { return x.lang === lang; }));
-                    this._language.next(language);
+                    var languages = this.languages_.getValue();
+                    if (languages.length) {
+                        /** @type {?} */
+                        var language = languages.find(( /**
+                         * @param {?} x
+                         * @return {?}
+                         */function (x) { return x.lang === lang; }));
+                        this.language_.next(language);
+                    }
                 }
             },
             enumerable: true,
             configurable: true
         });
+        Object.defineProperty(TranslateService.prototype, "language", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this.language_.getValue();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(TranslateService.prototype, "languages", {
+            get: /**
+             * @return {?}
+             */ function () {
+                return this.languages_.getValue();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        /**
+         * @return {?}
+         */
+        TranslateService.prototype.observe$ = /**
+         * @return {?}
+         */
+            function () {
+                var _this = this;
+                return this.language_.pipe(operators.filter(( /**
+                 * @param {?} x
+                 * @return {?}
+                 */function (x) { return x !== undefined; })), operators.switchMap(( /**
+                 * @param {?} language
+                 * @return {?}
+                 */function (language) { return _this.getTranslation(language.lang); })));
+            };
         /**
          * @param {?} lang
          * @return {?}
@@ -1886,19 +1925,21 @@
                 if (!lang || !lang.trim()) {
                     return rxjs.of(null);
                 }
-                this.lang = lang;
-                if (this.cache[lang]) {
-                    return rxjs.of(this.cache[lang]);
+                this.lang_ = lang;
+                if (this.cache_[lang]) {
+                    return rxjs.of(this.cache_[lang]);
                 }
                 else {
-                    return this.get({ lang: lang }).pipe(operators.take(1), operators.map(( /**
+                    return this.get("?lang=" + lang, { lang: lang }).pipe(
+                    // take(1),
+                    operators.map(( /**
                      * @param {?} x
                      * @return {?}
                      */function (x) {
-                        if (x[0]) {
+                        if (x.length && x[0]) {
                             /** @type {?} */
                             var labels = x[0].labels;
-                            _this.cache[lang] = labels;
+                            _this.cache_[lang] = labels;
                             _this.events.emit(labels);
                             return labels;
                         }
@@ -1921,22 +1962,46 @@
          * @return {?}
          */
             function (key, defaultValue, params) {
-                /** @type {?} */
-                var value = null;
-                /** @type {?} */
-                var labels = this.cache[this.lang];
-                if (labels) {
+                // console.log('TranslateService.getTranslate', key, this.cache_, this.lang_);
+                if (key) {
                     /** @type {?} */
-                    var keys = key.split('.');
+                    var value = null;
                     /** @type {?} */
-                    var k = keys.shift();
-                    while (keys.length > 0 && labels[k]) {
-                        labels = labels[k];
-                        k = keys.shift();
+                    var labels = this.cache_[this.lang_];
+                    // console.log('labels', this.lang_, this.cache_, labels);
+                    if (labels) {
+                        /** @type {?} */
+                        var keys = key.split('.');
+                        /** @type {?} */
+                        var k = keys.shift();
+                        while (keys.length > 0 && labels[k]) {
+                            labels = labels[k];
+                            k = keys.shift();
+                        }
+                        value = labels[k]; // || `{${k}}`;
+                        if (typeof value !== 'string') {
+                            value = null;
+                        }
                     }
-                    value = labels[k] || "{" + k + "}";
+                    return this.parseTranslate(value, key, defaultValue, params);
                 }
-                return this.parseTranslate(value, key, defaultValue, params);
+            };
+        /**
+         * @param {?} key
+         * @param {?=} defaultValue
+         * @param {?=} params
+         * @return {?}
+         */
+        TranslateService.prototype.transform = /**
+         * @param {?} key
+         * @param {?=} defaultValue
+         * @param {?=} params
+         * @return {?}
+         */
+            function (key, defaultValue, params) {
+                /** @type {?} */
+                var value = this.getTranslate(key, defaultValue, params);
+                return value;
             };
         /**
          * @private
@@ -1956,10 +2021,7 @@
          */
             function (value, key, defaultValue, params) {
                 if (value == null) {
-                    value = defaultValue;
-                }
-                if (value == null) {
-                    return this.missingTranslate(key);
+                    return defaultValue || this.missingTranslate(key);
                 }
                 else if (params) {
                     return this.parseParams(value, params);
@@ -1977,13 +2039,11 @@
          * @return {?}
          */
             function (key) {
-                console.log('missingTranslate', key, this.missingHandler);
                 if (this.missingHandler) {
                     return typeof this.missingHandler === 'function' ?
                         this.missingHandler(key) :
                         this.missingHandler;
                 }
-                console.log('missingTranslate', key);
                 return key;
             };
         /**
@@ -2048,7 +2108,52 @@
          * @return {?}
          */
             function () {
-                return 'it';
+                if (i1.isPlatformBrowser(this.platformId)) {
+                    /** @type {?} */
+                    var lang = this.getFirstBrowserLang() || this.config.defaultLanguage;
+                    // console.log('getBrowserLang', lang, navigator.languages);
+                    return lang;
+                }
+                else {
+                    return this.config.defaultLanguage;
+                }
+            };
+        /**
+         * @return {?}
+         */
+        TranslateService.prototype.getFirstBrowserLang = /**
+         * @return {?}
+         */
+            function () {
+                /** @type {?} */
+                var lang = this.getFirstBrowserLocale();
+                if (lang) {
+                    return lang.split('-')[0];
+                }
+            };
+        /**
+         * @return {?}
+         */
+        TranslateService.prototype.getFirstBrowserLocale = /**
+         * @return {?}
+         */
+            function () {
+                /** @type {?} */
+                var navigator = window.navigator;
+                /** @type {?} */
+                var properties = ['language', 'browserLanguage', 'systemLanguage', 'userLanguage'];
+                /** @type {?} */
+                var lang;
+                if (Array.isArray(navigator.languages)) {
+                    lang = navigator.languages[0];
+                }
+                /** @type {?} */
+                var i = 0;
+                while (!lang && i < properties.length) {
+                    lang = navigator[properties[i]];
+                    i++;
+                }
+                return lang;
             };
         TranslateService.decorators = [
             { type: i0.Injectable, args: [{
@@ -3868,14 +3973,16 @@
         /**
          * @param {?} images
          * @param {?=} type
+         * @param {?=} queryString
          * @return {?}
          */
         ImagePipe.prototype.transform = /**
          * @param {?} images
          * @param {?=} type
+         * @param {?=} queryString
          * @return {?}
          */
-            function (images, type) {
+            function (images, type, queryString) {
                 type = type || 'Default';
                 /** @type {?} */
                 var imageType = ImageType[type] || ImageType.Default;
@@ -3883,6 +3990,43 @@
                  * @param {?} i
                  * @return {?}
                  */function (i) { return i.type === imageType; })) || null : null; // images[0]
+            };
+        // 21 marzo 2019
+        // 21 marzo 2019
+        /**
+         * @param {?} images
+         * @param {?=} type
+         * @param {?=} queryString
+         * @return {?}
+         */
+        ImagePipe.prototype.transform__ =
+            // 21 marzo 2019
+            /**
+             * @param {?} images
+             * @param {?=} type
+             * @param {?=} queryString
+             * @return {?}
+             */
+            function (images, type, queryString) {
+                type = type || 'Default';
+                queryString = queryString ? "?" + queryString : '';
+                /** @type {?} */
+                var imageType = ImageType[type] || ImageType.Default;
+                /** @type {?} */
+                var image = null;
+                if (images && images.length) {
+                    image = images.find(( /**
+                     * @param {?} i
+                     * @return {?}
+                     */function (i) { return i.type === imageType; })); // || images[0];
+                    if (!image && imageType !== ImageType.Default) {
+                        image = images.find(( /**
+                         * @param {?} i
+                         * @return {?}
+                         */function (i) { return i.type === ImageType.Default; }));
+                    }
+                }
+                return image ? (image.url + queryString).replace(/ /g, '%20') : null;
             };
         ImagePipe.decorators = [
             { type: i0.Pipe, args: [{

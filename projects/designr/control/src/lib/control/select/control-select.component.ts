@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { isObservable, Observable, of } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { ControlComponent } from '../control.component';
 import { ControlSelect, ControlSelectOption } from './control-select';
 
@@ -22,7 +22,15 @@ export class ControlSelectComponent extends ControlComponent implements OnInit {
 
 	ngOnInit() {
 		this.options$().pipe(
-			takeUntil(this.unsubscribe)
+			takeUntil(this.unsubscribe),
+			tap(options => {
+				if (this.option.asObject && this.control.value === null) {
+					const firstNullOptions = options.find(x => x.id === null);
+					if (firstNullOptions !== undefined) {
+						this.control.setValue(firstNullOptions);
+					}
+				}
+			}),
 		).subscribe(options => this.options = options);
 	}
 
@@ -45,13 +53,11 @@ export class ControlSelectComponent extends ControlComponent implements OnInit {
 		return this.option.asObject ? item : item.id;
 	}
 
-	compareWith_(a: ControlSelectOption | number, b: ControlSelectOption | number) {
+	compareWith_(a: ControlSelectOption | string | number, b: ControlSelectOption | string | number) {
 		if (this.option.asObject) {
 			a = a as ControlSelectOption;
 			b = b as ControlSelectOption;
-			// b = (b as ControlSelectOption) || { id: null, name: 'Any' };
-			// console.log(a, b);
-			return b ? a.id === b.id : a.id === null;
+			return (b && b.id !== undefined) ? a.id === b.id : a.id === b;
 		} else {
 			return b ? a === b : a === null;
 		}

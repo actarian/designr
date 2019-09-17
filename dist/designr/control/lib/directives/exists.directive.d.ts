@@ -1,10 +1,11 @@
 import { AbstractControl, AsyncValidator, ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs';
 export declare class ExistsValidator implements AsyncValidator {
-    private values;
-    value: string;
-    private debounced$;
     exists: Function;
+    private value$;
+    private debounced$;
+    value: string;
     exists$(value: string): Observable<ValidationErrors | null>;
+    getValidationError(exists: boolean): ValidationErrors | null;
     validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null>;
 }

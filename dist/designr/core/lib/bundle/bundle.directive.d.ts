@@ -9,7 +9,9 @@ export declare class BundleDirective implements OnInit, OnDestroy {
     private loader;
     private container;
     bundle: keyof Bundles;
-    private moduleRef;
+    data?: any;
+    private moduleRef_;
+    private componentRef_;
     constructor(bundles: any, injector: Injector, loader: NgModuleFactoryLoader, container: ViewContainerRef);
     ngOnInit(): void;
     ngOnDestroy(): void;

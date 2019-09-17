@@ -117,6 +117,17 @@ textarea {
 	color: #ff6d22;
 }
 
+.control__title {
+	font-size: 21px;
+	font-weight: 600;
+	margin-bottom: 5px;
+}
+
+.control__abstract {
+	font-size: 16px;
+	line-height: 1.4;
+}
+
 .control__info {
 	font-size: 15px;
 }
@@ -150,6 +161,16 @@ textarea {
 			width: 100%;
 			flex: 1 0 100%;
 		}
+	}
+
+	.fieldset__field--group,
+	.fieldset__field--info {
+		width: 100%;
+		flex: 0 0 100%;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid #ccc;
 	}
 }
 

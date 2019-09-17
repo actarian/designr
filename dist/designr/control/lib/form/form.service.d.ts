@@ -4,7 +4,7 @@ import { ControlService } from '../control/control.service';
 export declare class FormService {
     private controlService;
     constructor(controlService: ControlService);
-    getFormGroup(options: ControlOption<any>[]): FormGroup;
     getOptions(data: IControlOption<any>[]): ControlOption<any>[];
+    getFormGroup(options: ControlOption<any>[]): FormGroup;
     getFormGroupFromOptions(options: IControlOption<any>[]): FormGroup;
 }

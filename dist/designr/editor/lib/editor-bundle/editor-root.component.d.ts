@@ -13,7 +13,7 @@ export declare class EditorRootComponent extends DisposableComponent implements 
     private _pageCopy;
     private _page;
     options: ControlOption<any>[];
-    group: FormGroup;
+    form: FormGroup;
     busy: boolean;
     submitted: boolean;
     constructor(platformId: string, configService: ConfigService, markdownService: MarkdownService, formService: FormService, pageResolverService: PageResolverService);

@@ -19,7 +19,7 @@ export class EditorRootComponent extends DisposableComponent implements OnInit {
 	private _page: Page;
 
 	options: ControlOption<any>[];
-	group: FormGroup;
+	form: FormGroup;
 
 	busy: boolean = false;
 	submitted: boolean = false;
@@ -43,13 +43,13 @@ export class EditorRootComponent extends DisposableComponent implements OnInit {
 		this._page = page;
 		if (this._page) {
 			this.options = this.formService.getOptions(this.getControlsByPage(page));
-			this.group = this.formService.getFormGroup(this.options);
-			this.group.valueChanges.subscribe(x => {
+			this.form = this.formService.getFormGroup(this.options);
+			this.form.valueChanges.subscribe(x => {
 				this.onAssign(x); // Object.assign(this._page, x);
 			});
 		} else {
 			this.options = [];
-			this.group = null;
+			this.form = null;
 		}
 	}
 
@@ -89,8 +89,8 @@ export class EditorRootComponent extends DisposableComponent implements OnInit {
 
 	onReset() {
 		// console.log('EditorRootComponent.onReset');
-		Object.keys(this.group.controls).forEach(key => {
-			this.group.get(key).setValue(this._pageCopy[key]);
+		Object.keys(this.form.controls).forEach(key => {
+			this.form.get(key).setValue(this._pageCopy[key]);
 		});
 		/*
 		const keys = this.controls.map(x => x.key);
@@ -108,7 +108,7 @@ export class EditorRootComponent extends DisposableComponent implements OnInit {
 	}
 
 	onAssign(model) {
-		Object.keys(this.group.controls).forEach(key => {
+		Object.keys(this.form.controls).forEach(key => {
 			switch (key) {
 				case 'description':
 					this._page[key] = this.markdownService.compile(model[key]);

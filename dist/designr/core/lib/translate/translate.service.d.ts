@@ -7,16 +7,18 @@ export declare class TranslateService<T extends Translate> extends ApiService<T>
     readonly collection: string;
     events: EventEmitter<any>;
     missingHandler?: Function;
-    cache: {};
-    private _language;
-    readonly language: Observable<any>;
-    private _languages;
-    readonly languages: Observable<any[]>;
-    private _lang;
+    private lang_;
+    private language_;
+    private languages_;
+    private cache_;
     lang: string;
+    readonly language: any;
+    readonly languages: any[];
     constructor(injector: Injector);
+    observe$(): Observable<{}>;
     getTranslation(lang: string): Observable<{}>;
     getTranslate(key: string, defaultValue?: string, params?: any): string | any;
+    transform(key: string, defaultValue?: string, params?: any): string | undefined;
     private parseTranslate;
     private missingTranslate;
     private parseParams;
@@ -24,5 +26,6 @@ export declare class TranslateService<T extends Translate> extends ApiService<T>
     setDefaultLang(lang: string): void;
     addLangs(lang: string[]): void;
     getBrowserLang(): string;
+    getFirstBrowserLang(): any;
+    getFirstBrowserLocale(): any;
 }
-export declare function CustomTranslateLoader(injector: Injector): TranslateService<Translate>;

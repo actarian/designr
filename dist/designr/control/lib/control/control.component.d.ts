@@ -12,11 +12,11 @@ export declare class ControlComponent extends DisposableComponent {
     readonly control: AbstractControl;
     readonly isValid: boolean;
     readonly classes: {
-        valid: boolean;
-        invalid: boolean;
-        dirty: boolean;
-        empty: boolean;
-        required: boolean;
-        disabled: boolean;
+        valid?: boolean;
+        invalid?: boolean;
+        dirty?: boolean;
+        empty?: boolean;
+        required?: boolean;
+        disabled?: boolean;
     };
 }
