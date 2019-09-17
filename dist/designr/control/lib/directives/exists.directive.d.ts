@@ -6,6 +6,5 @@ export declare class ExistsValidator implements AsyncValidator {
     private debounced$;
     value: string;
     exists$(value: string): Observable<ValidationErrors | null>;
-    getValidationError(exists: boolean): ValidationErrors | null;
     validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null>;
 }

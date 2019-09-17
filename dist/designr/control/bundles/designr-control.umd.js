@@ -747,7 +747,7 @@
      */
     var ControlModuleComponent = /** @class */ (function () {
         function ControlModuleComponent() {
-            this.version = '0.0.9';
+            this.version = '0.0.10';
         }
         /**
          * @return {?}
@@ -1258,45 +1258,23 @@
          * @return {?}
          */
             function (value) {
-                var _this = this;
                 if (typeof this.exists === 'function') {
                     /** @type {?} */
                     var exists = this.exists(value);
                     if (rxjs.isObservable(exists)) {
-                        // console.log('ExistsValidator.exists$', value);
-                        return exists.pipe(operators.switchMap(( /**
+                        return exists.pipe(operators.map(( /**
                          * @param {?} exists
                          * @return {?}
                          */function (exists) {
-                            // console.log('ExistsValidator.exists$', exists);
-                            return rxjs.of(_this.getValidationError(Boolean(exists)));
+                            return exists ? { exists: true } : null;
                         })));
                     }
                     else {
-                        return rxjs.of(this.getValidationError(Boolean(exists)));
+                        return rxjs.of(exists ? { exists: true } : null);
                     }
                 }
                 else {
-                    return rxjs.of(this.getValidationError(value ? true : false));
-                }
-            };
-        /**
-         * @param {?} exists
-         * @return {?}
-         */
-        ExistsValidator.prototype.getValidationError = /**
-         * @param {?} exists
-         * @return {?}
-         */
-            function (exists) {
-                // console.log('ExistsValidator.getValidationError', exists);
-                if (exists) {
-                    return {
-                        exists: true,
-                    };
-                }
-                else {
-                    return null;
+                    return rxjs.of(null);
                 }
             };
         /**

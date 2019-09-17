@@ -29,7 +29,7 @@ const SECTION_CONFIG = new InjectionToken('section.config');
  */
 class SectionModuleComponent {
     constructor() {
-        this.version = '0.0.9';
+        this.version = '0.0.10';
     }
     /**
      * @return {?}

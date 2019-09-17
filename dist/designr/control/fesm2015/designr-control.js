@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { DisposableComponent, CoreModule } from '@designr/core';
 import { isObservable, of, BehaviorSubject } from 'rxjs';
-import { takeUntil, tap, catchError, debounceTime, switchMap, take } from 'rxjs/operators';
+import { takeUntil, tap, catchError, debounceTime, map, switchMap, take } from 'rxjs/operators';
 import { FormGroup, FormControl, Validators, NG_VALUE_ACCESSOR, NG_ASYNC_VALIDATORS, NG_VALIDATORS, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Component, ContentChild, Input, InjectionToken, Inject, Injectable, Directive, ElementRef, forwardRef, Renderer2, Attribute, EventEmitter, HostListener, Output, ComponentFactoryResolver, ViewChild, ViewContainerRef, defineInjectable, inject, NgModule, Optional, SkipSelf } from '@angular/core';
 
@@ -558,7 +558,7 @@ const CONTROL_CONFIG = new InjectionToken('control.config');
  */
 class ControlModuleComponent {
     constructor() {
-        this.version = '0.0.9';
+        this.version = '0.0.10';
     }
     /**
      * @return {?}
@@ -1006,37 +1006,20 @@ class ExistsValidator {
             /** @type {?} */
             const exists = this.exists(value);
             if (isObservable(exists)) {
-                // console.log('ExistsValidator.exists$', value);
-                return exists.pipe(switchMap((/**
+                return exists.pipe(map((/**
                  * @param {?} exists
                  * @return {?}
                  */
                 exists => {
-                    // console.log('ExistsValidator.exists$', exists);
-                    return of(this.getValidationError(Boolean(exists)));
+                    return exists ? { exists: true } : null;
                 })));
             }
             else {
-                return of(this.getValidationError(Boolean(exists)));
+                return of(exists ? { exists: true } : null);
             }
         }
         else {
-            return of(this.getValidationError(value ? true : false));
-        }
-    }
-    /**
-     * @param {?} exists
-     * @return {?}
-     */
-    getValidationError(exists) {
-        // console.log('ExistsValidator.getValidationError', exists);
-        if (exists) {
-            return {
-                exists: true,
-            };
-        }
-        else {
-            return null;
+            return of(null);
         }
     }
     /**

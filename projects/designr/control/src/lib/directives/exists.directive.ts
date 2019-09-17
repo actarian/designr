@@ -1,7 +1,7 @@
 import { Directive, forwardRef, Input } from '@angular/core';
 import { AbstractControl, AsyncValidator, NG_ASYNC_VALIDATORS, ValidationErrors } from '@angular/forms';
 import { BehaviorSubject, isObservable, Observable, of } from 'rxjs';
-import { catchError, debounceTime, switchMap, take } from 'rxjs/operators';
+import { catchError, debounceTime, map, switchMap, take } from 'rxjs/operators';
 
 const DEBOUNCE_TIME: number = 250;
 
@@ -41,29 +41,16 @@ export class ExistsValidator implements AsyncValidator {
 		if (typeof this.exists === 'function') {
 			const exists = this.exists(value);
 			if (isObservable(exists)) {
-				// console.log('ExistsValidator.exists$', value);
 				return exists.pipe(
-					switchMap(exists => {
-						// console.log('ExistsValidator.exists$', exists);
-						return of(this.getValidationError(Boolean(exists)));
+					map(exists => {
+						return exists ? { exists: true } : null;
 					})
 				);
 			} else {
-				return of(this.getValidationError(Boolean(exists)));
+				return of(exists ? { exists: true } : null);
 			}
 		} else {
-			return of(this.getValidationError(value ? true : false));
-		}
-	}
-
-	getValidationError(exists: boolean): ValidationErrors | null {
-		// console.log('ExistsValidator.getValidationError', exists);
-		if (exists) {
-			return {
-				exists: true,
-			};
-		} else {
-			return null;
+			return of(null);
 		}
 	}
 

@@ -152,26 +152,26 @@ textarea {
 		justify-content: space-between;
 		width: 100%;
 	}
+}
 
-	.fieldset__field {
-		width: calc(50% - 10px);
-		flex: 0 0 calc(50% - 10px);
+.fieldset__field {
+	width: calc(50% - 10px);
+	flex: 0 0 calc(50% - 10px);
 
-		&:last-child:nth-child(odd) {
-			width: 100%;
-			flex: 1 0 100%;
-		}
-	}
-
-	.fieldset__field--group,
-	.fieldset__field--info {
+	&:last-child:nth-child(odd) {
 		width: 100%;
-		flex: 0 0 100%;
-		margin-top: 20px;
-		margin-bottom: 20px;
-		padding-bottom: 10px;
-		border-bottom: 1px solid #ccc;
+		flex: 1 0 100%;
 	}
+}
+
+.fieldset__field--group,
+.fieldset__field--info {
+	width: 100%;
+	flex: 0 0 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
 }
 
 // !!!

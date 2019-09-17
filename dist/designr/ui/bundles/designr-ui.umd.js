@@ -51,7 +51,7 @@
      */
     var UIModuleComponent = /** @class */ (function () {
         function UIModuleComponent() {
-            this.version = '0.0.9';
+            this.version = '0.0.10';
         }
         /**
          * @return {?}

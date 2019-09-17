@@ -79,13 +79,11 @@ export class ContactComponent extends PageComponent implements OnInit {
 				match: 'email',
 				// exists: this.exists$,
 			},
-
 			{
 				schema: 'info',
 				title: 'contact.infoTitle',
 				abstract: 'contact.infoAbstract',
 			},
-
 			{
 				key: 'type',
 				schema: 'select',
@@ -101,13 +99,11 @@ export class ContactComponent extends PageComponent implements OnInit {
 				asObject: true,
 				order: 3
 			},
-
 			{
 				schema: 'info',
 				title: 'contact.moreInfoTitle',
 				abstract: 'contact.moreInfoAbstract',
 			},
-
 			{
 				key: 'privacy',
 				schema: 'checkbox',

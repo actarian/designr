@@ -310,7 +310,7 @@ var EditorBundleModule = /** @class */ (function () {
  */
 var EditorModuleComponent = /** @class */ (function () {
     function EditorModuleComponent() {
-        this.version = '0.0.9';
+        this.version = '0.0.10';
     }
     /**
      * @return {?}
