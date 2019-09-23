@@ -2,11 +2,12 @@
 	<hero-component [section]="page"></hero-component>
 	<section class="section section--form">
 		<div class="container">
-			<div class="group group--form" *ngIf="form">
-				<form class="form" name="form" [formGroup]="form" (ngSubmit)="onValidate() && onSubmit(form.value)" role="form" novalidate autocomplete="off">
-					<!-- -->
+			<div class="group group--form">
+				<form class="form" [formGroup]="form" role="form" novalidate autocomplete="off">
+					<!--
+					<input class="control__input control__input--text" placeholder="{{ 'test' | label }}" [id]="'test'" [formControlName]="'test'" type="text">
+					-->
 					<controls-component class="fieldset" [options]="options" [form]="form"></controls-component>
-					<!-- -->
 					<!--
 					<div class="fieldset">
 						<ng-container *ngFor="let option of options">

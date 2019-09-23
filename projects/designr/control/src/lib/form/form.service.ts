@@ -11,7 +11,7 @@ import { ControlGroup } from '../control/group/control-group';
 export class FormService {
 
 	constructor(
-		private controlService: ControlService
+		protected controlService: ControlService,
 	) { }
 
 	getOptions(data: IControlOption<any>[]): ControlOption<any>[] {

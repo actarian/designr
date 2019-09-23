@@ -7,7 +7,6 @@ export declare class ControlSelectComponent extends ControlComponent implements 
     options: ControlSelectOption[];
     getValue: Function;
     compareWith: Function;
-    constructor();
     ngOnInit(): void;
     options$(): Observable<ControlSelectOption[]>;
     getValue_(item: ControlSelectOption): any;

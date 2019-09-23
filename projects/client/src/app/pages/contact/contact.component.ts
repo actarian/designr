@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Injector, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { ChangeDetectorRef, Component, Injector, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { ControlOption, FormService } from '@designr/control';
 import { PageComponent } from '@designr/page';
 import { Observable, of } from 'rxjs';
@@ -8,7 +8,7 @@ import { debounceTime, delay, takeUntil } from 'rxjs/operators';
 
 const CONTACT_OPTIONS = [{
 	id: null,
-	name: 'Any',
+	name: 'form.select',
 }, {
 	id: true,
 	name: 'Yes',
@@ -34,98 +34,65 @@ export class ContactComponent extends PageComponent implements OnInit {
 
 	constructor(
 		protected injector: Injector,
+		protected changeDetectorRef: ChangeDetectorRef,
 		private formService: FormService,
 	) {
 		super(injector);
 	}
 
 	ngOnInit() {
-		this.options = this.formService.getOptions([
-			{
-				key: 'login',
-				schema: 'group',
-				title: 'Login',
-				abstract: 'fill out fields',
-				options: [{
-					key: 'username',
-					schema: 'text',
-					label: 'contact.username',
-					placeholder: 'contact.usernamePlaceholder',
-					required: true,
-					exists: this.exists$,
-				}, {
-					key: 'password',
-					schema: 'password',
-					label: 'contact.password',
-					placeholder: 'contact.passwordPlaceholder',
-					required: true,
-					minlength: 6,
-				}]
-			},
-			{
-				key: 'email',
-				schema: 'email',
-				label: 'contact.email',
-				placeholder: 'contact.emailPlaceholder',
-				required: true,
-				match: 'emailConfirm',
-				reverse: true,
-			}, {
-				key: 'emailConfirm',
-				schema: 'email',
-				label: 'contact.emailConfirm',
-				placeholder: 'contact.emailConfirmPlaceholder',
-				required: true,
-				match: 'email',
+		const options = this.formService.getOptions([{
+			key: 'test', schema: 'text', label: 'contact.test', placeholder: 'contact.test', exists: this.exists$
+		}, {
+			key: 'test2', schema: 'select', label: 'contact.type', description: 'Lorem ipsum dolor sit amet', options: CONTACT_OPTIONS,
+		}, {
+			key: 'login', schema: 'group', title: 'Login', abstract: 'fill out fields',
+			options: [{
+				key: 'username', schema: 'text', label: 'contact.username', placeholder: 'contact.usernamePlaceholder',
+				// required: true,
 				// exists: this.exists$,
-			},
-			{
-				schema: 'info',
-				title: 'contact.infoTitle',
-				abstract: 'contact.infoAbstract',
-			},
-			{
-				key: 'type',
-				schema: 'select',
-				label: 'contact.type',
-				description: 'Lorem ipsum dolor sit amet',
-				options: CONTACT_OPTIONS,
-				order: 3
 			}, {
-				key: 'type2',
-				schema: 'select',
-				label: 'contact.type',
-				options: CONTACT_OPTIONS,
-				asObject: true,
-				order: 3
-			},
-			{
-				schema: 'info',
-				title: 'contact.moreInfoTitle',
-				abstract: 'contact.moreInfoAbstract',
-			},
-			{
-				key: 'privacy',
-				schema: 'checkbox',
-				label: 'contact.privacy',
-				description: 'Lorem ipsum dolor sit amet',
-				requiredTrue: true,
-				order: 5,
-				type: 'aaa'
-			}]);
-		this.form = this.formService.getFormGroup(this.options);
-		this.form.valueChanges.pipe(
+				key: 'password', schema: 'password', label: 'contact.password', placeholder: 'contact.passwordPlaceholder', pattern: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/,
+				// required: true,
+				// minlength: 6,
+			}]
+		}, {
+			key: 'email', schema: 'email', label: 'contact.email', placeholder: 'contact.emailPlaceholder', reverse: true,
+			// required: true,
+			// match: 'emailConfirm',
+		}, {
+			key: 'emailConfirm', schema: 'email', label: 'contact.emailConfirm', placeholder: 'contact.emailConfirmPlaceholder',
+			// required: true,
+			// match: 'email',
+			// exists: this.exists$,
+		}, {
+			schema: 'info', title: 'contact.infoTitle', abstract: 'contact.infoAbstract',
+		}, {
+			key: 'type', schema: 'select', label: 'contact.type', description: 'Lorem ipsum dolor sit amet', options: CONTACT_OPTIONS,
+		}, {
+			key: 'type2', schema: 'select', label: 'contact.type', options: CONTACT_OPTIONS, asObject: true,
+		}, {
+			schema: 'info', title: 'contact.moreInfoTitle', abstract: 'contact.moreInfoAbstract',
+		}, {
+			key: 'privacy', schema: 'checkbox', label: 'contact.privacy', info: 'Lorem ipsum dolor sit amet'
+			// requiredTrue: true,
+		}]);
+		const form = this.formService.getFormGroup(options);
+		form.valueChanges.pipe(
 			debounceTime(100),
 			takeUntil(this.unsubscribe),
 		).subscribe((values) => {
 			console.log(values);
 		});
-		this.form.reset(this.defaults);
+		form.reset(this.defaults);
+		this.options = options;
+		this.form = form;
+		// this.changeDetectorRef.detectChanges();
 	}
 
-	touch(form) {
+	touch(form: FormGroup | AbstractControl) {
 		form.markAsTouched();
-		if (form.controls) {
+		if (form instanceof FormGroup) {
 			Object.keys(form.controls).forEach(k => this.touch(form.controls[k]));
 		}
 	}

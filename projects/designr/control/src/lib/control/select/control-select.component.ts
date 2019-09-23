@@ -15,11 +15,6 @@ export class ControlSelectComponent extends ControlComponent implements OnInit {
 	getValue: Function = this.getValue_.bind(this);
 	compareWith: Function = this.compareWith_.bind(this);
 
-	constructor(
-	) {
-		super();
-	}
-
 	ngOnInit() {
 		this.options$().pipe(
 			takeUntil(this.unsubscribe),

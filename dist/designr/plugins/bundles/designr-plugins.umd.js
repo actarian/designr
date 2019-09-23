@@ -54,7 +54,7 @@
      */
     var PluginsModuleComponent = /** @class */ (function () {
         function PluginsModuleComponent() {
-            this.version = '0.0.10';
+            this.version = '0.0.11';
         }
         /**
          * @return {?}

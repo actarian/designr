@@ -1,6 +1,6 @@
 <ng-container [formGroup]="form">
 	<ng-template #inputDef let-context>
-		<input class="control__input control__input--email" placeholder="{{ context.option.placeholder | label }}" [id]="context.option.key" [formControlName]="context.option.key" type="email" [exists]="context.option.exists">
+		<input class="control__input control__input--email" placeholder="{{ context.option.placeholder | label }}" [id]="context.option.key" [formControlName]="context.option.key" type="email">
 	</ng-template>
 	<ng-template #errorDef let-context>
 		<div class="control__error control__error--email" *ngIf="context.control.invalid && (context.control.dirty || context.control.touched)">

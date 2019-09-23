@@ -27,7 +27,9 @@ export class ControlComponent extends DisposableComponent {
 		return this.form.controls[this.option.key];
 	}
 
-	get isValid() { return this.control.valid; }
+	get isValid(): boolean {
+		return this.control.valid;
+	}
 
 	get classes(): {
 		valid?: boolean,
@@ -41,7 +43,7 @@ export class ControlComponent extends DisposableComponent {
 			valid: this.control.valid,
 			invalid: this.control.invalid,
 			dirty: this.control.dirty,
-			empty: (this.control.value == null),
+			empty: Boolean(this.control.value == null),
 			required: Boolean(this.option.required || this.option.requiredTrue),
 			disabled: this.option.disabled,
 		};

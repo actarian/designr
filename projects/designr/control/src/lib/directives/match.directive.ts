@@ -22,20 +22,16 @@ export class MatchValidator implements Validator {
 	}
 
 	validate(control: AbstractControl): { [key: string]: any } {
-
 		// self value
 		const value = control.value;
-
 		// control value
 		const input = control.root.get(this.match);
-
 		// value not equal
 		if (input && value !== input.value && !this.isReverse) {
 			return {
 				match: true,
 			};
 		}
-
 		// value equal and reverse
 		if (input && value === input.value && this.isReverse) {
 			delete input.errors['match'];
@@ -43,14 +39,12 @@ export class MatchValidator implements Validator {
 				input.setErrors(null);
 			}
 		}
-
 		// value not equal and reverse
 		if (input && value !== input.value && this.isReverse) {
 			input.setErrors({
 				match: true,
 			});
 		}
-
 		return null;
 	}
 

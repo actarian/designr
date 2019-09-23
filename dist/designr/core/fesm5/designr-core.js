@@ -913,7 +913,7 @@ var DefaultContentDirective = /** @class */ (function () {
  */
 var CoreModuleComponent = /** @class */ (function () {
     function CoreModuleComponent() {
-        this.version = '0.0.10';
+        this.version = '0.0.11';
     }
     /**
      * @return {?}

@@ -2,6 +2,7 @@
 	<ng-template #inputDef let-context>
 		<input class="control__input" placeholder="{{ context.option.placeholder | label }}" [id]="context.option.key" [formControlName]="context.option.key" type="text">
 	</ng-template>
+	<ng-container *ngTemplateOutlet="context.inputRef || inputDef; context: { $implicit: context }"></ng-container>
 	<ng-template #errorDef let-context>
 		<div class="control__error" *ngIf="context.control.invalid && (context.control.dirty || context.control.touched)">
 			<div *ngIf="context.control.errors.required">{{ 'errors.required' | label }}</div>
@@ -11,6 +12,5 @@
 			<div *ngIf="context.control.errors.match">{{ 'errors.match' | label }}</div>
 		</div>
 	</ng-template>
-	<ng-container *ngTemplateOutlet="context.inputRef || inputDef; context: { $implicit: context }"></ng-container>
 	<ng-container *ngTemplateOutlet="context.errorRef || errorDef; context: { $implicit: context }"></ng-container>
 </ng-container>

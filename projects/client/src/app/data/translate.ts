@@ -17,6 +17,9 @@ export const translate: Translate[] = [{
 			minlength: 'Must be at least @value characters long',
 			match: 'Fields should match',
 		},
+		form: {
+			select: 'select',
+		},
 		header: {
 			profile: 'Profile',
 			homepage: 'Homepage',
@@ -87,6 +90,9 @@ export const translate: Translate[] = [{
 			exists: 'l\'indirizzo email è già presente, effettuare l\'accesso',
 			minlength: 'dev\'essere almeno @value caratteri',
 			match: 'I campi devono corrispondere',
+		},
+		form: {
+			select: 'select',
 		},
 		header: {
 			profile: 'Profilo',

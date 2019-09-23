@@ -2,7 +2,7 @@
 	<ng-template #inputDef let-context>
 		<div class="control__input control__input--select">
 			<select [id]="context.option.key" [formControlName]="context.option.key" [compareWith]="context.compareWith">
-				<option *ngFor="let item of options" [ngValue]="context.getValue(item)">{{item?.name}}</option>
+				<option *ngFor="let item of options" [ngValue]="context.getValue(item)">{{item?.name | label}}</option>
 			</select>
 			<!-- control__accessory -->
 		</div>

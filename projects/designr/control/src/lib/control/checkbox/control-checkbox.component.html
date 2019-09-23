@@ -2,7 +2,7 @@
 	<ng-template #inputDef let-context>
 		<label class="control__group control__group--checkbox">
 			<input class="control__checkbox" type="checkbox" [id]="context.option.key" [formControlName]="context.option.key">
-			<span class="control__info">{{ context.option.description | label }}</span>
+			<span class="control__info">{{ context.option.info | label }}</span>
 		</label>
 	</ng-template>
 	<ng-template #errorDef let-context>
