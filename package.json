@@ -51,10 +51,10 @@
 		"@nguniversal/common": "~7.1.0",
 		"@nguniversal/module-map-ngfactory-loader": "~7.1.0",
 		"aspnet-prerendering": "~3.0.1",
-		"bootstrap": "~4.2.1",
+		"bootstrap": "~4.3.1",
 		"core-js": "^2.5.4",
 		"intersection-observer": "~0.5.1",
-		"jquery": "~3.3.1",
+		"jquery": "~3.4.0",
 		"json-formatter-js": "~2.2.1",
 		"mapbox-gl": "~0.52.0",
 		"marked": "~0.6.0",
@@ -89,6 +89,6 @@
 		"tslib": "~1.10.0",
 		"tslint": "~5.11.0",
 		"typescript": "~3.2.2",
-		"webpack-bundle-analyzer": "^3.1.0"
+		"webpack-bundle-analyzer": "^3.3.2"
 	}
 }
