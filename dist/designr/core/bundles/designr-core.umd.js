@@ -1627,7 +1627,7 @@
      */
     var CoreModuleComponent = /** @class */ (function () {
         function CoreModuleComponent() {
-            this.version = '0.0.11';
+            this.version = '0.0.12';
         }
         /**
          * @return {?}

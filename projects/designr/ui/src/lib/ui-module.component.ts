@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UIModuleComponent implements OnInit {
 
-	version: string = '0.0.11';
+	version: string = '0.0.12';
 
 	constructor() { }
 
