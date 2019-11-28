@@ -1,6 +1,6 @@
 import { Component, DoCheck, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DisposableComponent, Label, LabelService, SlugService } from '@designr/core';
+import { DisposableComponent, Label, LabelService, SlugService, Translate, TranslateService } from '@designr/core';
 import { GoogleTagManagerPageViewEvent } from '@designr/plugins';
 // import { SwUpdate } from '@angular/service-worker';
 import { takeUntil } from 'rxjs/operators';
@@ -22,6 +22,7 @@ export class AppComponent extends DisposableComponent implements DoCheck {
 	constructor(
 		@Inject(PLATFORM_ID) private platformId: string,
 		private slugService: SlugService,
+		private translateService: TranslateService<Translate>,
 		private labelService: LabelService<Label>,
 		// private gtm: GtmService,
 		// private swUpdate: SwUpdate,
@@ -36,6 +37,12 @@ export class AppComponent extends DisposableComponent implements DoCheck {
 			takeUntil(this.unsubscribe),
 		).subscribe((keys) => {
 			console.log('AppComponent.labelService.collect', keys);
+		});
+		this.translateService.lang = this.translateService.getBrowserLang();
+		this.translateService.observe$().pipe(
+			takeUntil(this.unsubscribe),
+		).subscribe((translations) => {
+			console.log('AppComponent.translateService.collect', this.translateService.language, this.translateService.languages);
 		});
 	}
 

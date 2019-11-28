@@ -1,18 +1,7 @@
 import { HttpRequest } from '@angular/common/http';
 import { Inject, Injectable, Injector, PLATFORM_ID } from '@angular/core';
+import { AuthToken } from './auth';
 import { LocalStorageService } from '../storage/storage.service';
-
-export enum AuthStrategy {
-	Bearer = 0,
-	Cookie = 1,
-}
-
-export class AuthToken {
-	constructor(
-		public accessToken: string,
-		public expiresIn: number = 0
-	) { }
-}
 
 @Injectable({
 	providedIn: 'root'

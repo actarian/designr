@@ -1,14 +1,6 @@
 import { Injector } from '@angular/core';
+import { AuthToken } from './auth';
 import { LocalStorageService } from '../storage/storage.service';
-export declare enum AuthStrategy {
-    Bearer = 0,
-    Cookie = 1
-}
-export declare class AuthToken {
-    accessToken: string;
-    expiresIn: number;
-    constructor(accessToken: string, expiresIn?: number);
-}
 export declare class AuthService {
     private platformId;
     private injector;

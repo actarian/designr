@@ -2,13 +2,16 @@ import { isPlatformBrowser } from '@angular/common';
 import { EventEmitter, Injectable, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { filter, map, switchMap } from 'rxjs/operators';
-import { ApiService } from '../api/api.service';
+import { IdentityService } from '../models/identity.service';
 import { Translate } from './translate';
 
 @Injectable({
 	providedIn: 'root'
 })
-export class TranslateService<T extends Translate> extends ApiService<T> {
+export class TranslateService<T extends Translate> extends IdentityService<T> {
+
+	static cache: {} = {};
+	static lang_: string = null;
 
 	get collection(): string {
 		return '/api/translate';
@@ -17,18 +20,15 @@ export class TranslateService<T extends Translate> extends ApiService<T> {
 	public events: EventEmitter<any> = new EventEmitter();
 	public missingHandler?: Function;
 
-	private lang_: string;
 	private language_: any = new BehaviorSubject<any>(undefined);
 	private languages_: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
-	private cache_: { [key: string]: string; } = {};
 
 	public get lang(): string {
-		return this.lang_;
+		return TranslateService.lang_;
 	}
-
 	public set lang(lang: string) {
-		if (lang !== this.lang_) {
-			this.lang_ = lang;
+		if (lang !== TranslateService.lang_) {
+			TranslateService.lang_ = lang;
 			const languages = this.languages_.getValue();
 			if (languages.length) {
 				const language = languages.find(x => x.lang === lang);
@@ -53,6 +53,7 @@ export class TranslateService<T extends Translate> extends ApiService<T> {
 	}
 
 	public observe$(): Observable<{}> {
+		// console.log(new Error().stack);
 		return this.language_.pipe(
 			filter(x => x !== undefined),
 			switchMap((language: any) => this.getTranslation(language.lang)),
@@ -63,16 +64,16 @@ export class TranslateService<T extends Translate> extends ApiService<T> {
 		if (!lang || !lang.trim()) {
 			return of(null);
 		}
-		this.lang_ = lang;
-		if (this.cache_[lang]) {
-			return of(this.cache_[lang]);
+		TranslateService.lang_ = lang;
+		if (TranslateService.cache[lang]) {
+			return of(TranslateService.cache[lang]);
 		} else {
 			return this.get(`?lang=${lang}`, { lang }).pipe(
 				// take(1),
 				map((x: Translate[]) => {
 					if (x.length && x[0]) {
 						const labels = x[0].labels;
-						this.cache_[lang] = labels;
+						TranslateService.cache[lang] = labels;
 						this.events.emit(labels);
 						return labels;
 					} else {
@@ -85,11 +86,11 @@ export class TranslateService<T extends Translate> extends ApiService<T> {
 	}
 
 	public getTranslate(key: string, defaultValue?: string, params?: any): string | any {
-		// console.log('TranslateService.getTranslate', key, this.cache_, this.lang_);
+		// console.log('TranslateService.getTranslate', key, TranslateService.cache, TranslateService.lang_);
 		if (key) {
 			let value: string | null = null;
-			let labels: any = this.cache_[this.lang_];
-			// console.log('labels', this.lang_, this.cache_, labels);
+			let labels: any = TranslateService.cache[TranslateService.lang_];
+			// console.log('labels', TranslateService.lang_, TranslateService.cache, labels);
 			if (labels) {
 				const keys: string[] = key.split('.');
 				let k = keys.shift();
@@ -130,8 +131,8 @@ export class TranslateService<T extends Translate> extends ApiService<T> {
 	}
 
 	private parseParams(value: string, params: any): string {
-		const TEMPLATE_REGEXP: RegExp = /@([^{}\s]*)/g; // /{{\s?([^{}\s]*)\s?}}/g;
-		return value.replace(TEMPLATE_REGEXP, (text: string, key: string) => {
+		const TEMPLATEREGEXP_: RegExp = /@([^{}\s]*)/g; // /{{\s?([^{}\s]*)\s?}}/g;
+		return value.replace(TEMPLATEREGEXP_, (text: string, key: string) => {
 			const replacer: string = params[key] as string;
 			return typeof replacer !== 'undefined' ? replacer : text;
 		});

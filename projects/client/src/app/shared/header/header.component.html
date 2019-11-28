@@ -5,17 +5,25 @@
 		</div>
 		<ul class="nav nav--header">
 			<li class="nav__item" *ngFor="let item of menu;">
-				<a class="nav__link" [routerLink]="[item.slug] | route">{{item.name}}</a>
+				<a class="nav__link" [routerLink]="[item.slug] | route" [innerHTML]="item.name | translate"></a>
 			</li>
 		</ul>
 		<div class="nav nav--service">
 			<ng-container *ngIf="!userService.user">
-				<button type="button" class="btn btn--cta" (click)="onSign()">{{'header.signIn' | label : 'signin'}}</button>
+				<button type="button" class="btn btn--cta" (click)="onSign()" [innerHTML]="'header.signIn' | label : 'signin'"></button>
 			</ng-container>
 			<ng-container *ngIf="userService.user">
-				<button type="button" class="btn btn--cta">{{userService.user.firstName}}</button>
+				<button type="button" class="btn btn--cta" [innerHTML]="userService.user.firstName"></button>
 				<button type="button" class="btn btn--cta" (click)="onSignOut()">signout</button>
 			</ng-container>
+		</div>
+		<div class="nav nav--language" [ngClass]="{ 'active': navLanguagesActive }" (click)="navLanguagesActive = !navLanguagesActive">
+			<button type="button" class="btn btn--cta"><span [innerHTML]="currentLanguage.lang"></span></button>
+			<ul class="nav nav--languages" *ngIf="navLanguagesActive">
+				<li class="nav__item" *ngFor="let language of languages">
+					<button type="button" class="btn btn--cta" (click)="routeService.setLanguage(language.lang)" [innerHTML]="language.lang"></button>
+				</li>
+			</ul>
 		</div>
 	</div>
 </header>

@@ -2,16 +2,17 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Logger } from '../logger/logger';
+import { Logger } from '../logger/logger.service';
 import { HttpStatusCodeService } from './http-status-code.service';
 export declare class HttpResponseInterceptor implements HttpInterceptor {
     private injector;
     private statusCodeService;
-    private _logger;
+    private httpErrorLogStrategy_;
+    private logger_;
     readonly logger: Logger;
-    private _router;
+    private router_;
     readonly router: Router;
-    private _routeService;
+    private routeService_;
     readonly routeService: any;
     constructor(injector: Injector, statusCodeService: HttpStatusCodeService);
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>;

@@ -1,14 +1,730 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpErrorResponse, HttpClient, HttpHeaders, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { HttpErrorResponse, HttpClient, HttpHeaders, HttpParams, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import JSONFormatter from 'json-formatter-js';
 import { isArray, isObject } from 'util';
-import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
 import { __extends, __spread } from 'tslib';
-import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, INJECTOR, ComponentFactoryResolver, ViewChild, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer, Location, CommonModule } from '@angular/common';
+import { InjectionToken, Inject, Injectable, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, PLATFORM_ID, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, ComponentFactoryResolver, ViewChild, INJECTOR, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf, NgZone } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
 import { tap, filter, map, switchMap, distinctUntilChanged, catchError, debounceTime, takeUntil, first } from 'rxjs/operators';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @enum {number} */
+var AuthStrategy = {
+    Bearer: 0,
+    Cookie: 1,
+};
+AuthStrategy[AuthStrategy.Bearer] = 'Bearer';
+AuthStrategy[AuthStrategy.Cookie] = 'Cookie';
+var AuthToken = /** @class */ (function () {
+    function AuthToken(accessToken, expiresIn) {
+        if (expiresIn === void 0) { expiresIn = 0; }
+        this.accessToken = accessToken;
+        this.expiresIn = expiresIn;
+    }
+    return AuthToken;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @enum {number} */
+var LoggerErrorStrategy = {
+    Informational: 100,
+    Success: 200,
+    Redirect: 300,
+    Client: 400,
+    Server: 500,
+};
+LoggerErrorStrategy[LoggerErrorStrategy.Informational] = 'Informational';
+LoggerErrorStrategy[LoggerErrorStrategy.Success] = 'Success';
+LoggerErrorStrategy[LoggerErrorStrategy.Redirect] = 'Redirect';
+LoggerErrorStrategy[LoggerErrorStrategy.Client] = 'Client';
+LoggerErrorStrategy[LoggerErrorStrategy.Server] = 'Server';
+var LoggerError = /** @class */ (function (_super) {
+    __extends(LoggerError, _super);
+    function LoggerError() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    return LoggerError;
+}(HttpErrorResponse));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var CoreTransitionConfig = /** @class */ (function () {
+    function CoreTransitionConfig(options) {
+        // console.log('CoreTransitionConfig', options);
+        if (options) {
+            Object.assign(this, options);
+        }
+    }
+    return CoreTransitionConfig;
+}());
+var CoreConfig = /** @class */ (function () {
+    function CoreConfig(options) {
+        this.assets = '';
+        this.authStrategy = AuthStrategy.Cookie;
+        this.defaultLanguage = 'it';
+        this.defaultMarket = 'it';
+        this.httpErrorLogStrategy = LoggerErrorStrategy.Server;
+        this.languages = [{ id: 1, name: 'Italiano', lang: 'it' }];
+        this.origin = '';
+        this.production = false;
+        this.public = '';
+        this.urlStrategy = '';
+        this.useLang = false;
+        this.useMarket = false;
+        // console.log('CoreConfig', options);
+        if (options) {
+            Object.assign(this, options);
+            this.transition = new CoreTransitionConfig(options.transition);
+        }
+        else {
+            this.transition = new CoreTransitionConfig();
+        }
+    }
+    return CoreConfig;
+}());
+/** @type {?} */
+var CORE_CONFIG = new InjectionToken('core.config');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var CoreService = /** @class */ (function () {
+    function CoreService(options) {
+        // console.log('CoreService', options);
+        options = options || {};
+        // options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
+        // options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;
+        this.options = new CoreConfig(options);
+    }
+    CoreService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */
+    CoreService.ctorParameters = function () { return [
+        { type: CoreConfig, decorators: [{ type: Inject, args: [CORE_CONFIG,] }] }
+    ]; };
+    /** @nocollapse */ CoreService.ngInjectableDef = defineInjectable({ factory: function CoreService_Factory() { return new CoreService(inject(CORE_CONFIG)); }, token: CoreService, providedIn: "root" });
+    return CoreService;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var Logger = /** @class */ (function () {
+    function Logger(coreService) {
+        this.coreService = coreService;
+        this.logs = [];
+        //
+    }
+    /**
+     * @param {...?} args
+     * @return {?}
+     */
+    Logger.prototype.request = /**
+     * @param {...?} args
+     * @return {?}
+     */
+    function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (!this.coreService.options.production) {
+            /** @type {?} */
+            var s = args.join(', ');
+            this.logs.push(s);
+            // console.log.apply(this, ['%c %s', 'background: #dddddd; color: #111'].concat(args));
+        }
+    };
+    /**
+     * @param {...?} args
+     * @return {?}
+     */
+    Logger.prototype.log = /**
+     * @param {...?} args
+     * @return {?}
+     */
+    function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (!this.coreService.options.production) {
+            /** @type {?} */
+            var s = args.join(', ');
+            this.logs.push(s);
+            console.log.apply(this, ['%c%s', 'background: #1976d2; color: #fff; border-radius: 3px; padding: 4px 8px; margin-bottom: 4px;'].concat(args));
+        }
+    };
+    /**
+     * @param {...?} args
+     * @return {?}
+     */
+    Logger.prototype.warn = /**
+     * @param {...?} args
+     * @return {?}
+     */
+    function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (!this.coreService.options.production) {
+            /** @type {?} */
+            var s = args.join(', ');
+            this.logs.push(s);
+            console.log.apply(this, ['%c%s', 'background: #ff5500; color: #fff'].concat(args));
+        }
+    };
+    /**
+     * @param {...?} args
+     * @return {?}
+     */
+    Logger.prototype.error = /**
+     * @param {...?} args
+     * @return {?}
+     */
+    function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        if (!this.coreService.options.production) {
+            /** @type {?} */
+            var s = args.join(', ');
+            this.logs.push(s);
+            console.error.apply(console, args);
+        }
+    };
+    /**
+     * @param {?} error
+     * @return {?}
+     */
+    Logger.prototype.http = /**
+     * @param {?} error
+     * @return {?}
+     */
+    function (error) {
+        this.httpError = error;
+        if (!this.coreService.options.production) {
+            this.logs.push(error.message);
+        }
+        console.warn('Logger.http.error', error.status, error.statusText, error.url);
+    };
+    /**
+     * @return {?}
+     */
+    Logger.prototype.clear = /**
+     * @return {?}
+     */
+    function () {
+        this.httpError = null;
+        this.logs = [];
+    };
+    Logger.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */
+    Logger.ctorParameters = function () { return [
+        { type: CoreService }
+    ]; };
+    /** @nocollapse */ Logger.ngInjectableDef = defineInjectable({ factory: function Logger_Factory() { return new Logger(inject(CoreService)); }, token: Logger, providedIn: "root" });
+    return Logger;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+var ApiRequestOptions = /** @class */ (function () {
+    function ApiRequestOptions(params) {
+        this.headers = new HttpHeaders({
+            'Content-Type': 'application/json'
+        });
+        this.params = (/** @type {?} */ (params));
+    }
+    return ApiRequestOptions;
+}());
+/**
+ * @template T
+ */
+var ApiService = /** @class */ (function () {
+    function ApiService(injector) {
+        this.injector = injector;
+    }
+    Object.defineProperty(ApiService.prototype, "collection", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return '/api';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ApiService.prototype, "logger", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            if (!this._logger) {
+                this._logger = this.injector.get(Logger);
+            }
+            return this._logger;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ApiService.prototype, "http", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            if (!this._http) {
+                this._http = this.injector.get(HttpClient);
+            }
+            return this._http;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ApiService.prototype, "state", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            if (!this._state) {
+                this._state = this.injector.get(TransferState);
+            }
+            return this._state;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ApiService.prototype, "platformId", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            if (!this._platformId) {
+                this._platformId = this.injector.get(PLATFORM_ID);
+            }
+            return this._platformId;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ApiService.prototype, "config", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            if (!this._config) {
+                this._config = this.injector.get(CoreService).options;
+            }
+            return this._config;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ApiService.prototype, "origin", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            if (!this._origin) {
+                this._origin = this.config.origin;
+            }
+            return this._origin;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ApiService.prototype, "url", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            /** @type {?} */
+            var base = this.origin;
+            /** @type {?} */
+            var collection = this.collection.toLowerCase();
+            if (collection.indexOf('http') === 0) {
+                base = '';
+            }
+            return "" + base + collection;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @param {?=} method
+     * @return {?}
+     */
+    ApiService.prototype.getUrl = /**
+     * @param {?=} method
+     * @return {?}
+     */
+    function (method) {
+        if (method === void 0) { method = ''; }
+        return "" + this.url + method;
+    };
+    /**
+     * @param {?=} first
+     * @param {?=} second
+     * @return {?}
+     */
+    ApiService.prototype.get = /**
+     * @param {?=} first
+     * @param {?=} second
+     * @return {?}
+     */
+    function (first$$1, second) {
+        var _this = this;
+        /** @type {?} */
+        var method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        var params = (typeof first$$1 === 'object' ? first$$1 : second);
+        /** @type {?} */
+        var url = this.getUrl(method);
+        /** @type {?} */
+        var options = new ApiRequestOptions(params);
+        return this.http.get(url, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this.logger.request(url); })));
+    };
+    /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    ApiService.prototype.post = /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    function (first$$1, second, third) {
+        var _this = this;
+        /** @type {?} */
+        var method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        var model = (typeof first$$1 === 'object' ? first$$1 : second);
+        /** @type {?} */
+        var params = (typeof second === 'object' ? second : third);
+        /** @type {?} */
+        var url = this.getUrl(method);
+        /** @type {?} */
+        var options = new ApiRequestOptions(params);
+        return this.http.post(url, model, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this.logger.request(url); })));
+    };
+    /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    ApiService.prototype.put = /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    function (first$$1, second, third) {
+        var _this = this;
+        /** @type {?} */
+        var method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        var model = (/** @type {?} */ ((typeof first$$1 === 'object' ? first$$1 : second)));
+        /** @type {?} */
+        var params = (typeof second === 'object' ? second : third);
+        /** @type {?} */
+        var url = this.getUrl(method);
+        /** @type {?} */
+        var options = new ApiRequestOptions(params);
+        return this.http.put(url, model, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this.logger.request(url); })));
+    };
+    /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    ApiService.prototype.patch = /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    function (first$$1, second, third) {
+        var _this = this;
+        /** @type {?} */
+        var method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        var model = (/** @type {?} */ ((typeof first$$1 === 'object' ? first$$1 : second)));
+        /** @type {?} */
+        var params = (typeof second === 'object' ? second : third);
+        /** @type {?} */
+        var url = this.getUrl(method);
+        /** @type {?} */
+        var options = new ApiRequestOptions(params);
+        return this.http.patch(url, model, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this.logger.request(url); })));
+    };
+    /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    ApiService.prototype.delete = /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    function (first$$1, second, third) {
+        var _this = this;
+        /** @type {?} */
+        var method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        var identity = (/** @type {?} */ ((typeof first$$1 !== 'string' ? first$$1 : second)));
+        /** @type {?} */
+        var id = identity ? (typeof identity === 'number' ? identity : ((/** @type {?} */ (identity))).id) : null;
+        /** @type {?} */
+        var params = (typeof second === 'object' ? second : third);
+        /** @type {?} */
+        var url = id !== null ? this.getUrl(method + "/" + id) : this.getUrl(method);
+        /** @type {?} */
+        var options = new ApiRequestOptions(params);
+        return this.http.delete(url, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        function (x) { return _this.logger.request(url); })));
+    };
+    /**
+     * @param {?} input
+     * @return {?}
+     */
+    ApiService.prototype.toCamelCase = /**
+     * @param {?} input
+     * @return {?}
+     */
+    function (input) {
+        var _this = this;
+        /** @type {?} */
+        var output;
+        /** @type {?} */
+        var key;
+        /** @type {?} */
+        var keyCamelCase;
+        /** @type {?} */
+        var value;
+        if (input instanceof Array) {
+            return input.map((/**
+             * @param {?} value
+             * @return {?}
+             */
+            function (value) {
+                if (typeof value === 'object') {
+                    value = _this.toCamelCase(value);
+                }
+                return value;
+            }));
+        }
+        else {
+            output = {};
+            for (key in input) {
+                if (input.hasOwnProperty(key)) {
+                    keyCamelCase = (key.charAt(0).toLowerCase() + key.slice(1) || key).toString();
+                    value = input[key];
+                    if (value instanceof Array || (value !== null && value.constructor === Object)) {
+                        value = this.toCamelCase(value);
+                    }
+                    output[keyCamelCase] = value;
+                }
+            }
+        }
+        return output;
+    };
+    // TRANSFER STATE
+    // TRANSFER STATE
+    /**
+     * @param {?} url
+     * @param {?} model
+     * @return {?}
+     */
+    ApiService.prototype.getStateKey = 
+    // TRANSFER STATE
+    /**
+     * @param {?} url
+     * @param {?} model
+     * @return {?}
+     */
+    function (url, model) {
+        /** @type {?} */
+        var flatMap = (/**
+         * @param {?} s
+         * @param {?} x
+         * @return {?}
+         */
+        function (s, x) {
+            if (typeof x === 'number') {
+                s += x.toString();
+            }
+            else if (typeof x === 'string') {
+                s += x.substr(0, 10);
+            }
+            else if (x && typeof x === 'object') {
+                s += '_' + Object.keys(x).map((/**
+                 * @param {?} k
+                 * @return {?}
+                 */
+                function (k) { return k + '_' + flatMap('', x[k]); })).join('_');
+            }
+            return s;
+        });
+        url = flatMap(url, model);
+        // console.log('ApiService.getStateKey.url', url);
+        /** @type {?} */
+        var key = url.replace(/(\W)/gm, '_');
+        // this.logger.log('ApiService.getStateKey.key', key);
+        return makeStateKey(key);
+    };
+    /**
+     * @param {?=} first
+     * @param {?=} second
+     * @return {?}
+     */
+    ApiService.prototype.stateGet = /**
+     * @param {?=} first
+     * @param {?=} second
+     * @return {?}
+     */
+    function (first$$1, second) {
+        var _this = this;
+        /** @type {?} */
+        var method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        var params = (typeof first$$1 === 'object' ? first$$1 : second);
+        /** @type {?} */
+        var url = this.getUrl(method);
+        /** @type {?} */
+        var options = new ApiRequestOptions(params);
+        /** @type {?} */
+        var stateKey = this.getStateKey(url, params);
+        if (isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
+            /** @type {?} */
+            var cached = this.state.get(stateKey, null);
+            this.state.remove(stateKey);
+            return of(cached);
+        }
+        else {
+            return this.http.get(url, options).pipe(tap((/**
+             * @param {?} x
+             * @return {?}
+             */
+            function (x) {
+                if (isPlatformServer(_this.platformId)) {
+                    _this.state.onSerialize(stateKey, (/**
+                     * @return {?}
+                     */
+                    function () { return x; }));
+                }
+            })));
+        }
+    };
+    /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    ApiService.prototype.statePost = /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    function (first$$1, second, third) {
+        var _this = this;
+        /** @type {?} */
+        var method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        var model = (typeof first$$1 === 'object' ? first$$1 : second);
+        /** @type {?} */
+        var params = (typeof second === 'object' ? second : third);
+        /** @type {?} */
+        var url = this.getUrl(method);
+        /** @type {?} */
+        var options = new ApiRequestOptions(params);
+        /** @type {?} */
+        var stateKey = this.getStateKey(url, model);
+        if (isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
+            /** @type {?} */
+            var cached = this.state.get(stateKey, null);
+            this.state.remove(stateKey);
+            return of(cached);
+        }
+        else {
+            return this.http.post(url, model, options).pipe(tap((/**
+             * @param {?} x
+             * @return {?}
+             */
+            function (x) {
+                if (isPlatformServer(_this.platformId)) {
+                    _this.state.onSerialize(stateKey, (/**
+                     * @return {?}
+                     */
+                    function () { return x; }));
+                }
+            })));
+        }
+    };
+    ApiService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */
+    ApiService.ctorParameters = function () { return [
+        { type: Injector }
+    ]; };
+    /** @nocollapse */ ApiService.ngInjectableDef = defineInjectable({ factory: function ApiService_Factory() { return new ApiService(inject(INJECTOR)); }, token: ApiService, providedIn: "root" });
+    return ApiService;
+}());
 
 /**
  * @fileoverview added by tsickle
@@ -664,21 +1380,6 @@ var LocalStorageService = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-/** @enum {number} */
-var AuthStrategy = {
-    Bearer: 0,
-    Cookie: 1,
-};
-AuthStrategy[AuthStrategy.Bearer] = 'Bearer';
-AuthStrategy[AuthStrategy.Cookie] = 'Cookie';
-var AuthToken = /** @class */ (function () {
-    function AuthToken(accessToken, expiresIn) {
-        if (expiresIn === void 0) { expiresIn = 0; }
-        this.accessToken = accessToken;
-        this.expiresIn = expiresIn;
-    }
-    return AuthToken;
-}());
 var AuthService = /** @class */ (function () {
     function AuthService(platformId, injector, localStorageService) {
         this.platformId = platformId;
@@ -783,71 +1484,6 @@ var AuthService = /** @class */ (function () {
  */
 /** @type {?} */
 var BUNDLES = new InjectionToken('core.bundles');
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-var CoreTransitionConfig = /** @class */ (function () {
-    function CoreTransitionConfig(options) {
-        // console.log('CoreTransitionConfig', options);
-        if (options) {
-            Object.assign(this, options);
-        }
-    }
-    return CoreTransitionConfig;
-}());
-var CoreConfig = /** @class */ (function () {
-    function CoreConfig(options) {
-        this.assets = '';
-        this.authStrategy = AuthStrategy.Cookie;
-        this.defaultLanguage = 'it';
-        this.defaultMarket = 'it';
-        this.languages = [{ id: 1, name: 'Italiano', lang: 'it' }];
-        this.origin = '';
-        this.production = false;
-        this.public = '';
-        this.urlStrategy = '';
-        this.useLang = false;
-        this.useMarket = false;
-        // console.log('CoreConfig', options);
-        if (options) {
-            Object.assign(this, options);
-            this.transition = new CoreTransitionConfig(options.transition);
-        }
-        else {
-            this.transition = new CoreTransitionConfig();
-        }
-    }
-    return CoreConfig;
-}());
-/** @type {?} */
-var CORE_CONFIG = new InjectionToken('core.config');
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-var CoreService = /** @class */ (function () {
-    function CoreService(options) {
-        // console.log('CoreService', options);
-        options = options || {};
-        // options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
-        // options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;
-        this.options = new CoreConfig(options);
-    }
-    CoreService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    CoreService.ctorParameters = function () { return [
-        { type: CoreConfig, decorators: [{ type: Inject, args: [CORE_CONFIG,] }] }
-    ]; };
-    /** @nocollapse */ CoreService.ngInjectableDef = defineInjectable({ factory: function CoreService_Factory() { return new CoreService(inject(CORE_CONFIG)); }, token: CoreService, providedIn: "root" });
-    return CoreService;
-}());
 
 /**
  * @fileoverview added by tsickle
@@ -1119,141 +1755,6 @@ var HighlightPipe = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-var LoggerError = /** @class */ (function (_super) {
-    __extends(LoggerError, _super);
-    function LoggerError() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    return LoggerError;
-}(HttpErrorResponse));
-var Logger = /** @class */ (function () {
-    function Logger(coreService) {
-        this.coreService = coreService;
-        this.logs = [];
-        //
-    }
-    /**
-     * @param {...?} args
-     * @return {?}
-     */
-    Logger.prototype.request = /**
-     * @param {...?} args
-     * @return {?}
-     */
-    function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        if (!this.coreService.options.production) {
-            /** @type {?} */
-            var s = args.join(', ');
-            this.logs.push(s);
-            // console.log.apply(this, ['%c %s', 'background: #dddddd; color: #111'].concat(args));
-        }
-    };
-    /**
-     * @param {...?} args
-     * @return {?}
-     */
-    Logger.prototype.log = /**
-     * @param {...?} args
-     * @return {?}
-     */
-    function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        if (!this.coreService.options.production) {
-            /** @type {?} */
-            var s = args.join(', ');
-            this.logs.push(s);
-            console.log.apply(this, ['%c%s', 'background: #1976d2; color: #fff; border-radius: 3px; padding: 4px 8px; margin-bottom: 4px;'].concat(args));
-        }
-    };
-    /**
-     * @param {...?} args
-     * @return {?}
-     */
-    Logger.prototype.warn = /**
-     * @param {...?} args
-     * @return {?}
-     */
-    function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        if (!this.coreService.options.production) {
-            /** @type {?} */
-            var s = args.join(', ');
-            this.logs.push(s);
-            console.log.apply(this, ['%c%s', 'background: #ff5500; color: #fff'].concat(args));
-        }
-    };
-    /**
-     * @param {...?} args
-     * @return {?}
-     */
-    Logger.prototype.error = /**
-     * @param {...?} args
-     * @return {?}
-     */
-    function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
-        if (!this.coreService.options.production) {
-            /** @type {?} */
-            var s = args.join(', ');
-            this.logs.push(s);
-            console.error.apply(console, args);
-        }
-    };
-    /**
-     * @param {?} error
-     * @return {?}
-     */
-    Logger.prototype.http = /**
-     * @param {?} error
-     * @return {?}
-     */
-    function (error) {
-        this.httpError = error;
-        if (!this.coreService.options.production) {
-            this.logs.push(error.message);
-        }
-        console.warn('Logger.http.error', error.status, error.statusText, error.url);
-    };
-    /**
-     * @return {?}
-     */
-    Logger.prototype.clear = /**
-     * @return {?}
-     */
-    function () {
-        this.httpError = null;
-        this.logs = [];
-    };
-    Logger.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    Logger.ctorParameters = function () { return [
-        { type: CoreService }
-    ]; };
-    /** @nocollapse */ Logger.ngInjectableDef = defineInjectable({ factory: function Logger_Factory() { return new Logger(inject(CoreService)); }, token: Logger, providedIn: "root" });
-    return Logger;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 var SegmentPipe = /** @class */ (function () {
     function SegmentPipe(location) {
         this.location = location;
@@ -1297,478 +1798,49 @@ var SegmentPipe = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-var ApiRequestOptions = /** @class */ (function () {
-    function ApiRequestOptions(options) {
-        this.headers = new HttpHeaders({
-            'Content-Type': 'application/json'
-        });
-        this.params = options ? new HttpParams(options) : null;
-    }
-    return ApiRequestOptions;
-}());
 /**
  * @template T
  */
-var ApiService = /** @class */ (function () {
-    function ApiService(injector) {
-        this.injector = injector;
+var IdentityService = /** @class */ (function (_super) {
+    __extends(IdentityService, _super);
+    function IdentityService(injector) {
+        var _this = _super.call(this, injector) || this;
+        _this.injector = injector;
+        return _this;
     }
-    Object.defineProperty(ApiService.prototype, "collection", {
+    Object.defineProperty(IdentityService.prototype, "collection", {
         get: /**
          * @return {?}
          */
         function () {
-            return '/api';
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ApiService.prototype, "logger", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            if (!this._logger) {
-                this._logger = this.injector.get(Logger);
-            }
-            return this._logger;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ApiService.prototype, "http", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            if (!this._http) {
-                this._http = this.injector.get(HttpClient);
-            }
-            return this._http;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ApiService.prototype, "state", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            if (!this._state) {
-                this._state = this.injector.get(TransferState);
-            }
-            return this._state;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ApiService.prototype, "platformId", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            if (!this._platformId) {
-                this._platformId = this.injector.get(PLATFORM_ID);
-            }
-            return this._platformId;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ApiService.prototype, "config", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            if (!this._config) {
-                this._config = this.injector.get(CoreService).options;
-            }
-            return this._config;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ApiService.prototype, "origin", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            if (!this._origin) {
-                this._origin = this.config.origin;
-            }
-            return this._origin;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(ApiService.prototype, "url", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            /** @type {?} */
-            var base = this.origin;
-            /** @type {?} */
-            var collection = this.collection.toLowerCase();
-            if (collection.indexOf('http') === 0) {
-                base = '';
-            }
-            return "" + base + collection;
+            return '/api/identity';
         },
         enumerable: true,
         configurable: true
     });
     /**
-     * @param {?=} method
+     * @param {?} id
      * @return {?}
      */
-    ApiService.prototype.getUrl = /**
-     * @param {?=} method
+    IdentityService.prototype.getDetailById = /**
+     * @param {?} id
      * @return {?}
      */
-    function (method) {
-        if (method === void 0) { method = ''; }
-        return "" + this.url + method;
+    function (id) {
+        return this.get({ id: id });
     };
-    /**
-     * @param {?=} first
-     * @param {?=} second
-     * @return {?}
-     */
-    ApiService.prototype.get = /**
-     * @param {?=} first
-     * @param {?=} second
-     * @return {?}
-     */
-    function (first$$1, second) {
-        var _this = this;
-        /** @type {?} */
-        var method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        var params = (typeof first$$1 === 'object' ? first$$1 : second);
-        /** @type {?} */
-        var url = this.getUrl(method);
-        /** @type {?} */
-        var options = new ApiRequestOptions(params);
-        return this.http.get(url, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        function (x) { return _this.logger.request(url); })));
-    };
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    ApiService.prototype.post = /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    function (first$$1, second, third) {
-        var _this = this;
-        /** @type {?} */
-        var method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        var model = (typeof first$$1 === 'object' ? first$$1 : second);
-        /** @type {?} */
-        var params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
-        var url = this.getUrl(method);
-        /** @type {?} */
-        var options = new ApiRequestOptions(params);
-        return this.http.post(url, model, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        function (x) { return _this.logger.request(url); })));
-    };
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    ApiService.prototype.put = /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    function (first$$1, second, third) {
-        var _this = this;
-        /** @type {?} */
-        var method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        var model = (/** @type {?} */ ((typeof first$$1 === 'object' ? first$$1 : second)));
-        /** @type {?} */
-        var params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
-        var url = this.getUrl(method);
-        /** @type {?} */
-        var options = new ApiRequestOptions(params);
-        return this.http.put(url, model, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        function (x) { return _this.logger.request(url); })));
-    };
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    ApiService.prototype.patch = /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    function (first$$1, second, third) {
-        var _this = this;
-        /** @type {?} */
-        var method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        var model = (/** @type {?} */ ((typeof first$$1 === 'object' ? first$$1 : second)));
-        /** @type {?} */
-        var params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
-        var url = this.getUrl(method);
-        /** @type {?} */
-        var options = new ApiRequestOptions(params);
-        return this.http.patch(url, model, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        function (x) { return _this.logger.request(url); })));
-    };
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    ApiService.prototype.delete = /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    function (first$$1, second, third) {
-        var _this = this;
-        /** @type {?} */
-        var method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        var identity = (/** @type {?} */ ((typeof first$$1 !== 'string' ? first$$1 : second)));
-        /** @type {?} */
-        var id = identity ? (typeof identity === 'number' ? identity : ((/** @type {?} */ (identity))).id) : null;
-        /** @type {?} */
-        var params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
-        var url = id !== null ? this.getUrl(method + "/" + id) : this.getUrl(method);
-        /** @type {?} */
-        var options = new ApiRequestOptions(params);
-        return this.http.delete(url, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        function (x) { return _this.logger.request(url); })));
-    };
-    /**
-     * @param {?} input
-     * @return {?}
-     */
-    ApiService.prototype.toCamelCase = /**
-     * @param {?} input
-     * @return {?}
-     */
-    function (input) {
-        var _this = this;
-        /** @type {?} */
-        var output;
-        /** @type {?} */
-        var key;
-        /** @type {?} */
-        var keyCamelCase;
-        /** @type {?} */
-        var value;
-        if (input instanceof Array) {
-            return input.map((/**
-             * @param {?} value
-             * @return {?}
-             */
-            function (value) {
-                if (typeof value === 'object') {
-                    value = _this.toCamelCase(value);
-                }
-                return value;
-            }));
-        }
-        else {
-            output = {};
-            for (key in input) {
-                if (input.hasOwnProperty(key)) {
-                    keyCamelCase = (key.charAt(0).toLowerCase() + key.slice(1) || key).toString();
-                    value = input[key];
-                    if (value instanceof Array || (value !== null && value.constructor === Object)) {
-                        value = this.toCamelCase(value);
-                    }
-                    output[keyCamelCase] = value;
-                }
-            }
-        }
-        return output;
-    };
-    // TRANSFER STATE
-    // TRANSFER STATE
-    /**
-     * @param {?} url
-     * @param {?} model
-     * @return {?}
-     */
-    ApiService.prototype.getStateKey = 
-    // TRANSFER STATE
-    /**
-     * @param {?} url
-     * @param {?} model
-     * @return {?}
-     */
-    function (url, model) {
-        /** @type {?} */
-        var flatMap = (/**
-         * @param {?} s
-         * @param {?} x
-         * @return {?}
-         */
-        function (s, x) {
-            if (typeof x === 'number') {
-                s += x.toString();
-            }
-            else if (typeof x === 'string') {
-                s += x.substr(0, 10);
-            }
-            else if (x && typeof x === 'object') {
-                s += '_' + Object.keys(x).map((/**
-                 * @param {?} k
-                 * @return {?}
-                 */
-                function (k) { return k + '_' + flatMap('', x[k]); })).join('_');
-            }
-            return s;
-        });
-        url = flatMap(url, model);
-        // console.log('ApiService.getStateKey.url', url);
-        /** @type {?} */
-        var key = url.replace(/(\W)/gm, '_');
-        // this.logger.log('ApiService.getStateKey.key', key);
-        return makeStateKey(key);
-    };
-    /**
-     * @param {?=} first
-     * @param {?=} second
-     * @return {?}
-     */
-    ApiService.prototype.stateGet = /**
-     * @param {?=} first
-     * @param {?=} second
-     * @return {?}
-     */
-    function (first$$1, second) {
-        var _this = this;
-        /** @type {?} */
-        var method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        var params = (typeof first$$1 === 'object' ? first$$1 : second);
-        /** @type {?} */
-        var url = this.getUrl(method);
-        /** @type {?} */
-        var options = new ApiRequestOptions(params);
-        /** @type {?} */
-        var stateKey = this.getStateKey(url, params);
-        if (isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
-            /** @type {?} */
-            var cached = this.state.get(stateKey, null);
-            this.state.remove(stateKey);
-            return of(cached);
-        }
-        else {
-            return this.http.get(url, options).pipe(tap((/**
-             * @param {?} x
-             * @return {?}
-             */
-            function (x) {
-                if (isPlatformServer(_this.platformId)) {
-                    _this.state.onSerialize(stateKey, (/**
-                     * @return {?}
-                     */
-                    function () { return x; }));
-                }
-            })));
-        }
-    };
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    ApiService.prototype.statePost = /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    function (first$$1, second, third) {
-        var _this = this;
-        /** @type {?} */
-        var method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        var model = (typeof first$$1 === 'object' ? first$$1 : second);
-        /** @type {?} */
-        var params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
-        var url = this.getUrl(method);
-        /** @type {?} */
-        var options = new ApiRequestOptions(params);
-        /** @type {?} */
-        var stateKey = this.getStateKey(url, model);
-        if (isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
-            /** @type {?} */
-            var cached = this.state.get(stateKey, null);
-            this.state.remove(stateKey);
-            return of(cached);
-        }
-        else {
-            return this.http.post(url, model, options).pipe(tap((/**
-             * @param {?} x
-             * @return {?}
-             */
-            function (x) {
-                if (isPlatformServer(_this.platformId)) {
-                    _this.state.onSerialize(stateKey, (/**
-                     * @return {?}
-                     */
-                    function () { return x; }));
-                }
-            })));
-        }
-    };
-    ApiService.decorators = [
+    IdentityService.decorators = [
         { type: Injectable, args: [{
                     providedIn: 'root'
                 },] }
     ];
     /** @nocollapse */
-    ApiService.ctorParameters = function () { return [
+    IdentityService.ctorParameters = function () { return [
         { type: Injector }
     ]; };
-    /** @nocollapse */ ApiService.ngInjectableDef = defineInjectable({ factory: function ApiService_Factory() { return new ApiService(inject(INJECTOR)); }, token: ApiService, providedIn: "root" });
-    return ApiService;
-}());
+    /** @nocollapse */ IdentityService.ngInjectableDef = defineInjectable({ factory: function IdentityService_Factory() { return new IdentityService(inject(INJECTOR)); }, token: IdentityService, providedIn: "root" });
+    return IdentityService;
+}(ApiService));
 
 /**
  * @fileoverview added by tsickle
@@ -1785,7 +1857,6 @@ var TranslateService = /** @class */ (function (_super) {
         _this.events = new EventEmitter();
         _this.language_ = new BehaviorSubject(undefined);
         _this.languages_ = new BehaviorSubject([]);
-        _this.cache_ = {};
         _this.languages_.next(_this.config.languages);
         return _this;
     }
@@ -1804,15 +1875,15 @@ var TranslateService = /** @class */ (function (_super) {
          * @return {?}
          */
         function () {
-            return this.lang_;
+            return TranslateService.lang_;
         },
         set: /**
          * @param {?} lang
          * @return {?}
          */
         function (lang) {
-            if (lang !== this.lang_) {
-                this.lang_ = lang;
+            if (lang !== TranslateService.lang_) {
+                TranslateService.lang_ = lang;
                 /** @type {?} */
                 var languages = this.languages_.getValue();
                 if (languages.length) {
@@ -1857,6 +1928,7 @@ var TranslateService = /** @class */ (function (_super) {
      */
     function () {
         var _this = this;
+        // console.log(new Error().stack);
         return this.language_.pipe(filter((/**
          * @param {?} x
          * @return {?}
@@ -1880,9 +1952,9 @@ var TranslateService = /** @class */ (function (_super) {
         if (!lang || !lang.trim()) {
             return of(null);
         }
-        this.lang_ = lang;
-        if (this.cache_[lang]) {
-            return of(this.cache_[lang]);
+        TranslateService.lang_ = lang;
+        if (TranslateService.cache[lang]) {
+            return of(TranslateService.cache[lang]);
         }
         else {
             return this.get("?lang=" + lang, { lang: lang }).pipe(
@@ -1895,7 +1967,7 @@ var TranslateService = /** @class */ (function (_super) {
                 if (x.length && x[0]) {
                     /** @type {?} */
                     var labels = x[0].labels;
-                    _this.cache_[lang] = labels;
+                    TranslateService.cache[lang] = labels;
                     _this.events.emit(labels);
                     return labels;
                 }
@@ -1918,13 +1990,13 @@ var TranslateService = /** @class */ (function (_super) {
      * @return {?}
      */
     function (key, defaultValue, params) {
-        // console.log('TranslateService.getTranslate', key, this.cache_, this.lang_);
+        // console.log('TranslateService.getTranslate', key, TranslateService.cache, TranslateService.lang_);
         if (key) {
             /** @type {?} */
             var value = null;
             /** @type {?} */
-            var labels = this.cache_[this.lang_];
-            // console.log('labels', this.lang_, this.cache_, labels);
+            var labels = TranslateService.cache[TranslateService.lang_];
+            // console.log('labels', TranslateService.lang_, TranslateService.cache, labels);
             if (labels) {
                 /** @type {?} */
                 var keys = key.split('.');
@@ -2016,8 +2088,8 @@ var TranslateService = /** @class */ (function (_super) {
      */
     function (value, params) {
         /** @type {?} */
-        var TEMPLATE_REGEXP = /@([^{}\s]*)/g;
-        return value.replace(TEMPLATE_REGEXP, (/**
+        var TEMPLATEREGEXP_ = /@([^{}\s]*)/g;
+        return value.replace(TEMPLATEREGEXP_, (/**
          * @param {?} text
          * @param {?} key
          * @return {?}
@@ -2112,6 +2184,8 @@ var TranslateService = /** @class */ (function (_super) {
         }
         return lang;
     };
+    TranslateService.cache = {};
+    TranslateService.lang_ = null;
     TranslateService.decorators = [
         { type: Injectable, args: [{
                     providedIn: 'root'
@@ -2123,7 +2197,7 @@ var TranslateService = /** @class */ (function (_super) {
     ]; };
     /** @nocollapse */ TranslateService.ngInjectableDef = defineInjectable({ factory: function TranslateService_Factory() { return new TranslateService(inject(INJECTOR)); }, token: TranslateService, providedIn: "root" });
     return TranslateService;
-}(ApiService));
+}(IdentityService));
 
 /**
  * @fileoverview added by tsickle
@@ -2724,10 +2798,13 @@ var HttpStatusCodeService = /** @class */ (function () {
         return this.redirectUrl;
     };
     HttpStatusCodeService.decorators = [
-        { type: Injectable }
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
     ];
     /** @nocollapse */
     HttpStatusCodeService.ctorParameters = function () { return []; };
+    /** @nocollapse */ HttpStatusCodeService.ngInjectableDef = defineInjectable({ factory: function HttpStatusCodeService_Factory() { return new HttpStatusCodeService(); }, token: HttpStatusCodeService, providedIn: "root" });
     return HttpStatusCodeService;
 }());
 
@@ -2739,16 +2816,17 @@ var HttpResponseInterceptor = /** @class */ (function () {
     function HttpResponseInterceptor(injector, statusCodeService) {
         this.injector = injector;
         this.statusCodeService = statusCodeService;
+        this.httpErrorLogStrategy_ = LoggerErrorStrategy.Server;
     }
     Object.defineProperty(HttpResponseInterceptor.prototype, "logger", {
         get: /**
          * @return {?}
          */
         function () {
-            if (!this._logger) {
-                this._logger = this.injector.get(Logger);
+            if (!this.logger_) {
+                this.logger_ = this.injector.get(Logger);
             }
-            return this._logger;
+            return this.logger_;
         },
         enumerable: true,
         configurable: true
@@ -2758,10 +2836,10 @@ var HttpResponseInterceptor = /** @class */ (function () {
          * @return {?}
          */
         function () {
-            if (!this._router) {
-                this._router = this.injector.get(Router);
+            if (!this.router_) {
+                this.router_ = this.injector.get(Router);
             }
-            return this._router;
+            return this.router_;
         },
         enumerable: true,
         configurable: true
@@ -2771,8 +2849,8 @@ var HttpResponseInterceptor = /** @class */ (function () {
          * @return {?}
          */
         function () {
-            if (!this._routeService) {
-                this._routeService = this.injector.get(RouteService);
+            if (!this.routeService_) {
+                this.routeService_ = this.injector.get(RouteService);
             }
             return this.routeService;
         },
@@ -2815,6 +2893,11 @@ var HttpResponseInterceptor = /** @class */ (function () {
             // console.warn('HttpResponseInterceptor', error);
             if (error instanceof HttpErrorResponse) {
                 // this.statusCodeService.setStatusCode(error.status);
+                // !!! add logErrorStrategy (100 INFORMATIONAL, 200 SUCCESS, 300 REDIRECT, 400 CLIENT, 500 SERVER)
+                if (error.status >= _this.httpErrorLogStrategy_) {
+                    _this.logger.http(error);
+                }
+                /*
                 switch (error.status) {
                     case 401:
                         // unauthorized
@@ -2827,9 +2910,10 @@ var HttpResponseInterceptor = /** @class */ (function () {
                     case 410:
                         break;
                     default:
-                        _this.logger.http(error);
+                        this.logger.http(error);
                         break;
                 }
+                */
             }
             return throwError(error);
         })));
@@ -3258,274 +3342,6 @@ var LoggerComponent = /** @class */ (function () {
         { type: Logger }
     ]; };
     return LoggerComponent;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-var EventDispatcherService = /** @class */ (function () {
-    function EventDispatcherService() {
-        this.emitter = new EventEmitter();
-    }
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    EventDispatcherService.prototype.emit = /**
-     * @param {?} event
-     * @return {?}
-     */
-    function (event) {
-        return this.emitter.emit(event);
-    };
-    /**
-     * @return {?}
-     */
-    EventDispatcherService.prototype.observe = /**
-     * @return {?}
-     */
-    function () {
-        return this.emitter.pipe(tap((/**
-         * @param {?} event
-         * @return {?}
-         */
-        function (event) { return console.log('EventDispatcherService', event); })));
-    };
-    EventDispatcherService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    EventDispatcherService.ctorParameters = function () { return []; };
-    /** @nocollapse */ EventDispatcherService.ngInjectableDef = defineInjectable({ factory: function EventDispatcherService_Factory() { return new EventDispatcherService(); }, token: EventDispatcherService, providedIn: "root" });
-    return EventDispatcherService;
-}());
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
-var IdentityService = /** @class */ (function (_super) {
-    __extends(IdentityService, _super);
-    function IdentityService(injector) {
-        var _this = _super.call(this, injector) || this;
-        _this.injector = injector;
-        return _this;
-    }
-    Object.defineProperty(IdentityService.prototype, "collection", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            return '/api/identity';
-        },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * @param {?} id
-     * @return {?}
-     */
-    IdentityService.prototype.getDetailById = /**
-     * @param {?} id
-     * @return {?}
-     */
-    function (id) {
-        return this.get({ id: id });
-    };
-    IdentityService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    IdentityService.ctorParameters = function () { return [
-        { type: Injector }
-    ]; };
-    /** @nocollapse */ IdentityService.ngInjectableDef = defineInjectable({ factory: function IdentityService_Factory() { return new IdentityService(inject(INJECTOR)); }, token: IdentityService, providedIn: "root" });
-    return IdentityService;
-}(ApiService));
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
-var EntityService = /** @class */ (function (_super) {
-    __extends(EntityService, _super);
-    function EntityService() {
-        return _super !== null && _super.apply(this, arguments) || this;
-    }
-    Object.defineProperty(EntityService.prototype, "collection", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            return '/api/entity';
-        },
-        enumerable: true,
-        configurable: true
-    });
-    /**
-     * @param {?} name
-     * @return {?}
-     */
-    EntityService.prototype.getDetailByName = /**
-     * @param {?} name
-     * @return {?}
-     */
-    function (name) {
-        if (!name.trim()) {
-            return of([]);
-        }
-        return this.get({ name: name });
-    };
-    EntityService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */ EntityService.ngInjectableDef = defineInjectable({ factory: function EntityService_Factory() { return new EntityService(inject(INJECTOR)); }, token: EntityService, providedIn: "root" });
-    return EntityService;
-}(IdentityService));
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-var MenuService = /** @class */ (function (_super) {
-    __extends(MenuService, _super);
-    function MenuService(injector) {
-        var _this = _super.call(this, injector) || this;
-        _this.injector = injector;
-        return _this;
-    }
-    Object.defineProperty(MenuService.prototype, "collection", {
-        get: /**
-         * @return {?}
-         */
-        function () {
-            return '/api/menu';
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MenuService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    MenuService.ctorParameters = function () { return [
-        { type: Injector }
-    ]; };
-    /** @nocollapse */ MenuService.ngInjectableDef = defineInjectable({ factory: function MenuService_Factory() { return new MenuService(inject(INJECTOR)); }, token: MenuService, providedIn: "root" });
-    return MenuService;
-}(EntityService));
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-// export class OnceEvent extends Event { }
-var OnceService = /** @class */ (function () {
-    function OnceService(platformId, zone) {
-        this.platformId = platformId;
-        this.zone = zone;
-        this.uid = 0;
-        this.paths = [];
-    }
-    /**
-     * @param {?} url
-     * @param {?=} callback
-     * @return {?}
-     */
-    OnceService.prototype.script = /**
-     * @param {?} url
-     * @param {?=} callback
-     * @return {?}
-     */
-    function (url, callback) {
-        if (isPlatformBrowser(this.platformId)) {
-            // !!! this.zone.runOutsideAngular(() => {
-            if (this.paths.indexOf(url) === -1) {
-                this.paths.push(url);
-                /** @type {?} */
-                var callbackName_1;
-                if (callback === true) {
-                    callbackName_1 = 'OnceCallback' + (++this.uid);
-                    url = url.split('{{callback}}').join(callbackName_1);
-                }
-                else {
-                    callbackName_1 = (/** @type {?} */ (callback));
-                }
-                /** @type {?} */
-                var callback$ = void 0;
-                /** @type {?} */
-                var element = document.createElement('script');
-                element.type = 'text/javascript';
-                if (callback) {
-                    callback$ = from(new Promise((/**
-                     * @param {?} resolve
-                     * @param {?} reject
-                     * @return {?}
-                     */
-                    function (resolve, reject) {
-                        window[callbackName_1] = (/**
-                         * @param {?} data
-                         * @return {?}
-                         */
-                        function (data) {
-                            resolve(data);
-                        });
-                    })));
-                }
-                else {
-                    element.async = true;
-                    callback$ = fromEvent(element, 'load').pipe(map((/**
-                     * @param {?} x
-                     * @return {?}
-                     */
-                    function (x) { return (/** @type {?} */ (x)); })));
-                }
-                /** @type {?} */
-                var scripts = document.getElementsByTagName('script');
-                if (scripts.length) {
-                    /** @type {?} */
-                    var script = scripts[scripts.length - 1];
-                    script.parentNode.insertBefore(element, script.nextSibling);
-                }
-                element.src = url;
-                return callback$;
-            }
-            else {
-                return of(new Event('loaded!'));
-            }
-            // });
-        }
-        else {
-            return of(null);
-        }
-    };
-    OnceService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    OnceService.ctorParameters = function () { return [
-        { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-        { type: NgZone }
-    ]; };
-    /** @nocollapse */ OnceService.ngInjectableDef = defineInjectable({ factory: function OnceService_Factory() { return new OnceService(inject(PLATFORM_ID), inject(NgZone)); }, token: OnceService, providedIn: "root" });
-    return OnceService;
 }());
 
 /**
@@ -4089,6 +3905,51 @@ var RoutePipe = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @template T
+ */
+var EntityService = /** @class */ (function (_super) {
+    __extends(EntityService, _super);
+    function EntityService() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Object.defineProperty(EntityService.prototype, "collection", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return '/api/entity';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * @param {?} name
+     * @return {?}
+     */
+    EntityService.prototype.getDetailByName = /**
+     * @param {?} name
+     * @return {?}
+     */
+    function (name) {
+        if (!name.trim()) {
+            return of([]);
+        }
+        return this.get({ name: name });
+    };
+    EntityService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */ EntityService.ngInjectableDef = defineInjectable({ factory: function EntityService_Factory() { return new EntityService(inject(INJECTOR)); }, token: EntityService, providedIn: "root" });
+    return EntityService;
+}(IdentityService));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var SlugService = /** @class */ (function (_super) {
     __extends(SlugService, _super);
     function SlugService(injector) {
@@ -4518,22 +4379,6 @@ var TrustPipe = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-var services = [
-    AuthService,
-    CoreService,
-    CookieStorageService,
-    EventDispatcherService,
-    HttpStatusCodeService,
-    LabelService,
-    LocalStorageService,
-    Logger,
-    MenuService,
-    OnceService,
-    SessionStorageService,
-    StorageService,
-    TranslateService,
-];
-/** @type {?} */
 var components = [
     CoreModuleComponent,
     DisposableComponent,
@@ -4608,7 +4453,7 @@ var CoreModule = /** @class */ (function () {
                     providers: __spread([
                         { provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
                         { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader }
-                    ], services, pipes, validators),
+                    ], validators),
                     declarations: __spread(components, directives, pipes, validators),
                     entryComponents: __spread(components),
                     exports: __spread(components, directives, pipes, validators),
@@ -4712,6 +4557,49 @@ var Entity = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+var EventDispatcherService = /** @class */ (function () {
+    function EventDispatcherService() {
+        this.emitter = new EventEmitter();
+    }
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    EventDispatcherService.prototype.emit = /**
+     * @param {?} event
+     * @return {?}
+     */
+    function (event) {
+        return this.emitter.emit(event);
+    };
+    /**
+     * @return {?}
+     */
+    EventDispatcherService.prototype.observe = /**
+     * @return {?}
+     */
+    function () {
+        return this.emitter.pipe(tap((/**
+         * @param {?} event
+         * @return {?}
+         */
+        function (event) { return console.log('EventDispatcherService', event); })));
+    };
+    EventDispatcherService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */
+    EventDispatcherService.ctorParameters = function () { return []; };
+    /** @nocollapse */ EventDispatcherService.ngInjectableDef = defineInjectable({ factory: function EventDispatcherService_Factory() { return new EventDispatcherService(); }, token: EventDispatcherService, providedIn: "root" });
+    return EventDispatcherService;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var Feature = /** @class */ (function () {
     function Feature() {
         this.readmore = false;
@@ -4753,10 +4641,142 @@ var MenuItem = /** @class */ (function () {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+var MenuService = /** @class */ (function (_super) {
+    __extends(MenuService, _super);
+    function MenuService(injector) {
+        var _this = _super.call(this, injector) || this;
+        _this.injector = injector;
+        return _this;
+    }
+    Object.defineProperty(MenuService.prototype, "collection", {
+        get: /**
+         * @return {?}
+         */
+        function () {
+            return '/api/menu';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MenuService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */
+    MenuService.ctorParameters = function () { return [
+        { type: Injector }
+    ]; };
+    /** @nocollapse */ MenuService.ngInjectableDef = defineInjectable({ factory: function MenuService_Factory() { return new MenuService(inject(INJECTOR)); }, token: MenuService, providedIn: "root" });
+    return MenuService;
+}(EntityService));
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 var Taxonomy = /** @class */ (function () {
     function Taxonomy() {
     }
     return Taxonomy;
+}());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+// export class OnceEvent extends Event { }
+var OnceService = /** @class */ (function () {
+    function OnceService(platformId, zone) {
+        this.platformId = platformId;
+        this.zone = zone;
+        this.uid = 0;
+        this.paths = [];
+    }
+    /**
+     * @param {?} url
+     * @param {?=} callback
+     * @return {?}
+     */
+    OnceService.prototype.script = /**
+     * @param {?} url
+     * @param {?=} callback
+     * @return {?}
+     */
+    function (url, callback) {
+        if (isPlatformBrowser(this.platformId)) {
+            // !!! this.zone.runOutsideAngular(() => {
+            if (this.paths.indexOf(url) === -1) {
+                this.paths.push(url);
+                /** @type {?} */
+                var callbackName_1;
+                if (callback === true) {
+                    callbackName_1 = 'OnceCallback' + (++this.uid);
+                    url = url.split('{{callback}}').join(callbackName_1);
+                }
+                else {
+                    callbackName_1 = (/** @type {?} */ (callback));
+                }
+                /** @type {?} */
+                var callback$ = void 0;
+                /** @type {?} */
+                var element = document.createElement('script');
+                element.type = 'text/javascript';
+                if (callback) {
+                    callback$ = from(new Promise((/**
+                     * @param {?} resolve
+                     * @param {?} reject
+                     * @return {?}
+                     */
+                    function (resolve, reject) {
+                        window[callbackName_1] = (/**
+                         * @param {?} data
+                         * @return {?}
+                         */
+                        function (data) {
+                            resolve(data);
+                        });
+                    })));
+                }
+                else {
+                    element.async = true;
+                    callback$ = fromEvent(element, 'load').pipe(map((/**
+                     * @param {?} x
+                     * @return {?}
+                     */
+                    function (x) { return (/** @type {?} */ (x)); })));
+                }
+                /** @type {?} */
+                var scripts = document.getElementsByTagName('script');
+                if (scripts.length) {
+                    /** @type {?} */
+                    var script = scripts[scripts.length - 1];
+                    script.parentNode.insertBefore(element, script.nextSibling);
+                }
+                element.src = url;
+                return callback$;
+            }
+            else {
+                return of(new Event('loaded!'));
+            }
+            // });
+        }
+        else {
+            return of(null);
+        }
+    };
+    OnceService.decorators = [
+        { type: Injectable, args: [{
+                    providedIn: 'root'
+                },] }
+    ];
+    /** @nocollapse */
+    OnceService.ctorParameters = function () { return [
+        { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
+        { type: NgZone }
+    ]; };
+    /** @nocollapse */ OnceService.ngInjectableDef = defineInjectable({ factory: function OnceService_Factory() { return new OnceService(inject(PLATFORM_ID), inject(NgZone)); }, token: OnceService, providedIn: "root" });
+    return OnceService;
 }());
 
 /**
@@ -4779,6 +4799,6 @@ var Translate = /** @class */ (function () {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { AuthService, AuthStrategy, AuthToken, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Outlet, OUTLETS, OutletDefaultComponent, OutletRepeaterComponent, OutletComponent, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵb, BundleDirective as ɵd, OutletResolverService as ɵc };
+export { ApiRequestOptions, ApiService, AuthStrategy, AuthToken, AuthService, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, LoggerErrorStrategy, LoggerComponent, Logger, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Outlet, OUTLETS, OutletDefaultComponent, OutletRepeaterComponent, OutletComponent, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, BundleDirective as ɵc, OutletResolverService as ɵb };
 
 //# sourceMappingURL=designr-core.js.map

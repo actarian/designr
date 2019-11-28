@@ -2,7 +2,9 @@
  * Public API Surface of core
  */
 
-export { AuthService, AuthStrategy, AuthToken } from './lib/auth/auth.service';
+export { ApiRequestOptions, ApiService } from './lib/api/api.service';
+export { AuthStrategy, AuthToken } from './lib/auth/auth';
+export { AuthService } from './lib/auth/auth.service';
 export { Bundles, BUNDLES } from './lib/bundle/bundle';
 export { CoreConfig, CORE_CONFIG } from './lib/config/core.config';
 export { CoreService } from './lib/config/core.service';
@@ -18,8 +20,9 @@ export { Label } from './lib/label/label';
 export { LabelDirective } from './lib/label/label.directive';
 export { LabelPipe } from './lib/label/label.pipe';
 export { LabelService } from './lib/label/label.service';
-export { Logger } from './lib/logger/logger';
+export { LoggerErrorStrategy } from './lib/logger/logger';
 export { LoggerComponent } from './lib/logger/logger.component';
+export { Logger } from './lib/logger/logger.service';
 export { Document, DocumentIndex } from './lib/models/document';
 export { DocumentService } from './lib/models/document.service';
 export { Entity } from './lib/models/entity';

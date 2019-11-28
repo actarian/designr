@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Logger } from './logger';
+import { Logger } from './logger.service';
 
 @Component({
 	selector: 'core-logger',

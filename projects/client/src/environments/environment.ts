@@ -8,7 +8,8 @@ export const environment = {
 		defaultLanguage: 'en',
 		defaultMarket: 'en',
 		languages: [
-			{ id: 1, name: 'English', lang: 'en' }
+			{ id: 1, name: 'English', lang: 'en' },
+			{ id: 2, name: 'Italiano', lang: 'it' }
 		],
 		public: '/',
 		preboot: {

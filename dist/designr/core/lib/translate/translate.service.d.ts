@@ -1,16 +1,16 @@
 import { EventEmitter, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiService } from '../api/api.service';
+import { IdentityService } from '../models/identity.service';
 import { Translate } from './translate';
-export declare class TranslateService<T extends Translate> extends ApiService<T> {
+export declare class TranslateService<T extends Translate> extends IdentityService<T> {
     protected injector: Injector;
+    static cache: {};
+    static lang_: string;
     readonly collection: string;
     events: EventEmitter<any>;
     missingHandler?: Function;
-    private lang_;
     private language_;
     private languages_;
-    private cache_;
     lang: string;
     readonly language: any;
     readonly languages: any[];

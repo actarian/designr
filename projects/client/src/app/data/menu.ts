@@ -2,10 +2,10 @@ import { MenuItem } from '@designr/core';
 
 export const menu: MenuItem[] = [{
 	id: 2000,
-	name: 'Products',
+	name: 'header.products',
 	slug: '/products'
 }, {
 	id: 3000,
-	name: 'Contacts',
+	name: 'header.contacts',
 	slug: '/contacts'
 }];

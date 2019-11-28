@@ -1,5 +1,6 @@
 import { InjectionToken } from '@angular/core';
-import { AuthStrategy } from '../auth/auth.service';
+import { AuthStrategy } from '../auth/auth';
+import { LoggerErrorStrategy } from '../logger/logger';
 export declare class Language {
     id?: number;
     name?: string;
@@ -14,6 +15,7 @@ export declare class CoreConfig {
     authStrategy?: AuthStrategy;
     defaultLanguage?: string;
     defaultMarket?: string;
+    httpErrorLogStrategy?: LoggerErrorStrategy;
     languages?: Language[];
     origin?: string;
     production?: boolean;

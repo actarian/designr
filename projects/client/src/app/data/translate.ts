@@ -1,7 +1,8 @@
 import { Translate } from '@designr/core';
 
 export const translate: Translate[] = [{
-	id: 1, name: 'English', lang: 'en', labels: {
+	id: 1, name: 'English', lang: 'en',
+	labels: {
 		app: {
 			notFound: 'Page not found',
 			add: 'add',
@@ -21,12 +22,7 @@ export const translate: Translate[] = [{
 			select: 'select',
 		},
 		header: {
-			profile: 'Profile',
-			homepage: 'Homepage',
-			destinations: 'Destinations',
-			categories: 'Categories',
-			informations: 'Infos',
-			giftCard: 'Gift card',
+			products: 'Products',
 			contacts: 'Contacts',
 			signIn: 'Sign In',
 		},
@@ -75,7 +71,8 @@ export const translate: Translate[] = [{
 		},
 	}
 }, {
-	id: 2, name: 'Italiano', lang: 'it', labels: {
+	id: 2, name: 'Italiano', lang: 'it',
+	labels: {
 		app: {
 			notFound: 'Pagina inesistente',
 			add: 'aggiungi',
@@ -95,12 +92,7 @@ export const translate: Translate[] = [{
 			select: 'select',
 		},
 		header: {
-			profile: 'Profilo',
-			homepage: 'Homepage',
-			destinations: 'Destinazioni',
-			categories: 'Categorie',
-			informations: 'Informazioni',
-			giftCard: 'Carta regalo',
+			products: 'Prodotti',
 			contacts: 'Contatti',
 			signIn: 'Accedi',
 		},

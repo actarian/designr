@@ -4,7 +4,8 @@ import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Logger } from '../logger/logger';
+import { LoggerErrorStrategy } from '../logger/logger';
+import { Logger } from '../logger/logger.service';
 import { RouteService } from '../route/route.service';
 import { HttpStatusCodeService } from './http-status-code.service';
 
@@ -13,26 +14,28 @@ import { HttpStatusCodeService } from './http-status-code.service';
 })
 export class HttpResponseInterceptor implements HttpInterceptor {
 
-	private _logger: Logger;
+	private httpErrorLogStrategy_: LoggerErrorStrategy = LoggerErrorStrategy.Server;
+
+	private logger_: Logger;
 	get logger() {
-		if (!this._logger) {
-			this._logger = this.injector.get(Logger);
+		if (!this.logger_) {
+			this.logger_ = this.injector.get(Logger);
 		}
-		return this._logger;
+		return this.logger_;
 	}
 
-	private _router: Router;
+	private router_: Router;
 	get router() {
-		if (!this._router) {
-			this._router = this.injector.get(Router);
+		if (!this.router_) {
+			this.router_ = this.injector.get(Router);
 		}
-		return this._router;
+		return this.router_;
 	}
 
-	private _routeService: RouteService;
+	private routeService_: RouteService;
 	get routeService() {
-		if (!this._routeService) {
-			this._routeService = this.injector.get(RouteService);
+		if (!this.routeService_) {
+			this.routeService_ = this.injector.get(RouteService);
 		}
 		return this.routeService;
 	}
@@ -61,6 +64,11 @@ export class HttpResponseInterceptor implements HttpInterceptor {
 				// console.warn('HttpResponseInterceptor', error);
 				if (error instanceof HttpErrorResponse) {
 					// this.statusCodeService.setStatusCode(error.status);
+					// !!! add logErrorStrategy (100 INFORMATIONAL, 200 SUCCESS, 300 REDIRECT, 400 CLIENT, 500 SERVER)
+					if (error.status >= this.httpErrorLogStrategy_) {
+						this.logger.http(error);
+					}
+					/*
 					switch (error.status) {
 						case 401:
 							// unauthorized
@@ -76,6 +84,7 @@ export class HttpResponseInterceptor implements HttpInterceptor {
 							this.logger.http(error);
 							break;
 					}
+					*/
 				}
 				return throwError(error);
 			})

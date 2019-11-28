@@ -3,11 +3,11 @@ import { Injector } from '@angular/core';
 import { StateKey, TransferState } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { CoreConfig } from '../config/core.config';
-import { Logger } from '../logger/logger';
+import { Logger } from '../logger/logger.service';
 export declare class ApiRequestOptions {
     headers?: HttpHeaders;
     params?: HttpParams;
-    constructor(options?: {});
+    constructor(params?: {});
 }
 export declare class ApiService<T> {
     protected injector: Injector;

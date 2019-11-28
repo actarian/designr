@@ -1,13 +1,601 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpErrorResponse, HttpClient, HttpHeaders, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { HttpErrorResponse, HttpClient, HttpHeaders, HttpParams, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import JSONFormatter from 'json-formatter-js';
 import { isArray, isObject } from 'util';
-import { isPlatformBrowser, Location, isPlatformServer, CommonModule } from '@angular/common';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
-import { Inject, Injectable, PLATFORM_ID, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, InjectionToken, ComponentFactoryResolver, ViewChild, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, INJECTOR, NgZone, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer, Location, CommonModule } from '@angular/common';
+import { InjectionToken, Inject, Injectable, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, ComponentFactoryResolver, ViewChild, PLATFORM_ID, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, INJECTOR, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf, NgZone } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
 import { tap, filter, map, switchMap, distinctUntilChanged, catchError, debounceTime, takeUntil, first } from 'rxjs/operators';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @enum {number} */
+const AuthStrategy = {
+    Bearer: 0,
+    Cookie: 1,
+};
+AuthStrategy[AuthStrategy.Bearer] = 'Bearer';
+AuthStrategy[AuthStrategy.Cookie] = 'Cookie';
+class AuthToken {
+    /**
+     * @param {?} accessToken
+     * @param {?=} expiresIn
+     */
+    constructor(accessToken, expiresIn = 0) {
+        this.accessToken = accessToken;
+        this.expiresIn = expiresIn;
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @enum {number} */
+const LoggerErrorStrategy = {
+    Informational: 100,
+    Success: 200,
+    Redirect: 300,
+    Client: 400,
+    Server: 500,
+};
+LoggerErrorStrategy[LoggerErrorStrategy.Informational] = 'Informational';
+LoggerErrorStrategy[LoggerErrorStrategy.Success] = 'Success';
+LoggerErrorStrategy[LoggerErrorStrategy.Redirect] = 'Redirect';
+LoggerErrorStrategy[LoggerErrorStrategy.Client] = 'Client';
+LoggerErrorStrategy[LoggerErrorStrategy.Server] = 'Server';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class CoreTransitionConfig {
+    /**
+     * @param {?=} options
+     */
+    constructor(options) {
+        // console.log('CoreTransitionConfig', options);
+        if (options) {
+            Object.assign(this, options);
+        }
+    }
+}
+class CoreConfig {
+    // ExtraOptions
+    /**
+     * @param {?=} options
+     */
+    constructor(options) {
+        this.assets = '';
+        this.authStrategy = AuthStrategy.Cookie;
+        this.defaultLanguage = 'it';
+        this.defaultMarket = 'it';
+        this.httpErrorLogStrategy = LoggerErrorStrategy.Server;
+        this.languages = [{ id: 1, name: 'Italiano', lang: 'it' }];
+        this.origin = '';
+        this.production = false;
+        this.public = '';
+        this.urlStrategy = '';
+        this.useLang = false;
+        this.useMarket = false;
+        // console.log('CoreConfig', options);
+        if (options) {
+            Object.assign(this, options);
+            this.transition = new CoreTransitionConfig(options.transition);
+        }
+        else {
+            this.transition = new CoreTransitionConfig();
+        }
+    }
+}
+/** @type {?} */
+const CORE_CONFIG = new InjectionToken('core.config');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class CoreService {
+    /**
+     * @param {?} options
+     */
+    constructor(options) {
+        // console.log('CoreService', options);
+        options = options || {};
+        // options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
+        // options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;
+        this.options = new CoreConfig(options);
+    }
+}
+CoreService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+CoreService.ctorParameters = () => [
+    { type: CoreConfig, decorators: [{ type: Inject, args: [CORE_CONFIG,] }] }
+];
+/** @nocollapse */ CoreService.ngInjectableDef = defineInjectable({ factory: function CoreService_Factory() { return new CoreService(inject(CORE_CONFIG)); }, token: CoreService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class Logger {
+    /**
+     * @param {?} coreService
+     */
+    constructor(coreService) {
+        this.coreService = coreService;
+        this.logs = [];
+        //
+    }
+    /**
+     * @param {...?} args
+     * @return {?}
+     */
+    request(...args) {
+        if (!this.coreService.options.production) {
+            /** @type {?} */
+            const s = args.join(', ');
+            this.logs.push(s);
+            // console.log.apply(this, ['%c %s', 'background: #dddddd; color: #111'].concat(args));
+        }
+    }
+    /**
+     * @param {...?} args
+     * @return {?}
+     */
+    log(...args) {
+        if (!this.coreService.options.production) {
+            /** @type {?} */
+            const s = args.join(', ');
+            this.logs.push(s);
+            console.log.apply(this, ['%c%s', 'background: #1976d2; color: #fff; border-radius: 3px; padding: 4px 8px; margin-bottom: 4px;'].concat(args));
+        }
+    }
+    /**
+     * @param {...?} args
+     * @return {?}
+     */
+    warn(...args) {
+        if (!this.coreService.options.production) {
+            /** @type {?} */
+            const s = args.join(', ');
+            this.logs.push(s);
+            console.log.apply(this, ['%c%s', 'background: #ff5500; color: #fff'].concat(args));
+        }
+    }
+    /**
+     * @param {...?} args
+     * @return {?}
+     */
+    error(...args) {
+        if (!this.coreService.options.production) {
+            /** @type {?} */
+            const s = args.join(', ');
+            this.logs.push(s);
+            console.error.apply(console, args);
+        }
+    }
+    /**
+     * @param {?} error
+     * @return {?}
+     */
+    http(error) {
+        this.httpError = error;
+        if (!this.coreService.options.production) {
+            this.logs.push(error.message);
+        }
+        console.warn('Logger.http.error', error.status, error.statusText, error.url);
+    }
+    /**
+     * @return {?}
+     */
+    clear() {
+        this.httpError = null;
+        this.logs = [];
+    }
+}
+Logger.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+Logger.ctorParameters = () => [
+    { type: CoreService }
+];
+/** @nocollapse */ Logger.ngInjectableDef = defineInjectable({ factory: function Logger_Factory() { return new Logger(inject(CoreService)); }, token: Logger, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ApiRequestOptions {
+    /**
+     * @param {?=} params
+     */
+    constructor(params) {
+        this.headers = new HttpHeaders({
+            'Content-Type': 'application/json'
+        });
+        this.params = (/** @type {?} */ (params));
+    }
+}
+/**
+ * @template T
+ */
+class ApiService {
+    /**
+     * @param {?} injector
+     */
+    constructor(injector) {
+        this.injector = injector;
+    }
+    /**
+     * @return {?}
+     */
+    get collection() {
+        return '/api';
+    }
+    /**
+     * @return {?}
+     */
+    get logger() {
+        if (!this._logger) {
+            this._logger = this.injector.get(Logger);
+        }
+        return this._logger;
+    }
+    /**
+     * @return {?}
+     */
+    get http() {
+        if (!this._http) {
+            this._http = this.injector.get(HttpClient);
+        }
+        return this._http;
+    }
+    /**
+     * @return {?}
+     */
+    get state() {
+        if (!this._state) {
+            this._state = this.injector.get(TransferState);
+        }
+        return this._state;
+    }
+    /**
+     * @return {?}
+     */
+    get platformId() {
+        if (!this._platformId) {
+            this._platformId = this.injector.get(PLATFORM_ID);
+        }
+        return this._platformId;
+    }
+    /**
+     * @return {?}
+     */
+    get config() {
+        if (!this._config) {
+            this._config = this.injector.get(CoreService).options;
+        }
+        return this._config;
+    }
+    /**
+     * @return {?}
+     */
+    get origin() {
+        if (!this._origin) {
+            this._origin = this.config.origin;
+        }
+        return this._origin;
+    }
+    /**
+     * @return {?}
+     */
+    get url() {
+        /** @type {?} */
+        let base = this.origin;
+        /** @type {?} */
+        const collection = this.collection.toLowerCase();
+        if (collection.indexOf('http') === 0) {
+            base = '';
+        }
+        return `${base}${collection}`;
+    }
+    /**
+     * @param {?=} method
+     * @return {?}
+     */
+    getUrl(method = '') {
+        return `${this.url}${method}`;
+    }
+    /**
+     * @param {?=} first
+     * @param {?=} second
+     * @return {?}
+     */
+    get(first$$1, second) {
+        /** @type {?} */
+        const method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        const params = (typeof first$$1 === 'object' ? first$$1 : second);
+        /** @type {?} */
+        const url = this.getUrl(method);
+        /** @type {?} */
+        const options = new ApiRequestOptions(params);
+        return this.http.get(url, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.logger.request(url))));
+    }
+    /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    post(first$$1, second, third) {
+        /** @type {?} */
+        const method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        const model = (typeof first$$1 === 'object' ? first$$1 : second);
+        /** @type {?} */
+        const params = (typeof second === 'object' ? second : third);
+        /** @type {?} */
+        const url = this.getUrl(method);
+        /** @type {?} */
+        const options = new ApiRequestOptions(params);
+        return this.http.post(url, model, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.logger.request(url))));
+    }
+    /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    put(first$$1, second, third) {
+        /** @type {?} */
+        const method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        const model = (/** @type {?} */ ((typeof first$$1 === 'object' ? first$$1 : second)));
+        /** @type {?} */
+        const params = (typeof second === 'object' ? second : third);
+        /** @type {?} */
+        const url = this.getUrl(method);
+        /** @type {?} */
+        const options = new ApiRequestOptions(params);
+        return this.http.put(url, model, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.logger.request(url))));
+    }
+    /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    patch(first$$1, second, third) {
+        /** @type {?} */
+        const method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        const model = (/** @type {?} */ ((typeof first$$1 === 'object' ? first$$1 : second)));
+        /** @type {?} */
+        const params = (typeof second === 'object' ? second : third);
+        /** @type {?} */
+        const url = this.getUrl(method);
+        /** @type {?} */
+        const options = new ApiRequestOptions(params);
+        return this.http.patch(url, model, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.logger.request(url))));
+    }
+    /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    delete(first$$1, second, third) {
+        /** @type {?} */
+        const method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        const identity = (/** @type {?} */ ((typeof first$$1 !== 'string' ? first$$1 : second)));
+        /** @type {?} */
+        const id = identity ? (typeof identity === 'number' ? identity : ((/** @type {?} */ (identity))).id) : null;
+        /** @type {?} */
+        const params = (typeof second === 'object' ? second : third);
+        /** @type {?} */
+        const url = id !== null ? this.getUrl(`${method}/${id}`) : this.getUrl(method);
+        /** @type {?} */
+        const options = new ApiRequestOptions(params);
+        return this.http.delete(url, options).pipe(tap((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => this.logger.request(url))));
+    }
+    /**
+     * @param {?} input
+     * @return {?}
+     */
+    toCamelCase(input) {
+        /** @type {?} */
+        let output;
+        /** @type {?} */
+        let key;
+        /** @type {?} */
+        let keyCamelCase;
+        /** @type {?} */
+        let value;
+        if (input instanceof Array) {
+            return input.map((/**
+             * @param {?} value
+             * @return {?}
+             */
+            (value) => {
+                if (typeof value === 'object') {
+                    value = this.toCamelCase(value);
+                }
+                return value;
+            }));
+        }
+        else {
+            output = {};
+            for (key in input) {
+                if (input.hasOwnProperty(key)) {
+                    keyCamelCase = (key.charAt(0).toLowerCase() + key.slice(1) || key).toString();
+                    value = input[key];
+                    if (value instanceof Array || (value !== null && value.constructor === Object)) {
+                        value = this.toCamelCase(value);
+                    }
+                    output[keyCamelCase] = value;
+                }
+            }
+        }
+        return output;
+    }
+    // TRANSFER STATE
+    /**
+     * @param {?} url
+     * @param {?} model
+     * @return {?}
+     */
+    getStateKey(url, model) {
+        /** @type {?} */
+        const flatMap = (/**
+         * @param {?} s
+         * @param {?} x
+         * @return {?}
+         */
+        (s, x) => {
+            if (typeof x === 'number') {
+                s += x.toString();
+            }
+            else if (typeof x === 'string') {
+                s += x.substr(0, 10);
+            }
+            else if (x && typeof x === 'object') {
+                s += '_' + Object.keys(x).map((/**
+                 * @param {?} k
+                 * @return {?}
+                 */
+                k => k + '_' + flatMap('', x[k]))).join('_');
+            }
+            return s;
+        });
+        url = flatMap(url, model);
+        // console.log('ApiService.getStateKey.url', url);
+        /** @type {?} */
+        const key = url.replace(/(\W)/gm, '_');
+        // this.logger.log('ApiService.getStateKey.key', key);
+        return makeStateKey(key);
+    }
+    /**
+     * @param {?=} first
+     * @param {?=} second
+     * @return {?}
+     */
+    stateGet(first$$1, second) {
+        /** @type {?} */
+        const method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        const params = (typeof first$$1 === 'object' ? first$$1 : second);
+        /** @type {?} */
+        const url = this.getUrl(method);
+        /** @type {?} */
+        const options = new ApiRequestOptions(params);
+        /** @type {?} */
+        const stateKey = this.getStateKey(url, params);
+        if (isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
+            /** @type {?} */
+            const cached = this.state.get(stateKey, null);
+            this.state.remove(stateKey);
+            return of(cached);
+        }
+        else {
+            return this.http.get(url, options).pipe(tap((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => {
+                if (isPlatformServer(this.platformId)) {
+                    this.state.onSerialize(stateKey, (/**
+                     * @return {?}
+                     */
+                    () => x));
+                }
+            })));
+        }
+    }
+    /**
+     * @param {?} first
+     * @param {?=} second
+     * @param {?=} third
+     * @return {?}
+     */
+    statePost(first$$1, second, third) {
+        /** @type {?} */
+        const method = (typeof first$$1 === 'string' ? first$$1 : '');
+        /** @type {?} */
+        const model = (typeof first$$1 === 'object' ? first$$1 : second);
+        /** @type {?} */
+        const params = (typeof second === 'object' ? second : third);
+        /** @type {?} */
+        const url = this.getUrl(method);
+        /** @type {?} */
+        const options = new ApiRequestOptions(params);
+        /** @type {?} */
+        const stateKey = this.getStateKey(url, model);
+        if (isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
+            /** @type {?} */
+            const cached = this.state.get(stateKey, null);
+            this.state.remove(stateKey);
+            return of(cached);
+        }
+        else {
+            return this.http.post(url, model, options).pipe(tap((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => {
+                if (isPlatformServer(this.platformId)) {
+                    this.state.onSerialize(stateKey, (/**
+                     * @return {?}
+                     */
+                    () => x));
+                }
+            })));
+        }
+    }
+}
+ApiService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+ApiService.ctorParameters = () => [
+    { type: Injector }
+];
+/** @nocollapse */ ApiService.ngInjectableDef = defineInjectable({ factory: function ApiService_Factory() { return new ApiService(inject(INJECTOR)); }, token: ApiService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -554,23 +1142,6 @@ LocalStorageService.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-/** @enum {number} */
-const AuthStrategy = {
-    Bearer: 0,
-    Cookie: 1,
-};
-AuthStrategy[AuthStrategy.Bearer] = 'Bearer';
-AuthStrategy[AuthStrategy.Cookie] = 'Cookie';
-class AuthToken {
-    /**
-     * @param {?} accessToken
-     * @param {?=} expiresIn
-     */
-    constructor(accessToken, expiresIn = 0) {
-        this.accessToken = accessToken;
-        this.expiresIn = expiresIn;
-    }
-}
 class AuthService {
     /**
      * @param {?} platformId
@@ -655,78 +1226,6 @@ AuthService.ctorParameters = () => [
  */
 /** @type {?} */
 const BUNDLES = new InjectionToken('core.bundles');
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class CoreTransitionConfig {
-    /**
-     * @param {?=} options
-     */
-    constructor(options) {
-        // console.log('CoreTransitionConfig', options);
-        if (options) {
-            Object.assign(this, options);
-        }
-    }
-}
-class CoreConfig {
-    // ExtraOptions
-    /**
-     * @param {?=} options
-     */
-    constructor(options) {
-        this.assets = '';
-        this.authStrategy = AuthStrategy.Cookie;
-        this.defaultLanguage = 'it';
-        this.defaultMarket = 'it';
-        this.languages = [{ id: 1, name: 'Italiano', lang: 'it' }];
-        this.origin = '';
-        this.production = false;
-        this.public = '';
-        this.urlStrategy = '';
-        this.useLang = false;
-        this.useMarket = false;
-        // console.log('CoreConfig', options);
-        if (options) {
-            Object.assign(this, options);
-            this.transition = new CoreTransitionConfig(options.transition);
-        }
-        else {
-            this.transition = new CoreTransitionConfig();
-        }
-    }
-}
-/** @type {?} */
-const CORE_CONFIG = new InjectionToken('core.config');
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class CoreService {
-    /**
-     * @param {?} options
-     */
-    constructor(options) {
-        // console.log('CoreService', options);
-        options = options || {};
-        // options.defaultPage = (options.defaultPage || PageNotFoundComponent) as Type<PageComponent>;
-        // options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;
-        this.options = new CoreConfig(options);
-    }
-}
-CoreService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-CoreService.ctorParameters = () => [
-    { type: CoreConfig, decorators: [{ type: Inject, args: [CORE_CONFIG,] }] }
-];
-/** @nocollapse */ CoreService.ngInjectableDef = defineInjectable({ factory: function CoreService_Factory() { return new CoreService(inject(CORE_CONFIG)); }, token: CoreService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -969,97 +1468,6 @@ HighlightPipe.decorators = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class Logger {
-    /**
-     * @param {?} coreService
-     */
-    constructor(coreService) {
-        this.coreService = coreService;
-        this.logs = [];
-        //
-    }
-    /**
-     * @param {...?} args
-     * @return {?}
-     */
-    request(...args) {
-        if (!this.coreService.options.production) {
-            /** @type {?} */
-            const s = args.join(', ');
-            this.logs.push(s);
-            // console.log.apply(this, ['%c %s', 'background: #dddddd; color: #111'].concat(args));
-        }
-    }
-    /**
-     * @param {...?} args
-     * @return {?}
-     */
-    log(...args) {
-        if (!this.coreService.options.production) {
-            /** @type {?} */
-            const s = args.join(', ');
-            this.logs.push(s);
-            console.log.apply(this, ['%c%s', 'background: #1976d2; color: #fff; border-radius: 3px; padding: 4px 8px; margin-bottom: 4px;'].concat(args));
-        }
-    }
-    /**
-     * @param {...?} args
-     * @return {?}
-     */
-    warn(...args) {
-        if (!this.coreService.options.production) {
-            /** @type {?} */
-            const s = args.join(', ');
-            this.logs.push(s);
-            console.log.apply(this, ['%c%s', 'background: #ff5500; color: #fff'].concat(args));
-        }
-    }
-    /**
-     * @param {...?} args
-     * @return {?}
-     */
-    error(...args) {
-        if (!this.coreService.options.production) {
-            /** @type {?} */
-            const s = args.join(', ');
-            this.logs.push(s);
-            console.error.apply(console, args);
-        }
-    }
-    /**
-     * @param {?} error
-     * @return {?}
-     */
-    http(error) {
-        this.httpError = error;
-        if (!this.coreService.options.production) {
-            this.logs.push(error.message);
-        }
-        console.warn('Logger.http.error', error.status, error.statusText, error.url);
-    }
-    /**
-     * @return {?}
-     */
-    clear() {
-        this.httpError = null;
-        this.logs = [];
-    }
-}
-Logger.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-Logger.ctorParameters = () => [
-    { type: CoreService }
-];
-/** @nocollapse */ Logger.ngInjectableDef = defineInjectable({ factory: function Logger_Factory() { return new Logger(inject(CoreService)); }, token: Logger, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class SegmentPipe {
     /**
      * @param {?} location
@@ -1101,385 +1509,41 @@ SegmentPipe.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-class ApiRequestOptions {
-    /**
-     * @param {?=} options
-     */
-    constructor(options) {
-        this.headers = new HttpHeaders({
-            'Content-Type': 'application/json'
-        });
-        this.params = options ? new HttpParams(options) : null;
-    }
-}
 /**
  * @template T
  */
-class ApiService {
+class IdentityService extends ApiService {
     /**
      * @param {?} injector
      */
     constructor(injector) {
+        super(injector);
         this.injector = injector;
     }
     /**
      * @return {?}
      */
     get collection() {
-        return '/api';
+        return '/api/identity';
     }
     /**
+     * @param {?} id
      * @return {?}
      */
-    get logger() {
-        if (!this._logger) {
-            this._logger = this.injector.get(Logger);
-        }
-        return this._logger;
-    }
-    /**
-     * @return {?}
-     */
-    get http() {
-        if (!this._http) {
-            this._http = this.injector.get(HttpClient);
-        }
-        return this._http;
-    }
-    /**
-     * @return {?}
-     */
-    get state() {
-        if (!this._state) {
-            this._state = this.injector.get(TransferState);
-        }
-        return this._state;
-    }
-    /**
-     * @return {?}
-     */
-    get platformId() {
-        if (!this._platformId) {
-            this._platformId = this.injector.get(PLATFORM_ID);
-        }
-        return this._platformId;
-    }
-    /**
-     * @return {?}
-     */
-    get config() {
-        if (!this._config) {
-            this._config = this.injector.get(CoreService).options;
-        }
-        return this._config;
-    }
-    /**
-     * @return {?}
-     */
-    get origin() {
-        if (!this._origin) {
-            this._origin = this.config.origin;
-        }
-        return this._origin;
-    }
-    /**
-     * @return {?}
-     */
-    get url() {
-        /** @type {?} */
-        let base = this.origin;
-        /** @type {?} */
-        const collection = this.collection.toLowerCase();
-        if (collection.indexOf('http') === 0) {
-            base = '';
-        }
-        return `${base}${collection}`;
-    }
-    /**
-     * @param {?=} method
-     * @return {?}
-     */
-    getUrl(method = '') {
-        return `${this.url}${method}`;
-    }
-    /**
-     * @param {?=} first
-     * @param {?=} second
-     * @return {?}
-     */
-    get(first$$1, second) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const params = (typeof first$$1 === 'object' ? first$$1 : second);
-        /** @type {?} */
-        const url = this.getUrl(method);
-        /** @type {?} */
-        const options = new ApiRequestOptions(params);
-        return this.http.get(url, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.logger.request(url))));
-    }
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    post(first$$1, second, third) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const model = (typeof first$$1 === 'object' ? first$$1 : second);
-        /** @type {?} */
-        const params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
-        const url = this.getUrl(method);
-        /** @type {?} */
-        const options = new ApiRequestOptions(params);
-        return this.http.post(url, model, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.logger.request(url))));
-    }
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    put(first$$1, second, third) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const model = (/** @type {?} */ ((typeof first$$1 === 'object' ? first$$1 : second)));
-        /** @type {?} */
-        const params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
-        const url = this.getUrl(method);
-        /** @type {?} */
-        const options = new ApiRequestOptions(params);
-        return this.http.put(url, model, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.logger.request(url))));
-    }
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    patch(first$$1, second, third) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const model = (/** @type {?} */ ((typeof first$$1 === 'object' ? first$$1 : second)));
-        /** @type {?} */
-        const params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
-        const url = this.getUrl(method);
-        /** @type {?} */
-        const options = new ApiRequestOptions(params);
-        return this.http.patch(url, model, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.logger.request(url))));
-    }
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    delete(first$$1, second, third) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const identity = (/** @type {?} */ ((typeof first$$1 !== 'string' ? first$$1 : second)));
-        /** @type {?} */
-        const id = identity ? (typeof identity === 'number' ? identity : ((/** @type {?} */ (identity))).id) : null;
-        /** @type {?} */
-        const params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
-        const url = id !== null ? this.getUrl(`${method}/${id}`) : this.getUrl(method);
-        /** @type {?} */
-        const options = new ApiRequestOptions(params);
-        return this.http.delete(url, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.logger.request(url))));
-    }
-    /**
-     * @param {?} input
-     * @return {?}
-     */
-    toCamelCase(input) {
-        /** @type {?} */
-        let output;
-        /** @type {?} */
-        let key;
-        /** @type {?} */
-        let keyCamelCase;
-        /** @type {?} */
-        let value;
-        if (input instanceof Array) {
-            return input.map((/**
-             * @param {?} value
-             * @return {?}
-             */
-            (value) => {
-                if (typeof value === 'object') {
-                    value = this.toCamelCase(value);
-                }
-                return value;
-            }));
-        }
-        else {
-            output = {};
-            for (key in input) {
-                if (input.hasOwnProperty(key)) {
-                    keyCamelCase = (key.charAt(0).toLowerCase() + key.slice(1) || key).toString();
-                    value = input[key];
-                    if (value instanceof Array || (value !== null && value.constructor === Object)) {
-                        value = this.toCamelCase(value);
-                    }
-                    output[keyCamelCase] = value;
-                }
-            }
-        }
-        return output;
-    }
-    // TRANSFER STATE
-    /**
-     * @param {?} url
-     * @param {?} model
-     * @return {?}
-     */
-    getStateKey(url, model) {
-        /** @type {?} */
-        const flatMap = (/**
-         * @param {?} s
-         * @param {?} x
-         * @return {?}
-         */
-        (s, x) => {
-            if (typeof x === 'number') {
-                s += x.toString();
-            }
-            else if (typeof x === 'string') {
-                s += x.substr(0, 10);
-            }
-            else if (x && typeof x === 'object') {
-                s += '_' + Object.keys(x).map((/**
-                 * @param {?} k
-                 * @return {?}
-                 */
-                k => k + '_' + flatMap('', x[k]))).join('_');
-            }
-            return s;
-        });
-        url = flatMap(url, model);
-        // console.log('ApiService.getStateKey.url', url);
-        /** @type {?} */
-        const key = url.replace(/(\W)/gm, '_');
-        // this.logger.log('ApiService.getStateKey.key', key);
-        return makeStateKey(key);
-    }
-    /**
-     * @param {?=} first
-     * @param {?=} second
-     * @return {?}
-     */
-    stateGet(first$$1, second) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const params = (typeof first$$1 === 'object' ? first$$1 : second);
-        /** @type {?} */
-        const url = this.getUrl(method);
-        /** @type {?} */
-        const options = new ApiRequestOptions(params);
-        /** @type {?} */
-        const stateKey = this.getStateKey(url, params);
-        if (isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
-            /** @type {?} */
-            const cached = this.state.get(stateKey, null);
-            this.state.remove(stateKey);
-            return of(cached);
-        }
-        else {
-            return this.http.get(url, options).pipe(tap((/**
-             * @param {?} x
-             * @return {?}
-             */
-            x => {
-                if (isPlatformServer(this.platformId)) {
-                    this.state.onSerialize(stateKey, (/**
-                     * @return {?}
-                     */
-                    () => x));
-                }
-            })));
-        }
-    }
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    statePost(first$$1, second, third) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const model = (typeof first$$1 === 'object' ? first$$1 : second);
-        /** @type {?} */
-        const params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
-        const url = this.getUrl(method);
-        /** @type {?} */
-        const options = new ApiRequestOptions(params);
-        /** @type {?} */
-        const stateKey = this.getStateKey(url, model);
-        if (isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
-            /** @type {?} */
-            const cached = this.state.get(stateKey, null);
-            this.state.remove(stateKey);
-            return of(cached);
-        }
-        else {
-            return this.http.post(url, model, options).pipe(tap((/**
-             * @param {?} x
-             * @return {?}
-             */
-            x => {
-                if (isPlatformServer(this.platformId)) {
-                    this.state.onSerialize(stateKey, (/**
-                     * @return {?}
-                     */
-                    () => x));
-                }
-            })));
-        }
+    getDetailById(id) {
+        return this.get({ id });
     }
 }
-ApiService.decorators = [
+IdentityService.decorators = [
     { type: Injectable, args: [{
                 providedIn: 'root'
             },] }
 ];
 /** @nocollapse */
-ApiService.ctorParameters = () => [
+IdentityService.ctorParameters = () => [
     { type: Injector }
 ];
-/** @nocollapse */ ApiService.ngInjectableDef = defineInjectable({ factory: function ApiService_Factory() { return new ApiService(inject(INJECTOR)); }, token: ApiService, providedIn: "root" });
+/** @nocollapse */ IdentityService.ngInjectableDef = defineInjectable({ factory: function IdentityService_Factory() { return new IdentityService(inject(INJECTOR)); }, token: IdentityService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -1488,7 +1552,7 @@ ApiService.ctorParameters = () => [
 /**
  * @template T
  */
-class TranslateService extends ApiService {
+class TranslateService extends IdentityService {
     /**
      * @param {?} injector
      */
@@ -1498,7 +1562,6 @@ class TranslateService extends ApiService {
         this.events = new EventEmitter();
         this.language_ = new BehaviorSubject(undefined);
         this.languages_ = new BehaviorSubject([]);
-        this.cache_ = {};
         this.languages_.next(this.config.languages);
     }
     /**
@@ -1511,15 +1574,15 @@ class TranslateService extends ApiService {
      * @return {?}
      */
     get lang() {
-        return this.lang_;
+        return TranslateService.lang_;
     }
     /**
      * @param {?} lang
      * @return {?}
      */
     set lang(lang) {
-        if (lang !== this.lang_) {
-            this.lang_ = lang;
+        if (lang !== TranslateService.lang_) {
+            TranslateService.lang_ = lang;
             /** @type {?} */
             const languages = this.languages_.getValue();
             if (languages.length) {
@@ -1549,6 +1612,7 @@ class TranslateService extends ApiService {
      * @return {?}
      */
     observe$() {
+        // console.log(new Error().stack);
         return this.language_.pipe(filter((/**
          * @param {?} x
          * @return {?}
@@ -1567,9 +1631,9 @@ class TranslateService extends ApiService {
         if (!lang || !lang.trim()) {
             return of(null);
         }
-        this.lang_ = lang;
-        if (this.cache_[lang]) {
-            return of(this.cache_[lang]);
+        TranslateService.lang_ = lang;
+        if (TranslateService.cache[lang]) {
+            return of(TranslateService.cache[lang]);
         }
         else {
             return this.get(`?lang=${lang}`, { lang }).pipe(
@@ -1582,7 +1646,7 @@ class TranslateService extends ApiService {
                 if (x.length && x[0]) {
                     /** @type {?} */
                     const labels = x[0].labels;
-                    this.cache_[lang] = labels;
+                    TranslateService.cache[lang] = labels;
                     this.events.emit(labels);
                     return labels;
                 }
@@ -1599,13 +1663,13 @@ class TranslateService extends ApiService {
      * @return {?}
      */
     getTranslate(key, defaultValue, params) {
-        // console.log('TranslateService.getTranslate', key, this.cache_, this.lang_);
+        // console.log('TranslateService.getTranslate', key, TranslateService.cache, TranslateService.lang_);
         if (key) {
             /** @type {?} */
             let value = null;
             /** @type {?} */
-            let labels = this.cache_[this.lang_];
-            // console.log('labels', this.lang_, this.cache_, labels);
+            let labels = TranslateService.cache[TranslateService.lang_];
+            // console.log('labels', TranslateService.lang_, TranslateService.cache, labels);
             if (labels) {
                 /** @type {?} */
                 const keys = key.split('.');
@@ -1672,8 +1736,8 @@ class TranslateService extends ApiService {
      */
     parseParams(value, params) {
         /** @type {?} */
-        const TEMPLATE_REGEXP = /@([^{}\s]*)/g;
-        return value.replace(TEMPLATE_REGEXP, (/**
+        const TEMPLATEREGEXP_ = /@([^{}\s]*)/g;
+        return value.replace(TEMPLATEREGEXP_, (/**
          * @param {?} text
          * @param {?} key
          * @return {?}
@@ -1748,6 +1812,8 @@ class TranslateService extends ApiService {
         return lang;
     }
 }
+TranslateService.cache = {};
+TranslateService.lang_ = null;
 TranslateService.decorators = [
     { type: Injectable, args: [{
                 providedIn: 'root'
@@ -2246,10 +2312,13 @@ class HttpStatusCodeService {
     }
 }
 HttpStatusCodeService.decorators = [
-    { type: Injectable }
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
 ];
 /** @nocollapse */
 HttpStatusCodeService.ctorParameters = () => [];
+/** @nocollapse */ HttpStatusCodeService.ngInjectableDef = defineInjectable({ factory: function HttpStatusCodeService_Factory() { return new HttpStatusCodeService(); }, token: HttpStatusCodeService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -2263,31 +2332,32 @@ class HttpResponseInterceptor {
     constructor(injector, statusCodeService) {
         this.injector = injector;
         this.statusCodeService = statusCodeService;
+        this.httpErrorLogStrategy_ = LoggerErrorStrategy.Server;
     }
     /**
      * @return {?}
      */
     get logger() {
-        if (!this._logger) {
-            this._logger = this.injector.get(Logger);
+        if (!this.logger_) {
+            this.logger_ = this.injector.get(Logger);
         }
-        return this._logger;
+        return this.logger_;
     }
     /**
      * @return {?}
      */
     get router() {
-        if (!this._router) {
-            this._router = this.injector.get(Router);
+        if (!this.router_) {
+            this.router_ = this.injector.get(Router);
         }
-        return this._router;
+        return this.router_;
     }
     /**
      * @return {?}
      */
     get routeService() {
-        if (!this._routeService) {
-            this._routeService = this.injector.get(RouteService);
+        if (!this.routeService_) {
+            this.routeService_ = this.injector.get(RouteService);
         }
         return this.routeService;
     }
@@ -2321,6 +2391,11 @@ class HttpResponseInterceptor {
             // console.warn('HttpResponseInterceptor', error);
             if (error instanceof HttpErrorResponse) {
                 // this.statusCodeService.setStatusCode(error.status);
+                // !!! add logErrorStrategy (100 INFORMATIONAL, 200 SUCCESS, 300 REDIRECT, 400 CLIENT, 500 SERVER)
+                if (error.status >= this.httpErrorLogStrategy_) {
+                    this.logger.http(error);
+                }
+                /*
                 switch (error.status) {
                     case 401:
                         // unauthorized
@@ -2336,6 +2411,7 @@ class HttpResponseInterceptor {
                         this.logger.http(error);
                         break;
                 }
+                */
             }
             return throwError(error);
         })));
@@ -2715,239 +2791,6 @@ LoggerComponent.decorators = [
 LoggerComponent.ctorParameters = () => [
     { type: Logger }
 ];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class EventDispatcherService {
-    constructor() {
-        this.emitter = new EventEmitter();
-    }
-    /**
-     * @param {?} event
-     * @return {?}
-     */
-    emit(event) {
-        return this.emitter.emit(event);
-    }
-    /**
-     * @return {?}
-     */
-    observe() {
-        return this.emitter.pipe(tap((/**
-         * @param {?} event
-         * @return {?}
-         */
-        (event) => console.log('EventDispatcherService', event))));
-    }
-}
-EventDispatcherService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-EventDispatcherService.ctorParameters = () => [];
-/** @nocollapse */ EventDispatcherService.ngInjectableDef = defineInjectable({ factory: function EventDispatcherService_Factory() { return new EventDispatcherService(); }, token: EventDispatcherService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
-class IdentityService extends ApiService {
-    /**
-     * @param {?} injector
-     */
-    constructor(injector) {
-        super(injector);
-        this.injector = injector;
-    }
-    /**
-     * @return {?}
-     */
-    get collection() {
-        return '/api/identity';
-    }
-    /**
-     * @param {?} id
-     * @return {?}
-     */
-    getDetailById(id) {
-        return this.get({ id });
-    }
-}
-IdentityService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-IdentityService.ctorParameters = () => [
-    { type: Injector }
-];
-/** @nocollapse */ IdentityService.ngInjectableDef = defineInjectable({ factory: function IdentityService_Factory() { return new IdentityService(inject(INJECTOR)); }, token: IdentityService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
-class EntityService extends IdentityService {
-    /**
-     * @return {?}
-     */
-    get collection() {
-        return '/api/entity';
-    }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
-    getDetailByName(name) {
-        if (!name.trim()) {
-            return of([]);
-        }
-        return this.get({ name });
-    }
-}
-EntityService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */ EntityService.ngInjectableDef = defineInjectable({ factory: function EntityService_Factory() { return new EntityService(inject(INJECTOR)); }, token: EntityService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class MenuService extends EntityService {
-    /**
-     * @param {?} injector
-     */
-    constructor(injector) {
-        super(injector);
-        this.injector = injector;
-    }
-    /**
-     * @return {?}
-     */
-    get collection() {
-        return '/api/menu';
-    }
-}
-MenuService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-MenuService.ctorParameters = () => [
-    { type: Injector }
-];
-/** @nocollapse */ MenuService.ngInjectableDef = defineInjectable({ factory: function MenuService_Factory() { return new MenuService(inject(INJECTOR)); }, token: MenuService, providedIn: "root" });
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-// export class OnceEvent extends Event { }
-class OnceService {
-    /**
-     * @param {?} platformId
-     * @param {?} zone
-     */
-    constructor(platformId, zone) {
-        this.platformId = platformId;
-        this.zone = zone;
-        this.uid = 0;
-        this.paths = [];
-    }
-    /**
-     * @param {?} url
-     * @param {?=} callback
-     * @return {?}
-     */
-    script(url, callback) {
-        if (isPlatformBrowser(this.platformId)) {
-            // !!! this.zone.runOutsideAngular(() => {
-            if (this.paths.indexOf(url) === -1) {
-                this.paths.push(url);
-                /** @type {?} */
-                let callbackName;
-                if (callback === true) {
-                    callbackName = 'OnceCallback' + (++this.uid);
-                    url = url.split('{{callback}}').join(callbackName);
-                }
-                else {
-                    callbackName = (/** @type {?} */ (callback));
-                }
-                /** @type {?} */
-                let callback$;
-                /** @type {?} */
-                const element = document.createElement('script');
-                element.type = 'text/javascript';
-                if (callback) {
-                    callback$ = from(new Promise((/**
-                     * @param {?} resolve
-                     * @param {?} reject
-                     * @return {?}
-                     */
-                    (resolve, reject) => {
-                        window[callbackName] = (/**
-                         * @param {?} data
-                         * @return {?}
-                         */
-                        function (data) {
-                            resolve(data);
-                        });
-                    })));
-                }
-                else {
-                    element.async = true;
-                    callback$ = fromEvent(element, 'load').pipe(map((/**
-                     * @param {?} x
-                     * @return {?}
-                     */
-                    x => (/** @type {?} */ (x)))));
-                }
-                /** @type {?} */
-                const scripts = document.getElementsByTagName('script');
-                if (scripts.length) {
-                    /** @type {?} */
-                    const script = scripts[scripts.length - 1];
-                    script.parentNode.insertBefore(element, script.nextSibling);
-                }
-                element.src = url;
-                return callback$;
-            }
-            else {
-                return of(new Event('loaded!'));
-            }
-            // });
-        }
-        else {
-            return of(null);
-        }
-    }
-}
-OnceService.decorators = [
-    { type: Injectable, args: [{
-                providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-OnceService.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: NgZone }
-];
-/** @nocollapse */ OnceService.ngInjectableDef = defineInjectable({ factory: function OnceService_Factory() { return new OnceService(inject(PLATFORM_ID), inject(NgZone)); }, token: OnceService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -3436,6 +3279,38 @@ RoutePipe.ctorParameters = () => [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+/**
+ * @template T
+ */
+class EntityService extends IdentityService {
+    /**
+     * @return {?}
+     */
+    get collection() {
+        return '/api/entity';
+    }
+    /**
+     * @param {?} name
+     * @return {?}
+     */
+    getDetailByName(name) {
+        if (!name.trim()) {
+            return of([]);
+        }
+        return this.get({ name });
+    }
+}
+EntityService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */ EntityService.ngInjectableDef = defineInjectable({ factory: function EntityService_Factory() { return new EntityService(inject(INJECTOR)); }, token: EntityService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class SlugService extends EntityService {
     /**
      * @param {?} injector
@@ -3830,22 +3705,6 @@ TrustPipe.ctorParameters = () => [
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 /** @type {?} */
-const services = [
-    AuthService,
-    CoreService,
-    CookieStorageService,
-    EventDispatcherService,
-    HttpStatusCodeService,
-    LabelService,
-    LocalStorageService,
-    Logger,
-    MenuService,
-    OnceService,
-    SessionStorageService,
-    StorageService,
-    TranslateService,
-];
-/** @type {?} */
 const components = [
     CoreModuleComponent,
     DisposableComponent,
@@ -3919,8 +3778,6 @@ CoreModule.decorators = [
                 providers: [
                     { provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
                     { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader },
-                    ...services,
-                    ...pipes,
                     ...validators,
                 ],
                 declarations: [
@@ -4011,6 +3868,41 @@ class Entity {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class EventDispatcherService {
+    constructor() {
+        this.emitter = new EventEmitter();
+    }
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    emit(event) {
+        return this.emitter.emit(event);
+    }
+    /**
+     * @return {?}
+     */
+    observe() {
+        return this.emitter.pipe(tap((/**
+         * @param {?} event
+         * @return {?}
+         */
+        (event) => console.log('EventDispatcherService', event))));
+    }
+}
+EventDispatcherService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+EventDispatcherService.ctorParameters = () => [];
+/** @nocollapse */ EventDispatcherService.ngInjectableDef = defineInjectable({ factory: function EventDispatcherService_Factory() { return new EventDispatcherService(); }, token: EventDispatcherService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class Feature {
     constructor() {
         this.readmore = false;
@@ -4050,8 +3942,134 @@ class MenuItem {
  * @fileoverview added by tsickle
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class MenuService extends EntityService {
+    /**
+     * @param {?} injector
+     */
+    constructor(injector) {
+        super(injector);
+        this.injector = injector;
+    }
+    /**
+     * @return {?}
+     */
+    get collection() {
+        return '/api/menu';
+    }
+}
+MenuService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+MenuService.ctorParameters = () => [
+    { type: Injector }
+];
+/** @nocollapse */ MenuService.ngInjectableDef = defineInjectable({ factory: function MenuService_Factory() { return new MenuService(inject(INJECTOR)); }, token: MenuService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class Taxonomy {
 }
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+// export class OnceEvent extends Event { }
+class OnceService {
+    /**
+     * @param {?} platformId
+     * @param {?} zone
+     */
+    constructor(platformId, zone) {
+        this.platformId = platformId;
+        this.zone = zone;
+        this.uid = 0;
+        this.paths = [];
+    }
+    /**
+     * @param {?} url
+     * @param {?=} callback
+     * @return {?}
+     */
+    script(url, callback) {
+        if (isPlatformBrowser(this.platformId)) {
+            // !!! this.zone.runOutsideAngular(() => {
+            if (this.paths.indexOf(url) === -1) {
+                this.paths.push(url);
+                /** @type {?} */
+                let callbackName;
+                if (callback === true) {
+                    callbackName = 'OnceCallback' + (++this.uid);
+                    url = url.split('{{callback}}').join(callbackName);
+                }
+                else {
+                    callbackName = (/** @type {?} */ (callback));
+                }
+                /** @type {?} */
+                let callback$;
+                /** @type {?} */
+                const element = document.createElement('script');
+                element.type = 'text/javascript';
+                if (callback) {
+                    callback$ = from(new Promise((/**
+                     * @param {?} resolve
+                     * @param {?} reject
+                     * @return {?}
+                     */
+                    (resolve, reject) => {
+                        window[callbackName] = (/**
+                         * @param {?} data
+                         * @return {?}
+                         */
+                        function (data) {
+                            resolve(data);
+                        });
+                    })));
+                }
+                else {
+                    element.async = true;
+                    callback$ = fromEvent(element, 'load').pipe(map((/**
+                     * @param {?} x
+                     * @return {?}
+                     */
+                    x => (/** @type {?} */ (x)))));
+                }
+                /** @type {?} */
+                const scripts = document.getElementsByTagName('script');
+                if (scripts.length) {
+                    /** @type {?} */
+                    const script = scripts[scripts.length - 1];
+                    script.parentNode.insertBefore(element, script.nextSibling);
+                }
+                element.src = url;
+                return callback$;
+            }
+            else {
+                return of(new Event('loaded!'));
+            }
+            // });
+        }
+        else {
+            return of(null);
+        }
+    }
+}
+OnceService.decorators = [
+    { type: Injectable, args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+OnceService.ctorParameters = () => [
+    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
+    { type: NgZone }
+];
+/** @nocollapse */ OnceService.ngInjectableDef = defineInjectable({ factory: function OnceService_Factory() { return new OnceService(inject(PLATFORM_ID), inject(NgZone)); }, token: OnceService, providedIn: "root" });
 
 /**
  * @fileoverview added by tsickle
@@ -4070,6 +4088,6 @@ class Translate {
  * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 
-export { AuthService, AuthStrategy, AuthToken, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, Logger, LoggerComponent, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Outlet, OUTLETS, OutletDefaultComponent, OutletRepeaterComponent, OutletComponent, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, ApiService as ɵb, BundleDirective as ɵd, OutletResolverService as ɵc };
+export { ApiRequestOptions, ApiService, AuthStrategy, AuthToken, AuthService, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, LoggerErrorStrategy, LoggerComponent, Logger, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Outlet, OUTLETS, OutletDefaultComponent, OutletRepeaterComponent, OutletComponent, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, BundleDirective as ɵc, OutletResolverService as ɵb };
 
 //# sourceMappingURL=designr-core.js.map

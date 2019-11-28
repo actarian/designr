@@ -6,16 +6,16 @@ import { Observable, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { CoreConfig } from '../config/core.config';
 import { CoreService } from '../config/core.service';
-import { Logger } from '../logger/logger';
+import { Logger } from '../logger/logger.service';
 
 export class ApiRequestOptions {
 	headers?: HttpHeaders;
 	params?: HttpParams;
-	constructor(options?: {}) {
+	constructor(params?: {}) {
 		this.headers = new HttpHeaders({
 			'Content-Type': 'application/json'
 		});
-		this.params = options ? new HttpParams(options) : null;
+		this.params = params as HttpParams;
 	}
 }
 
