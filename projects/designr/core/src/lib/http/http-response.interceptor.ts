@@ -1,9 +1,11 @@
 
-import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpResponseBase } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { CoreConfig } from '../config/core.config';
+import { CoreService } from '../config/core.service';
 import { LoggerErrorStrategy } from '../logger/logger';
 import { Logger } from '../logger/logger.service';
 import { RouteService } from '../route/route.service';
@@ -14,7 +16,15 @@ import { HttpStatusCodeService } from './http-status-code.service';
 })
 export class HttpResponseInterceptor implements HttpInterceptor {
 
-	private httpErrorLogStrategy_: LoggerErrorStrategy = LoggerErrorStrategy.Server;
+	private loggerErrorStrategy_: LoggerErrorStrategy = LoggerErrorStrategy.Server;
+
+	private config_: CoreConfig;
+	get config(): CoreConfig {
+		if (!this.config_) {
+			this.config_ = this.injector.get(CoreService).options;
+		}
+		return this.config_;
+	}
 
 	private logger_: Logger;
 	get logger() {
@@ -43,33 +53,35 @@ export class HttpResponseInterceptor implements HttpInterceptor {
 	constructor(
 		private injector: Injector,
 		private statusCodeService: HttpStatusCodeService,
-	) { }
+	) {
+		this.loggerErrorStrategy_ = this.config.loggerErrorStrategy || LoggerErrorStrategy.Server;
+	}
 
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		// injecting request
 		// parsing response
 		return next.handle(request).pipe(
-			tap((event: HttpEvent<any>) => {
-				// console.log('HttpResponseInterceptor', event);
+			tap((response: HttpEvent<any>) => {
 				this.logger.httpError = null;
-				// this.logger.log(event);
-				/*
-				if (event instanceof HttpResponse) {
-					// console.log('event instanceof HttpResponse');
+				// this.logger.log(response);
+				if (response instanceof HttpResponse) {
+					// console.log('response instanceof HttpResponse');
 					// do stuff with response if you want
+					if (response.status >= this.loggerErrorStrategy_) {
+						this.logger.http(response);
+					}
 				}
-				*/
 			}),
-			catchError((error: any) => {
-				// console.warn('HttpResponseInterceptor', error);
-				if (error instanceof HttpErrorResponse) {
-					// this.statusCodeService.setStatusCode(error.status);
-					// !!! add logErrorStrategy (100 INFORMATIONAL, 200 SUCCESS, 300 REDIRECT, 400 CLIENT, 500 SERVER)
-					if (error.status >= this.httpErrorLogStrategy_) {
-						this.logger.http(error);
+			catchError((response: HttpResponseBase) => {
+				// console.warn('HttpResponseInterceptor', response);
+				if (response instanceof HttpErrorResponse) {
+					// this.statusCodeService.setStatusCode(response.status);
+					// !!! add logErrorStrategy (100 INFORMATIONAL, 200 SUCCESS, 300 REDIRECT, 400 CLIENT, 500 SERVER, 999 NONE)
+					if (response.status >= this.loggerErrorStrategy_) {
+						this.logger.http(response);
 					}
 					/*
-					switch (error.status) {
+					switch (response.status) {
 						case 401:
 							// unauthorized
 							break;
@@ -81,12 +93,12 @@ export class HttpResponseInterceptor implements HttpInterceptor {
 						case 410:
 							break;
 						default:
-							this.logger.http(error);
+							this.logger.http(response);
 							break;
 					}
 					*/
 				}
-				return throwError(error);
+				return throwError(response);
 			})
 		);
 	}

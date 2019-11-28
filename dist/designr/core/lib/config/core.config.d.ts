@@ -15,7 +15,7 @@ export declare class CoreConfig {
     authStrategy?: AuthStrategy;
     defaultLanguage?: string;
     defaultMarket?: string;
-    httpErrorLogStrategy?: LoggerErrorStrategy;
+    loggerErrorStrategy?: LoggerErrorStrategy;
     languages?: Language[];
     origin?: string;
     production?: boolean;

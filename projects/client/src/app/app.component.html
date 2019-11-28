@@ -2,10 +2,10 @@
 <div class="page" [ngClass]="{ 'page--editing': editor.opened }">
 	<!-- NOTIFICATIONS -->
 	<!-- <section-shop-reminder></section-shop-reminder> -->
-	<!-- HEADER -->
-	<header-component></header-component>
 	<!-- LOGGER -->
 	<core-logger></core-logger>
+	<!-- HEADER -->
+	<header-component></header-component>
 	<!-- PAGE -->
 	<div [@routeAnimations]="prepareRoute(outlet)">
 		<router-outlet #outlet="outlet"></router-outlet>

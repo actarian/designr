@@ -1,4 +1,4 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CoreService } from '../config/core.service';
 import { LoggerError } from './logger';
@@ -49,12 +49,12 @@ export class Logger {
 		}
 	}
 
-	http(error: HttpErrorResponse) {
-		this.httpError = error;
+	http(response: HttpErrorResponse | HttpResponse<any>) {
+		this.httpError = new LoggerError(response);
 		if (!this.coreService.options.production) {
-			this.logs.push(error.message);
+			this.logs.push(this.httpError.message);
 		}
-		console.warn('Logger.http.error', error.status, error.statusText, error.url);
+		console.warn('Logger.http.response', response.status, response.statusText, response.url);
 	}
 
 	clear() {

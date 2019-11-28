@@ -1,5 +1,5 @@
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpErrorResponse, HttpClient, HttpHeaders, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpErrorResponse, HttpClient, HttpHeaders, HttpResponse, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import JSONFormatter from 'json-formatter-js';
 import { isArray, isObject } from 'util';
@@ -42,12 +42,44 @@ const LoggerErrorStrategy = {
     Redirect: 300,
     Client: 400,
     Server: 500,
+    None: 999,
 };
 LoggerErrorStrategy[LoggerErrorStrategy.Informational] = 'Informational';
 LoggerErrorStrategy[LoggerErrorStrategy.Success] = 'Success';
 LoggerErrorStrategy[LoggerErrorStrategy.Redirect] = 'Redirect';
 LoggerErrorStrategy[LoggerErrorStrategy.Client] = 'Client';
 LoggerErrorStrategy[LoggerErrorStrategy.Server] = 'Server';
+LoggerErrorStrategy[LoggerErrorStrategy.None] = 'None';
+class LoggerError extends HttpErrorResponse {
+    /**
+     * @param {?=} response
+     */
+    constructor(response) {
+        super({
+            error: response instanceof HttpErrorResponse ? response.error : response.statusText,
+            headers: response.headers,
+            status: response.status,
+            statusText: response.statusText,
+            url: response.url,
+        });
+    }
+    /**
+     * @return {?}
+     */
+    get statusType() {
+        return Object.keys(LoggerErrorStrategy).reduce((/**
+         * @param {?} type
+         * @param {?} key
+         * @return {?}
+         */
+        (type, key) => {
+            if (this.status >= LoggerErrorStrategy[key]) {
+                type = key.toLowerCase();
+            }
+            return type;
+        }), null);
+    }
+}
 
 /**
  * @fileoverview added by tsickle
@@ -74,7 +106,7 @@ class CoreConfig {
         this.authStrategy = AuthStrategy.Cookie;
         this.defaultLanguage = 'it';
         this.defaultMarket = 'it';
-        this.httpErrorLogStrategy = LoggerErrorStrategy.Server;
+        this.loggerErrorStrategy = LoggerErrorStrategy.Server;
         this.languages = [{ id: 1, name: 'Italiano', lang: 'it' }];
         this.origin = '';
         this.production = false;
@@ -184,15 +216,15 @@ class Logger {
         }
     }
     /**
-     * @param {?} error
+     * @param {?} response
      * @return {?}
      */
-    http(error) {
-        this.httpError = error;
+    http(response) {
+        this.httpError = new LoggerError(response);
         if (!this.coreService.options.production) {
-            this.logs.push(error.message);
+            this.logs.push(this.httpError.message);
         }
-        console.warn('Logger.http.error', error.status, error.statusText, error.url);
+        console.warn('Logger.http.response', response.status, response.statusText, response.url);
     }
     /**
      * @return {?}
@@ -2332,7 +2364,17 @@ class HttpResponseInterceptor {
     constructor(injector, statusCodeService) {
         this.injector = injector;
         this.statusCodeService = statusCodeService;
-        this.httpErrorLogStrategy_ = LoggerErrorStrategy.Server;
+        this.loggerErrorStrategy_ = LoggerErrorStrategy.Server;
+        this.loggerErrorStrategy_ = this.config.loggerErrorStrategy || LoggerErrorStrategy.Server;
+    }
+    /**
+     * @return {?}
+     */
+    get config() {
+        if (!this.config_) {
+            this.config_ = this.injector.get(CoreService).options;
+        }
+        return this.config_;
     }
     /**
      * @return {?}
@@ -2370,33 +2412,33 @@ class HttpResponseInterceptor {
         // injecting request
         // parsing response
         return next.handle(request).pipe(tap((/**
-         * @param {?} event
+         * @param {?} response
          * @return {?}
          */
-        (event) => {
-            // console.log('HttpResponseInterceptor', event);
+        (response) => {
             this.logger.httpError = null;
-            // this.logger.log(event);
-            /*
-            if (event instanceof HttpResponse) {
-                // console.log('event instanceof HttpResponse');
+            // this.logger.log(response);
+            if (response instanceof HttpResponse) {
+                // console.log('response instanceof HttpResponse');
                 // do stuff with response if you want
+                if (response.status >= this.loggerErrorStrategy_) {
+                    this.logger.http(response);
+                }
             }
-            */
         })), catchError((/**
-         * @param {?} error
+         * @param {?} response
          * @return {?}
          */
-        (error) => {
-            // console.warn('HttpResponseInterceptor', error);
-            if (error instanceof HttpErrorResponse) {
-                // this.statusCodeService.setStatusCode(error.status);
-                // !!! add logErrorStrategy (100 INFORMATIONAL, 200 SUCCESS, 300 REDIRECT, 400 CLIENT, 500 SERVER)
-                if (error.status >= this.httpErrorLogStrategy_) {
-                    this.logger.http(error);
+        (response) => {
+            // console.warn('HttpResponseInterceptor', response);
+            if (response instanceof HttpErrorResponse) {
+                // this.statusCodeService.setStatusCode(response.status);
+                // !!! add logErrorStrategy (100 INFORMATIONAL, 200 SUCCESS, 300 REDIRECT, 400 CLIENT, 500 SERVER, 999 NONE)
+                if (response.status >= this.loggerErrorStrategy_) {
+                    this.logger.http(response);
                 }
                 /*
-                switch (error.status) {
+                switch (response.status) {
                     case 401:
                         // unauthorized
                         break;
@@ -2408,12 +2450,12 @@ class HttpResponseInterceptor {
                     case 410:
                         break;
                     default:
-                        this.logger.http(error);
+                        this.logger.http(response);
                         break;
                 }
                 */
             }
-            return throwError(error);
+            return throwError(response);
         })));
     }
 }
@@ -2782,7 +2824,7 @@ class LoggerComponent {
 LoggerComponent.decorators = [
     { type: Component, args: [{
                 selector: 'core-logger',
-                template: "<div class=\"error-http\" *ngIf=\"logger.httpError\">\n\t<span>error</span>&nbsp;\n\t<span class=\"status\">{{logger.httpError.status}}</span>&nbsp;\n\t<span class=\"url\">{{logger.httpError.url}}</span>&nbsp;\n\t<span class=\"message\">{{logger.httpError.body?.error}}</span>\n</div>\n<!--\n<div *ngIf=\"logger.logs.length\">\n\t<ul class=\"list-group \">\n\t\t<li class=\"list-group-item\">\n\t\t\t<button type=\"button\" class=\"btn btn-outline-primary btn-sm float-right\" (click)=\"logger.clear()\" title=\"Clear Logs\">{{ 'app.clear' | translate }}</button>\n\t\t</li>\n\t\t<li class=\"list-group-item\" *ngFor='let log of logger.logs'>\n\t\t\t<span>{{log}}</span>\n\t\t</li>\n\t</ul>\n\t<br>\n</div>\n-->\n",
+                template: "<div class=\"error-http\" [ngClass]=\"'http--' + logger.httpError.statusType\" *ngIf=\"logger.httpError\">\n\t<span>{{logger.httpError.statusType}}</span>&nbsp;\n\t<span class=\"status\">{{logger.httpError.status}}</span>&nbsp;\n\t<span class=\"url\">{{logger.httpError.url}}</span>&nbsp;\n\t<span class=\"message\">{{logger.httpError.body?.error}}</span>\n</div>\n<!--\n<div *ngIf=\"logger.logs.length\">\n\t<ul class=\"list-group \">\n\t\t<li class=\"list-group-item\">\n\t\t\t<button type=\"button\" class=\"btn btn-outline-primary btn-sm float-right\" (click)=\"logger.clear()\" title=\"Clear Logs\">{{ 'app.clear' | translate }}</button>\n\t\t</li>\n\t\t<li class=\"list-group-item\" *ngFor='let log of logger.logs'>\n\t\t\t<span>{{log}}</span>\n\t\t</li>\n\t</ul>\n\t<br>\n</div>\n-->\n",
                 encapsulation: ViewEncapsulation.Emulated,
                 styles: [".error-http{padding:15px;max-width:1140px;margin:0 auto 10px;background:#faebd7;font-size:13px;font-family:monospace;color:#d2691e}"]
             }] }

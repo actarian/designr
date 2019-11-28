@@ -1,5 +1,5 @@
-<div class="error-http" *ngIf="logger.httpError">
-	<span>error</span>&nbsp;
+<div class="error-http" [ngClass]="'http--' + logger.httpError.statusType" *ngIf="logger.httpError">
+	<span>{{logger.httpError.statusType}}</span>&nbsp;
 	<span class="status">{{logger.httpError.status}}</span>&nbsp;
 	<span class="url">{{logger.httpError.url}}</span>&nbsp;
 	<span class="message">{{logger.httpError.body?.error}}</span>

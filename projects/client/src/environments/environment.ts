@@ -1,5 +1,5 @@
 
-import { AuthStrategy } from '@designr/core';
+import { AuthStrategy, LoggerErrorStrategy } from '@designr/core';
 
 export const environment = {
 	core: {
@@ -11,6 +11,7 @@ export const environment = {
 			{ id: 1, name: 'English', lang: 'en' },
 			{ id: 2, name: 'Italiano', lang: 'it' }
 		],
+		loggerErrorStrategy: LoggerErrorStrategy.Informational,
 		public: '/',
 		preboot: {
 			appRoot: 'app-component'
