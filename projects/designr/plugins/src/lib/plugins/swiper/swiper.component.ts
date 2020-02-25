@@ -12,8 +12,8 @@ import { SwiperConfig, SwiperConfigInterface, SwiperEvent, SwiperEvents, SWIPER_
 })
 export class SwiperComponent implements AfterViewInit, OnDestroy {
 
-	@ViewChild('swiperSlides') swiperSlides?: ElementRef;
-	@ViewChild(SwiperDirective) directiveRef?: SwiperDirective;
+	@ViewChild('swiperSlides', { static: true }) swiperSlides?: ElementRef;
+	@ViewChild(SwiperDirective, { static: true }) directiveRef?: SwiperDirective;
 
 	@Input() index: number | null = null;
 	@Input() disabled: boolean = false;
@@ -104,7 +104,7 @@ export class SwiperComponent implements AfterViewInit, OnDestroy {
 					if (this.directiveRef) {
 						const directiveOutput = eventName as keyof SwiperDirective;
 						const componentOutput = eventName as keyof SwiperComponent;
-						this.directiveRef[directiveOutput] = this[componentOutput] as EventEmitter<any>;
+						(this.directiveRef as any)[directiveOutput] = this[componentOutput] as EventEmitter<any>;
 					}
 				});
 			}

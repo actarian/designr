@@ -36,6 +36,11 @@
             			]
 					}
 				}
+			},
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
 			}
 		},
 		"@designr/core": {
@@ -70,6 +75,11 @@
               				"**/node_modules/**"
             			]
 					}
+				}
+			},
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
 				}
 			}
 		},
@@ -106,6 +116,11 @@
             			]
 					}
 				}
+			},
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
 			}
 		},
 		"@designr/editor": {
@@ -140,6 +155,11 @@
               				"**/node_modules/**"
             			]
 					}
+				}
+			},
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
 				}
 			}
 		},
@@ -176,6 +196,11 @@
             			]
 					}
 				}
+			},
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
 			}
 		},
 		"@designr/plugins": {
@@ -210,6 +235,11 @@
               				"**/node_modules/**"
             			]
 					}
+				}
+			},
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
 				}
 			}
 		},
@@ -246,6 +276,11 @@
             			]
 					}
 				}
+			},
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
 			}
 		},
 		"@designr/ui": {
@@ -281,6 +316,11 @@
             			]
 					}
 				}
+			},
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
 			}
 		},
 		"browser": {
@@ -288,7 +328,6 @@
 			"sourceRoot": "projects/client/src",
 			"projectType": "application",
 			"prefix": "app",
-			"schematics": {},
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
@@ -421,6 +460,11 @@
 						"exclude": ["**/node_modules/**"]
 					}
 				}
+			},
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
 			}
 		},
 		"server": {
@@ -482,6 +526,11 @@
 						]
 					}
 				}
+			},
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
 			}
 		},
 		"e2e": {
@@ -508,13 +557,18 @@
 						"exclude": ["**/node_modules/**"]
 					}
 				}
+			},
+			"schematics": {
+				"@schematics/angular:component": {
+					"style": "scss"
+				}
 			}
 		}
 	},
 	"defaultProject": "browser",
 	"schematics": {
 		"@schematics/angular:component": {
-			"styleext": "scss"
+			"style": "scss"
 		}
 	}
 }
