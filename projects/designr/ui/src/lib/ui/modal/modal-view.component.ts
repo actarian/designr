@@ -11,7 +11,7 @@ import { Modal, ModalData } from './modal';
 })
 export class ModalViewComponent extends DisposableComponent implements OnInit, OnDestroy {
 
-	@ViewChild('modalContainer', { read: ViewContainerRef }) modalContainer: ViewContainerRef;
+	@ViewChild('modalContainer', { read: ViewContainerRef, static: true }) modalContainer: ViewContainerRef;
 	/*
 	@Input() set modal(modal: Modal) {
 		this.setModal(modal);

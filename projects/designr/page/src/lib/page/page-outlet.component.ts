@@ -12,7 +12,7 @@ import { PageService } from './page.service';
 
 export class PageOutletComponent extends DisposableComponent implements OnInit, OnDestroy {
 
-	@ViewChild('outlet', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+	@ViewChild('outlet', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
 	private componentRef: ComponentRef<PageComponent>;
 
 	constructor(

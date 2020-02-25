@@ -12,8 +12,8 @@ export class ControlComponent extends DisposableComponent {
 
 	// @ContentChild('controlRef') controlRef: TemplateRef<NgForOfContext<ControlComponent>>;
 	// @ContentChild('labelRef') labelRef: TemplateRef<NgForOfContext<ControlComponent>>;
-	@ContentChild('inputRef') inputRef: TemplateRef<NgForOfContext<ControlComponent>>;
-	@ContentChild('errorRef') errorRef: TemplateRef<NgForOfContext<ControlComponent>>;
+	@ContentChild('inputRef', /* TODO: add static flag */ {}) inputRef: TemplateRef<NgForOfContext<ControlComponent>>;
+	@ContentChild('errorRef', /* TODO: add static flag */ {}) errorRef: TemplateRef<NgForOfContext<ControlComponent>>;
 
 	@Input() option: IControlOption<any>;
 	@Input() form: FormGroup;

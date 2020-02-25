@@ -12,7 +12,7 @@ export class OutletComponent extends DisposableComponent implements OnInit, OnDe
 
 	@Input() outlet: Outlet;
 
-	@ViewChild('outlet', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+	@ViewChild('outlet', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
 	private componentRef: ComponentRef<DisposableComponent>;
 
 	constructor(

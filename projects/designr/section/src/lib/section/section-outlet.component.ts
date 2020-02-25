@@ -12,7 +12,7 @@ export class SectionOutletComponent extends DisposableComponent implements OnIni
 
 	@Input() section: Section;
 
-	@ViewChild('outlet', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+	@ViewChild('outlet', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
 	private componentRef: ComponentRef<SectionComponent>;
 
 	constructor(

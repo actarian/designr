@@ -11,13 +11,13 @@ import { ControlService } from './control.service';
 })
 export class ControlOutletComponent implements OnInit, OnDestroy, AfterViewInit {
 
-	@ContentChild('inputRef') inputRef: TemplateRef<NgForOfContext<ControlComponent>>;
-	@ContentChild('errorRef') errorRef: TemplateRef<NgForOfContext<ControlComponent>>;
-	@ContentChild('labelRef') labelRef: TemplateRef<NgForOfContext<ControlComponent>>;
-	@ContentChild('descriptionRef') descriptionRef: TemplateRef<NgForOfContext<ControlComponent>>;
-	@ViewChild('descriptionDef') descriptionDef: TemplateRef<NgForOfContext<ControlComponent>>;
-	@ViewChild('labelDef') labelDef: TemplateRef<NgForOfContext<ControlComponent>>;
-	@ViewChild('outlet', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+	@ContentChild('inputRef', { static: true }) inputRef: TemplateRef<NgForOfContext<ControlComponent>>;
+	@ContentChild('errorRef', { static: true }) errorRef: TemplateRef<NgForOfContext<ControlComponent>>;
+	@ContentChild('labelRef', { static: true }) labelRef: TemplateRef<NgForOfContext<ControlComponent>>;
+	@ContentChild('descriptionRef', { static: true }) descriptionRef: TemplateRef<NgForOfContext<ControlComponent>>;
+	@ViewChild('descriptionDef', { static: true }) descriptionDef: TemplateRef<NgForOfContext<ControlComponent>>;
+	@ViewChild('labelDef', { static: true }) labelDef: TemplateRef<NgForOfContext<ControlComponent>>;
+	@ViewChild('outlet', { read: ViewContainerRef, static: true }) viewContainerRef: ViewContainerRef;
 
 	@Input() option: IControlOption<any>;
 	@Input() form: FormGroup;

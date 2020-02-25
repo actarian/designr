@@ -11,7 +11,7 @@ import { isArray, isObject } from 'util';
 	encapsulation: ViewEncapsulation.Emulated,
 })
 export class JsonFormatterComponent implements OnChanges {
-	@ViewChild(`jsonFormatter`) input: ElementRef;
+	@ViewChild(`jsonFormatter`, { static: true }) input: ElementRef;
 
 	@Input() json: Array<any> | Object | any;
 
