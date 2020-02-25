@@ -15,7 +15,12 @@
 						"tsConfig": "projects/designr/control/tsconfig.lib.json",
 						"project": "projects/designr/control/ng-package.json"
 					}
-				},
+				,          "configurations": {
+            "production": {
+              "tsConfig": "projects/designr/control/tsconfig.lib.prod.json"
+            }
+          }
+},
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
@@ -55,7 +60,12 @@
 						"tsConfig": "projects/designr/core/tsconfig.lib.json",
 						"project": "projects/designr/core/ng-package.json"
 					}
-				},
+				,          "configurations": {
+            "production": {
+              "tsConfig": "projects/designr/core/tsconfig.lib.prod.json"
+            }
+          }
+},
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
@@ -95,7 +105,12 @@
 						"tsConfig": "projects/designr/data/tsconfig.lib.json",
 						"project": "projects/designr/data/ng-package.json"
 					}
-				},
+				,          "configurations": {
+            "production": {
+              "tsConfig": "projects/designr/data/tsconfig.lib.prod.json"
+            }
+          }
+},
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
@@ -135,7 +150,12 @@
 						"tsConfig": "projects/designr/editor/tsconfig.lib.json",
 						"project": "projects/designr/editor/ng-package.json"
 					}
-				},
+				,          "configurations": {
+            "production": {
+              "tsConfig": "projects/designr/editor/tsconfig.lib.prod.json"
+            }
+          }
+},
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
@@ -175,7 +195,12 @@
 						"tsConfig": "projects/designr/page/tsconfig.lib.json",
 						"project": "projects/designr/page/ng-package.json"
 					}
-				},
+				,          "configurations": {
+            "production": {
+              "tsConfig": "projects/designr/page/tsconfig.lib.prod.json"
+            }
+          }
+},
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
@@ -215,7 +240,12 @@
 						"tsConfig": "projects/designr/plugins/tsconfig.lib.json",
 						"project": "projects/designr/plugins/ng-package.json"
 					}
-				},
+				,          "configurations": {
+            "production": {
+              "tsConfig": "projects/designr/plugins/tsconfig.lib.prod.json"
+            }
+          }
+},
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
@@ -255,7 +285,12 @@
 						"tsConfig": "projects/designr/section/tsconfig.lib.json",
 						"project": "projects/designr/section/ng-package.json"
 					}
-				},
+				,          "configurations": {
+            "production": {
+              "tsConfig": "projects/designr/section/tsconfig.lib.prod.json"
+            }
+          }
+},
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
@@ -295,7 +330,12 @@
 						"tsConfig": "projects/designr/ui/tsconfig.lib.json",
 						"project": "projects/designr/ui/ng-package.json"
 					}
-				},
+				,          "configurations": {
+            "production": {
+              "tsConfig": "projects/designr/ui/tsconfig.lib.prod.json"
+            }
+          }
+},
 				"test": {
 					"builder": "@angular-devkit/build-angular:karma",
 					"options": {
@@ -332,6 +372,7 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
+            "aot": true,
 						"outputPath": "dist/development/browser",
 						"index": "projects/client/src/index.html",
 						"main": "projects/client/src/main/main-browser.bootstrap.ts",
@@ -344,16 +385,28 @@
 							"projects/client/src/app/bundles/editor.bundle"
 						],
 						"scripts": [
-							{ "input": "./node_modules/jquery/dist/jquery.js", "lazy": false },
-							{ "input": "./node_modules/@fancyapps/fancybox/dist/jquery.fancybox.js", "lazy": false },
-							{ "input": "./node_modules/intersection-observer/intersection-observer.js", "lazy": false },
-							{ "input": "./node_modules/json-formatter-js/dist/json-formatter.js", "lazy": true },
-							{ "input": "./node_modules/mapbox-gl/dist/mapbox-gl.js", "lazy": false },
-							{ "input": "./node_modules/marked/lib/marked.js", "lazy": false }
+							{ "input": "./node_modules/jquery/dist/jquery.js"
+},
+							{ "input": "./node_modules/@fancyapps/fancybox/dist/jquery.fancybox.js"
+},
+							{ "input": "./node_modules/intersection-observer/intersection-observer.js"
+},
+							{"inject":false, "input": "./node_modules/json-formatter-js/dist/json-formatter.js"
+},
+							{ "input": "./node_modules/mapbox-gl/dist/mapbox-gl.js"
+},
+							{ "input": "./node_modules/marked/lib/marked.js"
+}
 						]
 					},
 					"configurations": {
 						"development": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
 							"outputPath": "dist/development/browser",
 							"optimization": false,
 							"outputHashing": "all",
@@ -370,6 +423,12 @@
 							"es5BrowserSupport": true
 						},
 						"staging": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
 							"outputPath": "dist/staging/browser",
 							"optimization": true,
 							"outputHashing": "all",
@@ -386,6 +445,12 @@
 							"es5BrowserSupport": true
 						},
 						"production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
 							"outputPath": "dist/production/browser",
 							"optimization": true,
 							"outputHashing": "all",
@@ -418,7 +483,17 @@
 							"serviceWorker": false,
 							"statsJson": true,
 							"es5BrowserSupport": true,
-							"budgets": [{ "type": "initial", "maximumWarning": "2mb", "maximumError": "5mb" }]
+							"budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
 						}
 					}
 				},
