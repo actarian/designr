@@ -2,6 +2,7 @@ import { AfterViewInit, ElementRef } from '@angular/core';
 import { DisposableComponent } from '@designr/core';
 import { PluginsService } from '../../config/plugins.service';
 import { TrustPilotConfig, TrustPilotService } from './trustpilot.service';
+import * as i0 from "@angular/core";
 export declare class TrustPilotWidgetOptions {
     templateId?: string;
     businessunitId?: string;
@@ -29,4 +30,6 @@ export declare class TrustPilotWidgetComponent extends DisposableComponent imple
     constructor(platformId: string, pluginsService: PluginsService, elementRef: ElementRef, trustPilot: TrustPilotService);
     private init;
     ngAfterViewInit(): void;
+    static ɵfac: i0.ɵɵFactoryDef<TrustPilotWidgetComponent>;
+    static ɵcmp: i0.ɵɵComponentDefWithMeta<TrustPilotWidgetComponent, "plugins-trustpilot-widget-component", never, { "options": "options"; "sku": "sku"; }, {}, never>;
 }

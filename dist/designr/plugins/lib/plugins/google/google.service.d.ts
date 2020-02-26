@@ -1,6 +1,7 @@
 import { LocalStorageService, OnceService, StorageService } from '@designr/core';
 import { Observable } from 'rxjs';
 import { PluginsService } from '../../config/plugins.service';
+import * as i0 from "@angular/core";
 export declare class GoogleConfig {
     clientId: string;
     cookiepolicy?: string;
@@ -46,11 +47,13 @@ export declare class GoogleService {
     init(): void;
     private google;
     getMe(): Observable<GoogleUser>;
-    login(): Observable<{}>;
-    logout(): Observable<never>;
+    login(): Observable<unknown>;
+    logout(): Observable<unknown>;
     private once;
     private getAuth2;
     private signin;
     private auth2init;
     auth2Instance(): Observable<any>;
+    static ɵfac: i0.ɵɵFactoryDef<GoogleService>;
+    static ɵprov: i0.ɵɵInjectableDef<GoogleService>;
 }

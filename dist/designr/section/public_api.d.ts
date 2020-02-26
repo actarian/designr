@@ -5,3 +5,4 @@ export { Section, Sections } from './lib/section/section';
 export { SectionOutletComponent } from './lib/section/section-outlet.component';
 export { SectionComponent } from './lib/section/section.component';
 export { SectionService } from './lib/section/section.service';
+export { SectionsComponent } from './lib/section/sections.component';

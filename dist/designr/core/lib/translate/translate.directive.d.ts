@@ -1,8 +1,9 @@
 import { ElementRef, OnInit } from '@angular/core';
-import { DisposableComponent } from '../disposable/disposable.component';
+import { DisposableDirective } from '../disposable/disposable.directive';
 import { Translate } from './translate';
 import { TranslateService } from './translate.service';
-export declare class TranslateDirective extends DisposableComponent implements OnInit {
+import * as i0 from "@angular/core";
+export declare class TranslateDirective extends DisposableDirective implements OnInit {
     private element;
     private translateService;
     key: string;
@@ -11,4 +12,6 @@ export declare class TranslateDirective extends DisposableComponent implements O
     translateParams: any;
     constructor(element: ElementRef, translateService: TranslateService<Translate>);
     ngOnInit(): void;
+    static ɵfac: i0.ɵɵFactoryDef<TranslateDirective>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<TranslateDirective, "[translate]", never, { "translate": "translate"; "translateParams": "translateParams"; }, {}, never>;
 }

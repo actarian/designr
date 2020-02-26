@@ -1,6 +1,7 @@
 import { OnceService } from '@designr/core';
 import { Observable } from 'rxjs';
 import { PluginsService } from '../../config/plugins.service';
+import * as i0 from "@angular/core";
 export declare class PayPalConfigStyle {
     label?: string;
     size?: string;
@@ -32,4 +33,6 @@ export declare class PayPalService {
     once(): Observable<any>;
     render(options: any, selector?: string): Observable<any[]>;
     private getOptions;
+    static ɵfac: i0.ɵɵFactoryDef<PayPalService>;
+    static ɵprov: i0.ɵɵInjectableDef<PayPalService>;
 }

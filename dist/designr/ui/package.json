@@ -13,7 +13,8 @@
   "peerDependencies": {
     "@angular/common": "~7.2.4",
     "@angular/core": "~7.2.4",
-    "intersection-observer": "~0.5.1"
+    "intersection-observer": "~0.5.1",
+    "tslib": "^1.10.0"
   },
   "main": "bundles/designr-ui.umd.js",
   "module": "fesm5/designr-ui.js",
@@ -23,9 +24,8 @@
   "fesm5": "fesm5/designr-ui.js",
   "fesm2015": "fesm2015/designr-ui.js",
   "typings": "designr-ui.d.ts",
-  "metadata": "designr-ui.metadata.json",
   "sideEffects": false,
-  "dependencies": {
-    "tslib": "^1.9.0"
+  "scripts": {
+    "prepublishOnly": "node --eval \"console.error('ERROR: Trying to publish a package that has been compiled by Ivy. This is not allowed.\\nPlease delete and rebuild the package, without compiling with Ivy, before attempting to publish.\\n')\" && exit 1"
   }
 }

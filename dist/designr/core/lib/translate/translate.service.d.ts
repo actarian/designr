@@ -2,18 +2,20 @@ import { EventEmitter, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IdentityService } from '../models/identity.service';
 import { Translate } from './translate';
+import * as i0 from "@angular/core";
 export declare class TranslateService<T extends Translate> extends IdentityService<T> {
     protected injector: Injector;
     static cache: {};
     static lang_: string;
-    readonly collection: string;
+    get collection(): string;
     events: EventEmitter<any>;
     missingHandler?: Function;
     private language_;
     private languages_;
-    lang: string;
-    readonly language: any;
-    readonly languages: any[];
+    get lang(): string;
+    set lang(lang: string);
+    get language(): any;
+    get languages(): any[];
     constructor(injector: Injector);
     observe$(): Observable<{}>;
     getTranslation(lang: string): Observable<{}>;
@@ -28,4 +30,6 @@ export declare class TranslateService<T extends Translate> extends IdentityServi
     getBrowserLang(): string;
     getFirstBrowserLang(): any;
     getFirstBrowserLocale(): any;
+    static ɵfac: i0.ɵɵFactoryDef<TranslateService<any>>;
+    static ɵprov: i0.ɵɵInjectableDef<TranslateService<any>>;
 }

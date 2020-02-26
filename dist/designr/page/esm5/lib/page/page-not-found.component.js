@@ -1,39 +1,37 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-import * as tslib_1 from "tslib";
+import { __extends } from "tslib";
 import { Component, Injector, ViewEncapsulation } from '@angular/core';
 import { PageComponent } from './page.component';
+import * as i0 from "@angular/core";
 var PageNotFoundComponent = /** @class */ (function (_super) {
-    tslib_1.__extends(PageNotFoundComponent, _super);
+    __extends(PageNotFoundComponent, _super);
     function PageNotFoundComponent(injector) {
         var _this = _super.call(this, injector) || this;
         _this.injector = injector;
         _this.url = _this.router.url;
         return _this;
     }
-    PageNotFoundComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'page-not-found-component',
-                    template: "<div class=\"page\">Page <span>{{url}}</span> not found</div>",
-                    encapsulation: ViewEncapsulation.Emulated
-                }] }
-    ];
-    /** @nocollapse */
-    PageNotFoundComponent.ctorParameters = function () { return [
-        { type: Injector }
-    ]; };
+    PageNotFoundComponent.ɵfac = function PageNotFoundComponent_Factory(t) { return new (t || PageNotFoundComponent)(i0.ɵɵdirectiveInject(i0.Injector)); };
+    PageNotFoundComponent.ɵcmp = i0.ɵɵdefineComponent({ type: PageNotFoundComponent, selectors: [["page-not-found-component"]], features: [i0.ɵɵInheritDefinitionFeature], decls: 5, vars: 1, consts: [[1, "page"]], template: function PageNotFoundComponent_Template(rf, ctx) { if (rf & 1) {
+            i0.ɵɵelementStart(0, "div", 0);
+            i0.ɵɵtext(1, "Page ");
+            i0.ɵɵelementStart(2, "span");
+            i0.ɵɵtext(3);
+            i0.ɵɵelementEnd();
+            i0.ɵɵtext(4, " not found");
+            i0.ɵɵelementEnd();
+        } if (rf & 2) {
+            i0.ɵɵadvance(3);
+            i0.ɵɵtextInterpolate(ctx.url);
+        } }, encapsulation: 2 });
     return PageNotFoundComponent;
 }(PageComponent));
 export { PageNotFoundComponent };
-if (false) {
-    /** @type {?} */
-    PageNotFoundComponent.prototype.url;
-    /**
-     * @type {?}
-     * @protected
-     */
-    PageNotFoundComponent.prototype.injector;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicGFnZS1ub3QtZm91bmQuY29tcG9uZW50LmpzIiwic291cmNlUm9vdCI6Im5nOi8vQGRlc2lnbnIvcGFnZS8iLCJzb3VyY2VzIjpbImxpYi9wYWdlL3BhZ2Utbm90LWZvdW5kLmNvbXBvbmVudC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7OztBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQUUsUUFBUSxFQUFFLGlCQUFpQixFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ3ZFLE9BQU8sRUFBRSxhQUFhLEVBQUUsTUFBTSxrQkFBa0IsQ0FBQztBQUVqRDtJQU0yQyxpREFBYTtJQUl2RCwrQkFDVyxRQUFrQjtRQUQ3QixZQUdDLGtCQUFNLFFBQVEsQ0FBQyxTQUVmO1FBSlUsY0FBUSxHQUFSLFFBQVEsQ0FBVTtRQUc1QixLQUFJLENBQUMsR0FBRyxHQUFHLEtBQUksQ0FBQyxNQUFNLENBQUMsR0FBRyxDQUFDOztJQUM1QixDQUFDOztnQkFmRCxTQUFTLFNBQUM7b0JBQ1YsUUFBUSxFQUFFLDBCQUEwQjtvQkFDcEMsUUFBUSxFQUFFLCtEQUE2RDtvQkFDdkUsYUFBYSxFQUFFLGlCQUFpQixDQUFDLFFBQVE7aUJBQ3pDOzs7O2dCQVBtQixRQUFROztJQW9CNUIsNEJBQUM7Q0FBQSxBQWpCRCxDQU0yQyxhQUFhLEdBV3ZEO1NBWFkscUJBQXFCOzs7SUFFakMsb0NBQW1COzs7OztJQUdsQix5Q0FBNEIiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQsIEluamVjdG9yLCBWaWV3RW5jYXBzdWxhdGlvbiB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgUGFnZUNvbXBvbmVudCB9IGZyb20gJy4vcGFnZS5jb21wb25lbnQnO1xuXG5AQ29tcG9uZW50KHtcblx0c2VsZWN0b3I6ICdwYWdlLW5vdC1mb3VuZC1jb21wb25lbnQnLFxuXHR0ZW1wbGF0ZTogYDxkaXYgY2xhc3M9XCJwYWdlXCI+UGFnZSA8c3Bhbj57e3VybH19PC9zcGFuPiBub3QgZm91bmQ8L2Rpdj5gLFxuXHRlbmNhcHN1bGF0aW9uOiBWaWV3RW5jYXBzdWxhdGlvbi5FbXVsYXRlZCxcbn0pXG5cbmV4cG9ydCBjbGFzcyBQYWdlTm90Rm91bmRDb21wb25lbnQgZXh0ZW5kcyBQYWdlQ29tcG9uZW50IHtcblxuXHRwdWJsaWMgdXJsOiBzdHJpbmc7XG5cblx0Y29uc3RydWN0b3IoXG5cdFx0cHJvdGVjdGVkIGluamVjdG9yOiBJbmplY3RvclxuXHQpIHtcblx0XHRzdXBlcihpbmplY3Rvcik7XG5cdFx0dGhpcy51cmwgPSB0aGlzLnJvdXRlci51cmw7XG5cdH1cblxufVxuIl19
+/*@__PURE__*/ (function () { i0.ɵsetClassMetadata(PageNotFoundComponent, [{
+        type: Component,
+        args: [{
+                selector: 'page-not-found-component',
+                template: "<div class=\"page\">Page <span>{{url}}</span> not found</div>",
+                encapsulation: ViewEncapsulation.Emulated,
+            }]
+    }], function () { return [{ type: i0.Injector }]; }, null); })();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicGFnZS1ub3QtZm91bmQuY29tcG9uZW50LmpzIiwic291cmNlUm9vdCI6Im5nOi8vQGRlc2lnbnIvcGFnZS8iLCJzb3VyY2VzIjpbImxpYi9wYWdlL3BhZ2Utbm90LWZvdW5kLmNvbXBvbmVudC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO0FBQUEsT0FBTyxFQUFFLFNBQVMsRUFBRSxRQUFRLEVBQUUsaUJBQWlCLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDdkUsT0FBTyxFQUFFLGFBQWEsRUFBRSxNQUFNLGtCQUFrQixDQUFDOztBQUVqRDtJQU0yQyx5Q0FBYTtJQUl2RCwrQkFDVyxRQUFrQjtRQUQ3QixZQUdDLGtCQUFNLFFBQVEsQ0FBQyxTQUVmO1FBSlUsY0FBUSxHQUFSLFFBQVEsQ0FBVTtRQUc1QixLQUFJLENBQUMsR0FBRyxHQUFHLEtBQUksQ0FBQyxNQUFNLENBQUMsR0FBRyxDQUFDOztJQUM1QixDQUFDOzhGQVRXLHFCQUFxQjs4REFBckIscUJBQXFCO1lBSnRCLDhCQUFrQjtZQUFBLHFCQUFLO1lBQUEsNEJBQU07WUFBQSxZQUFPO1lBQUEsaUJBQU87WUFBQywwQkFBUztZQUFBLGlCQUFNOztZQUE5QixlQUFPO1lBQVAsNkJBQU87O2dDQUxoRDtDQW9CQyxBQWpCRCxDQU0yQyxhQUFhLEdBV3ZEO1NBWFkscUJBQXFCO2tEQUFyQixxQkFBcUI7Y0FOakMsU0FBUztlQUFDO2dCQUNWLFFBQVEsRUFBRSwwQkFBMEI7Z0JBQ3BDLFFBQVEsRUFBRSwrREFBNkQ7Z0JBQ3ZFLGFBQWEsRUFBRSxpQkFBaUIsQ0FBQyxRQUFRO2FBQ3pDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgQ29tcG9uZW50LCBJbmplY3RvciwgVmlld0VuY2Fwc3VsYXRpb24gfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IFBhZ2VDb21wb25lbnQgfSBmcm9tICcuL3BhZ2UuY29tcG9uZW50JztcblxuQENvbXBvbmVudCh7XG5cdHNlbGVjdG9yOiAncGFnZS1ub3QtZm91bmQtY29tcG9uZW50Jyxcblx0dGVtcGxhdGU6IGA8ZGl2IGNsYXNzPVwicGFnZVwiPlBhZ2UgPHNwYW4+e3t1cmx9fTwvc3Bhbj4gbm90IGZvdW5kPC9kaXY+YCxcblx0ZW5jYXBzdWxhdGlvbjogVmlld0VuY2Fwc3VsYXRpb24uRW11bGF0ZWQsXG59KVxuXG5leHBvcnQgY2xhc3MgUGFnZU5vdEZvdW5kQ29tcG9uZW50IGV4dGVuZHMgUGFnZUNvbXBvbmVudCB7XG5cblx0cHVibGljIHVybDogc3RyaW5nO1xuXG5cdGNvbnN0cnVjdG9yKFxuXHRcdHByb3RlY3RlZCBpbmplY3RvcjogSW5qZWN0b3Jcblx0KSB7XG5cdFx0c3VwZXIoaW5qZWN0b3IpO1xuXHRcdHRoaXMudXJsID0gdGhpcy5yb3V0ZXIudXJsO1xuXHR9XG5cbn1cbiJdfQ==

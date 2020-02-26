@@ -1,40 +1,30 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-import * as tslib_1 from "tslib";
+import { __extends } from "tslib";
 import { Component, Input } from '@angular/core';
 import { DisposableComponent } from '@designr/core';
 import { Section } from './section';
-/**
- * @record
- */
-export function SectionInit() { }
-if (false) {
-    /**
-     * @return {?}
-     */
-    SectionInit.prototype.SectionInit = function () { };
-}
+import * as i0 from "@angular/core";
 var SectionComponent = /** @class */ (function (_super) {
-    tslib_1.__extends(SectionComponent, _super);
+    __extends(SectionComponent, _super);
     function SectionComponent() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    SectionComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'core-section',
-                    template: "<section class=\"section\">Section not found!</section>"
-                }] }
-    ];
-    SectionComponent.propDecorators = {
-        section: [{ type: Input }]
-    };
+    SectionComponent.ɵfac = function SectionComponent_Factory(t) { return ɵSectionComponent_BaseFactory(t || SectionComponent); };
+    SectionComponent.ɵcmp = i0.ɵɵdefineComponent({ type: SectionComponent, selectors: [["core-section"]], inputs: { section: "section" }, features: [i0.ɵɵInheritDefinitionFeature], decls: 2, vars: 0, consts: [[1, "section"]], template: function SectionComponent_Template(rf, ctx) { if (rf & 1) {
+            i0.ɵɵelementStart(0, "section", 0);
+            i0.ɵɵtext(1, "Section not found!");
+            i0.ɵɵelementEnd();
+        } }, encapsulation: 2 });
     return SectionComponent;
 }(DisposableComponent));
 export { SectionComponent };
-if (false) {
-    /** @type {?} */
-    SectionComponent.prototype.section;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2VjdGlvbi5jb21wb25lbnQuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AZGVzaWduci9zZWN0aW9uLyIsInNvdXJjZXMiOlsibGliL3NlY3Rpb24vc2VjdGlvbi5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFDQSxPQUFPLEVBQUUsU0FBUyxFQUFFLEtBQUssRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUNqRCxPQUFPLEVBQUUsbUJBQW1CLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDcEQsT0FBTyxFQUFFLE9BQU8sRUFBRSxNQUFNLFdBQVcsQ0FBQzs7OztBQUVwQyxpQ0FFQzs7Ozs7SUFEQSxvREFBb0I7O0FBR3JCO0lBSXNDLDRDQUFtQjtJQUp6RDs7SUFNQSxDQUFDOztnQkFOQSxTQUFTLFNBQUM7b0JBQ1YsUUFBUSxFQUFFLGNBQWM7b0JBQ3hCLFFBQVEsRUFBRSx5REFBdUQ7aUJBQ2pFOzs7MEJBRUMsS0FBSzs7SUFDUCx1QkFBQztDQUFBLEFBTkQsQ0FJc0MsbUJBQW1CLEdBRXhEO1NBRlksZ0JBQWdCOzs7SUFDNUIsbUNBQTBCIiwic291cmNlc0NvbnRlbnQiOlsiXG5pbXBvcnQgeyBDb21wb25lbnQsIElucHV0IH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBEaXNwb3NhYmxlQ29tcG9uZW50IH0gZnJvbSAnQGRlc2lnbnIvY29yZSc7XG5pbXBvcnQgeyBTZWN0aW9uIH0gZnJvbSAnLi9zZWN0aW9uJztcblxuZXhwb3J0IGludGVyZmFjZSBTZWN0aW9uSW5pdCB7XG5cdFNlY3Rpb25Jbml0KCk6IHZvaWQ7XG59XG5cbkBDb21wb25lbnQoe1xuXHRzZWxlY3RvcjogJ2NvcmUtc2VjdGlvbicsXG5cdHRlbXBsYXRlOiBgPHNlY3Rpb24gY2xhc3M9XCJzZWN0aW9uXCI+U2VjdGlvbiBub3QgZm91bmQhPC9zZWN0aW9uPmAsXG59KVxuZXhwb3J0IGNsYXNzIFNlY3Rpb25Db21wb25lbnQgZXh0ZW5kcyBEaXNwb3NhYmxlQ29tcG9uZW50IHtcblx0QElucHV0KCkgc2VjdGlvbjogU2VjdGlvbjtcbn1cbiJdfQ==
+var ɵSectionComponent_BaseFactory = i0.ɵɵgetInheritedFactory(SectionComponent);
+/*@__PURE__*/ (function () { i0.ɵsetClassMetadata(SectionComponent, [{
+        type: Component,
+        args: [{
+                selector: 'core-section',
+                template: "<section class=\"section\">Section not found!</section>",
+            }]
+    }], null, { section: [{
+            type: Input
+        }] }); })();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2VjdGlvbi5jb21wb25lbnQuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AZGVzaWduci9zZWN0aW9uLyIsInNvdXJjZXMiOlsibGliL3NlY3Rpb24vc2VjdGlvbi5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IjtBQUNBLE9BQU8sRUFBRSxTQUFTLEVBQUUsS0FBSyxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ2pELE9BQU8sRUFBRSxtQkFBbUIsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUNwRCxPQUFPLEVBQUUsT0FBTyxFQUFFLE1BQU0sV0FBVyxDQUFDOztBQU1wQztJQUlzQyxvQ0FBbUI7SUFKekQ7O0tBTUM7NkdBRlksZ0JBQWdCO3lEQUFoQixnQkFBZ0I7WUFGakIsa0NBQXlCO1lBQUEsa0NBQWtCO1lBQUEsaUJBQVU7OzJCQVhqRTtDQWVDLEFBTkQsQ0FJc0MsbUJBQW1CLEdBRXhEO1NBRlksZ0JBQWdCOzZEQUFoQixnQkFBZ0I7a0RBQWhCLGdCQUFnQjtjQUo1QixTQUFTO2VBQUM7Z0JBQ1YsUUFBUSxFQUFFLGNBQWM7Z0JBQ3hCLFFBQVEsRUFBRSx5REFBdUQ7YUFDakU7O2tCQUVDLEtBQUsiLCJzb3VyY2VzQ29udGVudCI6WyJcbmltcG9ydCB7IENvbXBvbmVudCwgSW5wdXQgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IERpc3Bvc2FibGVDb21wb25lbnQgfSBmcm9tICdAZGVzaWduci9jb3JlJztcbmltcG9ydCB7IFNlY3Rpb24gfSBmcm9tICcuL3NlY3Rpb24nO1xuXG5leHBvcnQgaW50ZXJmYWNlIFNlY3Rpb25Jbml0IHtcblx0U2VjdGlvbkluaXQoKTogdm9pZDtcbn1cblxuQENvbXBvbmVudCh7XG5cdHNlbGVjdG9yOiAnY29yZS1zZWN0aW9uJyxcblx0dGVtcGxhdGU6IGA8c2VjdGlvbiBjbGFzcz1cInNlY3Rpb25cIj5TZWN0aW9uIG5vdCBmb3VuZCE8L3NlY3Rpb24+YCxcbn0pXG5leHBvcnQgY2xhc3MgU2VjdGlvbkNvbXBvbmVudCBleHRlbmRzIERpc3Bvc2FibGVDb21wb25lbnQge1xuXHRASW5wdXQoKSBzZWN0aW9uOiBTZWN0aW9uO1xufVxuIl19

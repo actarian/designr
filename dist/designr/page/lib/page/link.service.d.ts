@@ -1,3 +1,4 @@
+import * as i0 from "@angular/core";
 export declare class LinkDefinition {
     href?: string;
     id?: string;
@@ -12,4 +13,6 @@ export declare class LinkService {
     removeTag(selector: string): void;
     updateElementDefinition(element: HTMLLinkElement, definition: LinkDefinition): void;
     updateElementAttribute(element: HTMLLinkElement, attribute: string, value: any): void;
+    static ɵfac: i0.ɵɵFactoryDef<LinkService>;
+    static ɵprov: i0.ɵɵInjectableDef<LinkService>;
 }

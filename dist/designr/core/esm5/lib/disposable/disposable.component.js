@@ -1,37 +1,24 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 import { Component } from '@angular/core';
 import { Subject } from 'rxjs';
+import * as i0 from "@angular/core";
 var DisposableComponent = /** @class */ (function () {
     function DisposableComponent() {
         this.unsubscribe = new Subject();
     }
-    /**
-     * @return {?}
-     */
-    DisposableComponent.prototype.ngOnDestroy = /**
-     * @return {?}
-     */
-    function () {
+    DisposableComponent.prototype.ngOnDestroy = function () {
         this.unsubscribe.next();
         this.unsubscribe.complete();
         // console.log('DisposableComponent.ngOnDestroy', this);
     };
-    DisposableComponent.decorators = [
-        { type: Component, args: [{
-                    template: ''
-                }] }
-    ];
+    DisposableComponent.ɵfac = function DisposableComponent_Factory(t) { return new (t || DisposableComponent)(); };
+    DisposableComponent.ɵcmp = i0.ɵɵdefineComponent({ type: DisposableComponent, selectors: [["ng-component"]], decls: 0, vars: 0, template: function DisposableComponent_Template(rf, ctx) { }, encapsulation: 2 });
     return DisposableComponent;
 }());
 export { DisposableComponent };
-if (false) {
-    /**
-     * @type {?}
-     * @protected
-     */
-    DisposableComponent.prototype.unsubscribe;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlzcG9zYWJsZS5jb21wb25lbnQuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AZGVzaWduci9jb3JlLyIsInNvdXJjZXMiOlsibGliL2Rpc3Bvc2FibGUvZGlzcG9zYWJsZS5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7OztBQUNBLE9BQU8sRUFBRSxTQUFTLEVBQWEsTUFBTSxlQUFlLENBQUM7QUFDckQsT0FBTyxFQUFFLE9BQU8sRUFBRSxNQUFNLE1BQU0sQ0FBQztBQUUvQjtJQUFBO1FBS1csZ0JBQVcsR0FBUSxJQUFJLE9BQU8sRUFBRSxDQUFDO0lBUTVDLENBQUM7Ozs7SUFOQSx5Q0FBVzs7O0lBQVg7UUFDQyxJQUFJLENBQUMsV0FBVyxDQUFDLElBQUksRUFBRSxDQUFDO1FBQ3hCLElBQUksQ0FBQyxXQUFXLENBQUMsUUFBUSxFQUFFLENBQUM7UUFDNUIsd0RBQXdEO0lBQ3pELENBQUM7O2dCQVhELFNBQVMsU0FBQztvQkFDVixRQUFRLEVBQUUsRUFBRTtpQkFDWjs7SUFXRCwwQkFBQztDQUFBLEFBYkQsSUFhQztTQVZZLG1CQUFtQjs7Ozs7O0lBRS9CLDBDQUEyQyIsInNvdXJjZXNDb250ZW50IjpbIlxuaW1wb3J0IHsgQ29tcG9uZW50LCBPbkRlc3Ryb3kgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IFN1YmplY3QgfSBmcm9tICdyeGpzJztcblxuQENvbXBvbmVudCh7XG5cdHRlbXBsYXRlOiAnJ1xufSlcbmV4cG9ydCBjbGFzcyBEaXNwb3NhYmxlQ29tcG9uZW50IGltcGxlbWVudHMgT25EZXN0cm95IHtcblxuXHRwcm90ZWN0ZWQgdW5zdWJzY3JpYmU6IGFueSA9IG5ldyBTdWJqZWN0KCk7XG5cblx0bmdPbkRlc3Ryb3koKSB7XG5cdFx0dGhpcy51bnN1YnNjcmliZS5uZXh0KCk7XG5cdFx0dGhpcy51bnN1YnNjcmliZS5jb21wbGV0ZSgpO1xuXHRcdC8vIGNvbnNvbGUubG9nKCdEaXNwb3NhYmxlQ29tcG9uZW50Lm5nT25EZXN0cm95JywgdGhpcyk7XG5cdH1cblxufVxuIl19
+/*@__PURE__*/ (function () { i0.ɵsetClassMetadata(DisposableComponent, [{
+        type: Component,
+        args: [{
+                template: ''
+            }]
+    }], null, null); })();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGlzcG9zYWJsZS5jb21wb25lbnQuanMiLCJzb3VyY2VSb290Ijoibmc6Ly9AZGVzaWduci9jb3JlLyIsInNvdXJjZXMiOlsibGliL2Rpc3Bvc2FibGUvZGlzcG9zYWJsZS5jb21wb25lbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0EsT0FBTyxFQUFFLFNBQVMsRUFBYSxNQUFNLGVBQWUsQ0FBQztBQUNyRCxPQUFPLEVBQUUsT0FBTyxFQUFFLE1BQU0sTUFBTSxDQUFDOztBQUUvQjtJQUFBO1FBS1csZ0JBQVcsR0FBUSxJQUFJLE9BQU8sRUFBRSxDQUFDO0tBUTNDO0lBTkEseUNBQVcsR0FBWDtRQUNDLElBQUksQ0FBQyxXQUFXLENBQUMsSUFBSSxFQUFFLENBQUM7UUFDeEIsSUFBSSxDQUFDLFdBQVcsQ0FBQyxRQUFRLEVBQUUsQ0FBQztRQUM1Qix3REFBd0Q7SUFDekQsQ0FBQzswRkFSVyxtQkFBbUI7NERBQW5CLG1CQUFtQjs4QkFQaEM7Q0FpQkMsQUFiRCxJQWFDO1NBVlksbUJBQW1CO2tEQUFuQixtQkFBbUI7Y0FIL0IsU0FBUztlQUFDO2dCQUNWLFFBQVEsRUFBRSxFQUFFO2FBQ1oiLCJzb3VyY2VzQ29udGVudCI6WyJcbmltcG9ydCB7IENvbXBvbmVudCwgT25EZXN0cm95IH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBTdWJqZWN0IH0gZnJvbSAncnhqcyc7XG5cbkBDb21wb25lbnQoe1xuXHR0ZW1wbGF0ZTogJydcbn0pXG5leHBvcnQgY2xhc3MgRGlzcG9zYWJsZUNvbXBvbmVudCBpbXBsZW1lbnRzIE9uRGVzdHJveSB7XG5cblx0cHJvdGVjdGVkIHVuc3Vic2NyaWJlOiBhbnkgPSBuZXcgU3ViamVjdCgpO1xuXG5cdG5nT25EZXN0cm95KCkge1xuXHRcdHRoaXMudW5zdWJzY3JpYmUubmV4dCgpO1xuXHRcdHRoaXMudW5zdWJzY3JpYmUuY29tcGxldGUoKTtcblx0XHQvLyBjb25zb2xlLmxvZygnRGlzcG9zYWJsZUNvbXBvbmVudC5uZ09uRGVzdHJveScsIHRoaXMpO1xuXHR9XG5cbn1cbiJdfQ==

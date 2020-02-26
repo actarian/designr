@@ -1,6 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Modal, ModalCloseEvent, ModalCompleteEvent } from './modal';
+import * as i0 from "@angular/core";
 export declare class ModalService {
     private platformId;
     modals$: BehaviorSubject<Modal[]>;
@@ -15,4 +16,6 @@ export declare class ModalService {
     private pop;
     private remove;
     private removeAll;
+    static ɵfac: i0.ɵɵFactoryDef<ModalService>;
+    static ɵprov: i0.ɵɵInjectableDef<ModalService>;
 }

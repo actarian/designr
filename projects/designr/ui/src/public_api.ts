@@ -11,4 +11,5 @@ export { ModalService } from './lib/ui/modal/modal.service';
 export { ParallaxDirective } from './lib/ui/parallax/parallax.directive';
 export { RafService } from './lib/ui/raf/raf.service';
 export { ScrollDirective } from './lib/ui/scroll/scroll.directive';
+export { SpriteComponent } from './lib/ui/sprite/sprite.component';
 

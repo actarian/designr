@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
 export interface Bundles {
-    [key: string]: string;
+    [key: string]: () => any;
 }
 export declare const BUNDLES: InjectionToken<Bundles>;

@@ -1,13 +1,13 @@
 import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
-import { DisposableComponent } from '../disposable/disposable.component';
+import { DisposableDirective } from '../disposable/disposable.directive';
 import { Label } from './label';
 import { LabelService } from './label.service';
 
 @Directive({
 	selector: '[label]'
 })
-export class LabelDirective extends DisposableComponent implements OnInit {
+export class LabelDirective extends DisposableDirective implements OnInit {
 
 	// key: string;
 	// innerHTML: string;

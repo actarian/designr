@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, OnDestroy, PipeTransform } from '@angular/core';
 import { Observable } from 'rxjs';
+import * as i0 from "@angular/core";
 export declare class CustomAsyncPipe implements OnDestroy, PipeTransform {
     private changeDetector;
     private subject;
@@ -12,4 +13,6 @@ export declare class CustomAsyncPipe implements OnDestroy, PipeTransform {
     dispose(): void;
     ngOnDestroy(): void;
     private _observableToValue;
+    static ɵfac: i0.ɵɵFactoryDef<CustomAsyncPipe>;
+    static ɵpipe: i0.ɵɵPipeDefWithMeta<CustomAsyncPipe, "customAsync">;
 }

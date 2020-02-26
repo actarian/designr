@@ -1,4 +1,5 @@
 import { ElementRef, NgZone, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import * as i0 from "@angular/core";
 export declare class LazyImagesDirective implements OnInit, OnDestroy {
     private platformId;
     renderer: Renderer2;
@@ -14,4 +15,6 @@ export declare class LazyImagesDirective implements OnInit, OnDestroy {
     newIntersectionObserver(): IntersectionObserver;
     onAppearsInViewport(image: any): void;
     onImagePreload(src: string, callback: Function): void;
+    static ɵfac: i0.ɵɵFactoryDef<LazyImagesDirective>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<LazyImagesDirective, "[lazy-images]", never, { "lazyImages": "lazyImages"; }, {}, never>;
 }

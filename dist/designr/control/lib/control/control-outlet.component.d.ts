@@ -4,6 +4,7 @@ import { AbstractControl, FormGroup } from '@angular/forms';
 import { IControlOption } from './control-option';
 import { ControlComponent } from './control.component';
 import { ControlService } from './control.service';
+import * as i0 from "@angular/core";
 export declare class ControlOutletComponent implements OnInit, OnDestroy, AfterViewInit {
     private componentFactoryResolver;
     private controlService;
@@ -17,13 +18,15 @@ export declare class ControlOutletComponent implements OnInit, OnDestroy, AfterV
     option: IControlOption<any>;
     form: FormGroup;
     private componentRef;
-    readonly context: ControlOutletComponent;
-    readonly classes: {
+    get context(): ControlOutletComponent;
+    get classes(): {
         [key: string]: boolean;
     };
-    readonly control: AbstractControl;
+    get control(): AbstractControl;
     constructor(componentFactoryResolver: ComponentFactoryResolver, controlService: ControlService);
     ngAfterViewInit(): void;
     ngOnInit(): void;
     ngOnDestroy(): void;
+    static ɵfac: i0.ɵɵFactoryDef<ControlOutletComponent>;
+    static ɵcmp: i0.ɵɵComponentDefWithMeta<ControlOutletComponent, "control-outlet", never, { "option": "option"; "form": "form"; }, {}, ["inputRef", "errorRef", "labelRef", "descriptionRef"]>;
 }

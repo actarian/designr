@@ -1,7 +1,5 @@
 /**
  * Generated bundle index. Do not edit.
  */
+/// <amd-module name="@designr/core" />
 export * from './public_api';
-export { BundleDirective as ɵc } from './lib/bundle/bundle.directive';
-export { Outlets as ɵa } from './lib/outlet/outlet';
-export { OutletResolverService as ɵb } from './lib/outlet/outlet-resolver.service';

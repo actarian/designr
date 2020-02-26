@@ -1,7 +1,3 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 import { Injectable, Pipe } from '@angular/core';
 import { RouteService } from './route.service';
 import * as i0 from "@angular/core";
@@ -10,39 +6,25 @@ var RoutePipe = /** @class */ (function () {
     function RoutePipe(routeService) {
         this.routeService = routeService;
     }
-    /**
-     * @param {?} data
-     * @return {?}
-     */
-    RoutePipe.prototype.transform = /**
-     * @param {?} data
-     * @return {?}
-     */
-    function (data) {
+    RoutePipe.prototype.transform = function (data) {
         return this.routeService.toRoute(data);
     };
-    RoutePipe.decorators = [
-        { type: Pipe, args: [{
-                    name: 'route',
-                    pure: false
-                },] },
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    RoutePipe.ctorParameters = function () { return [
-        { type: RouteService }
-    ]; };
-    /** @nocollapse */ RoutePipe.ngInjectableDef = i0.defineInjectable({ factory: function RoutePipe_Factory() { return new RoutePipe(i0.inject(i1.RouteService)); }, token: RoutePipe, providedIn: "root" });
+    RoutePipe.ɵfac = function RoutePipe_Factory(t) { return new (t || RoutePipe)(i0.ɵɵdirectiveInject(i1.RouteService)); };
+    RoutePipe.ɵpipe = i0.ɵɵdefinePipe({ name: "route", type: RoutePipe, pure: false });
+    RoutePipe.ɵprov = i0.ɵɵdefineInjectable({ token: RoutePipe, factory: RoutePipe.ɵfac, providedIn: 'root' });
     return RoutePipe;
 }());
 export { RoutePipe };
-if (false) {
-    /**
-     * @type {?}
-     * @private
-     */
-    RoutePipe.prototype.routeService;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicm91dGUucGlwZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BkZXNpZ25yL2NvcmUvIiwic291cmNlcyI6WyJsaWIvcm91dGUvcm91dGUucGlwZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7O0FBQUEsT0FBTyxFQUFFLFVBQVUsRUFBRSxJQUFJLEVBQWlCLE1BQU0sZUFBZSxDQUFDO0FBQ2hFLE9BQU8sRUFBRSxZQUFZLEVBQUUsTUFBTSxpQkFBaUIsQ0FBQzs7O0FBRS9DO0lBVUMsbUJBQ1MsWUFBMEI7UUFBMUIsaUJBQVksR0FBWixZQUFZLENBQWM7SUFDL0IsQ0FBQzs7Ozs7SUFFTCw2QkFBUzs7OztJQUFULFVBQVUsSUFBb0I7UUFDN0IsT0FBTyxJQUFJLENBQUMsWUFBWSxDQUFDLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQztJQUN4QyxDQUFDOztnQkFoQkQsSUFBSSxTQUFDO29CQUNMLElBQUksRUFBRSxPQUFPO29CQUNiLElBQUksRUFBRSxLQUFLO2lCQUNYO2dCQUVBLFVBQVUsU0FBQztvQkFDWCxVQUFVLEVBQUUsTUFBTTtpQkFDbEI7Ozs7Z0JBVFEsWUFBWTs7O29CQURyQjtDQXFCQyxBQWxCRCxJQWtCQztTQVZZLFNBQVM7Ozs7OztJQUdwQixpQ0FBa0MiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBJbmplY3RhYmxlLCBQaXBlLCBQaXBlVHJhbnNmb3JtIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBSb3V0ZVNlcnZpY2UgfSBmcm9tICcuL3JvdXRlLnNlcnZpY2UnO1xuXG5AUGlwZSh7XG5cdG5hbWU6ICdyb3V0ZScsXG5cdHB1cmU6IGZhbHNlXG59KVxuXG5ASW5qZWN0YWJsZSh7XG5cdHByb3ZpZGVkSW46ICdyb290J1xufSlcbmV4cG9ydCBjbGFzcyBSb3V0ZVBpcGUgaW1wbGVtZW50cyBQaXBlVHJhbnNmb3JtIHtcblxuXHRjb25zdHJ1Y3Rvcihcblx0XHRwcml2YXRlIHJvdXRlU2VydmljZTogUm91dGVTZXJ2aWNlLFxuXHQpIHsgfVxuXG5cdHRyYW5zZm9ybShkYXRhOiBhbnlbXSB8IHN0cmluZyk6IHN0cmluZ1tdIHtcblx0XHRyZXR1cm4gdGhpcy5yb3V0ZVNlcnZpY2UudG9Sb3V0ZShkYXRhKTtcblx0fVxuXG59XG4iXX0=
+/*@__PURE__*/ (function () { i0.ɵsetClassMetadata(RoutePipe, [{
+        type: Pipe,
+        args: [{
+                name: 'route',
+                pure: false
+            }]
+    }, {
+        type: Injectable,
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: i1.RouteService }]; }, null); })();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicm91dGUucGlwZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BkZXNpZ25yL2NvcmUvIiwic291cmNlcyI6WyJsaWIvcm91dGUvcm91dGUucGlwZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsVUFBVSxFQUFFLElBQUksRUFBaUIsTUFBTSxlQUFlLENBQUM7QUFDaEUsT0FBTyxFQUFFLFlBQVksRUFBRSxNQUFNLGlCQUFpQixDQUFDOzs7QUFFL0M7SUFVQyxtQkFDUyxZQUEwQjtRQUExQixpQkFBWSxHQUFaLFlBQVksQ0FBYztJQUMvQixDQUFDO0lBRUwsNkJBQVMsR0FBVCxVQUFVLElBQW9CO1FBQzdCLE9BQU8sSUFBSSxDQUFDLFlBQVksQ0FBQyxPQUFPLENBQUMsSUFBSSxDQUFDLENBQUM7SUFDeEMsQ0FBQztzRUFSVyxTQUFTOzZEQUFULFNBQVM7cURBQVQsU0FBUyxXQUFULFNBQVMsbUJBRlQsTUFBTTtvQkFUbkI7Q0FxQkMsQUFsQkQsSUFrQkM7U0FWWSxTQUFTO2tEQUFULFNBQVM7Y0FSckIsSUFBSTtlQUFDO2dCQUNMLElBQUksRUFBRSxPQUFPO2dCQUNiLElBQUksRUFBRSxLQUFLO2FBQ1g7O2NBRUEsVUFBVTtlQUFDO2dCQUNYLFVBQVUsRUFBRSxNQUFNO2FBQ2xCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgSW5qZWN0YWJsZSwgUGlwZSwgUGlwZVRyYW5zZm9ybSB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgUm91dGVTZXJ2aWNlIH0gZnJvbSAnLi9yb3V0ZS5zZXJ2aWNlJztcblxuQFBpcGUoe1xuXHRuYW1lOiAncm91dGUnLFxuXHRwdXJlOiBmYWxzZVxufSlcblxuQEluamVjdGFibGUoe1xuXHRwcm92aWRlZEluOiAncm9vdCdcbn0pXG5leHBvcnQgY2xhc3MgUm91dGVQaXBlIGltcGxlbWVudHMgUGlwZVRyYW5zZm9ybSB7XG5cblx0Y29uc3RydWN0b3IoXG5cdFx0cHJpdmF0ZSByb3V0ZVNlcnZpY2U6IFJvdXRlU2VydmljZSxcblx0KSB7IH1cblxuXHR0cmFuc2Zvcm0oZGF0YTogYW55W10gfCBzdHJpbmcpOiBzdHJpbmdbXSB7XG5cdFx0cmV0dXJuIHRoaXMucm91dGVTZXJ2aWNlLnRvUm91dGUoZGF0YSk7XG5cdH1cblxufVxuIl19

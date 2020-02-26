@@ -4,6 +4,7 @@ import { StateKey, TransferState } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { CoreConfig } from '../config/core.config';
 import { Logger } from '../logger/logger.service';
+import * as i0 from "@angular/core";
 export declare class ApiRequestOptions {
     headers?: HttpHeaders;
     params?: HttpParams;
@@ -11,20 +12,20 @@ export declare class ApiRequestOptions {
 }
 export declare class ApiService<T> {
     protected injector: Injector;
-    readonly collection: string;
+    get collection(): string;
     private _logger;
-    readonly logger: Logger;
+    get logger(): Logger;
     private _http;
-    readonly http: HttpClient;
+    get http(): HttpClient;
     private _state;
-    readonly state: TransferState;
+    get state(): TransferState;
     private _platformId;
-    readonly platformId: string;
+    get platformId(): string;
     private _config;
-    readonly config: CoreConfig;
+    get config(): CoreConfig;
     private _origin;
-    readonly origin: string;
-    readonly url: string;
+    get origin(): string;
+    get url(): string;
     constructor(injector: Injector);
     getUrl(method?: string): string;
     get(first?: string | {}, second?: {}): Observable<any>;
@@ -36,4 +37,6 @@ export declare class ApiService<T> {
     getStateKey(url: string, model: {}): StateKey<any>;
     stateGet(first?: string | {}, second?: {}): Observable<any>;
     statePost(first: string | {}, second?: {}, third?: {}): Observable<any>;
+    static ɵfac: i0.ɵɵFactoryDef<ApiService<any>>;
+    static ɵprov: i0.ɵɵInjectableDef<ApiService<any>>;
 }

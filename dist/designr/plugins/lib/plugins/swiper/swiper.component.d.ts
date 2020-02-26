@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, NgZone, OnDestroy } from '@angular/core';
 import { SwiperDirective } from './swiper.directive';
 import { SwiperConfigInterface } from './swiper.interfaces';
+import * as i0 from "@angular/core";
 export declare class SwiperComponent implements AfterViewInit, OnDestroy {
     private zone;
     private cdRef;
@@ -53,8 +54,8 @@ export declare class SwiperComponent implements AfterViewInit, OnDestroy {
     touchStart: EventEmitter<any>;
     transitionEnd: EventEmitter<any>;
     transitionStart: EventEmitter<any>;
-    readonly isAtLast: boolean;
-    readonly isAtFirst: boolean;
+    get isAtLast(): boolean;
+    get isAtFirst(): boolean;
     private mo;
     swiperConfig: any;
     paginationBackup: any;
@@ -65,4 +66,6 @@ export declare class SwiperComponent implements AfterViewInit, OnDestroy {
     getConfig(): SwiperConfigInterface;
     private updateClasses;
     onPaginationClick(index: number): void;
+    static ɵfac: i0.ɵɵFactoryDef<SwiperComponent>;
+    static ɵcmp: i0.ɵɵComponentDefWithMeta<SwiperComponent, "swiper", ["ngxSwiper"], { "index": "index"; "disabled": "disabled"; "performance": "performance"; "config": "config"; "useSwiperClass": "useSwiperClass"; }, { "autoplay": "autoplay"; "autoplayStart": "autoplayStart"; "autoplayStop": "autoplayStop"; "beforeDestroy": "beforeDestroy"; "beforeResize": "beforeResize"; "breakpoint": "breakpoint"; "click": "click"; "doubleTap": "doubleTap"; "fromEdge": "fromEdge"; "imagesReady": "imagesReady"; "indexChange": "indexChange"; "init": "init"; "keyPress": "keyPress"; "lazyImageLoad": "lazyImageLoad"; "lazyImageReady": "lazyImageReady"; "progress": "progress"; "reachBeginning": "reachBeginning"; "reachEnd": "reachEnd"; "resize": "resize"; "scroll": "scroll"; "scrollDragEnd": "scrollDragEnd"; "scrollDragMove": "scrollDragMove"; "scrollDragStart": "scrollDragStart"; "setTransition": "setTransition"; "setTranslate": "setTranslate"; "slideChange": "slideChange"; "slideChangeTransitionEnd": "slideChangeTransitionEnd"; "slideChangeTransitionStart": "slideChangeTransitionStart"; "slideNextTransitionEnd": "slideNextTransitionEnd"; "slideNextTransitionStart": "slideNextTransitionStart"; "slidePrevTransitionEnd": "slidePrevTransitionEnd"; "slidePrevTransitionStart": "slidePrevTransitionStart"; "sliderMove": "sliderMove"; "tap": "tap"; "touchEnd": "touchEnd"; "touchMove": "touchMove"; "touchMoveOpposite": "touchMoveOpposite"; "touchStart": "touchStart"; "transitionEnd": "transitionEnd"; "transitionStart": "transitionStart"; }, never>;
 }

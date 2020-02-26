@@ -1,6 +1,32 @@
 import { ModuleWithProviders } from '@angular/core';
 import { ControlConfig } from './config/control.config';
+import * as i0 from "@angular/core";
+import * as i1 from "./control/controls.component";
+import * as i2 from "./control-module.component";
+import * as i3 from "./control/control-outlet.component";
+import * as i4 from "./control/control.component";
+import * as i5 from "./control/checkbox/control-checkbox.component";
+import * as i6 from "./control/email/control-email.component";
+import * as i7 from "./control/group/control-group.component";
+import * as i8 from "./control/info/control-info.component";
+import * as i9 from "./control/markdown/control-markdown.component";
+import * as i10 from "./control/number/control-number.component";
+import * as i11 from "./control/password/control-password.component";
+import * as i12 from "./control/radio/control-radio.component";
+import * as i13 from "./control/select/control-select.component";
+import * as i14 from "./control/text/control-text.component";
+import * as i15 from "./control/textarea/control-textarea.component";
+import * as i16 from "./directives/uppercase.directive";
+import * as i17 from "./control/control.accessor";
+import * as i18 from "./directives/exists.directive";
+import * as i19 from "./directives/match.directive";
+import * as i20 from "@angular/common";
+import * as i21 from "@angular/common/http";
+import * as i22 from "@angular/forms";
+import * as i23 from "@designr/core";
 export declare class ControlModule {
     constructor(parentModule: ControlModule);
-    static forRoot(config?: ControlConfig): ModuleWithProviders;
+    static forRoot(config?: ControlConfig): i0.ModuleWithProviders<ControlModule>;
+    static ɵmod: i0.ɵɵNgModuleDefWithMeta<ControlModule, [typeof i1.ControlsComponent, typeof i2.ControlModuleComponent, typeof i3.ControlOutletComponent, typeof i4.ControlComponent, typeof i5.ControlCheckboxComponent, typeof i6.ControlEmailComponent, typeof i7.ControlGroupComponent, typeof i8.ControlInfoComponent, typeof i9.ControlMarkdownComponent, typeof i10.ControlNumberComponent, typeof i11.ControlPasswordComponent, typeof i12.ControlRadioComponent, typeof i13.ControlSelectComponent, typeof i14.ControlTextComponent, typeof i15.ControlTextareaComponent, typeof i16.UppercaseDirective, typeof i17.ControlAccessor, typeof i18.ExistsValidator, typeof i19.MatchValidator], [typeof i20.CommonModule, typeof i21.HttpClientModule, typeof i22.FormsModule, typeof i22.ReactiveFormsModule, typeof i23.CoreModule], [typeof i1.ControlsComponent, typeof i2.ControlModuleComponent, typeof i3.ControlOutletComponent, typeof i4.ControlComponent, typeof i5.ControlCheckboxComponent, typeof i6.ControlEmailComponent, typeof i7.ControlGroupComponent, typeof i8.ControlInfoComponent, typeof i9.ControlMarkdownComponent, typeof i10.ControlNumberComponent, typeof i11.ControlPasswordComponent, typeof i12.ControlRadioComponent, typeof i13.ControlSelectComponent, typeof i14.ControlTextComponent, typeof i15.ControlTextareaComponent, typeof i16.UppercaseDirective, typeof i17.ControlAccessor, typeof i18.ExistsValidator, typeof i19.MatchValidator]>;
+    static ɵinj: i0.ɵɵInjectorDef<ControlModule>;
 }

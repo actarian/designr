@@ -1,5 +1,5 @@
 /**
  * Generated bundle index. Do not edit.
  */
+/// <amd-module name="@designr/section" />
 export * from './public_api';
-export { SectionsComponent as ɵa } from './lib/section/sections.component';

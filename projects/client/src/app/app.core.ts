@@ -3,7 +3,7 @@ import { Bundles, CoreModule } from '@designr/core';
 import { environment } from '../environments/environment';
 
 export const bundles: Bundles = {
-	editor: 'projects/client/src/app/bundles/editor.bundle#EditorBundle',
+	editor: () => import('./bundles/editor.bundle').then(m => m.EditorBundle), // 'projects/client/src/app/bundles/editor.bundle#EditorBundle',
 };
 
 @NgModule({

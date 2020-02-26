@@ -1,12 +1,15 @@
 import { ElementRef, OnInit } from '@angular/core';
-import { DisposableComponent } from '../disposable/disposable.component';
+import { DisposableDirective } from '../disposable/disposable.directive';
 import { Label } from './label';
 import { LabelService } from './label.service';
-export declare class LabelDirective extends DisposableComponent implements OnInit {
+import * as i0 from "@angular/core";
+export declare class LabelDirective extends DisposableDirective implements OnInit {
     private element;
     private labelService;
     label: string;
     labelParams: any;
     constructor(element: ElementRef, labelService: LabelService<Label>);
     ngOnInit(): void;
+    static ɵfac: i0.ɵɵFactoryDef<LabelDirective>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<LabelDirective, "[label]", never, { "label": "label"; "labelParams": "labelParams"; }, {}, never>;
 }

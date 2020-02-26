@@ -1,6 +1,7 @@
 import { HttpBackend, HttpEvent, HttpRequest, HttpResponse, HttpXhrBackend, XhrFactory } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MemoryBackendConfig, MemoryDataService, MemoryRequest, MemoryResponse, ParsedRequestUrl, PassThruBackend, UriInfo } from './memory';
+import * as i0 from "@angular/core";
 export declare class BackendService implements HttpBackend {
     protected dataService: MemoryDataService;
     private factory;
@@ -9,7 +10,7 @@ export declare class BackendService implements HttpBackend {
     protected database: Object;
     protected databaseReadySubject: BehaviorSubject<boolean>;
     constructor(dataService: MemoryDataService, config: MemoryBackendConfig, factory: XhrFactory);
-    protected readonly databaseReady: Observable<boolean>;
+    protected get databaseReady(): Observable<boolean>;
     /**
      * Process Request and return an Observable of Http Response object
      * in the manner of a RESTy web api.
@@ -160,4 +161,6 @@ export declare class BackendService implements HttpBackend {
     protected createQueryMap(search: string): Map<string, string[]>;
     protected createResponse$fromMemoryResponse$(response$: Observable<MemoryResponse>): Observable<HttpResponse<any>>;
     protected createPassThruBackend(): HttpXhrBackend;
+    static ɵfac: i0.ɵɵFactoryDef<BackendService>;
+    static ɵprov: i0.ɵɵInjectableDef<BackendService>;
 }

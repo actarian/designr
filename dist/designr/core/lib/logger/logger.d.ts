@@ -10,5 +10,5 @@ export declare enum LoggerErrorStrategy {
 export declare class LoggerError extends HttpErrorResponse {
     body?: any;
     constructor(response?: HttpErrorResponse | HttpResponse<any>);
-    readonly statusType: string;
+    get statusType(): string;
 }

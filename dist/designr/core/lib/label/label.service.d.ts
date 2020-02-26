@@ -2,6 +2,7 @@ import { Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from '../api/api.service';
 import { Label } from './label';
+import * as i0 from "@angular/core";
 export declare class LabelKey {
     id?: string;
     value?: string;
@@ -9,7 +10,7 @@ export declare class LabelKey {
 }
 export declare class LabelService<T extends Label> extends ApiService<T> {
     protected injector: Injector;
-    readonly collection: string;
+    get collection(): string;
     private keys;
     private values$;
     private emitter$;
@@ -26,4 +27,6 @@ export declare class LabelService<T extends Label> extends ApiService<T> {
     parseLabel(value: string, params: any): string;
     private getLabel;
     private getMissingLabel;
+    static ɵfac: i0.ɵɵFactoryDef<LabelService<any>>;
+    static ɵprov: i0.ɵɵInjectableDef<LabelService<any>>;
 }

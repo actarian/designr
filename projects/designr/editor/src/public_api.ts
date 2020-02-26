@@ -5,4 +5,5 @@ export { EditorBundleModule } from './lib/editor-bundle/editor-bundle.module';
 export { EditorRootComponent } from './lib/editor-bundle/editor-root.component';
 export { EditorModuleComponent } from './lib/editor-module.component';
 export { EditorModule } from './lib/editor.module';
+export { PanelComponent } from './lib/panel/panel.component';
 

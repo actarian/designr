@@ -1,59 +1,36 @@
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpErrorResponse, HttpClient, HttpHeaders, HttpResponse, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import JSONFormatter from 'json-formatter-js';
-import { isArray, isObject } from 'util';
-import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
-import { isPlatformBrowser, isPlatformServer, Location, CommonModule } from '@angular/common';
-import { InjectionToken, Inject, Injectable, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, ComponentFactoryResolver, ViewChild, PLATFORM_ID, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, INJECTOR, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf, NgZone } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer, Location, NgIf, NgClass, NgForOf, CommonModule } from '@angular/common';
+import { HttpErrorResponse, HttpHeaders, HttpClient, HttpResponse, HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { InjectionToken, ɵɵinject, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, Inject, PLATFORM_ID, Injector, ɵɵdirectiveInject, NgModuleFactoryLoader, ViewContainerRef, ɵɵdefineDirective, Directive, Input, ElementRef, Renderer2, ɵɵdefineComponent, ɵɵelementStart, ɵɵtext, ɵɵelementEnd, ɵɵadvance, ɵɵtextInterpolate1, Component, ɵɵdefinePipe, Pipe, EventEmitter, ɵɵstaticViewQuery, ɵɵqueryRefresh, ɵɵloadQuery, ɵɵNgOnChangesFeature, ɵɵelement, ViewEncapsulation, ViewChild, ɵɵInheritDefinitionFeature, ɵɵnextContext, ɵɵproperty, ɵɵtextInterpolate, ɵɵtemplate, ɵɵgetInheritedFactory, ComponentFactoryResolver, ɵɵviewQuery, ɵɵelementContainerStart, ɵɵelementContainerEnd, WrappedValue, ɵɵinjectPipeChangeDetectorRef, ChangeDetectorRef, ɵɵdefineNgModule, ɵɵdefineInjector, SystemJsNgModuleLoader, ɵɵsetNgModuleScope, NgModule, Optional, SkipSelf, NgZone } from '@angular/core';
+import { TransferState, makeStateKey, DomSanitizer } from '@angular/platform-browser';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
-import { tap, filter, map, switchMap, distinctUntilChanged, catchError, debounceTime, takeUntil, first } from 'rxjs/operators';
+import { tap, filter, switchMap, map, distinctUntilChanged, catchError, debounceTime, takeUntil, first } from 'rxjs/operators';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NavigationStart, ActivatedRoute, Router } from '@angular/router';
+import JSONFormatter from 'json-formatter-js';
+import { isObject, isArray } from 'util';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {number} */
-const AuthStrategy = {
-    Bearer: 0,
-    Cookie: 1,
-};
-AuthStrategy[AuthStrategy.Bearer] = 'Bearer';
-AuthStrategy[AuthStrategy.Cookie] = 'Cookie';
+var AuthStrategy;
+(function (AuthStrategy) {
+    AuthStrategy[AuthStrategy["Bearer"] = 0] = "Bearer";
+    AuthStrategy[AuthStrategy["Cookie"] = 1] = "Cookie";
+})(AuthStrategy || (AuthStrategy = {}));
 class AuthToken {
-    /**
-     * @param {?} accessToken
-     * @param {?=} expiresIn
-     */
     constructor(accessToken, expiresIn = 0) {
         this.accessToken = accessToken;
         this.expiresIn = expiresIn;
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {number} */
-const LoggerErrorStrategy = {
-    Informational: 100,
-    Success: 200,
-    Redirect: 300,
-    Client: 400,
-    Server: 500,
-    None: 999,
-};
-LoggerErrorStrategy[LoggerErrorStrategy.Informational] = 'Informational';
-LoggerErrorStrategy[LoggerErrorStrategy.Success] = 'Success';
-LoggerErrorStrategy[LoggerErrorStrategy.Redirect] = 'Redirect';
-LoggerErrorStrategy[LoggerErrorStrategy.Client] = 'Client';
-LoggerErrorStrategy[LoggerErrorStrategy.Server] = 'Server';
-LoggerErrorStrategy[LoggerErrorStrategy.None] = 'None';
+var LoggerErrorStrategy;
+(function (LoggerErrorStrategy) {
+    LoggerErrorStrategy[LoggerErrorStrategy["Informational"] = 100] = "Informational";
+    LoggerErrorStrategy[LoggerErrorStrategy["Success"] = 200] = "Success";
+    LoggerErrorStrategy[LoggerErrorStrategy["Redirect"] = 300] = "Redirect";
+    LoggerErrorStrategy[LoggerErrorStrategy["Client"] = 400] = "Client";
+    LoggerErrorStrategy[LoggerErrorStrategy["Server"] = 500] = "Server";
+    LoggerErrorStrategy[LoggerErrorStrategy["None"] = 999] = "None";
+})(LoggerErrorStrategy || (LoggerErrorStrategy = {}));
 class LoggerError extends HttpErrorResponse {
-    /**
-     * @param {?=} response
-     */
     constructor(response) {
         super({
             error: response instanceof HttpErrorResponse ? response.error : response.statusText,
@@ -63,32 +40,19 @@ class LoggerError extends HttpErrorResponse {
             url: response.url,
         });
     }
-    /**
-     * @return {?}
-     */
     get statusType() {
-        return Object.keys(LoggerErrorStrategy).reduce((/**
-         * @param {?} type
-         * @param {?} key
-         * @return {?}
-         */
-        (type, key) => {
+        return Object.keys(LoggerErrorStrategy).reduce((type, key) => {
             if (this.status >= LoggerErrorStrategy[key]) {
                 type = key.toLowerCase();
             }
             return type;
-        }), null);
+        }, null);
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+class Language {
+}
 class CoreTransitionConfig {
-    /**
-     * @param {?=} options
-     */
     constructor(options) {
         // console.log('CoreTransitionConfig', options);
         if (options) {
@@ -97,10 +61,6 @@ class CoreTransitionConfig {
     }
 }
 class CoreConfig {
-    // ExtraOptions
-    /**
-     * @param {?=} options
-     */
     constructor(options) {
         this.assets = '';
         this.authStrategy = AuthStrategy.Cookie;
@@ -124,17 +84,9 @@ class CoreConfig {
         }
     }
 }
-/** @type {?} */
 const CORE_CONFIG = new InjectionToken('core.config');
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class CoreService {
-    /**
-     * @param {?} options
-     */
     constructor(options) {
         // console.log('CoreService', options);
         options = options || {};
@@ -143,82 +95,52 @@ class CoreService {
         this.options = new CoreConfig(options);
     }
 }
-CoreService.decorators = [
-    { type: Injectable, args: [{
+CoreService.ɵfac = function CoreService_Factory(t) { return new (t || CoreService)(ɵɵinject(CORE_CONFIG)); };
+CoreService.ɵprov = ɵɵdefineInjectable({ token: CoreService, factory: CoreService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(CoreService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-CoreService.ctorParameters = () => [
-    { type: CoreConfig, decorators: [{ type: Inject, args: [CORE_CONFIG,] }] }
-];
-/** @nocollapse */ CoreService.ngInjectableDef = defineInjectable({ factory: function CoreService_Factory() { return new CoreService(inject(CORE_CONFIG)); }, token: CoreService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: CoreConfig, decorators: [{
+                type: Inject,
+                args: [CORE_CONFIG]
+            }] }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class Logger {
-    /**
-     * @param {?} coreService
-     */
     constructor(coreService) {
         this.coreService = coreService;
         this.logs = [];
         //
     }
-    /**
-     * @param {...?} args
-     * @return {?}
-     */
     request(...args) {
         if (!this.coreService.options.production) {
-            /** @type {?} */
             const s = args.join(', ');
             this.logs.push(s);
             // console.log.apply(this, ['%c %s', 'background: #dddddd; color: #111'].concat(args));
         }
     }
-    /**
-     * @param {...?} args
-     * @return {?}
-     */
     log(...args) {
         if (!this.coreService.options.production) {
-            /** @type {?} */
             const s = args.join(', ');
             this.logs.push(s);
             console.log.apply(this, ['%c%s', 'background: #1976d2; color: #fff; border-radius: 3px; padding: 4px 8px; margin-bottom: 4px;'].concat(args));
         }
     }
-    /**
-     * @param {...?} args
-     * @return {?}
-     */
     warn(...args) {
         if (!this.coreService.options.production) {
-            /** @type {?} */
             const s = args.join(', ');
             this.logs.push(s);
             console.log.apply(this, ['%c%s', 'background: #ff5500; color: #fff'].concat(args));
         }
     }
-    /**
-     * @param {...?} args
-     * @return {?}
-     */
     error(...args) {
         if (!this.coreService.options.production) {
-            /** @type {?} */
             const s = args.join(', ');
             this.logs.push(s);
             console.error.apply(console, args);
         }
     }
-    /**
-     * @param {?} response
-     * @return {?}
-     */
     http(response) {
         this.httpError = new LoggerError(response);
         if (!this.coreService.options.production) {
@@ -226,268 +148,131 @@ class Logger {
         }
         console.warn('Logger.http.response', response.status, response.statusText, response.url);
     }
-    /**
-     * @return {?}
-     */
     clear() {
         this.httpError = null;
         this.logs = [];
     }
 }
-Logger.decorators = [
-    { type: Injectable, args: [{
+Logger.ɵfac = function Logger_Factory(t) { return new (t || Logger)(ɵɵinject(CoreService)); };
+Logger.ɵprov = ɵɵdefineInjectable({ token: Logger, factory: Logger.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(Logger, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-Logger.ctorParameters = () => [
-    { type: CoreService }
-];
-/** @nocollapse */ Logger.ngInjectableDef = defineInjectable({ factory: function Logger_Factory() { return new Logger(inject(CoreService)); }, token: Logger, providedIn: "root" });
+            }]
+    }], function () { return [{ type: CoreService }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ApiRequestOptions {
-    /**
-     * @param {?=} params
-     */
     constructor(params) {
         this.headers = new HttpHeaders({
             'Content-Type': 'application/json'
         });
-        this.params = (/** @type {?} */ (params));
+        this.params = params;
     }
 }
-/**
- * @template T
- */
 class ApiService {
-    /**
-     * @param {?} injector
-     */
     constructor(injector) {
         this.injector = injector;
     }
-    /**
-     * @return {?}
-     */
     get collection() {
         return '/api';
     }
-    /**
-     * @return {?}
-     */
     get logger() {
         if (!this._logger) {
             this._logger = this.injector.get(Logger);
         }
         return this._logger;
     }
-    /**
-     * @return {?}
-     */
     get http() {
         if (!this._http) {
             this._http = this.injector.get(HttpClient);
         }
         return this._http;
     }
-    /**
-     * @return {?}
-     */
     get state() {
         if (!this._state) {
             this._state = this.injector.get(TransferState);
         }
         return this._state;
     }
-    /**
-     * @return {?}
-     */
     get platformId() {
         if (!this._platformId) {
             this._platformId = this.injector.get(PLATFORM_ID);
         }
         return this._platformId;
     }
-    /**
-     * @return {?}
-     */
     get config() {
         if (!this._config) {
             this._config = this.injector.get(CoreService).options;
         }
         return this._config;
     }
-    /**
-     * @return {?}
-     */
     get origin() {
         if (!this._origin) {
             this._origin = this.config.origin;
         }
         return this._origin;
     }
-    /**
-     * @return {?}
-     */
     get url() {
-        /** @type {?} */
         let base = this.origin;
-        /** @type {?} */
         const collection = this.collection.toLowerCase();
         if (collection.indexOf('http') === 0) {
             base = '';
         }
         return `${base}${collection}`;
     }
-    /**
-     * @param {?=} method
-     * @return {?}
-     */
     getUrl(method = '') {
         return `${this.url}${method}`;
     }
-    /**
-     * @param {?=} first
-     * @param {?=} second
-     * @return {?}
-     */
-    get(first$$1, second) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const params = (typeof first$$1 === 'object' ? first$$1 : second);
-        /** @type {?} */
+    get(first, second) {
+        const method = (typeof first === 'string' ? first : '');
+        const params = (typeof first === 'object' ? first : second);
         const url = this.getUrl(method);
-        /** @type {?} */
         const options = new ApiRequestOptions(params);
-        return this.http.get(url, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.logger.request(url))));
+        return this.http.get(url, options).pipe(tap(x => this.logger.request(url)));
     }
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    post(first$$1, second, third) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const model = (typeof first$$1 === 'object' ? first$$1 : second);
-        /** @type {?} */
+    post(first, second, third) {
+        const method = (typeof first === 'string' ? first : '');
+        const model = (typeof first === 'object' ? first : second);
         const params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
         const url = this.getUrl(method);
-        /** @type {?} */
         const options = new ApiRequestOptions(params);
-        return this.http.post(url, model, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.logger.request(url))));
+        return this.http.post(url, model, options).pipe(tap(x => this.logger.request(url)));
     }
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    put(first$$1, second, third) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const model = (/** @type {?} */ ((typeof first$$1 === 'object' ? first$$1 : second)));
-        /** @type {?} */
+    put(first, second, third) {
+        const method = (typeof first === 'string' ? first : '');
+        const model = (typeof first === 'object' ? first : second);
         const params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
         const url = this.getUrl(method);
-        /** @type {?} */
         const options = new ApiRequestOptions(params);
-        return this.http.put(url, model, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.logger.request(url))));
+        return this.http.put(url, model, options).pipe(tap(x => this.logger.request(url)));
     }
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    patch(first$$1, second, third) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const model = (/** @type {?} */ ((typeof first$$1 === 'object' ? first$$1 : second)));
-        /** @type {?} */
+    patch(first, second, third) {
+        const method = (typeof first === 'string' ? first : '');
+        const model = (typeof first === 'object' ? first : second);
         const params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
         const url = this.getUrl(method);
-        /** @type {?} */
         const options = new ApiRequestOptions(params);
-        return this.http.patch(url, model, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.logger.request(url))));
+        return this.http.patch(url, model, options).pipe(tap(x => this.logger.request(url)));
     }
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    delete(first$$1, second, third) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const identity = (/** @type {?} */ ((typeof first$$1 !== 'string' ? first$$1 : second)));
-        /** @type {?} */
-        const id = identity ? (typeof identity === 'number' ? identity : ((/** @type {?} */ (identity))).id) : null;
-        /** @type {?} */
+    delete(first, second, third) {
+        const method = (typeof first === 'string' ? first : '');
+        const identity = (typeof first !== 'string' ? first : second);
+        const id = identity ? (typeof identity === 'number' ? identity : identity.id) : null;
         const params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
         const url = id !== null ? this.getUrl(`${method}/${id}`) : this.getUrl(method);
-        /** @type {?} */
         const options = new ApiRequestOptions(params);
-        return this.http.delete(url, options).pipe(tap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.logger.request(url))));
+        return this.http.delete(url, options).pipe(tap(x => this.logger.request(url)));
     }
-    /**
-     * @param {?} input
-     * @return {?}
-     */
     toCamelCase(input) {
-        /** @type {?} */
-        let output;
-        /** @type {?} */
-        let key;
-        /** @type {?} */
-        let keyCamelCase;
-        /** @type {?} */
-        let value;
+        let output, key, keyCamelCase, value;
         if (input instanceof Array) {
-            return input.map((/**
-             * @param {?} value
-             * @return {?}
-             */
-            (value) => {
+            return input.map((value) => {
                 if (typeof value === 'object') {
                     value = this.toCamelCase(value);
                 }
                 return value;
-            }));
+            });
         }
         else {
             output = {};
@@ -505,19 +290,8 @@ class ApiService {
         return output;
     }
     // TRANSFER STATE
-    /**
-     * @param {?} url
-     * @param {?} model
-     * @return {?}
-     */
     getStateKey(url, model) {
-        /** @type {?} */
-        const flatMap = (/**
-         * @param {?} s
-         * @param {?} x
-         * @return {?}
-         */
-        (s, x) => {
+        const flatMap = (s, x) => {
             if (typeof x === 'number') {
                 s += x.toString();
             }
@@ -525,117 +299,66 @@ class ApiService {
                 s += x.substr(0, 10);
             }
             else if (x && typeof x === 'object') {
-                s += '_' + Object.keys(x).map((/**
-                 * @param {?} k
-                 * @return {?}
-                 */
-                k => k + '_' + flatMap('', x[k]))).join('_');
+                s += '_' + Object.keys(x).map(k => k + '_' + flatMap('', x[k])).join('_');
             }
             return s;
-        });
+        };
         url = flatMap(url, model);
         // console.log('ApiService.getStateKey.url', url);
-        /** @type {?} */
         const key = url.replace(/(\W)/gm, '_');
         // this.logger.log('ApiService.getStateKey.key', key);
         return makeStateKey(key);
     }
-    /**
-     * @param {?=} first
-     * @param {?=} second
-     * @return {?}
-     */
-    stateGet(first$$1, second) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const params = (typeof first$$1 === 'object' ? first$$1 : second);
-        /** @type {?} */
+    stateGet(first, second) {
+        const method = (typeof first === 'string' ? first : '');
+        const params = (typeof first === 'object' ? first : second);
         const url = this.getUrl(method);
-        /** @type {?} */
         const options = new ApiRequestOptions(params);
-        /** @type {?} */
         const stateKey = this.getStateKey(url, params);
         if (isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
-            /** @type {?} */
             const cached = this.state.get(stateKey, null);
             this.state.remove(stateKey);
             return of(cached);
         }
         else {
-            return this.http.get(url, options).pipe(tap((/**
-             * @param {?} x
-             * @return {?}
-             */
-            x => {
+            return this.http.get(url, options).pipe(tap(x => {
                 if (isPlatformServer(this.platformId)) {
-                    this.state.onSerialize(stateKey, (/**
-                     * @return {?}
-                     */
-                    () => x));
+                    this.state.onSerialize(stateKey, () => x);
                 }
-            })));
+            }));
         }
     }
-    /**
-     * @param {?} first
-     * @param {?=} second
-     * @param {?=} third
-     * @return {?}
-     */
-    statePost(first$$1, second, third) {
-        /** @type {?} */
-        const method = (typeof first$$1 === 'string' ? first$$1 : '');
-        /** @type {?} */
-        const model = (typeof first$$1 === 'object' ? first$$1 : second);
-        /** @type {?} */
+    statePost(first, second, third) {
+        const method = (typeof first === 'string' ? first : '');
+        const model = (typeof first === 'object' ? first : second);
         const params = (typeof second === 'object' ? second : third);
-        /** @type {?} */
         const url = this.getUrl(method);
-        /** @type {?} */
         const options = new ApiRequestOptions(params);
-        /** @type {?} */
         const stateKey = this.getStateKey(url, model);
         if (isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
-            /** @type {?} */
             const cached = this.state.get(stateKey, null);
             this.state.remove(stateKey);
             return of(cached);
         }
         else {
-            return this.http.post(url, model, options).pipe(tap((/**
-             * @param {?} x
-             * @return {?}
-             */
-            x => {
+            return this.http.post(url, model, options).pipe(tap(x => {
                 if (isPlatformServer(this.platformId)) {
-                    this.state.onSerialize(stateKey, (/**
-                     * @return {?}
-                     */
-                    () => x));
+                    this.state.onSerialize(stateKey, () => x);
                 }
-            })));
+            }));
         }
     }
 }
-ApiService.decorators = [
-    { type: Injectable, args: [{
+ApiService.ɵfac = function ApiService_Factory(t) { return new (t || ApiService)(ɵɵinject(Injector)); };
+ApiService.ɵprov = ɵɵdefineInjectable({ token: ApiService, factory: ApiService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ApiService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-ApiService.ctorParameters = () => [
-    { type: Injector }
-];
-/** @nocollapse */ ApiService.ngInjectableDef = defineInjectable({ factory: function ApiService_Factory() { return new ApiService(inject(INJECTOR)); }, token: ApiService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: Injector }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
-const TIMEOUT = 5 * 60 * 1000;
-// five minutes
+const TIMEOUT = 5 * 60 * 1000; // five minutes
 /*
 export class StorageEvent extends Event {}
 
@@ -646,58 +369,29 @@ export class SessionStorageEvent extends StorageEvent { }
 export class LocalStorageEvent extends StorageEvent { }
 */
 class StorageService {
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     delete(name) { }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     exist(name) { return false; }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     get(name) { return null; }
-    /**
-     * @param {?} name
-     * @param {?} value
-     * @param {?=} days
-     * @return {?}
-     */
     set(name, value, days) { }
-    /**
-     * @return {?}
-     */
     on() { return of(null); }
-    /**
-     * @return {?}
-     */
     tryGet() {
         // console.log('no StorageService available...');
         return this;
     }
 }
-StorageService.decorators = [
-    { type: Injectable, args: [{
+StorageService.ɵfac = function StorageService_Factory(t) { return new (t || StorageService)(); };
+StorageService.ɵprov = ɵɵdefineInjectable({ token: StorageService, factory: StorageService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(StorageService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */ StorageService.ngInjectableDef = defineInjectable({ factory: function StorageService_Factory() { return new StorageService(); }, token: StorageService, providedIn: "root" });
+            }]
+    }], null, null); })();
 class CookieStorageService {
-    /**
-     * @param {?} platformId
-     * @param {?} storageService
-     */
     constructor(platformId, storageService) {
         this.platformId = platformId;
         this.storageService = storageService;
     }
-    /**
-     * @return {?}
-     */
     tryGet() {
         if (this.isSupported()) {
             // console.log('CookieStorageService.supported');
@@ -707,39 +401,22 @@ class CookieStorageService {
             return this.storageService.tryGet();
         }
     }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     delete(name) {
         this.setter(name, '', -1);
     }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     exist(name) {
         return document.cookie.indexOf(';' + name + '=') !== -1 || document.cookie.indexOf(name + '=') === 0;
     }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     get(name) {
-        /** @type {?} */
         const cookieName = name + '=';
-        /** @type {?} */
         const ca = document.cookie.split(';');
         for (let i = 0; i < ca.length; i++) {
-            /** @type {?} */
             let c = ca[i];
             while (c.charAt(0) === ' ') {
                 c = c.substring(1, c.length);
             }
             if (c.indexOf(cookieName) === 0) {
-                /** @type {?} */
                 const value = c.substring(cookieName.length, c.length);
-                /** @type {?} */
                 let model = null;
                 try {
                     model = JSON.parse(decodeURIComponent(atob(value)));
@@ -752,23 +429,10 @@ class CookieStorageService {
         }
         return null;
     }
-    /**
-     * @param {?} name
-     * @param {?} value
-     * @param {?=} days
-     * @return {?}
-     */
     set(name, value, days) {
         try {
-            /** @type {?} */
             let cache = [];
-            /** @type {?} */
-            const json = JSON.stringify(value, (/**
-             * @param {?} key
-             * @param {?} value
-             * @return {?}
-             */
-            function (key, value) {
+            const json = JSON.stringify(value, function (key, value) {
                 if (key === 'pool') {
                     return;
                 }
@@ -780,7 +444,7 @@ class CookieStorageService {
                     cache.push(value);
                 }
                 return value;
-            }));
+            });
             cache = null;
             this.setter(name, btoa(encodeURIComponent(json)), days);
         }
@@ -788,28 +452,19 @@ class CookieStorageService {
             console.log('CookieSet.error serializing', name, value, e);
         }
     }
-    /**
-     * @return {?}
-     */
     on() {
         // todo
-        /** @type {?} */
-        const interval = 1000;
-        /** @type {?} */
-        const timeout = TIMEOUT;
-        /** @type {?} */
-        let i;
-        /** @type {?} */
-        let elapsed = 0;
-        /**
-         * @return {?}
-         */
+        const interval = 1000, timeout = TIMEOUT;
+        let i, elapsed = 0;
         function checkCookie() {
-            if (elapsed > timeout) ;
+            if (elapsed > timeout) {
+                // promise.reject('timeout');
+            }
             else {
-                /** @type {?} */
                 const c = this.get(name);
-                if (c) ;
+                if (c) {
+                    // promise.resolve(c);
+                }
                 else {
                     elapsed += interval;
                     i = setTimeout(checkCookie, interval);
@@ -819,18 +474,9 @@ class CookieStorageService {
         checkCookie();
         return of(null);
     }
-    /**
-     * @private
-     * @param {?} name
-     * @param {?} value
-     * @param {?=} days
-     * @return {?}
-     */
     setter(name, value, days) {
-        /** @type {?} */
         let expires;
         if (days) {
-            /** @type {?} */
             const date = new Date();
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             expires = '; expires=' + date.toUTCString();
@@ -840,37 +486,26 @@ class CookieStorageService {
         }
         document.cookie = name + '=' + value + expires + '; path=/';
     }
-    /**
-     * @private
-     * @return {?}
-     */
     isSupported() {
         return isPlatformBrowser(this.platformId);
     }
 }
-CookieStorageService.decorators = [
-    { type: Injectable, args: [{
+CookieStorageService.ɵfac = function CookieStorageService_Factory(t) { return new (t || CookieStorageService)(ɵɵinject(PLATFORM_ID), ɵɵinject(StorageService)); };
+CookieStorageService.ɵprov = ɵɵdefineInjectable({ token: CookieStorageService, factory: CookieStorageService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(CookieStorageService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-CookieStorageService.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: StorageService }
-];
-/** @nocollapse */ CookieStorageService.ngInjectableDef = defineInjectable({ factory: function CookieStorageService_Factory() { return new CookieStorageService(inject(PLATFORM_ID), inject(StorageService)); }, token: CookieStorageService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Inject,
+                args: [PLATFORM_ID]
+            }] }, { type: StorageService }]; }, null); })();
 class SessionStorageService {
-    /**
-     * @param {?} platformId
-     * @param {?} cookieStorageService
-     */
     constructor(platformId, cookieStorageService) {
         this.platformId = platformId;
         this.cookieStorageService = cookieStorageService;
     }
-    /**
-     * @return {?}
-     */
     tryGet() {
         if (this.isSupported()) {
             // console.log('SessionStorageService.supported');
@@ -880,26 +515,13 @@ class SessionStorageService {
             return this.cookieStorageService.tryGet();
         }
     }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     delete(name) {
         window.sessionStorage.removeItem(name);
     }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     exist(name) {
         return window.sessionStorage[name] !== undefined;
     }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     get(name) {
-        /** @type {?} */
         let value = null;
         if (window.sessionStorage[name] !== undefined) {
             try {
@@ -911,9 +533,6 @@ class SessionStorageService {
         }
         return value;
     }
-    /**
-     * @return {?}
-     */
     on() {
         /*
         return $promise(function (promise) {
@@ -942,23 +561,10 @@ class SessionStorageService {
         */
         return of(null);
     }
-    /**
-     * @param {?} name
-     * @param {?} value
-     * @param {?=} days
-     * @return {?}
-     */
     set(name, value, days) {
         try {
-            /** @type {?} */
             let cache = [];
-            /** @type {?} */
-            const json = JSON.stringify(value, (/**
-             * @param {?} key
-             * @param {?} value
-             * @return {?}
-             */
-            function (key, value) {
+            const json = JSON.stringify(value, function (key, value) {
                 if (key === 'pool') {
                     return;
                 }
@@ -970,7 +576,7 @@ class SessionStorageService {
                     cache.push(value);
                 }
                 return value;
-            }));
+            });
             cache = null;
             window.sessionStorage.setItem(name, json);
         }
@@ -978,12 +584,7 @@ class SessionStorageService {
             console.log('SessionStorage.set.error serializing', name, value, e);
         }
     }
-    /**
-     * @private
-     * @return {?}
-     */
     isSupported() {
-        /** @type {?} */
         let supported = false;
         if (isPlatformBrowser(this.platformId)) {
             try {
@@ -1003,29 +604,22 @@ class SessionStorageService {
         return supported;
     }
 }
-SessionStorageService.decorators = [
-    { type: Injectable, args: [{
+SessionStorageService.ɵfac = function SessionStorageService_Factory(t) { return new (t || SessionStorageService)(ɵɵinject(PLATFORM_ID), ɵɵinject(CookieStorageService)); };
+SessionStorageService.ɵprov = ɵɵdefineInjectable({ token: SessionStorageService, factory: SessionStorageService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(SessionStorageService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-SessionStorageService.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: CookieStorageService }
-];
-/** @nocollapse */ SessionStorageService.ngInjectableDef = defineInjectable({ factory: function SessionStorageService_Factory() { return new SessionStorageService(inject(PLATFORM_ID), inject(CookieStorageService)); }, token: SessionStorageService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Inject,
+                args: [PLATFORM_ID]
+            }] }, { type: CookieStorageService }]; }, null); })();
 class LocalStorageService {
-    /**
-     * @param {?} platformId
-     * @param {?} cookieStorageService
-     */
     constructor(platformId, cookieStorageService) {
         this.platformId = platformId;
         this.cookieStorageService = cookieStorageService;
     }
-    /**
-     * @return {?}
-     */
     tryGet() {
         if (this.isSupported()) {
             // console.log('LocalStorageService.supported');
@@ -1035,26 +629,13 @@ class LocalStorageService {
             return this.cookieStorageService.tryGet();
         }
     }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     delete(name) {
         window.localStorage.removeItem(name);
     }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     exist(name) {
         return window.localStorage[name] !== undefined;
     }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     get(name) {
-        /** @type {?} */
         let value = null;
         if (window.localStorage[name] !== undefined) {
             try {
@@ -1066,9 +647,6 @@ class LocalStorageService {
         }
         return value;
     }
-    /**
-     * @return {?}
-     */
     on() {
         /*
         return $promise(function (promise) {
@@ -1097,23 +675,10 @@ class LocalStorageService {
         */
         return of(null);
     }
-    /**
-     * @param {?} name
-     * @param {?} value
-     * @param {?=} days
-     * @return {?}
-     */
     set(name, value, days) {
         try {
-            /** @type {?} */
             let cache = [];
-            /** @type {?} */
-            const json = JSON.stringify(value, (/**
-             * @param {?} key
-             * @param {?} value
-             * @return {?}
-             */
-            function (key, value) {
+            const json = JSON.stringify(value, function (key, value) {
                 if (key === 'pool') {
                     return;
                 }
@@ -1125,7 +690,7 @@ class LocalStorageService {
                     cache.push(value);
                 }
                 return value;
-            }));
+            });
             cache = null;
             window.localStorage.setItem(name, json);
         }
@@ -1133,12 +698,7 @@ class LocalStorageService {
             console.log('LocalStorage.set.error serializing', name, value, e);
         }
     }
-    /**
-     * @private
-     * @return {?}
-     */
     isSupported() {
-        /** @type {?} */
         let supported = false;
         if (isPlatformBrowser(this.platformId)) {
             try {
@@ -1158,28 +718,19 @@ class LocalStorageService {
         return supported;
     }
 }
-LocalStorageService.decorators = [
-    { type: Injectable, args: [{
+LocalStorageService.ɵfac = function LocalStorageService_Factory(t) { return new (t || LocalStorageService)(ɵɵinject(PLATFORM_ID), ɵɵinject(CookieStorageService)); };
+LocalStorageService.ɵprov = ɵɵdefineInjectable({ token: LocalStorageService, factory: LocalStorageService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(LocalStorageService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-LocalStorageService.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: CookieStorageService }
-];
-/** @nocollapse */ LocalStorageService.ngInjectableDef = defineInjectable({ factory: function LocalStorageService_Factory() { return new LocalStorageService(inject(PLATFORM_ID), inject(CookieStorageService)); }, token: LocalStorageService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Inject,
+                args: [PLATFORM_ID]
+            }] }, { type: CookieStorageService }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class AuthService {
-    /**
-     * @param {?} platformId
-     * @param {?} injector
-     * @param {?} localStorageService
-     */
     constructor(platformId, injector, localStorageService) {
         this.platformId = platformId;
         this.injector = injector;
@@ -1187,103 +738,103 @@ class AuthService {
         this.cachedRequests = [];
         this.paths = [];
     }
-    /**
-     * @param {?} authToken
-     * @return {?}
-     */
     setToken(authToken) {
         this.localStorageService.set('authToken', authToken);
         this.retryFailedRequests();
     }
-    /**
-     * @return {?}
-     */
     getToken() {
-        return (/** @type {?} */ (this.localStorageService.get('authToken')));
+        return this.localStorageService.get('authToken');
     }
-    /**
-     * @return {?}
-     */
     getFakeToken() {
         return new AuthToken('fakeToken');
     }
-    /**
-     * @param {?} authToken
-     * @return {?}
-     */
     isValid(authToken) {
         // return a boolean reflecting whether or not the token is expired
         return authToken && (authToken.expiresIn > Date.now() || authToken.expiresIn === 0);
     }
-    /**
-     * @return {?}
-     */
     isAuthenticated() {
-        /** @type {?} */
         const authToken = this.getToken();
         return this.isValid(authToken);
     }
-    /**
-     * @param {?} request
-     * @return {?}
-     */
     collectFailedRequest(request) {
         this.cachedRequests.push(request);
     }
-    /**
-     * @return {?}
-     */
     retryFailedRequests() {
         // this method can be called after the token is refreshed
         // console.log('AuthService.retryFailedRequests');
         // retry the requests.
     }
 }
-AuthService.decorators = [
-    { type: Injectable, args: [{
+AuthService.ɵfac = function AuthService_Factory(t) { return new (t || AuthService)(ɵɵinject(PLATFORM_ID), ɵɵinject(Injector), ɵɵinject(LocalStorageService)); };
+AuthService.ɵprov = ɵɵdefineInjectable({ token: AuthService, factory: AuthService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(AuthService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-AuthService.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: Injector },
-    { type: LocalStorageService }
-];
-/** @nocollapse */ AuthService.ngInjectableDef = defineInjectable({ factory: function AuthService_Factory() { return new AuthService(inject(PLATFORM_ID), inject(INJECTOR), inject(LocalStorageService)); }, token: AuthService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Inject,
+                args: [PLATFORM_ID]
+            }] }, { type: Injector }, { type: LocalStorageService }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const BUNDLES = new InjectionToken('core.bundles');
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+class BundleDirective {
+    constructor(bundles, injector, loader, container) {
+        this.bundles = bundles;
+        this.injector = injector;
+        this.loader = loader;
+        this.container = container;
+    }
+    ngOnInit() {
+        this.loader.load(this.bundles[this.bundle]).then((moduleFactory) => {
+            const moduleRef = moduleFactory.create(this.injector);
+            this.moduleRef_ = moduleRef;
+            const rootComponentType = moduleRef.injector.get('LAZY_ROOT_COMPONENT');
+            // console.log(rootComponentType);
+            const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
+            const componentRef = this.container.createComponent(factory);
+            const instance = componentRef.instance;
+            // instance.data = this.data; // !!!
+            this.componentRef_ = componentRef;
+        });
+    }
+    ngOnDestroy() {
+        if (this.componentRef_) {
+            this.componentRef_.destroy();
+        }
+        if (this.moduleRef_) {
+            this.moduleRef_.destroy();
+        }
+    }
+}
+BundleDirective.ɵfac = function BundleDirective_Factory(t) { return new (t || BundleDirective)(ɵɵdirectiveInject(BUNDLES), ɵɵdirectiveInject(Injector), ɵɵdirectiveInject(NgModuleFactoryLoader), ɵɵdirectiveInject(ViewContainerRef)); };
+BundleDirective.ɵdir = ɵɵdefineDirective({ type: BundleDirective, selectors: [["", "bundle", ""]], inputs: { bundle: "bundle", data: "data" } });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(BundleDirective, [{
+        type: Directive,
+        args: [{
+                selector: '[bundle]'
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Inject,
+                args: [BUNDLES]
+            }] }, { type: Injector }, { type: NgModuleFactoryLoader }, { type: ViewContainerRef }]; }, { bundle: [{
+            type: Input
+        }], data: [{
+            type: Input
+        }] }); })();
+
 class DefaultContentDirective {
-    /**
-     * @param {?} element
-     * @param {?} container
-     * @param {?} renderer
-     */
     constructor(element, container, renderer) {
         this.container = container;
         this.renderer = renderer;
         this.hasContent = true;
         this.element = element.nativeElement;
     }
-    /**
-     * @return {?}
-     */
     ngAfterContentChecked() {
-        /** @type {?} */
         let hasContent = false;
         console.log('DefaultContentDirective', this.element.childNodes);
         for (let i = this.element.childNodes.length - 1; i >= 0; --i) {
-            /** @type {?} */
             const node = this.element.childNodes[i];
             if (node.nodeType === 1 || node.nodeType === 3) {
                 hasContent = true;
@@ -1303,182 +854,98 @@ class DefaultContentDirective {
         }
     }
 }
-DefaultContentDirective.decorators = [
-    { type: Directive, args: [{
+DefaultContentDirective.ɵfac = function DefaultContentDirective_Factory(t) { return new (t || DefaultContentDirective)(ɵɵdirectiveInject(ElementRef), ɵɵdirectiveInject(ViewContainerRef), ɵɵdirectiveInject(Renderer2)); };
+DefaultContentDirective.ɵdir = ɵɵdefineDirective({ type: DefaultContentDirective, selectors: [["", "default", ""]], inputs: { default: "default" } });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(DefaultContentDirective, [{
+        type: Directive,
+        args: [{
                 selector: '[default]',
-            },] }
-];
-/** @nocollapse */
-DefaultContentDirective.ctorParameters = () => [
-    { type: ElementRef },
-    { type: ViewContainerRef },
-    { type: Renderer2 }
-];
-DefaultContentDirective.propDecorators = {
-    default: [{ type: Input }]
-};
+            }]
+    }], function () { return [{ type: ElementRef }, { type: ViewContainerRef }, { type: Renderer2 }]; }, { default: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class CoreModuleComponent {
     constructor() {
         this.version = '0.0.12';
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
     }
 }
-CoreModuleComponent.decorators = [
-    { type: Component, args: [{
+CoreModuleComponent.ɵfac = function CoreModuleComponent_Factory(t) { return new (t || CoreModuleComponent)(); };
+CoreModuleComponent.ɵcmp = ɵɵdefineComponent({ type: CoreModuleComponent, selectors: [["core-module"]], decls: 2, vars: 1, consts: [[1, "core-module"]], template: function CoreModuleComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementStart(0, "span", 0);
+        ɵɵtext(1);
+        ɵɵelementEnd();
+    } if (rf & 2) {
+        ɵɵadvance(1);
+        ɵɵtextInterpolate1("core ", ctx.version, "");
+    } }, encapsulation: 2 });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(CoreModuleComponent, [{
+        type: Component,
+        args: [{
                 selector: 'core-module',
-                template: `<span class="core-module">core {{version}}</span>`
-            }] }
-];
-/** @nocollapse */
-CoreModuleComponent.ctorParameters = () => [];
+                template: `<span class="core-module">core {{version}}</span>`,
+                styles: []
+            }]
+    }], function () { return []; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class BundleDirective {
-    /**
-     * @param {?} bundles
-     * @param {?} injector
-     * @param {?} loader
-     * @param {?} container
-     */
-    constructor(bundles, injector, loader, container) {
-        this.bundles = bundles;
-        this.injector = injector;
-        this.loader = loader;
-        this.container = container;
-    }
-    /**
-     * @return {?}
-     */
-    ngOnInit() {
-        this.loader.load(this.bundles[this.bundle]).then((/**
-         * @param {?} moduleFactory
-         * @return {?}
-         */
-        (moduleFactory) => {
-            /** @type {?} */
-            const moduleRef = moduleFactory.create(this.injector);
-            this.moduleRef_ = moduleRef;
-            /** @type {?} */
-            const rootComponentType = moduleRef.injector.get('LAZY_ROOT_COMPONENT');
-            // console.log(rootComponentType);
-            /** @type {?} */
-            const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
-            /** @type {?} */
-            const componentRef = this.container.createComponent(factory);
-            /** @type {?} */
-            const instance = componentRef.instance;
-            // instance.data = this.data; // !!!
-            this.componentRef_ = componentRef;
-        }));
-    }
-    /**
-     * @return {?}
-     */
-    ngOnDestroy() {
-        if (this.componentRef_) {
-            this.componentRef_.destroy();
-        }
-        if (this.moduleRef_) {
-            this.moduleRef_.destroy();
-        }
-    }
-}
-BundleDirective.decorators = [
-    { type: Directive, args: [{
-                selector: '[bundle]'
-            },] }
-];
-/** @nocollapse */
-BundleDirective.ctorParameters = () => [
-    { type: undefined, decorators: [{ type: Inject, args: [BUNDLES,] }] },
-    { type: Injector },
-    { type: NgModuleFactoryLoader },
-    { type: ViewContainerRef }
-];
-BundleDirective.propDecorators = {
-    bundle: [{ type: Input }],
-    data: [{ type: Input }]
-};
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class DisposableComponent {
     constructor() {
         this.unsubscribe = new Subject();
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this.unsubscribe.next();
         this.unsubscribe.complete();
         // console.log('DisposableComponent.ngOnDestroy', this);
     }
 }
-DisposableComponent.decorators = [
-    { type: Component, args: [{
+DisposableComponent.ɵfac = function DisposableComponent_Factory(t) { return new (t || DisposableComponent)(); };
+DisposableComponent.ɵcmp = ɵɵdefineComponent({ type: DisposableComponent, selectors: [["ng-component"]], decls: 0, vars: 0, template: function DisposableComponent_Template(rf, ctx) { }, encapsulation: 2 });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(DisposableComponent, [{
+        type: Component,
+        args: [{
                 template: ''
-            }] }
-];
+            }]
+    }], null, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+class DisposableDirective {
+    constructor() {
+        this.unsubscribe = new Subject();
+    }
+    ngOnDestroy() {
+        this.unsubscribe.next();
+        this.unsubscribe.complete();
+        // console.log('DisposableDirective.ngOnDestroy', this);
+    }
+}
+DisposableDirective.ɵfac = function DisposableDirective_Factory(t) { return new (t || DisposableDirective)(); };
+DisposableDirective.ɵdir = ɵɵdefineDirective({ type: DisposableDirective, selectors: [["", "disposable-directive", ""]] });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(DisposableDirective, [{
+        type: Directive,
+        args: [{
+                selector: '[disposable-directive]'
+            }]
+    }], null, null); })();
+
 class HighlightPipe {
-    /**
-     * @param {?} text
-     * @param {?} query
-     * @return {?}
-     */
     transform(text, query) {
         if (!query) {
             return text;
         }
         text = this.encodeHTML(text);
         query = this.encodeHTML(query);
-        /** @type {?} */
         const regExp = new RegExp('&[^;]+;|' + this.escapeRegexChars(query), 'gi');
-        return text.replace(regExp, (/**
-         * @param {?} match
-         * @return {?}
-         */
-        function (match) {
+        return text.replace(regExp, function (match) {
             return match.toLowerCase() === query.toLowerCase() ? '<strong>' + match + '</strong>' : match;
-        }));
+        });
     }
-    /**
-     * @param {?} text
-     * @return {?}
-     */
     escapeRegexChars(text) {
         return text.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
     }
-    /**
-     * @param {?} text
-     * @return {?}
-     */
     safeToString(text) {
         return text === undefined || text === null ? '' : text.toString().trim();
     }
-    /**
-     * @param {?} text
-     * @return {?}
-     */
     encodeHTML(text) {
         return this.safeToString(text)
             .replace(/&/g, '&amp;')
@@ -1486,34 +953,27 @@ class HighlightPipe {
             .replace(/>/g, '&gt;');
     }
 }
-HighlightPipe.decorators = [
-    { type: Pipe, args: [{
+HighlightPipe.ɵfac = function HighlightPipe_Factory(t) { return new (t || HighlightPipe)(); };
+HighlightPipe.ɵpipe = ɵɵdefinePipe({ name: "highlight", type: HighlightPipe, pure: true });
+HighlightPipe.ɵprov = ɵɵdefineInjectable({ token: HighlightPipe, factory: HighlightPipe.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(HighlightPipe, [{
+        type: Pipe,
+        args: [{
                 name: 'highlight',
-            },] },
-    { type: Injectable, args: [{
+            }]
+    }, {
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */ HighlightPipe.ngInjectableDef = defineInjectable({ factory: function HighlightPipe_Factory() { return new HighlightPipe(); }, token: HighlightPipe, providedIn: "root" });
+            }]
+    }], null, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class SegmentPipe {
-    /**
-     * @param {?} location
-     */
     constructor(location) {
         this.location = location;
     }
-    /**
-     * @param {?} segments
-     * @return {?}
-     */
     transform(segments) {
         segments = segments != null ? (Array.isArray(segments) ? segments : segments.split('/')) : [];
-        /** @type {?} */
         let path = segments.join('/');
         path = this.location.normalize(path);
         if (path.indexOf('/') !== 0) {
@@ -1523,71 +983,43 @@ class SegmentPipe {
         return segments;
     }
 }
-SegmentPipe.decorators = [
-    { type: Pipe, args: [{
+SegmentPipe.ɵfac = function SegmentPipe_Factory(t) { return new (t || SegmentPipe)(ɵɵdirectiveInject(Location)); };
+SegmentPipe.ɵpipe = ɵɵdefinePipe({ name: "segment", type: SegmentPipe, pure: true });
+SegmentPipe.ɵprov = ɵɵdefineInjectable({ token: SegmentPipe, factory: SegmentPipe.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(SegmentPipe, [{
+        type: Pipe,
+        args: [{
                 name: 'segment',
-            },] },
-    { type: Injectable, args: [{
+            }]
+    }, {
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-SegmentPipe.ctorParameters = () => [
-    { type: Location }
-];
-/** @nocollapse */ SegmentPipe.ngInjectableDef = defineInjectable({ factory: function SegmentPipe_Factory() { return new SegmentPipe(inject(Location)); }, token: SegmentPipe, providedIn: "root" });
+            }]
+    }], function () { return [{ type: Location }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
 class IdentityService extends ApiService {
-    /**
-     * @param {?} injector
-     */
     constructor(injector) {
         super(injector);
         this.injector = injector;
     }
-    /**
-     * @return {?}
-     */
     get collection() {
         return '/api/identity';
     }
-    /**
-     * @param {?} id
-     * @return {?}
-     */
     getDetailById(id) {
         return this.get({ id });
     }
 }
-IdentityService.decorators = [
-    { type: Injectable, args: [{
+IdentityService.ɵfac = function IdentityService_Factory(t) { return new (t || IdentityService)(ɵɵinject(Injector)); };
+IdentityService.ɵprov = ɵɵdefineInjectable({ token: IdentityService, factory: IdentityService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(IdentityService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-IdentityService.ctorParameters = () => [
-    { type: Injector }
-];
-/** @nocollapse */ IdentityService.ngInjectableDef = defineInjectable({ factory: function IdentityService_Factory() { return new IdentityService(inject(INJECTOR)); }, token: IdentityService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: Injector }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
 class TranslateService extends IdentityService {
-    /**
-     * @param {?} injector
-     */
     constructor(injector) {
         super(injector);
         this.injector = injector;
@@ -1596,69 +1028,32 @@ class TranslateService extends IdentityService {
         this.languages_ = new BehaviorSubject([]);
         this.languages_.next(this.config.languages);
     }
-    /**
-     * @return {?}
-     */
     get collection() {
         return '/api/translate';
     }
-    /**
-     * @return {?}
-     */
     get lang() {
         return TranslateService.lang_;
     }
-    /**
-     * @param {?} lang
-     * @return {?}
-     */
     set lang(lang) {
         if (lang !== TranslateService.lang_) {
             TranslateService.lang_ = lang;
-            /** @type {?} */
             const languages = this.languages_.getValue();
             if (languages.length) {
-                /** @type {?} */
-                const language = languages.find((/**
-                 * @param {?} x
-                 * @return {?}
-                 */
-                x => x.lang === lang));
+                const language = languages.find(x => x.lang === lang);
                 this.language_.next(language);
             }
         }
     }
-    /**
-     * @return {?}
-     */
     get language() {
         return this.language_.getValue();
     }
-    /**
-     * @return {?}
-     */
     get languages() {
         return this.languages_.getValue();
     }
-    /**
-     * @return {?}
-     */
     observe$() {
         // console.log(new Error().stack);
-        return this.language_.pipe(filter((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => x !== undefined)), switchMap((/**
-         * @param {?} language
-         * @return {?}
-         */
-        (language) => this.getTranslation(language.lang))));
+        return this.language_.pipe(filter(x => x !== undefined), switchMap((language) => this.getTranslation(language.lang)));
     }
-    /**
-     * @param {?} lang
-     * @return {?}
-     */
     getTranslation(lang) {
         if (!lang || !lang.trim()) {
             return of(null);
@@ -1670,13 +1065,8 @@ class TranslateService extends IdentityService {
         else {
             return this.get(`?lang=${lang}`, { lang }).pipe(
             // take(1),
-            map((/**
-             * @param {?} x
-             * @return {?}
-             */
-            (x) => {
+            map((x) => {
                 if (x.length && x[0]) {
-                    /** @type {?} */
                     const labels = x[0].labels;
                     TranslateService.cache[lang] = labels;
                     this.events.emit(labels);
@@ -1685,27 +1075,17 @@ class TranslateService extends IdentityService {
                 else {
                     return of(null);
                 }
-            })));
+            }));
         }
     }
-    /**
-     * @param {?} key
-     * @param {?=} defaultValue
-     * @param {?=} params
-     * @return {?}
-     */
     getTranslate(key, defaultValue, params) {
         // console.log('TranslateService.getTranslate', key, TranslateService.cache, TranslateService.lang_);
         if (key) {
-            /** @type {?} */
             let value = null;
-            /** @type {?} */
             let labels = TranslateService.cache[TranslateService.lang_];
             // console.log('labels', TranslateService.lang_, TranslateService.cache, labels);
             if (labels) {
-                /** @type {?} */
                 const keys = key.split('.');
-                /** @type {?} */
                 let k = keys.shift();
                 while (keys.length > 0 && labels[k]) {
                     labels = labels[k];
@@ -1719,25 +1099,10 @@ class TranslateService extends IdentityService {
             return this.parseTranslate(value, key, defaultValue, params);
         }
     }
-    /**
-     * @param {?} key
-     * @param {?=} defaultValue
-     * @param {?=} params
-     * @return {?}
-     */
     transform(key, defaultValue, params) {
-        /** @type {?} */
         const value = this.getTranslate(key, defaultValue, params);
         return value;
     }
-    /**
-     * @private
-     * @param {?} value
-     * @param {?} key
-     * @param {?=} defaultValue
-     * @param {?=} params
-     * @return {?}
-     */
     parseTranslate(value, key, defaultValue, params) {
         if (value == null) {
             return defaultValue || this.missingTranslate(key);
@@ -1747,11 +1112,6 @@ class TranslateService extends IdentityService {
         }
         return value;
     }
-    /**
-     * @private
-     * @param {?} key
-     * @return {?}
-     */
     missingTranslate(key) {
         if (this.missingHandler) {
             return typeof this.missingHandler === 'function' ?
@@ -1760,51 +1120,22 @@ class TranslateService extends IdentityService {
         }
         return key;
     }
-    /**
-     * @private
-     * @param {?} value
-     * @param {?} params
-     * @return {?}
-     */
     parseParams(value, params) {
-        /** @type {?} */
-        const TEMPLATEREGEXP_ = /@([^{}\s]*)/g;
-        return value.replace(TEMPLATEREGEXP_, (/**
-         * @param {?} text
-         * @param {?} key
-         * @return {?}
-         */
-        (text, key) => {
-            /** @type {?} */
-            const replacer = (/** @type {?} */ (params[key]));
+        const TEMPLATEREGEXP_ = /@([^{}\s]*)/g; // /{{\s?([^{}\s]*)\s?}}/g;
+        return value.replace(TEMPLATEREGEXP_, (text, key) => {
+            const replacer = params[key];
             return typeof replacer !== 'undefined' ? replacer : text;
-        }));
+        });
     }
-    /**
-     * @param {?} lang
-     * @return {?}
-     */
     use(lang) {
     }
-    /**
-     * @param {?} lang
-     * @return {?}
-     */
     setDefaultLang(lang) {
     }
-    /**
-     * @param {?} lang
-     * @return {?}
-     */
     addLangs(lang) {
     }
-    /**
-     * @return {?}
-     */
     getBrowserLang() {
         if (isPlatformBrowser(this.platformId)) {
-            /** @type {?} */
-            const lang = this.getFirstBrowserLang() || this.config.defaultLanguage;
+            const lang = this.getFirstBrowserLang() || this.config.defaultLanguage; // navigator.languages ? navigator.languages[0] : (navigator.language || navigator['userLanguage'] || this.config.defaultLanguage);
             // console.log('getBrowserLang', lang, navigator.languages);
             return lang;
         }
@@ -1812,30 +1143,19 @@ class TranslateService extends IdentityService {
             return this.config.defaultLanguage;
         }
     }
-    /**
-     * @return {?}
-     */
     getFirstBrowserLang() {
-        /** @type {?} */
         const lang = this.getFirstBrowserLocale();
         if (lang) {
             return lang.split('-')[0];
         }
     }
-    /**
-     * @return {?}
-     */
     getFirstBrowserLocale() {
-        /** @type {?} */
         const navigator = window.navigator;
-        /** @type {?} */
         const properties = ['language', 'browserLanguage', 'systemLanguage', 'userLanguage'];
-        /** @type {?} */
         let lang;
         if (Array.isArray(navigator.languages)) {
             lang = navigator.languages[0];
         }
-        /** @type {?} */
         let i = 0;
         while (!lang && i < properties.length) {
             lang = navigator[properties[i]];
@@ -1846,33 +1166,17 @@ class TranslateService extends IdentityService {
 }
 TranslateService.cache = {};
 TranslateService.lang_ = null;
-TranslateService.decorators = [
-    { type: Injectable, args: [{
+TranslateService.ɵfac = function TranslateService_Factory(t) { return new (t || TranslateService)(ɵɵinject(Injector)); };
+TranslateService.ɵprov = ɵɵdefineInjectable({ token: TranslateService, factory: TranslateService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(TranslateService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-TranslateService.ctorParameters = () => [
-    { type: Injector }
-];
-/** @nocollapse */ TranslateService.ngInjectableDef = defineInjectable({ factory: function TranslateService_Factory() { return new TranslateService(inject(INJECTOR)); }, token: TranslateService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: Injector }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 // @dynamic
 class RouteService {
-    /**
-     * @param {?} platformId
-     * @param {?} coreService
-     * @param {?} injector
-     * @param {?} translateService
-     * @param {?} location
-     * @param {?} route
-     * @param {?} router
-     * @param {?} segment
-     */
     constructor(platformId, coreService, injector, translateService, location, route, router, segment) {
         this.platformId = platformId;
         this.coreService = coreService;
@@ -1895,34 +1199,18 @@ class RouteService {
             this.subscribeToRouter();
         }
     }
-    /**
-     * @private
-     * @return {?}
-     */
     get lang() {
         return this._lang;
     }
-    /**
-     * @private
-     * @param {?} lang
-     * @return {?}
-     */
     set lang(lang) {
         if (lang !== this._lang) {
             this._lang = lang;
-            /** @type {?} */
-            const language = this._languages.getValue().find((/**
-             * @param {?} x
-             * @return {?}
-             */
-            x => x.lang === lang));
+            const language = this._languages.getValue().find(x => x.lang === lang);
             this._language.next(language);
             this.translateService.use(lang);
             // console.log('RouteService.set lang', lang, this.coreService.options.useLang);
             if (this.coreService.options.useLang) {
-                /** @type {?} */
                 const _lang = this._lang;
-                /** @type {?} */
                 let path = this.location.path();
                 if (path.indexOf(`/${_lang}`) === 0) {
                     path = path.replace(`/${_lang}`, `/${lang}`);
@@ -1935,41 +1223,21 @@ class RouteService {
             }
         }
     }
-    /**
-     * @return {?}
-     */
     get currentLang() {
         return this._lang;
     }
-    /**
-     * @return {?}
-     */
     getPageParams() {
         // console.log('RouteService.getPageParams', this.router.url);
-        return this.route.queryParams.pipe(distinctUntilChanged(), switchMap((/**
-         * @param {?} params
-         * @return {?}
-         */
-        params => {
+        return this.route.queryParams.pipe(distinctUntilChanged(), switchMap(params => {
             // console.log(params);
-            /** @type {?} */
             const parsed = this.parseParams(params);
             this.pageParams$.next(parsed);
             return of(parsed);
-        })));
+        }));
     }
-    /**
-     * @param {?} params
-     * @return {?}
-     */
     parseParams(params) {
-        /** @type {?} */
         const parsed = {};
-        Object.keys(params).forEach((/**
-         * @param {?} k
-         * @return {?}
-         */
-        k => parsed[k] = this.parse(params[k])));
+        Object.keys(params).forEach(k => parsed[k] = this.parse(params[k]));
         /*
         for (const key in params) {
             if (typeof (params[key]) === 'string') {
@@ -1981,24 +1249,11 @@ class RouteService {
         */
         return parsed;
     }
-    /**
-     * @param {?} params
-     * @return {?}
-     */
     serializeParams(params) {
-        /** @type {?} */
         const serialized = {};
-        Object.keys(params).forEach((/**
-         * @param {?} k
-         * @return {?}
-         */
-        k => serialized[k] = this.serialize(params[k])));
+        Object.keys(params).forEach(k => serialized[k] = this.serialize(params[k]));
         return serialized;
     }
-    /**
-     * @param {?} base64
-     * @return {?}
-     */
     parse(base64) {
         try {
             if (isPlatformBrowser(this.platformId)) {
@@ -2012,10 +1267,6 @@ class RouteService {
             return null;
         }
     }
-    /**
-     * @param {?} object
-     * @return {?}
-     */
     serialize(object) {
         if (isPlatformBrowser(this.platformId)) {
             return window.btoa(JSON.stringify(object));
@@ -2024,74 +1275,42 @@ class RouteService {
             return Buffer.from(JSON.stringify(object), 'ascii').toString('base64');
         }
     }
-    /**
-     * @return {?}
-     */
     getId() {
         return +this.route.snapshot.paramMap.get('id');
     }
-    /**
-     * @return {?}
-     */
     getSlug() {
         return this.route.snapshot.paramMap.get('slug');
     }
-    /**
-     * @param {?} data
-     * @return {?}
-     */
     toRoute(data) {
-        /** @type {?} */
         const segments = this.segment.transform(data);
         if (this.coreService.options.useMarket) {
-            /** @type {?} */
             const market = this.currentMarket;
-            /** @type {?} */
             const marketIndex = this.urlStrategy.split('/').indexOf(':market');
             segments.splice(marketIndex, 0, market);
         }
         if (this.coreService.options.useLang) {
-            /** @type {?} */
             const lang = this._lang;
-            /** @type {?} */
             const langIndex = this.urlStrategy.split('/').indexOf(':lang');
             segments.splice(langIndex, 0, lang);
         }
         // console.log('RouteService.toRoute', segments);
         return segments;
     }
-    /**
-     * @param {?} data
-     * @return {?}
-     */
     toSlug(data) {
-        /** @type {?} */
         const segments = this.segment.transform(data);
-        /** @type {?} */
-        let paths = segments.filter((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => {
+        let paths = segments.filter(x => {
             return typeof x === 'string';
-        }));
-        /** @type {?} */
-        const datas = segments.filter((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => {
+        });
+        const datas = segments.filter(x => {
             return typeof x !== 'string';
-        }));
+        });
         if (this.coreService.options.useMarket) {
-            /** @type {?} */
             const marketIndex = this.urlStrategy.split('/').indexOf(':market');
             if (paths.length > marketIndex) {
                 paths[marketIndex] = '*';
             }
         }
         if (this.coreService.options.useLang) {
-            /** @type {?} */
             const langIndex = this.urlStrategy.split('/').indexOf(':lang');
             if (paths.length > langIndex) {
                 paths[langIndex] = '*';
@@ -2101,43 +1320,30 @@ class RouteService {
         // console.log('RouteService.toSlug', data, paths);
         return paths.concat(datas);
     }
-    /**
-     * @param {?} data
-     * @return {?}
-     */
     toParams(data) {
         return {
             data: window.btoa(JSON.stringify(data))
         };
     }
-    /**
-     * @param {?} params
-     * @return {?}
-     */
     toData(params) {
         if (params && params.data) {
             return JSON.parse(window.atob(params.data));
         }
     }
     /*
-        public getParams(): Observable<ComponentFactory<PageComponent>> {
-            return this.router.events.pipe(
-                filter(event => event instanceof ActivationEnd),
-                map(() => this.route),
-                distinctUntilChanged(),
-                map(route => route.firstChild),
-                switchMap(route => route.params),
-                concatMap(x => {
-                    return of(this.toData(x));
-                })
-            );
-        }
-        */
-    /**
-     * @param {?} lang
-     * @param {?=} silent
-     * @return {?}
-     */
+    public getParams(): Observable<ComponentFactory<PageComponent>> {
+        return this.router.events.pipe(
+            filter(event => event instanceof ActivationEnd),
+            map(() => this.route),
+            distinctUntilChanged(),
+            map(route => route.firstChild),
+            switchMap(route => route.params),
+            concatMap(x => {
+                return of(this.toData(x));
+            })
+        );
+    }
+    */
     setLanguage(lang, silent) {
         this.lang = lang;
         if (this.coreService.options.useLang && this.path) {
@@ -2151,16 +1357,8 @@ class RouteService {
         }
     }
     // PRIVATE METHODS
-    /**
-     * @private
-     * @return {?}
-     */
     setLanguages() {
-        this.translateService.addLangs(this.coreService.options.languages ? this.coreService.options.languages.map((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => x.lang)) : []);
+        this.translateService.addLangs(this.coreService.options.languages ? this.coreService.options.languages.map(x => x.lang) : []);
         this.translateService.setDefaultLang(this.coreService.options.defaultLanguage);
         // this.setLanguage(this.detectLanguage(), true);
         this.setLanguage(this.coreService.options.defaultLanguage, true);
@@ -2170,26 +1368,11 @@ class RouteService {
         });
         */
     }
-    /**
-     * @private
-     * @return {?}
-     */
     subscribeToRouter() {
-        this.router.events.pipe(filter((/**
-         * @param {?} event
-         * @return {?}
-         */
-        event => event instanceof NavigationStart))).subscribe((/**
-         * @param {?} event
-         * @return {?}
-         */
-        (event) => {
-            /** @type {?} */
+        this.router.events.pipe(filter(event => event instanceof NavigationStart)).subscribe((event) => {
             const location = this.location.normalize(event.url).split('/');
             if (this.coreService.options.useMarket) {
-                /** @type {?} */
                 const marketIndex = this.urlStrategy.split('/').indexOf(':market');
-                /** @type {?} */
                 const market = location[marketIndex];
                 if (market !== this.currentMarket) {
                     this.currentMarket = market;
@@ -2197,47 +1380,33 @@ class RouteService {
                 }
             }
             if (this.coreService.options.useLang) {
-                /** @type {?} */
                 const langIndex = this.urlStrategy.split('/').indexOf(':lang');
-                /** @type {?} */
                 const lang = location[langIndex];
                 if (lang !== this._lang) {
-                    /** @type {?} */
-                    const language = this._languages.getValue().find((/**
-                     * @param {?} x
-                     * @return {?}
-                     */
-                    x => x.lang === lang));
+                    const language = this._languages.getValue().find(x => x.lang === lang);
                     this._language.next(language);
                     this.translateService.use(lang);
                     // console.log('RouteService.setLang', lang, this._lang, langIndex, location, event.url);
                 }
             }
-        }));
+        });
     }
-    /**
-     * @private
-     * @return {?}
-     */
     detectLanguage() {
-        /** @type {?} */
         let acceptLanguage = null;
         if (isPlatformServer(this.platformId)) {
             /*
-                        // server side express engine
-                        app.engine('html',  (_, options, callback) => {
-                            let engine = ngExpressEngine({
-                                bootstrap: ServerAppModule,
-                                providers: [ { provide: 'request', useFactory: () => options.req } ]
-                            });
-                            engine(_, options, callback)
-                        })
-                        */
-            /** @type {?} */
+            // server side express engine
+            app.engine('html',  (_, options, callback) => {
+                let engine = ngExpressEngine({
+                    bootstrap: ServerAppModule,
+                    providers: [ { provide: 'request', useFactory: () => options.req } ]
+                });
+                engine(_, options, callback)
+            })
+            */
             const request = this.injector.get('request');
             if (request) {
                 acceptLanguage = request.headers['accept-language'];
-                /** @type {?} */
                 const languages = acceptLanguage.match(/[a-zA-Z\-]{2,10}/g) || [];
                 if (languages.length > 0) {
                     acceptLanguage = languages[0].split('-')[0];
@@ -2253,169 +1422,102 @@ class RouteService {
             acceptLanguage = this.translateService.getBrowserLang();
             // console.log('RouteService.isPlatformBrowser', this.platformId, acceptLanguage);
         }
-        /** @type {?} */
         let detectedLanguage = this.coreService.options.defaultLanguage;
-        /** @type {?} */
-        const regexp = new RegExp(`(${this.coreService.options.languages ? this.coreService.options.languages.map((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => x.lang)).join('|') : ''})`, 'gi');
-        /** @type {?} */
+        const regexp = new RegExp(`(${this.coreService.options.languages ? this.coreService.options.languages.map(x => x.lang).join('|') : ''})`, 'gi');
         const match = (acceptLanguage || '').match(regexp);
         detectedLanguage = match ? match[0] : detectedLanguage;
         // console.log('RouteService.detectLanguage', detectedLanguage);
         return detectedLanguage;
     }
-    /**
-     * @return {?}
-     */
     getTime() {
         if (isPlatformBrowser(this.platformId)) {
             return (performance || Date).now();
         }
         else {
-            /** @type {?} */
             const time = process.hrtime();
             return (time[0] * 1e9 + time[1]) / 1e6;
         }
     }
-    /**
-     * @return {?}
-     */
     start() {
         RouteService.startTime = this.getTime();
     }
-    /**
-     * @return {?}
-     */
     end() {
         RouteService.endTime = this.getTime();
         console.log('RouteService.end', RouteService.endTime - RouteService.startTime);
     }
 }
-RouteService.decorators = [
-    { type: Injectable, args: [{
+RouteService.ɵfac = function RouteService_Factory(t) { return new (t || RouteService)(ɵɵinject(PLATFORM_ID), ɵɵinject(CoreService), ɵɵinject(Injector), ɵɵinject(TranslateService), ɵɵinject(Location), ɵɵinject(ActivatedRoute), ɵɵinject(Router), ɵɵinject(SegmentPipe)); };
+RouteService.ɵprov = ɵɵdefineInjectable({ token: RouteService, factory: RouteService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(RouteService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-RouteService.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: CoreService },
-    { type: Injector },
-    { type: TranslateService },
-    { type: Location },
-    { type: ActivatedRoute },
-    { type: Router },
-    { type: SegmentPipe }
-];
-/** @nocollapse */ RouteService.ngInjectableDef = defineInjectable({ factory: function RouteService_Factory() { return new RouteService(inject(PLATFORM_ID), inject(CoreService), inject(INJECTOR), inject(TranslateService), inject(Location), inject(ActivatedRoute), inject(Router), inject(SegmentPipe)); }, token: RouteService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Inject,
+                args: [PLATFORM_ID]
+            }] }, { type: CoreService }, { type: Injector }, { type: TranslateService }, { type: Location }, { type: ActivatedRoute }, { type: Router }, { type: SegmentPipe }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class HttpStatusCodeService {
     constructor() {
         this.statusCode = 200;
         this.redirectUrl = null;
     }
-    /**
-     * @param {?} statusCode
-     * @param {?=} redirectUrl
-     * @return {?}
-     */
     setStatusCode(statusCode, redirectUrl = null) {
         this.statusCode = statusCode;
         this.redirectUrl = redirectUrl;
     }
-    /**
-     * @return {?}
-     */
     getStatusCode() {
         return (this.statusCode === 309 ? 301 : this.statusCode);
     }
-    /**
-     * @return {?}
-     */
     getRedirectUrl() {
         return this.redirectUrl;
     }
 }
-HttpStatusCodeService.decorators = [
-    { type: Injectable, args: [{
+HttpStatusCodeService.ɵfac = function HttpStatusCodeService_Factory(t) { return new (t || HttpStatusCodeService)(); };
+HttpStatusCodeService.ɵprov = ɵɵdefineInjectable({ token: HttpStatusCodeService, factory: HttpStatusCodeService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(HttpStatusCodeService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-HttpStatusCodeService.ctorParameters = () => [];
-/** @nocollapse */ HttpStatusCodeService.ngInjectableDef = defineInjectable({ factory: function HttpStatusCodeService_Factory() { return new HttpStatusCodeService(); }, token: HttpStatusCodeService, providedIn: "root" });
+            }]
+    }], function () { return []; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class HttpResponseInterceptor {
-    /**
-     * @param {?} injector
-     * @param {?} statusCodeService
-     */
     constructor(injector, statusCodeService) {
         this.injector = injector;
         this.statusCodeService = statusCodeService;
         this.loggerErrorStrategy_ = LoggerErrorStrategy.Server;
         this.loggerErrorStrategy_ = this.config.loggerErrorStrategy || LoggerErrorStrategy.Server;
     }
-    /**
-     * @return {?}
-     */
     get config() {
         if (!this.config_) {
             this.config_ = this.injector.get(CoreService).options;
         }
         return this.config_;
     }
-    /**
-     * @return {?}
-     */
     get logger() {
         if (!this.logger_) {
             this.logger_ = this.injector.get(Logger);
         }
         return this.logger_;
     }
-    /**
-     * @return {?}
-     */
     get router() {
         if (!this.router_) {
             this.router_ = this.injector.get(Router);
         }
         return this.router_;
     }
-    /**
-     * @return {?}
-     */
     get routeService() {
         if (!this.routeService_) {
             this.routeService_ = this.injector.get(RouteService);
         }
         return this.routeService;
     }
-    /**
-     * @param {?} request
-     * @param {?} next
-     * @return {?}
-     */
     intercept(request, next) {
         // injecting request
         // parsing response
-        return next.handle(request).pipe(tap((/**
-         * @param {?} response
-         * @return {?}
-         */
-        (response) => {
+        return next.handle(request).pipe(tap((response) => {
             this.logger.httpError = null;
             // this.logger.log(response);
             if (response instanceof HttpResponse) {
@@ -2425,11 +1527,7 @@ class HttpResponseInterceptor {
                     this.logger.http(response);
                 }
             }
-        })), catchError((/**
-         * @param {?} response
-         * @return {?}
-         */
-        (response) => {
+        }), catchError((response) => {
             // console.warn('HttpResponseInterceptor', response);
             if (response instanceof HttpErrorResponse) {
                 // this.statusCodeService.setStatusCode(response.status);
@@ -2456,35 +1554,23 @@ class HttpResponseInterceptor {
                 */
             }
             return throwError(response);
-        })));
+        }));
     }
 }
-HttpResponseInterceptor.decorators = [
-    { type: Injectable, args: [{
+HttpResponseInterceptor.ɵfac = function HttpResponseInterceptor_Factory(t) { return new (t || HttpResponseInterceptor)(ɵɵinject(Injector), ɵɵinject(HttpStatusCodeService)); };
+HttpResponseInterceptor.ɵprov = ɵɵdefineInjectable({ token: HttpResponseInterceptor, factory: HttpResponseInterceptor.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(HttpResponseInterceptor, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-HttpResponseInterceptor.ctorParameters = () => [
-    { type: Injector },
-    { type: HttpStatusCodeService }
-];
-/** @nocollapse */ HttpResponseInterceptor.ngInjectableDef = defineInjectable({ factory: function HttpResponseInterceptor_Factory() { return new HttpResponseInterceptor(inject(INJECTOR), inject(HttpStatusCodeService)); }, token: HttpResponseInterceptor, providedIn: "root" });
+            }]
+    }], function () { return [{ type: Injector }, { type: HttpStatusCodeService }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+const _c0 = ["jsonFormatter"];
 class JsonFormatterComponent {
-    /**
-     * @param {?} platformId
-     */
     constructor(platformId) {
         this.platformId = platformId;
     }
-    /**
-     * @return {?}
-     */
     ngOnChanges() {
         if (isPlatformBrowser(this.platformId)) {
             if (!isObject(this.json) && !isArray(this.json)) {
@@ -2495,43 +1581,43 @@ class JsonFormatterComponent {
                 this.input.nativeElement.removeChild(this.elementRef.nativeElement);
             }
             // const JSONFormatter = require('json-formatter-js').default;
-            /** @type {?} */
             const formatter = new JSONFormatter(this.json);
-            /** @type {?} */
             const elementRef = formatter.render();
             this.input.nativeElement.appendChild(elementRef);
             this.elementRef = new ElementRef(elementRef);
         }
     }
 }
-JsonFormatterComponent.decorators = [
-    { type: Component, args: [{
+JsonFormatterComponent.ɵfac = function JsonFormatterComponent_Factory(t) { return new (t || JsonFormatterComponent)(ɵɵdirectiveInject(PLATFORM_ID)); };
+JsonFormatterComponent.ɵcmp = ɵɵdefineComponent({ type: JsonFormatterComponent, selectors: [["json-formatter"]], viewQuery: function JsonFormatterComponent_Query(rf, ctx) { if (rf & 1) {
+        ɵɵstaticViewQuery(_c0, true);
+    } if (rf & 2) {
+        var _t;
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.input = _t.first);
+    } }, inputs: { json: "json" }, features: [ɵɵNgOnChangesFeature()], decls: 2, vars: 0, consts: [["jsonFormatter", ""]], template: function JsonFormatterComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelement(0, "div", null, 0);
+    } }, styles: [""] });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(JsonFormatterComponent, [{
+        type: Component,
+        args: [{
                 selector: 'json-formatter',
                 template: `<div #jsonFormatter></div>`,
+                styleUrls: ['./json-formatter.component.scss'],
                 encapsulation: ViewEncapsulation.Emulated,
-                styles: [""]
-            }] }
-];
-/** @nocollapse */
-JsonFormatterComponent.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] }
-];
-JsonFormatterComponent.propDecorators = {
-    input: [{ type: ViewChild, args: [`jsonFormatter`,] }],
-    json: [{ type: Input }]
-};
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Inject,
+                args: [PLATFORM_ID]
+            }] }]; }, { input: [{
+            type: ViewChild,
+            args: [`jsonFormatter`, { static: true }]
+        }], json: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
+class LabelKey {
+}
 class LabelService extends ApiService {
-    /**
-     * @param {?} injector
-     */
     constructor(injector) {
         super(injector);
         this.injector = injector;
@@ -2539,20 +1625,10 @@ class LabelService extends ApiService {
         this.values$ = new BehaviorSubject({});
         this.emitter$ = new EventEmitter();
     }
-    /**
-     * @return {?}
-     */
     get collection() {
         return '/api/label';
     }
-    /**
-     * @param {?} key
-     * @param {?=} defaultValue
-     * @param {?=} params
-     * @return {?}
-     */
     transform(key, defaultValue, params) {
-        /** @type {?} */
         const values = this.values$.getValue();
         if (values.hasOwnProperty(key)) {
             return this.parseLabel(values[key], params);
@@ -2568,14 +1644,7 @@ class LabelService extends ApiService {
             return null;
         }
     }
-    /**
-     * @param {?} key
-     * @param {?=} defaultValue
-     * @param {?=} params
-     * @return {?}
-     */
     transform$(key, defaultValue, params) {
-        /** @type {?} */
         const values = this.values$.getValue();
         if (values.hasOwnProperty(key)) {
             return of(this.parseLabel(values[key], params));
@@ -2589,125 +1658,55 @@ class LabelService extends ApiService {
             });
             this.emitter$.emit();
         }
-        return this.values$.pipe(map((/**
-         * @param {?} values
-         * @return {?}
-         */
-        values => this.parseLabel(values[key], params))));
+        return this.values$.pipe(map(values => this.parseLabel(values[key], params)));
     }
-    /**
-     * @return {?}
-     */
     observe$() {
-        return this.emitter$.pipe(debounceTime(1), switchMap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.collect$())), filter((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => x !== null)));
+        return this.emitter$.pipe(debounceTime(1), switchMap(x => this.collect$()), filter(x => x !== null));
     }
-    /**
-     * @return {?}
-     */
     collect$() {
         if (Object.keys(this.keys).length) {
-            /** @type {?} */
-            const keys = Object.keys(this.keys).map((/**
-             * @param {?} x
-             * @return {?}
-             */
-            x => this.keys[x]));
+            const keys = Object.keys(this.keys).map(x => this.keys[x]);
             this.keys = {};
-            return this.statePost(keys).pipe(map((/**
-             * @param {?} labels
-             * @return {?}
-             */
-            (labels) => {
-                return labels.reduce((/**
-                 * @param {?} values
-                 * @param {?} x
-                 * @return {?}
-                 */
-                (values, x) => {
+            return this.statePost(keys).pipe(map((labels) => {
+                return labels.reduce((values, x) => {
                     values[x.id] = this.getLabel(x);
                     return values;
-                }), {});
-            })), tap((/**
-             * @param {?} labels
-             * @return {?}
-             */
-            (labels) => {
-                /** @type {?} */
+                }, {});
+            }), tap((labels) => {
                 const values = this.values$.getValue();
                 Object.assign(values, labels);
                 this.values$.next(values);
-            })), catchError((/**
-             * @param {?} error
-             * @return {?}
-             */
-            error => {
+            }), catchError(error => {
                 console.log(error);
-                /** @type {?} */
-                const labels = keys.reduce((/**
-                 * @param {?} values
-                 * @param {?} x
-                 * @return {?}
-                 */
-                (values, x) => {
+                const labels = keys.reduce((values, x) => {
                     values[x.id] = this.getLabel(x);
                     return values;
-                }), {});
-                /** @type {?} */
+                }, {});
                 const values = this.values$.getValue();
                 Object.assign(values, labels);
                 // return this.values$.next(values);
                 return of(null);
-            })));
+            }));
         }
         else {
             return of(null);
         }
     }
-    /**
-     * @param {?} value
-     * @param {?} params
-     * @return {?}
-     */
     parseLabel(value, params) {
         if (value && params) {
-            /** @type {?} */
             const TEMPLATE_REGEXP = /@([^{}\s]*)/g;
-            return value.replace(TEMPLATE_REGEXP, (/**
-             * @param {?} text
-             * @param {?} key
-             * @return {?}
-             */
-            (text, key) => {
-                /** @type {?} */
-                const replacer = (/** @type {?} */ (params[key]));
+            return value.replace(TEMPLATE_REGEXP, (text, key) => {
+                const replacer = params[key];
                 return typeof replacer !== 'undefined' ? replacer : text;
-            }));
+            });
         }
         else {
             return value;
         }
     }
-    /**
-     * @private
-     * @param {?} label
-     * @return {?}
-     */
     getLabel(label) {
         return label.value || label.defaultValue || this.getMissingLabel(label);
     }
-    /**
-     * @private
-     * @param {?} label
-     * @return {?}
-     */
     getMissingLabel(label) {
         if (typeof this.missingHandler === 'function') {
             return this.missingHandler(label);
@@ -2715,183 +1714,145 @@ class LabelService extends ApiService {
         return label.id;
     }
 }
-LabelService.decorators = [
-    { type: Injectable, args: [{
+LabelService.ɵfac = function LabelService_Factory(t) { return new (t || LabelService)(ɵɵinject(Injector)); };
+LabelService.ɵprov = ɵɵdefineInjectable({ token: LabelService, factory: LabelService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(LabelService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-LabelService.ctorParameters = () => [
-    { type: Injector }
-];
-/** @nocollapse */ LabelService.ngInjectableDef = defineInjectable({ factory: function LabelService_Factory() { return new LabelService(inject(INJECTOR)); }, token: LabelService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: Injector }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LabelDirective extends DisposableComponent {
-    /**
-     * @param {?} element
-     * @param {?} labelService
-     */
+class LabelDirective extends DisposableDirective {
     constructor(element, labelService) {
         super();
         this.element = element;
         this.labelService = labelService;
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
-        this.labelService.transform$(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(takeUntil(this.unsubscribe)).subscribe((/**
-         * @param {?} label
-         * @return {?}
-         */
-        label => {
+        this.labelService.transform$(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(takeUntil(this.unsubscribe)).subscribe(label => {
             this.element.nativeElement.innerHTML = label;
-        }));
+        });
     }
 }
-LabelDirective.decorators = [
-    { type: Directive, args: [{
+LabelDirective.ɵfac = function LabelDirective_Factory(t) { return new (t || LabelDirective)(ɵɵdirectiveInject(ElementRef), ɵɵdirectiveInject(LabelService)); };
+LabelDirective.ɵdir = ɵɵdefineDirective({ type: LabelDirective, selectors: [["", "label", ""]], inputs: { label: "label", labelParams: "labelParams" }, features: [ɵɵInheritDefinitionFeature] });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(LabelDirective, [{
+        type: Directive,
+        args: [{
                 selector: '[label]'
-            },] }
-];
-/** @nocollapse */
-LabelDirective.ctorParameters = () => [
-    { type: ElementRef },
-    { type: LabelService }
-];
-LabelDirective.propDecorators = {
-    label: [{ type: Input }],
-    labelParams: [{ type: Input }]
-};
+            }]
+    }], function () { return [{ type: ElementRef }, { type: LabelService }]; }, { label: [{
+            type: Input
+        }], labelParams: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class LabelPipe {
-    /**
-     * @param {?} labelService
-     */
     constructor(labelService) {
         this.labelService = labelService;
     }
-    /**
-     * @param {?} key
-     * @param {?=} defaultValue
-     * @param {?=} params
-     * @return {?}
-     */
     transform(key, defaultValue, params) {
         return this.labelService.transform(key, defaultValue, params);
     }
 }
-LabelPipe.decorators = [
-    { type: Pipe, args: [{
+LabelPipe.ɵfac = function LabelPipe_Factory(t) { return new (t || LabelPipe)(ɵɵdirectiveInject(LabelService)); };
+LabelPipe.ɵpipe = ɵɵdefinePipe({ name: "label", type: LabelPipe, pure: false });
+LabelPipe.ɵprov = ɵɵdefineInjectable({ token: LabelPipe, factory: LabelPipe.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(LabelPipe, [{
+        type: Pipe,
+        args: [{
                 name: 'label',
                 pure: false
-            },] },
-    { type: Injectable, args: [{
+            }]
+    }, {
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-LabelPipe.ctorParameters = () => [
-    { type: LabelService }
-];
-/** @nocollapse */ LabelPipe.ngInjectableDef = defineInjectable({ factory: function LabelPipe_Factory() { return new LabelPipe(inject(LabelService)); }, token: LabelPipe, providedIn: "root" });
+            }]
+    }], function () { return [{ type: LabelService }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function LoggerComponent_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 1);
+    ɵɵelementStart(1, "span");
+    ɵɵtext(2);
+    ɵɵelementEnd();
+    ɵɵtext(3, "\u00A0 ");
+    ɵɵelementStart(4, "span", 2);
+    ɵɵtext(5);
+    ɵɵelementEnd();
+    ɵɵtext(6, "\u00A0 ");
+    ɵɵelementStart(7, "span", 3);
+    ɵɵtext(8);
+    ɵɵelementEnd();
+    ɵɵtext(9, "\u00A0 ");
+    ɵɵelementStart(10, "span", 4);
+    ɵɵtext(11);
+    ɵɵelementEnd();
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const ctx_r1 = ɵɵnextContext();
+    ɵɵproperty("ngClass", "http--" + ctx_r1.logger.httpError.statusType);
+    ɵɵadvance(2);
+    ɵɵtextInterpolate(ctx_r1.logger.httpError.statusType);
+    ɵɵadvance(3);
+    ɵɵtextInterpolate(ctx_r1.logger.httpError.status);
+    ɵɵadvance(3);
+    ɵɵtextInterpolate(ctx_r1.logger.httpError.url);
+    ɵɵadvance(3);
+    ɵɵtextInterpolate(ctx_r1.logger.httpError.body == null ? null : ctx_r1.logger.httpError.body.error);
+} }
 class LoggerComponent {
-    /**
-     * @param {?} logger
-     */
     constructor(logger) {
         this.logger = logger;
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
     }
 }
-LoggerComponent.decorators = [
-    { type: Component, args: [{
+LoggerComponent.ɵfac = function LoggerComponent_Factory(t) { return new (t || LoggerComponent)(ɵɵdirectiveInject(Logger)); };
+LoggerComponent.ɵcmp = ɵɵdefineComponent({ type: LoggerComponent, selectors: [["core-logger"]], decls: 1, vars: 1, consts: [["class", "error-http", 3, "ngClass", 4, "ngIf"], [1, "error-http", 3, "ngClass"], [1, "status"], [1, "url"], [1, "message"]], template: function LoggerComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵtemplate(0, LoggerComponent_div_0_Template, 12, 5, "div", 0);
+    } if (rf & 2) {
+        ɵɵproperty("ngIf", ctx.logger.httpError);
+    } }, directives: [NgIf, NgClass], styles: [".error-http[_ngcontent-%COMP%]{padding:15px;max-width:1140px;margin:0 auto 10px;background:#faebd7;font-size:13px;font-family:monospace;color:#d2691e}"] });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(LoggerComponent, [{
+        type: Component,
+        args: [{
                 selector: 'core-logger',
-                template: "<div class=\"error-http\" [ngClass]=\"'http--' + logger.httpError.statusType\" *ngIf=\"logger.httpError\">\n\t<span>{{logger.httpError.statusType}}</span>&nbsp;\n\t<span class=\"status\">{{logger.httpError.status}}</span>&nbsp;\n\t<span class=\"url\">{{logger.httpError.url}}</span>&nbsp;\n\t<span class=\"message\">{{logger.httpError.body?.error}}</span>\n</div>\n<!--\n<div *ngIf=\"logger.logs.length\">\n\t<ul class=\"list-group \">\n\t\t<li class=\"list-group-item\">\n\t\t\t<button type=\"button\" class=\"btn btn-outline-primary btn-sm float-right\" (click)=\"logger.clear()\" title=\"Clear Logs\">{{ 'app.clear' | translate }}</button>\n\t\t</li>\n\t\t<li class=\"list-group-item\" *ngFor='let log of logger.logs'>\n\t\t\t<span>{{log}}</span>\n\t\t</li>\n\t</ul>\n\t<br>\n</div>\n-->\n",
+                templateUrl: './logger.component.html',
+                styleUrls: ['./logger.component.scss'],
                 encapsulation: ViewEncapsulation.Emulated,
-                styles: [".error-http{padding:15px;max-width:1140px;margin:0 auto 10px;background:#faebd7;font-size:13px;font-family:monospace;color:#d2691e}"]
-            }] }
-];
-/** @nocollapse */
-LoggerComponent.ctorParameters = () => [
-    { type: Logger }
-];
+            }]
+    }], function () { return [{ type: Logger }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const OUTLETS = new InjectionToken('core.outlets');
 class Outlet {
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class OutletDefaultComponent extends DisposableComponent {
 }
-OutletDefaultComponent.decorators = [
-    { type: Component, args: [{
+OutletDefaultComponent.ɵfac = function OutletDefaultComponent_Factory(t) { return ɵOutletDefaultComponent_BaseFactory(t || OutletDefaultComponent); };
+OutletDefaultComponent.ɵcmp = ɵɵdefineComponent({ type: OutletDefaultComponent, selectors: [["outlet-content-component"]], inputs: { outlet: "outlet" }, features: [ɵɵInheritDefinitionFeature], decls: 2, vars: 0, consts: [[1, "outlet"]], template: function OutletDefaultComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementStart(0, "div", 0);
+        ɵɵtext(1, "Outlet not found!");
+        ɵɵelementEnd();
+    } }, encapsulation: 2 });
+const ɵOutletDefaultComponent_BaseFactory = ɵɵgetInheritedFactory(OutletDefaultComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(OutletDefaultComponent, [{
+        type: Component,
+        args: [{
                 selector: 'outlet-content-component',
-                template: `<div class="outlet">Outlet not found!</div>`
-            }] }
-];
-OutletDefaultComponent.propDecorators = {
-    outlet: [{ type: Input }]
-};
+                template: `<div class="outlet">Outlet not found!</div>`,
+            }]
+    }], null, { outlet: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class OutletRepeaterComponent extends DisposableComponent {
-}
-OutletRepeaterComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'outlet-repeater-component',
-                template: `<ng-container *ngFor="let outlet of outlets"><outlet-component [outlet]="outlet"></outlet-component></ng-container>`
-            }] }
-];
-OutletRepeaterComponent.propDecorators = {
-    outlets: [{ type: Input }]
-};
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class OutletResolverService {
-    /**
-     * @param {?} outlets
-     */
     constructor(outlets) {
         outlets = outlets || {};
     }
-    /**
-     * @param {?} outlet
-     * @return {?}
-     */
     resolve(outlet) {
-        /** @type {?} */
         let component;
         if (outlet) {
             component = this.outlets[outlet.component] || OutletDefaultComponent;
@@ -2902,43 +1863,30 @@ class OutletResolverService {
         return component;
     }
 }
-OutletResolverService.decorators = [
-    { type: Injectable, args: [{
+OutletResolverService.ɵfac = function OutletResolverService_Factory(t) { return new (t || OutletResolverService)(ɵɵinject(OUTLETS)); };
+OutletResolverService.ɵprov = ɵɵdefineInjectable({ token: OutletResolverService, factory: OutletResolverService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(OutletResolverService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-OutletResolverService.ctorParameters = () => [
-    { type: undefined, decorators: [{ type: Inject, args: [OUTLETS,] }] }
-];
-/** @nocollapse */ OutletResolverService.ngInjectableDef = defineInjectable({ factory: function OutletResolverService_Factory() { return new OutletResolverService(inject(OUTLETS)); }, token: OutletResolverService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Inject,
+                args: [OUTLETS]
+            }] }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+const _c0$1 = ["outlet"];
 class OutletComponent extends DisposableComponent {
-    /**
-     * @param {?} componentFactoryResolver
-     * @param {?} outletResolverService
-     */
     constructor(componentFactoryResolver, outletResolverService) {
         super();
         this.componentFactoryResolver = componentFactoryResolver;
         this.outletResolverService = outletResolverService;
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
-        /** @type {?} */
         const component = this.outletResolverService.resolve(this.outlet);
-        /** @type {?} */
         const factory = this.componentFactoryResolver.resolveComponentFactory(component);
         this.viewContainerRef.clear();
-        /** @type {?} */
         const componentRef = this.viewContainerRef.createComponent(factory);
-        /** @type {?} */
         const instance = componentRef.instance;
         instance.outlet = this.outlet;
         if (typeof instance['OutletInit'] === 'function') {
@@ -2946,81 +1894,90 @@ class OutletComponent extends DisposableComponent {
         }
         this.componentRef = componentRef;
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this.componentRef.destroy();
     }
 }
-OutletComponent.decorators = [
-    { type: Component, args: [{
+OutletComponent.ɵfac = function OutletComponent_Factory(t) { return new (t || OutletComponent)(ɵɵdirectiveInject(ComponentFactoryResolver), ɵɵdirectiveInject(OutletResolverService)); };
+OutletComponent.ɵcmp = ɵɵdefineComponent({ type: OutletComponent, selectors: [["outlet-component"]], viewQuery: function OutletComponent_Query(rf, ctx) { if (rf & 1) {
+        ɵɵviewQuery(_c0$1, true, ViewContainerRef);
+    } if (rf & 2) {
+        var _t;
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.viewContainerRef = _t.first);
+    } }, inputs: { outlet: "outlet" }, features: [ɵɵInheritDefinitionFeature], decls: 0, vars: 0, template: function OutletComponent_Template(rf, ctx) { }, encapsulation: 2 });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(OutletComponent, [{
+        type: Component,
+        args: [{
                 selector: 'outlet-component',
-                template: ''
-            }] }
-];
-/** @nocollapse */
-OutletComponent.ctorParameters = () => [
-    { type: ComponentFactoryResolver },
-    { type: OutletResolverService }
-];
-OutletComponent.propDecorators = {
-    outlet: [{ type: Input }],
-    viewContainerRef: [{ type: ViewChild, args: ['outlet', { read: ViewContainerRef },] }]
-};
+                template: '',
+            }]
+    }], function () { return [{ type: ComponentFactoryResolver }, { type: OutletResolverService }]; }, { outlet: [{
+            type: Input
+        }], viewContainerRef: [{
+            type: ViewChild,
+            args: ['outlet', { read: ViewContainerRef, static: false }]
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function OutletRepeaterComponent_ng_container_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainerStart(0);
+    ɵɵelement(1, "outlet-component", 1);
+    ɵɵelementContainerEnd();
+} if (rf & 2) {
+    const outlet_r3 = ctx.$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("outlet", outlet_r3);
+} }
+class OutletRepeaterComponent extends DisposableComponent {
+}
+OutletRepeaterComponent.ɵfac = function OutletRepeaterComponent_Factory(t) { return ɵOutletRepeaterComponent_BaseFactory(t || OutletRepeaterComponent); };
+OutletRepeaterComponent.ɵcmp = ɵɵdefineComponent({ type: OutletRepeaterComponent, selectors: [["outlet-repeater-component"]], inputs: { outlets: "outlets" }, features: [ɵɵInheritDefinitionFeature], decls: 1, vars: 1, consts: [[4, "ngFor", "ngForOf"], [3, "outlet"]], template: function OutletRepeaterComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵtemplate(0, OutletRepeaterComponent_ng_container_0_Template, 2, 1, "ng-container", 0);
+    } if (rf & 2) {
+        ɵɵproperty("ngForOf", ctx.outlets);
+    } }, directives: [NgForOf, OutletComponent], encapsulation: 2 });
+const ɵOutletRepeaterComponent_BaseFactory = ɵɵgetInheritedFactory(OutletRepeaterComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(OutletRepeaterComponent, [{
+        type: Component,
+        args: [{
+                selector: 'outlet-repeater-component',
+                template: `<ng-container *ngFor="let outlet of outlets"><outlet-component [outlet]="outlet"></outlet-component></ng-container>`,
+            }]
+    }], null, { outlets: [{
+            type: Input
+        }] }); })();
+
 class AssetPipe {
-    /**
-     * @param {?} coreService
-     * @param {?} segment
-     */
     constructor(coreService, segment) {
         this.coreService = coreService;
         this.segment = segment;
     }
-    /**
-     * @param {?} data
-     * @return {?}
-     */
     transform(data) {
         if (typeof data === 'string' && (data.indexOf('http') === 0 || data.indexOf('/media/') === 0)) {
             return data;
         }
         else {
-            /** @type {?} */
             const segments = this.segment.transform(data);
             segments.unshift(this.coreService.options.assets);
             return segments.join('/');
         }
     }
 }
-AssetPipe.decorators = [
-    { type: Pipe, args: [{
+AssetPipe.ɵfac = function AssetPipe_Factory(t) { return new (t || AssetPipe)(ɵɵdirectiveInject(CoreService), ɵɵdirectiveInject(SegmentPipe)); };
+AssetPipe.ɵpipe = ɵɵdefinePipe({ name: "asset", type: AssetPipe, pure: true });
+AssetPipe.ɵprov = ɵɵdefineInjectable({ token: AssetPipe, factory: AssetPipe.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(AssetPipe, [{
+        type: Pipe,
+        args: [{
                 name: 'asset',
-            },] },
-    { type: Injectable, args: [{
+            }]
+    }, {
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-AssetPipe.ctorParameters = () => [
-    { type: CoreService },
-    { type: SegmentPipe }
-];
-/** @nocollapse */ AssetPipe.ngInjectableDef = defineInjectable({ factory: function AssetPipe_Factory() { return new AssetPipe(inject(CoreService), inject(SegmentPipe)); }, token: AssetPipe, providedIn: "root" });
+            }]
+    }], function () { return [{ type: CoreService }, { type: SegmentPipe }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class CustomAsyncPipe {
-    /**
-     * @param {?} changeDetector
-     */
     constructor(changeDetector) {
         this.changeDetector = changeDetector;
         this.subject = null;
@@ -3028,18 +1985,9 @@ class CustomAsyncPipe {
         this.value = null;
         this.cachedValue = null;
     }
-    /**
-     * @param {?} subject
-     * @return {?}
-     */
     transform(subject) {
         return this.observableToValue(subject);
     }
-    /**
-     * @private
-     * @param {?} subject
-     * @return {?}
-     */
     observableToValue(subject) {
         if (subject !== this.subject) {
             if (this.subject) {
@@ -3047,15 +1995,11 @@ class CustomAsyncPipe {
             }
             if (subject) {
                 this.subject = subject;
-                this.subscription = this.subject.subscribe((/**
-                 * @param {?} value
-                 * @return {?}
-                 */
-                (value) => {
+                this.subscription = this.subject.subscribe((value) => {
                     // console.log('CustomAsyncPipe.A', value);
                     this.value = value;
                     this.changeDetector.markForCheck(); // mark pipe as dirty
-                }));
+                });
                 this.cachedValue = this.value; // ???
                 return this.value;
             }
@@ -3067,9 +2011,6 @@ class CustomAsyncPipe {
         }
         return this.cachedValue; // return cachedValue
     }
-    /**
-     * @return {?}
-     */
     dispose() {
         if (this.subscription) {
             this.subscription.unsubscribe();
@@ -3079,36 +2020,24 @@ class CustomAsyncPipe {
         this.subscription = null;
         this.subject = null;
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this.dispose();
     }
-    /**
-     * @private
-     * @param {?} subject
-     * @return {?}
-     */
     _observableToValue(subject) {
         if (!this.subject) {
             if (subject) {
                 this.subject = subject;
-                this.subscription = this.subject.subscribe((/**
-                 * @param {?} value
-                 * @return {?}
-                 */
-                (value) => {
+                this.subscription = this.subject.subscribe((value) => {
                     this.value = value;
                     this.changeDetector.markForCheck(); // value has changed
-                }));
+                });
             }
             this.cachedValue = this.value;
             return this.value;
         }
         if (subject !== this.subject) {
             this.dispose();
-            return this.transform((/** @type {?} */ (subject)));
+            return this.transform(subject);
         }
         if (this.value === this.cachedValue) {
             return this.cachedValue;
@@ -3117,224 +2046,142 @@ class CustomAsyncPipe {
         return WrappedValue.wrap(this.value); // value has changed
     }
 }
-CustomAsyncPipe.decorators = [
-    { type: Pipe, args: [{
+CustomAsyncPipe.ɵfac = function CustomAsyncPipe_Factory(t) { return new (t || CustomAsyncPipe)(ɵɵinjectPipeChangeDetectorRef()); };
+CustomAsyncPipe.ɵpipe = ɵɵdefinePipe({ name: "customAsync", type: CustomAsyncPipe, pure: false });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(CustomAsyncPipe, [{
+        type: Pipe,
+        args: [{
                 name: 'customAsync',
                 pure: false
-            },] }
-];
-/** @nocollapse */
-CustomAsyncPipe.ctorParameters = () => [
-    { type: ChangeDetectorRef }
-];
+            }]
+    }], function () { return [{ type: ChangeDetectorRef }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @enum {number} */
-const ImageType = {
-    Default: 1,
-    Gallery: 2,
-    Share: 3,
-};
-ImageType[ImageType.Default] = 'Default';
-ImageType[ImageType.Gallery] = 'Gallery';
-ImageType[ImageType.Share] = 'Share';
+var ImageType;
+(function (ImageType) {
+    ImageType[ImageType["Default"] = 1] = "Default";
+    ImageType[ImageType["Gallery"] = 2] = "Gallery";
+    ImageType[ImageType["Share"] = 3] = "Share";
+})(ImageType || (ImageType = {}));
 class Image {
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ImageUrlPipe {
-    /**
-     * @param {?} images
-     * @param {?=} type
-     * @param {?=} queryString
-     * @return {?}
-     */
     transform(images, type, queryString) {
         type = type || 'Default';
         queryString = queryString ? `?${queryString}` : '';
-        /** @type {?} */
         const imageType = ImageType[type] || ImageType.Default;
-        /** @type {?} */
         let image = null;
         if (images && images.length) {
-            image = images.find((/**
-             * @param {?} i
-             * @return {?}
-             */
-            i => i.type === imageType)) || images[0];
+            image = images.find(i => i.type === imageType) || images[0];
         }
         return image ? (image.url + queryString).replace(/ /g, '%20') : null;
     }
 }
-ImageUrlPipe.decorators = [
-    { type: Pipe, args: [{
+ImageUrlPipe.ɵfac = function ImageUrlPipe_Factory(t) { return new (t || ImageUrlPipe)(); };
+ImageUrlPipe.ɵpipe = ɵɵdefinePipe({ name: "imageUrl", type: ImageUrlPipe, pure: true });
+ImageUrlPipe.ɵprov = ɵɵdefineInjectable({ token: ImageUrlPipe, factory: ImageUrlPipe.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ImageUrlPipe, [{
+        type: Pipe,
+        args: [{
                 name: 'imageUrl',
-            },] },
-    { type: Injectable, args: [{
+            }]
+    }, {
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */ ImageUrlPipe.ngInjectableDef = defineInjectable({ factory: function ImageUrlPipe_Factory() { return new ImageUrlPipe(); }, token: ImageUrlPipe, providedIn: "root" });
+            }]
+    }], null, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ImagePipe {
-    /**
-     * @param {?} images
-     * @param {?=} type
-     * @param {?=} queryString
-     * @return {?}
-     */
     transform(images, type, queryString) {
         type = type || 'Default';
-        /** @type {?} */
         const imageType = ImageType[type] || ImageType.Default;
-        return (images && images.length) ? images.find((/**
-         * @param {?} i
-         * @return {?}
-         */
-        i => i.type === imageType)) || null : null; // images[0]
+        return (images && images.length) ? images.find(i => i.type === imageType) || null : null; // images[0]
     }
     // 21 marzo 2019
-    /**
-     * @param {?} images
-     * @param {?=} type
-     * @param {?=} queryString
-     * @return {?}
-     */
     transform__(images, type, queryString) {
         type = type || 'Default';
         queryString = queryString ? `?${queryString}` : '';
-        /** @type {?} */
         const imageType = ImageType[type] || ImageType.Default;
-        /** @type {?} */
         let image = null;
         if (images && images.length) {
-            image = images.find((/**
-             * @param {?} i
-             * @return {?}
-             */
-            i => i.type === imageType)); // || images[0];
+            image = images.find(i => i.type === imageType); // || images[0];
             if (!image && imageType !== ImageType.Default) {
-                image = images.find((/**
-                 * @param {?} i
-                 * @return {?}
-                 */
-                i => i.type === ImageType.Default));
+                image = images.find(i => i.type === ImageType.Default);
             }
         }
         return image ? (image.url + queryString).replace(/ /g, '%20') : null;
     }
 }
-ImagePipe.decorators = [
-    { type: Pipe, args: [{
+ImagePipe.ɵfac = function ImagePipe_Factory(t) { return new (t || ImagePipe)(); };
+ImagePipe.ɵpipe = ɵɵdefinePipe({ name: "image", type: ImagePipe, pure: true });
+ImagePipe.ɵprov = ɵɵdefineInjectable({ token: ImagePipe, factory: ImagePipe.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ImagePipe, [{
+        type: Pipe,
+        args: [{
                 name: 'image',
-            },] },
-    { type: Injectable, args: [{
+            }]
+    }, {
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */ ImagePipe.ngInjectableDef = defineInjectable({ factory: function ImagePipe_Factory() { return new ImagePipe(); }, token: ImagePipe, providedIn: "root" });
+            }]
+    }], null, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class PublicPipe {
-    /**
-     * @param {?} coreService
-     * @param {?} segment
-     */
     constructor(coreService, segment) {
         this.coreService = coreService;
         this.segment = segment;
     }
-    /**
-     * @param {?} data
-     * @return {?}
-     */
     transform(data) {
-        /** @type {?} */
         const segments = this.segment.transform(data);
         segments.unshift(this.coreService.options.public);
         return segments.join('/');
     }
 }
-PublicPipe.decorators = [
-    { type: Pipe, args: [{
+PublicPipe.ɵfac = function PublicPipe_Factory(t) { return new (t || PublicPipe)(ɵɵdirectiveInject(CoreService), ɵɵdirectiveInject(SegmentPipe)); };
+PublicPipe.ɵpipe = ɵɵdefinePipe({ name: "public", type: PublicPipe, pure: true });
+PublicPipe.ɵprov = ɵɵdefineInjectable({ token: PublicPipe, factory: PublicPipe.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(PublicPipe, [{
+        type: Pipe,
+        args: [{
                 name: 'public',
-            },] },
-    { type: Injectable, args: [{
+            }]
+    }, {
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-PublicPipe.ctorParameters = () => [
-    { type: CoreService },
-    { type: SegmentPipe }
-];
-/** @nocollapse */ PublicPipe.ngInjectableDef = defineInjectable({ factory: function PublicPipe_Factory() { return new PublicPipe(inject(CoreService), inject(SegmentPipe)); }, token: PublicPipe, providedIn: "root" });
+            }]
+    }], function () { return [{ type: CoreService }, { type: SegmentPipe }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class RoutePipe {
-    /**
-     * @param {?} routeService
-     */
     constructor(routeService) {
         this.routeService = routeService;
     }
-    /**
-     * @param {?} data
-     * @return {?}
-     */
     transform(data) {
         return this.routeService.toRoute(data);
     }
 }
-RoutePipe.decorators = [
-    { type: Pipe, args: [{
+RoutePipe.ɵfac = function RoutePipe_Factory(t) { return new (t || RoutePipe)(ɵɵdirectiveInject(RouteService)); };
+RoutePipe.ɵpipe = ɵɵdefinePipe({ name: "route", type: RoutePipe, pure: false });
+RoutePipe.ɵprov = ɵɵdefineInjectable({ token: RoutePipe, factory: RoutePipe.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(RoutePipe, [{
+        type: Pipe,
+        args: [{
                 name: 'route',
                 pure: false
-            },] },
-    { type: Injectable, args: [{
+            }]
+    }, {
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-RoutePipe.ctorParameters = () => [
-    { type: RouteService }
-];
-/** @nocollapse */ RoutePipe.ngInjectableDef = defineInjectable({ factory: function RoutePipe_Factory() { return new RoutePipe(inject(RouteService)); }, token: RoutePipe, providedIn: "root" });
+            }]
+    }], function () { return [{ type: RouteService }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
 class EntityService extends IdentityService {
-    /**
-     * @return {?}
-     */
     get collection() {
         return '/api/entity';
     }
-    /**
-     * @param {?} name
-     * @return {?}
-     */
     getDetailByName(name) {
         if (!name.trim()) {
             return of([]);
@@ -3342,21 +2189,19 @@ class EntityService extends IdentityService {
         return this.get({ name });
     }
 }
-EntityService.decorators = [
-    { type: Injectable, args: [{
+EntityService.ɵfac = function EntityService_Factory(t) { return ɵEntityService_BaseFactory(t || EntityService); };
+EntityService.ɵprov = ɵɵdefineInjectable({ token: EntityService, factory: EntityService.ɵfac, providedIn: 'root' });
+const ɵEntityService_BaseFactory = ɵɵgetInheritedFactory(EntityService);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(EntityService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */ EntityService.ngInjectableDef = defineInjectable({ factory: function EntityService_Factory() { return new EntityService(inject(INJECTOR)); }, token: EntityService, providedIn: "root" });
+            }]
+    }], null, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+class SlugKey {
+}
 class SlugService extends EntityService {
-    /**
-     * @param {?} injector
-     */
     constructor(injector) {
         super(injector);
         this.injector = injector;
@@ -3364,18 +2209,10 @@ class SlugService extends EntityService {
         this.values$ = new BehaviorSubject({});
         this.emitter$ = new EventEmitter();
     }
-    /**
-     * @return {?}
-     */
     get collection() {
         return `/api/slug`;
     }
-    /**
-     * @param {?} key
-     * @return {?}
-     */
     transform(key) {
-        /** @type {?} */
         const values = this.values$.getValue();
         if (values.hasOwnProperty(key)) {
             return values[key];
@@ -3391,12 +2228,7 @@ class SlugService extends EntityService {
             return null;
         }
     }
-    /**
-     * @param {?} key
-     * @return {?}
-     */
     transform$(key) {
-        /** @type {?} */
         const values = this.values$.getValue();
         if (values.hasOwnProperty(key)) {
             return of(values[key]);
@@ -3409,122 +2241,57 @@ class SlugService extends EntityService {
             });
             this.emitter$.emit();
         }
-        return this.values$.pipe(map((/**
-         * @param {?} values
-         * @return {?}
-         */
-        values => values[key])));
+        return this.values$.pipe(map(values => values[key]));
     }
-    /**
-     * @return {?}
-     */
     observe$() {
-        return this.emitter$.pipe(debounceTime(1), switchMap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.collect$())), filter((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => x !== null)), first());
+        return this.emitter$.pipe(debounceTime(1), switchMap(x => this.collect$()), filter(x => x !== null), first());
     }
-    /**
-     * @return {?}
-     */
     collect$() {
         if (Object.keys(this.keys).length) {
-            /** @type {?} */
-            const keys = Object.keys(this.keys).map((/**
-             * @param {?} x
-             * @return {?}
-             */
-            x => this.keys[x]));
+            const keys = Object.keys(this.keys).map(x => this.keys[x]);
             this.keys = {};
-            return this.statePost(keys).pipe(map((/**
-             * @param {?} items
-             * @return {?}
-             */
-            (items) => {
-                return items.reduce((/**
-                 * @param {?} values
-                 * @param {?} x
-                 * @return {?}
-                 */
-                (values, x) => {
+            return this.statePost(keys).pipe(map((items) => {
+                return items.reduce((values, x) => {
                     values[x.mnemonic] = [x.slug];
                     return values;
-                }), {});
-            })), tap((/**
-             * @param {?} slugs
-             * @return {?}
-             */
-            (slugs) => {
-                /** @type {?} */
+                }, {});
+            }), tap((slugs) => {
                 const values = this.values$.getValue();
                 Object.assign(values, slugs);
                 this.values$.next(values);
-            })), catchError((/**
-             * @param {?} error
-             * @return {?}
-             */
-            error => {
+            }), catchError(error => {
                 console.log(error);
-                /** @type {?} */
-                const labels = keys.reduce((/**
-                 * @param {?} values
-                 * @param {?} x
-                 * @return {?}
-                 */
-                (values, x) => {
+                const labels = keys.reduce((values, x) => {
                     values[x.mnemonic] = null;
                     return values;
-                }), {});
-                /** @type {?} */
+                }, {});
                 const values = this.values$.getValue();
                 Object.assign(values, labels);
                 return of(null);
-            })));
+            }));
         }
         else {
             return of(null);
         }
     }
 }
-SlugService.decorators = [
-    { type: Injectable, args: [{
+SlugService.ɵfac = function SlugService_Factory(t) { return new (t || SlugService)(ɵɵinject(Injector)); };
+SlugService.ɵprov = ɵɵdefineInjectable({ token: SlugService, factory: SlugService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(SlugService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-SlugService.ctorParameters = () => [
-    { type: Injector }
-];
-/** @nocollapse */ SlugService.ngInjectableDef = defineInjectable({ factory: function SlugService_Factory() { return new SlugService(inject(INJECTOR)); }, token: SlugService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: Injector }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class SlugPipe {
-    /**
-     * @param {?} slugService
-     * @param {?} routePipe
-     */
     constructor(slugService, routePipe) {
         this.slugService = slugService;
         this.routePipe = routePipe;
     }
-    /**
-     * @param {?} key
-     * @param {?=} segments
-     * @return {?}
-     */
     transform(key, segments) {
-        /** @type {?} */
         const slug = this.slugService.transform(key);
         if (slug) {
-            /** @type {?} */
             let slugs = this.routePipe.transform(slug);
             if (slugs && segments) {
                 slugs = slugs.concat(segments);
@@ -3536,234 +2303,160 @@ class SlugPipe {
         }
     }
 }
-SlugPipe.decorators = [
-    { type: Pipe, args: [{
+SlugPipe.ɵfac = function SlugPipe_Factory(t) { return new (t || SlugPipe)(ɵɵdirectiveInject(SlugService), ɵɵdirectiveInject(RoutePipe)); };
+SlugPipe.ɵpipe = ɵɵdefinePipe({ name: "slug", type: SlugPipe, pure: false });
+SlugPipe.ɵprov = ɵɵdefineInjectable({ token: SlugPipe, factory: SlugPipe.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(SlugPipe, [{
+        type: Pipe,
+        args: [{
                 name: 'slug',
                 pure: false
-            },] },
-    { type: Injectable, args: [{
+            }]
+    }, {
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-SlugPipe.ctorParameters = () => [
-    { type: SlugService },
-    { type: RoutePipe }
-];
-/** @nocollapse */ SlugPipe.ngInjectableDef = defineInjectable({ factory: function SlugPipe_Factory() { return new SlugPipe(inject(SlugService), inject(RoutePipe)); }, token: SlugPipe, providedIn: "root" });
+            }]
+    }], function () { return [{ type: SlugService }, { type: RoutePipe }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class TranslateDirective extends DisposableComponent {
-    /**
-     * @param {?} element
-     * @param {?} translateService
-     */
+class TranslateDirective extends DisposableDirective {
     constructor(element, translateService) {
         super();
         this.element = element;
         this.translateService = translateService;
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
         // console.log('TranslateDirective.ngOnInit', this.element.nativeElement.innerHTML);
-        this.translateService.getTranslate(this.translate, this.element.nativeElement.innerHTML, this.translateParams).pipe(takeUntil(this.unsubscribe)).subscribe((/**
-         * @param {?} translate
-         * @return {?}
-         */
-        translate => {
+        this.translateService.getTranslate(this.translate, this.element.nativeElement.innerHTML, this.translateParams).pipe(takeUntil(this.unsubscribe)).subscribe(translate => {
             this.element.nativeElement.innerHTML = translate;
             // console.log('TranslateDirective.ngOnInit', translate);
-        }));
+        });
         // console.log('TranslateDirective.ngOnInit', this.translate, this.translateParams, this.template, this.view);
     }
 }
-TranslateDirective.decorators = [
-    { type: Directive, args: [{
+TranslateDirective.ɵfac = function TranslateDirective_Factory(t) { return new (t || TranslateDirective)(ɵɵdirectiveInject(ElementRef), ɵɵdirectiveInject(TranslateService)); };
+TranslateDirective.ɵdir = ɵɵdefineDirective({ type: TranslateDirective, selectors: [["", "translate", ""]], inputs: { translate: "translate", translateParams: "translateParams" }, features: [ɵɵInheritDefinitionFeature] });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(TranslateDirective, [{
+        type: Directive,
+        args: [{
                 selector: '[translate]'
-            },] }
-];
-/** @nocollapse */
-TranslateDirective.ctorParameters = () => [
-    { type: ElementRef },
-    { type: TranslateService }
-];
-TranslateDirective.propDecorators = {
-    translate: [{ type: Input }],
-    translateParams: [{ type: Input }]
-};
+            }]
+    }], function () { return [{ type: ElementRef }, { type: TranslateService }]; }, { translate: [{
+            type: Input
+        }], translateParams: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class TranslatePipe {
-    /**
-     * @param {?} ref
-     * @param {?} translateService
-     */
     constructor(ref, translateService) {
         this.ref = ref;
         this.translateService = translateService;
-        this.translateService.events.subscribe((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => this.ref.markForCheck()));
+        this.translateService.events.subscribe(x => this.ref.markForCheck());
     }
-    /**
-     * @param {?} key
-     * @param {?=} text
-     * @param {?=} params
-     * @return {?}
-     */
     transform(key, text, params) {
         // console.log(key, params);
-        /** @type {?} */
         const label = this.translateService.getTranslate(key, text, params);
         // console.log('label', label, this.translateService.cache);
         return label;
     }
 }
-TranslatePipe.decorators = [
-    { type: Pipe, args: [{
+TranslatePipe.ɵfac = function TranslatePipe_Factory(t) { return new (t || TranslatePipe)(ɵɵinjectPipeChangeDetectorRef(), ɵɵdirectiveInject(TranslateService)); };
+TranslatePipe.ɵpipe = ɵɵdefinePipe({ name: "translate", type: TranslatePipe, pure: false });
+TranslatePipe.ɵprov = ɵɵdefineInjectable({ token: TranslatePipe, factory: TranslatePipe.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(TranslatePipe, [{
+        type: Pipe,
+        args: [{
                 name: 'translate',
                 pure: false,
-            },] },
-    { type: Injectable, args: [{
+            }]
+    }, {
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-TranslatePipe.ctorParameters = () => [
-    { type: ChangeDetectorRef },
-    { type: TranslateService }
-];
-/** @nocollapse */ TranslatePipe.ngInjectableDef = defineInjectable({ factory: function TranslatePipe_Factory() { return new TranslatePipe(inject(ChangeDetectorRef), inject(TranslateService)); }, token: TranslatePipe, providedIn: "root" });
+            }]
+    }], function () { return [{ type: ChangeDetectorRef }, { type: TranslateService }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class SafeStylePipe {
-    /**
-     * @param {?} sanitizer
-     */
     constructor(sanitizer) {
         this.sanitizer = sanitizer;
     }
-    /**
-     * @param {?} style
-     * @return {?}
-     */
     transform(style) {
         return this.sanitizer.bypassSecurityTrustStyle(style);
     }
 }
-SafeStylePipe.decorators = [
-    { type: Pipe, args: [{
+SafeStylePipe.ɵfac = function SafeStylePipe_Factory(t) { return new (t || SafeStylePipe)(ɵɵdirectiveInject(DomSanitizer)); };
+SafeStylePipe.ɵpipe = ɵɵdefinePipe({ name: "safeStyle", type: SafeStylePipe, pure: true });
+SafeStylePipe.ɵprov = ɵɵdefineInjectable({ token: SafeStylePipe, factory: SafeStylePipe.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(SafeStylePipe, [{
+        type: Pipe,
+        args: [{
                 name: 'safeStyle'
-            },] },
-    { type: Injectable, args: [{
+            }]
+    }, {
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-SafeStylePipe.ctorParameters = () => [
-    { type: DomSanitizer }
-];
-/** @nocollapse */ SafeStylePipe.ngInjectableDef = defineInjectable({ factory: function SafeStylePipe_Factory() { return new SafeStylePipe(inject(DomSanitizer)); }, token: SafeStylePipe, providedIn: "root" });
+            }]
+    }], function () { return [{ type: DomSanitizer }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class SafeUrlPipe {
-    /**
-     * @param {?} sanitizer
-     */
     constructor(sanitizer) {
         this.sanitizer = sanitizer;
     }
-    /**
-     * @param {?} url
-     * @return {?}
-     */
     transform(url) {
         return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 }
-SafeUrlPipe.decorators = [
-    { type: Pipe, args: [{
+SafeUrlPipe.ɵfac = function SafeUrlPipe_Factory(t) { return new (t || SafeUrlPipe)(ɵɵdirectiveInject(DomSanitizer)); };
+SafeUrlPipe.ɵpipe = ɵɵdefinePipe({ name: "safeUrl", type: SafeUrlPipe, pure: true });
+SafeUrlPipe.ɵprov = ɵɵdefineInjectable({ token: SafeUrlPipe, factory: SafeUrlPipe.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(SafeUrlPipe, [{
+        type: Pipe,
+        args: [{
                 name: 'safeUrl'
-            },] },
-    { type: Injectable, args: [{
+            }]
+    }, {
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-SafeUrlPipe.ctorParameters = () => [
-    { type: DomSanitizer }
-];
-/** @nocollapse */ SafeUrlPipe.ngInjectableDef = defineInjectable({ factory: function SafeUrlPipe_Factory() { return new SafeUrlPipe(inject(DomSanitizer)); }, token: SafeUrlPipe, providedIn: "root" });
+            }]
+    }], function () { return [{ type: DomSanitizer }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class TrustPipe {
-    /**
-     * @param {?} sanitizer
-     */
     constructor(sanitizer) {
         this.sanitizer = sanitizer;
     }
-    /**
-     * @param {?} text
-     * @return {?}
-     */
     transform(text) {
         return this.sanitizer.bypassSecurityTrustHtml(text);
         // return this.sanitizer.bypassSecurityTrustStyle(text);
         // return this.sanitizer.bypassSecurityTrustXxx(text); - see docs
     }
 }
-TrustPipe.decorators = [
-    { type: Pipe, args: [{
+TrustPipe.ɵfac = function TrustPipe_Factory(t) { return new (t || TrustPipe)(ɵɵdirectiveInject(DomSanitizer)); };
+TrustPipe.ɵpipe = ɵɵdefinePipe({ name: "safeHtml", type: TrustPipe, pure: true });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(TrustPipe, [{
+        type: Pipe,
+        args: [{
                 name: 'safeHtml'
-            },] }
-];
-/** @nocollapse */
-TrustPipe.ctorParameters = () => [
-    { type: DomSanitizer }
-];
+            }]
+    }], function () { return [{ type: DomSanitizer }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const components = [
     CoreModuleComponent,
     DisposableComponent,
+    DisposableDirective,
     JsonFormatterComponent,
     LoggerComponent,
     OutletComponent,
     OutletDefaultComponent,
     OutletRepeaterComponent,
 ];
-/** @type {?} */
 const directives = [
     BundleDirective,
     DefaultContentDirective,
     LabelDirective,
     TranslateDirective,
 ];
-/** @type {?} */
 const pipes = [
     AssetPipe,
     CustomAsyncPipe,
@@ -3780,12 +2473,9 @@ const pipes = [
     TranslatePipe,
     TrustPipe,
 ];
-/** @type {?} */
 const validators = [];
+const guards = [];
 class CoreModule {
-    /**
-     * @param {?} parentModule
-     */
     constructor(parentModule) {
         /*
         if (parentModule) {
@@ -3793,11 +2483,6 @@ class CoreModule {
         }
         */
     }
-    /**
-     * @param {?=} bundles
-     * @param {?=} config
-     * @return {?}
-     */
     static forRoot(bundles, config) {
         return {
             ngModule: CoreModule,
@@ -3809,8 +2494,74 @@ class CoreModule {
         };
     }
 }
-CoreModule.decorators = [
-    { type: NgModule, args: [{
+CoreModule.ɵmod = ɵɵdefineNgModule({ type: CoreModule });
+CoreModule.ɵinj = ɵɵdefineInjector({ factory: function CoreModule_Factory(t) { return new (t || CoreModule)(ɵɵinject(CoreModule, 12)); }, providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
+        { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader },
+        ...validators,
+    ], imports: [[
+            CommonModule,
+            HttpClientModule,
+            FormsModule,
+            ReactiveFormsModule,
+        ]] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && ɵɵsetNgModuleScope(CoreModule, { declarations: [CoreModuleComponent,
+        DisposableComponent,
+        DisposableDirective,
+        JsonFormatterComponent,
+        LoggerComponent,
+        OutletComponent,
+        OutletDefaultComponent,
+        OutletRepeaterComponent,
+        BundleDirective,
+        DefaultContentDirective,
+        LabelDirective,
+        TranslateDirective,
+        AssetPipe,
+        CustomAsyncPipe,
+        HighlightPipe,
+        ImagePipe,
+        ImageUrlPipe,
+        LabelPipe,
+        PublicPipe,
+        RoutePipe,
+        SafeStylePipe,
+        SafeUrlPipe,
+        SegmentPipe,
+        SlugPipe,
+        TranslatePipe,
+        TrustPipe], imports: [CommonModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule], exports: [CoreModuleComponent,
+        DisposableComponent,
+        DisposableDirective,
+        JsonFormatterComponent,
+        LoggerComponent,
+        OutletComponent,
+        OutletDefaultComponent,
+        OutletRepeaterComponent,
+        BundleDirective,
+        DefaultContentDirective,
+        LabelDirective,
+        TranslateDirective,
+        AssetPipe,
+        CustomAsyncPipe,
+        HighlightPipe,
+        ImagePipe,
+        ImageUrlPipe,
+        LabelPipe,
+        PublicPipe,
+        RoutePipe,
+        SafeStylePipe,
+        SafeUrlPipe,
+        SegmentPipe,
+        SlugPipe,
+        TranslatePipe,
+        TrustPipe] }); })();
+/*@__PURE__*/ (function () { ɵsetClassMetadata(CoreModule, [{
+        type: NgModule,
+        args: [{
                 imports: [
                     CommonModule,
                     HttpClientModule,
@@ -3837,47 +2588,25 @@ CoreModule.decorators = [
                     ...pipes,
                     ...validators,
                 ],
-            },] }
-];
-/** @nocollapse */
-CoreModule.ctorParameters = () => [
-    { type: CoreModule, decorators: [{ type: Optional }, { type: SkipSelf }] }
-];
+            }]
+    }], function () { return [{ type: CoreModule, decorators: [{
+                type: Optional
+            }, {
+                type: SkipSelf
+            }] }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class Label {
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class Document {
 }
 class DocumentIndex {
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
 class DocumentService extends EntityService {
-    /**
-     * @return {?}
-     */
     get collection() {
         return '/api/document';
     }
-    /**
-     * @param {?} slug
-     * @return {?}
-     */
     getDetailBySlug(slug) {
         if (!slug.trim()) {
             // if not search term, return empty identity array.
@@ -3885,206 +2614,122 @@ class DocumentService extends EntityService {
         }
         return this.get({ slug }).pipe(
         // tap(x => this.logger.log(`found identities matching "${slug}"`)),
-        switchMap((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => of(x[0]))));
+        switchMap(x => of(x[0])));
     }
 }
-DocumentService.decorators = [
-    { type: Injectable, args: [{
+DocumentService.ɵfac = function DocumentService_Factory(t) { return ɵDocumentService_BaseFactory(t || DocumentService); };
+DocumentService.ɵprov = ɵɵdefineInjectable({ token: DocumentService, factory: DocumentService.ɵfac, providedIn: 'root' });
+const ɵDocumentService_BaseFactory = ɵɵgetInheritedFactory(DocumentService);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(DocumentService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */ DocumentService.ngInjectableDef = defineInjectable({ factory: function DocumentService_Factory() { return new DocumentService(inject(INJECTOR)); }, token: DocumentService, providedIn: "root" });
+            }]
+    }], null, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class Entity {
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+class EventEntity {
+}
 class EventDispatcherService {
     constructor() {
         this.emitter = new EventEmitter();
     }
-    /**
-     * @param {?} event
-     * @return {?}
-     */
     emit(event) {
         return this.emitter.emit(event);
     }
-    /**
-     * @return {?}
-     */
     observe() {
-        return this.emitter.pipe(tap((/**
-         * @param {?} event
-         * @return {?}
-         */
-        (event) => console.log('EventDispatcherService', event))));
+        return this.emitter.pipe(tap((event) => console.log('EventDispatcherService', event)));
     }
 }
-EventDispatcherService.decorators = [
-    { type: Injectable, args: [{
+EventDispatcherService.ɵfac = function EventDispatcherService_Factory(t) { return new (t || EventDispatcherService)(); };
+EventDispatcherService.ɵprov = ɵɵdefineInjectable({ token: EventDispatcherService, factory: EventDispatcherService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(EventDispatcherService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-EventDispatcherService.ctorParameters = () => [];
-/** @nocollapse */ EventDispatcherService.ngInjectableDef = defineInjectable({ factory: function EventDispatcherService_Factory() { return new EventDispatcherService(); }, token: EventDispatcherService, providedIn: "root" });
+            }]
+    }], function () { return []; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class Feature {
     constructor() {
         this.readmore = false;
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class Identity {
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class MenuItem {
-    /**
-     * @param {?=} options
-     */
     constructor(options) {
         if (options) {
             Object.assign(this, options);
             if (options.items) {
-                this.items = options.items.map((/**
-                 * @param {?} item
-                 * @return {?}
-                 */
-                item => new MenuItem(item)));
+                this.items = options.items.map(item => new MenuItem(item));
             }
         }
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class MenuService extends EntityService {
-    /**
-     * @param {?} injector
-     */
     constructor(injector) {
         super(injector);
         this.injector = injector;
     }
-    /**
-     * @return {?}
-     */
     get collection() {
         return '/api/menu';
     }
 }
-MenuService.decorators = [
-    { type: Injectable, args: [{
+MenuService.ɵfac = function MenuService_Factory(t) { return new (t || MenuService)(ɵɵinject(Injector)); };
+MenuService.ɵprov = ɵɵdefineInjectable({ token: MenuService, factory: MenuService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(MenuService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-MenuService.ctorParameters = () => [
-    { type: Injector }
-];
-/** @nocollapse */ MenuService.ngInjectableDef = defineInjectable({ factory: function MenuService_Factory() { return new MenuService(inject(INJECTOR)); }, token: MenuService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: Injector }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class Taxonomy {
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 // export class OnceEvent extends Event { }
 class OnceService {
-    /**
-     * @param {?} platformId
-     * @param {?} zone
-     */
     constructor(platformId, zone) {
         this.platformId = platformId;
         this.zone = zone;
         this.uid = 0;
         this.paths = [];
     }
-    /**
-     * @param {?} url
-     * @param {?=} callback
-     * @return {?}
-     */
     script(url, callback) {
         if (isPlatformBrowser(this.platformId)) {
             // !!! this.zone.runOutsideAngular(() => {
             if (this.paths.indexOf(url) === -1) {
                 this.paths.push(url);
-                /** @type {?} */
                 let callbackName;
                 if (callback === true) {
                     callbackName = 'OnceCallback' + (++this.uid);
                     url = url.split('{{callback}}').join(callbackName);
                 }
                 else {
-                    callbackName = (/** @type {?} */ (callback));
+                    callbackName = callback;
                 }
-                /** @type {?} */
                 let callback$;
-                /** @type {?} */
                 const element = document.createElement('script');
                 element.type = 'text/javascript';
                 if (callback) {
-                    callback$ = from(new Promise((/**
-                     * @param {?} resolve
-                     * @param {?} reject
-                     * @return {?}
-                     */
-                    (resolve, reject) => {
-                        window[callbackName] = (/**
-                         * @param {?} data
-                         * @return {?}
-                         */
-                        function (data) {
+                    callback$ = from(new Promise((resolve, reject) => {
+                        window[callbackName] = function (data) {
                             resolve(data);
-                        });
-                    })));
+                        };
+                    }));
                 }
                 else {
                     element.async = true;
-                    callback$ = fromEvent(element, 'load').pipe(map((/**
-                     * @param {?} x
-                     * @return {?}
-                     */
-                    x => (/** @type {?} */ (x)))));
+                    callback$ = fromEvent(element, 'load').pipe(map(x => x));
                 }
-                /** @type {?} */
                 const scripts = document.getElementsByTagName('script');
                 if (scripts.length) {
-                    /** @type {?} */
                     const script = scripts[scripts.length - 1];
                     script.parentNode.insertBefore(element, script.nextSibling);
                 }
@@ -4101,35 +2746,28 @@ class OnceService {
         }
     }
 }
-OnceService.decorators = [
-    { type: Injectable, args: [{
+OnceService.ɵfac = function OnceService_Factory(t) { return new (t || OnceService)(ɵɵinject(PLATFORM_ID), ɵɵinject(NgZone)); };
+OnceService.ɵprov = ɵɵdefineInjectable({ token: OnceService, factory: OnceService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(OnceService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-OnceService.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: NgZone }
-];
-/** @nocollapse */ OnceService.ngInjectableDef = defineInjectable({ factory: function OnceService_Factory() { return new OnceService(inject(PLATFORM_ID), inject(NgZone)); }, token: OnceService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Inject,
+                args: [PLATFORM_ID]
+            }] }, { type: NgZone }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class Translate {
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+/*
+ * Public API Surface of core
  */
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-export { ApiRequestOptions, ApiService, AuthStrategy, AuthToken, AuthService, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, LoggerErrorStrategy, LoggerComponent, Logger, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Outlet, OUTLETS, OutletDefaultComponent, OutletRepeaterComponent, OutletComponent, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe, BundleDirective as ɵc, OutletResolverService as ɵb };
-
+export { ApiRequestOptions, ApiService, AssetPipe, AuthService, AuthStrategy, AuthToken, BUNDLES, BundleDirective, CORE_CONFIG, CookieStorageService, CoreConfig, CoreModule, CoreModuleComponent, CoreService, CustomAsyncPipe, DefaultContentDirective, DisposableComponent, DisposableDirective, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, Identity, IdentityService, Image, ImagePipe, ImageType, ImageUrlPipe, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, LocalStorageService, Logger, LoggerComponent, LoggerErrorStrategy, MenuItem, MenuService, OUTLETS, OnceService, Outlet, OutletComponent, OutletDefaultComponent, OutletRepeaterComponent, PublicPipe, RoutePipe, RouteService, SafeStylePipe, SafeUrlPipe, SegmentPipe, SessionStorageService, SlugPipe, SlugService, StorageService, Taxonomy, Translate, TranslateDirective, TranslatePipe, TranslateService, TrustPipe };
 //# sourceMappingURL=designr-core.js.map

@@ -1,24 +1,16 @@
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FormService, ControlModule } from '@designr/control';
-import { ConfigService, PageResolverService } from '@designr/page';
 import { MarkdownService, MarkdownModule, MarkedOptions } from 'ngx-markdown';
 export { MarkdownModule, MarkedOptions } from 'ngx-markdown';
+import { InjectionToken, ɵɵinject, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, Inject, ɵɵelementStart, ɵɵelement, ɵɵelementEnd, ɵɵnextContext, ɵɵreference, ɵɵadvance, ɵɵclassMapInterpolate1, ɵɵproperty, ɵɵgetCurrentView, ɵɵelementContainerStart, ɵɵlistener, ɵɵrestoreView, ɵɵtext, ɵɵtemplate, ɵɵelementContainerEnd, ɵɵtextInterpolate, ɵɵpureFunction1, ɵɵsanitizeHtml, ɵɵdirectiveInject, PLATFORM_ID, ɵɵdefineComponent, ɵɵInheritDefinitionFeature, Component, ViewEncapsulation, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule, Optional, SkipSelf, ɵɵtextInterpolate1, ɵɵelementContainer, ɵɵresolveDocument, HostListener } from '@angular/core';
+import { isPlatformBrowser, NgIf, NgClass, NgForOf, CommonModule } from '@angular/common';
+import { ɵangular_packages_forms_forms_y, NgControlStatusGroup, FormGroupDirective, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormService, ControlOutletComponent, ControlModule } from '@designr/control';
+import { DisposableComponent, CoreModule, BundleDirective } from '@designr/core';
+import { ConfigService, PageResolverService } from '@designr/page';
 import { takeUntil } from 'rxjs/operators';
-import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { InjectionToken, Inject, Injectable, Component, ViewEncapsulation, PLATFORM_ID, HostListener, NgModule, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
-import { DisposableComponent, CoreModule } from '@designr/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const EDITOR_CONFIG = new InjectionToken('editor.config');
 class EditorConfig {
-    /**
-     * @param {?=} options
-     */
     constructor(options) {
         // console.log('EditorConfig', options);
         if (options) {
@@ -27,43 +19,97 @@ class EditorConfig {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class EditorService {
-    /**
-     * @param {?} options
-     */
     constructor(options) {
         // console.log('EditorService', options);
         options = options || {};
         this.options = new EditorConfig(options);
     }
 }
-EditorService.decorators = [
-    { type: Injectable, args: [{
+EditorService.ɵfac = function EditorService_Factory(t) { return new (t || EditorService)(ɵɵinject(EDITOR_CONFIG)); };
+EditorService.ɵprov = ɵɵdefineInjectable({ token: EditorService, factory: EditorService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(EditorService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-EditorService.ctorParameters = () => [
-    { type: EditorConfig, decorators: [{ type: Inject, args: [EDITOR_CONFIG,] }] }
-];
-/** @nocollapse */ EditorService.ngInjectableDef = defineInjectable({ factory: function EditorService_Factory() { return new EditorService(inject(EDITOR_CONFIG)); }, token: EditorService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: EditorConfig, decorators: [{
+                type: Inject,
+                args: [EDITOR_CONFIG]
+            }] }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function EditorRootComponent_ng_container_0_div_13_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵelement(1, "control-outlet", 12);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const option_r3 = ctx.$implicit;
+    ɵɵnextContext();
+    const _r1 = ɵɵreference(2);
+    ɵɵadvance(1);
+    ɵɵclassMapInterpolate1("fieldset__field fieldset__field--", option_r3.schema, "");
+    ɵɵproperty("option", option_r3)("form", _r1);
+} }
+const _c0 = function (a0) { return { active: a0 }; };
+const _c1 = function (a0) { return { "btn--busy": a0 }; };
+function EditorRootComponent_ng_container_0_Template(rf, ctx) { if (rf & 1) {
+    const _r5 = ɵɵgetCurrentView();
+    ɵɵelementContainerStart(0);
+    ɵɵelementStart(1, "form", 1, 2);
+    ɵɵlistener("ngSubmit", function EditorRootComponent_ng_container_0_Template_form_ngSubmit_1_listener($event) { ɵɵrestoreView(_r5); const _r1 = ɵɵreference(2); const ctx_r4 = ɵɵnextContext(); return _r1.valid && ctx_r4.onSubmit(_r1.value); });
+    ɵɵelementStart(3, "div", 3);
+    ɵɵelementStart(4, "span", 4);
+    ɵɵtext(5);
+    ɵɵelementEnd();
+    ɵɵelementStart(6, "span", 5);
+    ɵɵtext(7);
+    ɵɵelementEnd();
+    ɵɵelementStart(8, "span", 6);
+    ɵɵtext(9);
+    ɵɵelementEnd();
+    ɵɵelementEnd();
+    ɵɵelement(10, "hr");
+    ɵɵelement(11, "h2", 7);
+    ɵɵelement(12, "hr");
+    ɵɵtemplate(13, EditorRootComponent_ng_container_0_div_13_Template, 2, 5, "div", 8);
+    ɵɵelementStart(14, "div", 9);
+    ɵɵelementStart(15, "button", 10);
+    ɵɵlistener("click", function EditorRootComponent_ng_container_0_Template_button_click_15_listener($event) { ɵɵrestoreView(_r5); const ctx_r6 = ɵɵnextContext(); return ctx_r6.onReset(); });
+    ɵɵelementStart(16, "span");
+    ɵɵtext(17, "Annulla");
+    ɵɵelementEnd();
+    ɵɵelementEnd();
+    ɵɵelementStart(18, "button", 11);
+    ɵɵelementStart(19, "span");
+    ɵɵtext(20, "Salva");
+    ɵɵelementEnd();
+    ɵɵelementEnd();
+    ɵɵelementEnd();
+    ɵɵelementEnd();
+    ɵɵelementContainerEnd();
+} if (rf & 2) {
+    const _r1 = ɵɵreference(2);
+    const ctx_r0 = ɵɵnextContext();
+    ɵɵadvance(1);
+    ɵɵproperty("formGroup", _r1);
+    ɵɵadvance(4);
+    ɵɵtextInterpolate(ctx_r0.page.id);
+    ɵɵadvance(1);
+    ɵɵproperty("ngClass", ɵɵpureFunction1(10, _c0, ctx_r0.page.active));
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ctx_r0.page.active ? "active" : "inactive");
+    ɵɵadvance(2);
+    ɵɵtextInterpolate(ctx_r0.componentName);
+    ɵɵadvance(2);
+    ɵɵproperty("innerHTML", ctx_r0.page.title, ɵɵsanitizeHtml);
+    ɵɵadvance(2);
+    ɵɵproperty("ngForOf", ctx_r0.options);
+    ɵɵadvance(2);
+    ɵɵproperty("disabled", ctx_r0.submitted || !_r1.valid);
+    ɵɵadvance(3);
+    ɵɵproperty("disabled", ctx_r0.submitted || !_r1.valid)("ngClass", ɵɵpureFunction1(12, _c1, ctx_r0.busy));
+} }
 class EditorRootComponent extends DisposableComponent {
-    /**
-     * @param {?} platformId
-     * @param {?} configService
-     * @param {?} markdownService
-     * @param {?} formService
-     * @param {?} pageResolverService
-     */
     constructor(platformId, configService, markdownService, formService, pageResolverService) {
         super();
         this.platformId = platformId;
@@ -74,62 +120,34 @@ class EditorRootComponent extends DisposableComponent {
         this.busy = false;
         this.submitted = false;
     }
-    /**
-     * @return {?}
-     */
     get page() {
         return this._page;
     }
-    /**
-     * @param {?} page
-     * @return {?}
-     */
     set page(page) {
         this._pageCopy = Object.assign({}, page);
         this._page = page;
         if (this._page) {
             this.options = this.formService.getOptions(this.getControlsByPage(page));
             this.form = this.formService.getFormGroup(this.options);
-            this.form.valueChanges.subscribe((/**
-             * @param {?} x
-             * @return {?}
-             */
-            x => {
+            this.form.valueChanges.subscribe(x => {
                 this.onAssign(x); // Object.assign(this._page, x);
-            }));
+            });
         }
         else {
             this.options = [];
             this.form = null;
         }
     }
-    /**
-     * @return {?}
-     */
     get componentName() {
         if (this._page) {
-            /** @type {?} */
             const component = this.configService.options.pages[this._page.component];
             if (component) {
                 return component.name;
             }
         }
     }
-    /**
-     * @param {?} page
-     * @return {?}
-     */
     getControlsByPage(page) {
-        return page ? Object.keys(page).filter((/**
-         * @param {?} key
-         * @return {?}
-         */
-        key => typeof page[key] !== 'object')).map((/**
-         * @param {?} key
-         * @param {?} i
-         * @return {?}
-         */
-        (key, i) => {
+        return page ? Object.keys(page).filter(key => typeof page[key] !== 'object').map((key, i) => {
             return {
                 key: key,
                 value: page[key],
@@ -139,35 +157,21 @@ class EditorRootComponent extends DisposableComponent {
                 required: false,
                 order: i + 1
             };
-        })) : [];
+        }) : [];
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
         if (isPlatformBrowser(this.platformId)) {
-            this.pageResolverService.events$.pipe(takeUntil(this.unsubscribe)).subscribe((/**
-             * @param {?} resolver
-             * @return {?}
-             */
-            (resolver) => {
+            this.pageResolverService.events$.pipe(takeUntil(this.unsubscribe)).subscribe((resolver) => {
                 // console.log('EditorRootComponent.resolver', resolver);
                 this.page = resolver ? resolver.page : null;
-            }));
+            });
         }
     }
-    /**
-     * @return {?}
-     */
     onReset() {
         // console.log('EditorRootComponent.onReset');
-        Object.keys(this.form.controls).forEach((/**
-         * @param {?} key
-         * @return {?}
-         */
-        key => {
+        Object.keys(this.form.controls).forEach(key => {
             this.form.get(key).setValue(this._pageCopy[key]);
-        }));
+        });
         /*
         const keys = this.controls.map(x => x.key);
         keys.forEach(k => {
@@ -176,25 +180,13 @@ class EditorRootComponent extends DisposableComponent {
         });
         */
     }
-    /**
-     * @param {?} model
-     * @return {?}
-     */
     onSubmit(model) {
         // console.log('EditorRootComponent.onSubmit', model);
         this.onAssign(model);
         // Object.assign(this._page, model);
     }
-    /**
-     * @param {?} model
-     * @return {?}
-     */
     onAssign(model) {
-        Object.keys(this.form.controls).forEach((/**
-         * @param {?} key
-         * @return {?}
-         */
-        key => {
+        Object.keys(this.form.controls).forEach(key => {
             switch (key) {
                 case 'description':
                     this._page[key] = this.markdownService.compile(model[key]);
@@ -202,57 +194,76 @@ class EditorRootComponent extends DisposableComponent {
                 default:
                     this._page[key] = model[key];
             }
-        }));
+        });
     }
 }
-EditorRootComponent.decorators = [
-    { type: Component, args: [{
+EditorRootComponent.ɵfac = function EditorRootComponent_Factory(t) { return new (t || EditorRootComponent)(ɵɵdirectiveInject(PLATFORM_ID), ɵɵdirectiveInject(ConfigService), ɵɵdirectiveInject(MarkdownService), ɵɵdirectiveInject(FormService), ɵɵdirectiveInject(PageResolverService)); };
+EditorRootComponent.ɵcmp = ɵɵdefineComponent({ type: EditorRootComponent, selectors: [["editor-root-component"]], features: [ɵɵInheritDefinitionFeature], decls: 1, vars: 1, consts: [[4, "ngIf"], ["name", "form", "role", "form", "novalidate", "", "autocomplete", "off", 1, "form", 3, "formGroup", "ngSubmit"], ["form", "ngForm"], [1, "info"], [1, "id"], [1, "status", 3, "ngClass"], [1, "component"], [1, "h1", 3, "innerHTML"], [4, "ngFor", "ngForOf"], [1, "action-bar"], ["type", "text", "title", "Annulla", 1, "btn", "btn--secondary", 3, "disabled", "click"], ["type", "submit", "title", "Salva", 1, "btn", "btn--primary", 3, "disabled", "ngClass"], [3, "option", "form"]], template: function EditorRootComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵtemplate(0, EditorRootComponent_ng_container_0_Template, 21, 14, "ng-container", 0);
+    } if (rf & 2) {
+        ɵɵproperty("ngIf", ctx.page);
+    } }, directives: [NgIf, ɵangular_packages_forms_forms_y, NgControlStatusGroup, FormGroupDirective, NgClass, NgForOf, ControlOutletComponent], styles: ["[_nghost-%COMP%]{font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;background:#fafafa;color:#55555a}.h1[_ngcontent-%COMP%]{color:#55555a;font-size:19px}form[_ngcontent-%COMP%]{margin:0}label[_ngcontent-%COMP%]{display:block;width:100%;color:#55555a;font-weight:700;font-size:12px}.id[_ngcontent-%COMP%]{display:inline-block;padding:4px 6px;background:#0875c2;color:#fff;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status[_ngcontent-%COMP%]{display:inline-block;padding:4px 6px;background:#fff;color:#000;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status.active[_ngcontent-%COMP%]{background:green;color:#fff}.component[_ngcontent-%COMP%]{display:inline-block;font-size:14px;font-style:italic}"] });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(EditorRootComponent, [{
+        type: Component,
+        args: [{
                 selector: 'editor-root-component',
-                template: "<ng-container *ngIf=\"page\">\n\t<form class=\"form\" name=\"form\" [formGroup]=\"form\" (ngSubmit)=\"form.valid && onSubmit(form.value)\" #form=\"ngForm\" role=\"form\" novalidate autocomplete=\"off\">\n\t\t<div class=\"info\">\n\t\t\t<span class=\"id\">{{page.id}}</span>\n\t\t\t<span class=\"status\" [ngClass]=\"{ active: page.active }\">{{page.active ? 'active' : 'inactive'}}</span>\n\t\t\t<span class=\"component\">{{componentName}}</span>\n\t\t</div>\n\t\t<hr>\n\t\t<h2 class=\"h1\" [innerHTML]=\"page.title\"></h2>\n\t\t<!--\n\t\t\t\t<p [innerHTML]=\"page.description\"></p>\n\t\t\t\t-->\n\t\t<hr>\n\t\t<div *ngFor=\"let option of options\">\n\t\t\t<control-outlet class=\"fieldset__field fieldset__field--{{option.schema}}\" [option]=\"option\" [form]=\"form\"></control-outlet>\n\t\t</div>\n\t\t<!-- <control-editable formControlName=\"email\"></control-editable> -->\n\t\t<div class=\"action-bar\">\n\t\t\t<button type=\"text\" class=\"btn btn--secondary\" [disabled]=\"submitted || !form.valid\" (click)=\"onReset()\" title=\"Annulla\"><span>Annulla</span></button>\n\t\t\t<button type=\"submit\" class=\"btn btn--primary\" [disabled]=\"submitted || !form.valid\" [ngClass]=\"{ 'btn--busy': busy }\" title=\"Salva\"><span>Salva</span></button>\n\t\t</div>\n\t</form>\n</ng-container>\n",
+                templateUrl: './editor-root.component.html',
+                styleUrls: ['./editor-root.component.scss'],
                 encapsulation: ViewEncapsulation.Emulated,
-                styles: [":host{font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;background:#fafafa;color:#55555a}.h1{color:#55555a;font-size:19px}form{margin:0}label{display:block;width:100%;color:#55555a;font-weight:700;font-size:12px}.id{display:inline-block;padding:4px 6px;background:#0875c2;color:#fff;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status{display:inline-block;padding:4px 6px;background:#fff;color:#000;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status.active{background:green;color:#fff}.component{display:inline-block;font-size:14px;font-style:italic}"]
-            }] }
-];
-/** @nocollapse */
-EditorRootComponent.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: ConfigService },
-    { type: MarkdownService },
-    { type: FormService },
-    { type: PageResolverService }
-];
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Inject,
+                args: [PLATFORM_ID]
+            }] }, { type: ConfigService }, { type: MarkdownService }, { type: FormService }, { type: PageResolverService }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const services = [];
-/** @type {?} */
 const components = [
     EditorRootComponent,
 ];
-const ɵ0 = {
-// gfm: true,
-// tables: true,
-// breaks: true,
-// pedantic: true,
-// sanitize: true,
-// smartLists: true,
-// smartypants: true,
-}, ɵ1 = EditorRootComponent;
+const directives = [];
+const pipes = [];
+const validators = [];
+const guards = [];
 class EditorBundleModule {
-    /**
-     * @param {?} parentModule
-     */
     constructor(parentModule) {
         if (parentModule) {
             throw new Error('EditorBundleModule is already loaded. Import it in the AppModule only');
         }
     }
 }
-EditorBundleModule.decorators = [
-    { type: NgModule, args: [{
+EditorBundleModule.ɵmod = ɵɵdefineNgModule({ type: EditorBundleModule });
+EditorBundleModule.ɵinj = ɵɵdefineInjector({ factory: function EditorBundleModule_Factory(t) { return new (t || EditorBundleModule)(ɵɵinject(EditorBundleModule, 12)); }, providers: [
+        { provide: 'LAZY_ROOT_COMPONENT', useValue: EditorRootComponent },
+        ...services,
+    ], imports: [[
+            CommonModule,
+            FormsModule,
+            ReactiveFormsModule,
+            MarkdownModule.forRoot({
+                markedOptions: {
+                    provide: MarkedOptions,
+                    useValue: {
+                    // gfm: true,
+                    // tables: true,
+                    // breaks: true,
+                    // pedantic: true,
+                    // sanitize: true,
+                    // smartLists: true,
+                    // smartypants: true,
+                    },
+                },
+            }),
+            CoreModule,
+            ControlModule,
+        ]] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && ɵɵsetNgModuleScope(EditorBundleModule, { declarations: [EditorRootComponent,
+        EditorRootComponent], imports: [CommonModule,
+        FormsModule,
+        ReactiveFormsModule, MarkdownModule, CoreModule,
+        ControlModule], exports: [EditorRootComponent] }); })();
+/*@__PURE__*/ (function () { ɵsetClassMetadata(EditorBundleModule, [{
+        type: NgModule,
+        args: [{
                 imports: [
                     CommonModule,
                     FormsModule,
@@ -260,14 +271,22 @@ EditorBundleModule.decorators = [
                     MarkdownModule.forRoot({
                         markedOptions: {
                             provide: MarkedOptions,
-                            useValue: ɵ0,
+                            useValue: {
+                            // gfm: true,
+                            // tables: true,
+                            // breaks: true,
+                            // pedantic: true,
+                            // sanitize: true,
+                            // smartLists: true,
+                            // smartypants: true,
+                            },
                         },
                     }),
                     CoreModule,
                     ControlModule,
                 ],
                 providers: [
-                    { provide: 'LAZY_ROOT_COMPONENT', useValue: ɵ1 },
+                    { provide: 'LAZY_ROOT_COMPONENT', useValue: EditorRootComponent },
                     ...services,
                 ],
                 declarations: [
@@ -280,55 +299,50 @@ EditorBundleModule.decorators = [
                 exports: [
                     ...components,
                 ],
-            },] }
-];
-/** @nocollapse */
-EditorBundleModule.ctorParameters = () => [
-    { type: EditorBundleModule, decorators: [{ type: Optional }, { type: SkipSelf }] }
-];
+            }]
+    }], function () { return [{ type: EditorBundleModule, decorators: [{
+                type: Optional
+            }, {
+                type: SkipSelf
+            }] }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class EditorModuleComponent {
     constructor() {
         this.version = '0.0.12';
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
     }
 }
-EditorModuleComponent.decorators = [
-    { type: Component, args: [{
+EditorModuleComponent.ɵfac = function EditorModuleComponent_Factory(t) { return new (t || EditorModuleComponent)(); };
+EditorModuleComponent.ɵcmp = ɵɵdefineComponent({ type: EditorModuleComponent, selectors: [["editor-module"]], decls: 2, vars: 1, consts: [[1, "editor-module"]], template: function EditorModuleComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementStart(0, "span", 0);
+        ɵɵtext(1);
+        ɵɵelementEnd();
+    } if (rf & 2) {
+        ɵɵadvance(1);
+        ɵɵtextInterpolate1("editor ", ctx.version, "");
+    } }, encapsulation: 2 });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(EditorModuleComponent, [{
+        type: Component,
+        args: [{
                 selector: 'editor-module',
-                template: `<span class="editor-module">editor {{version}}</span>`
-            }] }
-];
-/** @nocollapse */
-EditorModuleComponent.ctorParameters = () => [];
+                template: `<span class="editor-module">editor {{version}}</span>`,
+                styles: []
+            }]
+    }], function () { return []; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function PanelComponent_ng_container_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainerStart(0);
+    ɵɵelementContainer(1, 2);
+    ɵɵelementContainerEnd();
+} }
 class PanelComponent extends DisposableComponent {
-    /**
-     * @param {?} platformId
-     * @param {?} config
-     */
     constructor(platformId, config) {
         super();
         this.platformId = platformId;
         this.config = config;
         this.opened = false;
     }
-    /**
-     * @param {?} event
-     * @return {?}
-     */
     onKeydown(event) {
         if (event.key === 'e' && event.ctrlKey) {
             this.opened = this.config.enabled && !this.opened;
@@ -336,10 +350,42 @@ class PanelComponent extends DisposableComponent {
         }
     }
 }
-PanelComponent.decorators = [
-    { type: Component, args: [{
+PanelComponent.ɵfac = function PanelComponent_Factory(t) { return new (t || PanelComponent)(ɵɵdirectiveInject(PLATFORM_ID), ɵɵdirectiveInject(EDITOR_CONFIG)); };
+PanelComponent.ɵcmp = ɵɵdefineComponent({ type: PanelComponent, selectors: [["panel-component"]], hostBindings: function PanelComponent_HostBindings(rf, ctx) { if (rf & 1) {
+        ɵɵlistener("keydown", function PanelComponent_keydown_HostBindingHandler($event) { return ctx.onKeydown($event); }, false, ɵɵresolveDocument);
+    } }, features: [ɵɵInheritDefinitionFeature], decls: 2, vars: 2, consts: [[1, "panel", 3, "clickOutside"], [4, "ngIf"], ["bundle", "editor"]], template: function PanelComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementStart(0, "div", 0);
+        ɵɵlistener("clickOutside", function PanelComponent_Template_div_clickOutside_0_listener($event) { return ctx.opened = false; });
+        ɵɵtemplate(1, PanelComponent_ng_container_1_Template, 2, 0, "ng-container", 1);
+        ɵɵelementEnd();
+    } if (rf & 2) {
+        ɵɵproperty("@openClose", ctx.opened ? "open" : "closed");
+        ɵɵadvance(1);
+        ɵɵproperty("ngIf", ctx.opened);
+    } }, directives: [NgIf, BundleDirective], styles: [".panel[_ngcontent-%COMP%]{position:fixed;top:0;right:0;width:320px;height:100vh;padding:15px;overflow-x:hidden;overflow-y:auto;background:#fff;z-index:100000}[_ngcontent-%COMP%]::-webkit-scrollbar{width:0}[_ngcontent-%COMP%]::-webkit-scrollbar-track{background:0 0}[_ngcontent-%COMP%]::-webkit-scrollbar-thumb{background:0 0}[_ngcontent-%COMP%]::-webkit-scrollbar-thumb:hover{background:0 0}"], data: { animation: [
+            trigger('openClose', [
+                state('open', style({
+                    opacity: 1,
+                    transform: 'translateX(0)',
+                })),
+                state('closed', style({
+                    opacity: 0.5,
+                    transform: 'translateX(100%)',
+                })),
+                transition('open => closed', [
+                    animate('250ms')
+                ]),
+                transition('closed => open', [
+                    animate('150ms')
+                ]),
+            ]),
+        ] } });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(PanelComponent, [{
+        type: Component,
+        args: [{
                 selector: 'panel-component',
-                template: "<div class=\"panel\" [@openClose]=\"opened ? 'open' : 'closed'\" (clickOutside)=\"opened = false\">\n\t<ng-container *ngIf=\"opened\">\n\t\t<ng-container bundle=\"editor\"></ng-container>\n\t</ng-container>\n</div>\n",
+                templateUrl: './panel.component.html',
+                styleUrls: ['./panel.component.scss'],
                 animations: [
                     trigger('openClose', [
                         state('open', style({
@@ -359,46 +405,35 @@ PanelComponent.decorators = [
                     ]),
                 ],
                 encapsulation: ViewEncapsulation.Emulated,
-                styles: [".panel{position:fixed;top:0;right:0;width:320px;height:100vh;padding:15px;overflow-x:hidden;overflow-y:auto;background:#fff;z-index:100000}::-webkit-scrollbar{width:0}::-webkit-scrollbar-track{background:0 0}::-webkit-scrollbar-thumb{background:0 0}::-webkit-scrollbar-thumb:hover{background:0 0}"]
-            }] }
-];
-/** @nocollapse */
-PanelComponent.ctorParameters = () => [
-    { type: String, decorators: [{ type: Inject, args: [PLATFORM_ID,] }] },
-    { type: EditorConfig, decorators: [{ type: Inject, args: [EDITOR_CONFIG,] }] }
-];
-PanelComponent.propDecorators = {
-    onKeydown: [{ type: HostListener, args: ['document:keydown', ['$event'],] }]
-};
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Inject,
+                args: [PLATFORM_ID]
+            }] }, { type: EditorConfig, decorators: [{
+                type: Inject,
+                args: [EDITOR_CONFIG]
+            }] }]; }, { onKeydown: [{
+            type: HostListener,
+            args: ['document:keydown', ['$event']]
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const services$1 = [
     EditorService,
 ];
-/** @type {?} */
 const components$1 = [
     EditorModuleComponent,
     PanelComponent,
 ];
-/** @type {?} */
 const directives$1 = [];
+const pipes$1 = [];
+const validators$1 = [];
+const guards$1 = [];
 class EditorModule {
-    /**
-     * @param {?} parentModule
-     */
     constructor(parentModule) {
         if (parentModule) {
             throw new Error('EditorModule is already loaded. Import it in the AppModule only');
         }
     }
-    /**
-     * @param {?=} config
-     * @return {?}
-     */
     static forRoot(config) {
         return {
             ngModule: EditorModule,
@@ -408,8 +443,22 @@ class EditorModule {
         };
     }
 }
-EditorModule.decorators = [
-    { type: NgModule, args: [{
+EditorModule.ɵmod = ɵɵdefineNgModule({ type: EditorModule });
+EditorModule.ɵinj = ɵɵdefineInjector({ factory: function EditorModule_Factory(t) { return new (t || EditorModule)(ɵɵinject(EditorModule, 12)); }, providers: [
+        ...services$1,
+    ], imports: [[
+            CommonModule,
+            CoreModule,
+        ],
+        CoreModule] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && ɵɵsetNgModuleScope(EditorModule, { declarations: [EditorModuleComponent,
+        PanelComponent], imports: [CommonModule,
+        CoreModule], exports: [CoreModule,
+        EditorModuleComponent,
+        PanelComponent] }); })();
+/*@__PURE__*/ (function () { ɵsetClassMetadata(EditorModule, [{
+        type: NgModule,
+        args: [{
                 imports: [
                     CommonModule,
                     CoreModule,
@@ -425,23 +474,16 @@ EditorModule.decorators = [
                     CoreModule,
                     ...components$1,
                 ],
-            },] }
-];
-/** @nocollapse */
-EditorModule.ctorParameters = () => [
-    { type: EditorModule, decorators: [{ type: Optional }, { type: SkipSelf }] }
-];
+            }]
+    }], function () { return [{ type: EditorModule, decorators: [{
+                type: Optional
+            }, {
+                type: SkipSelf
+            }] }]; }, null); })();
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { EditorConfig, EDITOR_CONFIG, EditorService, EditorBundleModule, EditorRootComponent, EditorModuleComponent, EditorModule, PanelComponent as ɵa };
-
+export { EDITOR_CONFIG, EditorBundleModule, EditorConfig, EditorModule, EditorModuleComponent, EditorRootComponent, EditorService, PanelComponent };
 //# sourceMappingURL=designr-editor.js.map

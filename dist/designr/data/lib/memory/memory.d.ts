@@ -1,6 +1,7 @@
 import { HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BackendService } from './backend.service';
+import * as i0 from "@angular/core";
 /** Return information (UriInfo) about a URI  */
 export declare function parseUri(str: string): UriInfo;
 export declare function removeTrailingSlash(path: string): string;
@@ -92,6 +93,8 @@ export declare class MemoryBackendConfig {
      */
     rootPath?: string;
     constructor(config?: MemoryBackendConfig);
+    static ɵfac: i0.ɵɵFactoryDef<MemoryBackendConfig>;
+    static ɵprov: i0.ɵɵInjectableDef<MemoryBackendConfig>;
 }
 /**
  *

@@ -6,6 +6,7 @@ import { CoreService } from '../config/core.service';
 import { SegmentPipe } from '../pipes/segment.pipe';
 import { Translate } from '../translate/translate';
 import { TranslateService } from '../translate/translate.service';
+import * as i0 from "@angular/core";
 export declare class RouteService {
     private platformId;
     private coreService;
@@ -28,8 +29,9 @@ export declare class RouteService {
     queryParams: Observable<Params>;
     currentMarket: string;
     constructor(platformId: string, coreService: CoreService, injector: Injector, translateService: TranslateService<Translate>, location: Location, route: ActivatedRoute, router: Router, segment: SegmentPipe);
-    private lang;
-    readonly currentLang: string;
+    private get lang();
+    private set lang(value);
+    get currentLang(): string;
     pageParams$: BehaviorSubject<Params>;
     getPageParams(): Observable<Params>;
     parseParams(params: any): any;
@@ -49,4 +51,6 @@ export declare class RouteService {
     getTime(): number;
     start(): void;
     end(): void;
+    static ɵfac: i0.ɵɵFactoryDef<RouteService>;
+    static ɵprov: i0.ɵɵInjectableDef<RouteService>;
 }

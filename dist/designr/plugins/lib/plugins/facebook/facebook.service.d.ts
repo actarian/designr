@@ -2,6 +2,7 @@ import { LocalStorageService, OnceService, RouteService, StorageService } from '
 import { PageService } from '@designr/page';
 import { Observable } from 'rxjs';
 import { PluginsService } from '../../config/plugins.service';
+import * as i0 from "@angular/core";
 export declare class FacebookConfig {
     appId: number;
     fields: string;
@@ -48,8 +49,10 @@ export declare class FacebookService {
     constructor(platformId: string, pluginsService: PluginsService, storageService: LocalStorageService, onceService: OnceService, routeService: RouteService, pageService: PageService);
     init(): void;
     facebook(): Observable<any>;
-    status(): Observable<never>;
-    login(): Observable<never>;
+    status(): Observable<unknown>;
+    login(): Observable<unknown>;
     logout(): Observable<any>;
     getMe(fields?: string): Observable<FacebookUser>;
+    static ɵfac: i0.ɵɵFactoryDef<FacebookService>;
+    static ɵprov: i0.ɵɵInjectableDef<FacebookService>;
 }

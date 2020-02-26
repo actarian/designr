@@ -8,6 +8,7 @@ import { CoreConfig, CORE_CONFIG } from './config/core.config';
 import { DefaultContentDirective } from './content/default-content.directive';
 import { CoreModuleComponent } from './core-module.component';
 import { DisposableComponent } from './disposable/disposable.component';
+import { DisposableDirective } from './disposable/disposable.directive';
 import { HighlightPipe } from './highlight/highlight.pipe';
 import { HttpResponseInterceptor } from './http/http-response.interceptor';
 import { JsonFormatterComponent } from './json-formatter/json-formatter.component';
@@ -34,6 +35,7 @@ import { TrustPipe } from './trust/trust.pipe';
 const components = [
 	CoreModuleComponent,
 	DisposableComponent,
+	DisposableDirective,
 	JsonFormatterComponent,
 	LoggerComponent,
 	OutletComponent,

@@ -1,22 +1,13 @@
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { DisposableComponent, CoreModule } from '@designr/core';
+import { ɵɵelement, ɵɵpipe, ɵɵpropertyInterpolate, ɵɵpipeBind1, ɵɵproperty, ɵɵelementContainer, ɵɵelementStart, ɵɵtext, ɵɵelementEnd, ɵɵadvance, ɵɵtextInterpolate, ɵɵnextContext, ɵɵpipeBind3, ɵɵpureFunction1, ɵɵtemplate, ɵɵdefineComponent, ɵɵcontentQuery, ɵɵqueryRefresh, ɵɵloadQuery, ɵɵInheritDefinitionFeature, ɵɵelementContainerStart, ɵɵtemplateRefExtractor, ɵɵelementContainerEnd, ɵɵreference, ɵɵgetInheritedFactory, ɵsetClassMetadata, Component, ContentChild, Input, ɵɵclassMapInterpolate1, ɵɵattribute, ɵɵgetCurrentView, ɵɵlistener, ɵɵrestoreView, InjectionToken, ɵɵtextInterpolate1, ɵɵinject, ɵɵdefineInjectable, Injectable, Inject, ɵɵdirectiveInject, ComponentFactoryResolver, ɵɵstaticContentQuery, ɵɵstaticViewQuery, ViewContainerRef, ViewChild, forwardRef, Renderer2, ElementRef, ɵɵdefineDirective, ɵɵProvidersFeature, Directive, ɵɵinjectAttribute, Attribute, EventEmitter, Output, HostListener, ɵɵdefineNgModule, ɵɵdefineInjector, ɵɵsetNgModuleScope, NgModule, Optional, SkipSelf, ɵɵsetComponentScope } from '@angular/core';
+import { NgControlStatusGroup, FormGroupDirective, DefaultValueAccessor, NgControlStatus, FormControlName, CheckboxControlValueAccessor, NumberValueAccessor, RadioControlValueAccessor, SelectControlValueAccessor, NgSelectOption, ɵangular_packages_forms_forms_x, FormControl, FormGroup, Validators, NG_VALUE_ACCESSOR, NG_ASYNC_VALIDATORS, NG_VALIDATORS, FormsModule, ReactiveFormsModule, ɵangular_packages_forms_forms_y, RangeValueAccessor, SelectMultipleControlValueAccessor, RequiredValidator, MinLengthValidator, MaxLengthValidator, PatternValidator, CheckboxRequiredValidator, EmailValidator, NgModel, NgModelGroup, NgForm, FormControlDirective, FormGroupName, FormArrayName } from '@angular/forms';
+import { DisposableComponent, LabelPipe, CoreModule, CoreModuleComponent, DisposableDirective, JsonFormatterComponent, LoggerComponent, OutletComponent, OutletDefaultComponent, OutletRepeaterComponent, BundleDirective, DefaultContentDirective, LabelDirective, TranslateDirective, AssetPipe, CustomAsyncPipe, HighlightPipe, ImagePipe, ImageUrlPipe, PublicPipe, RoutePipe, SafeStylePipe, SafeUrlPipe, SegmentPipe, SlugPipe, TranslatePipe, TrustPipe } from '@designr/core';
+import { NgTemplateOutlet, NgIf, NgForOf, NgClass, CommonModule, NgComponentOutlet, NgStyle, NgSwitch, NgSwitchCase, NgSwitchDefault, NgPlural, NgPluralCase, AsyncPipe, UpperCasePipe, LowerCasePipe, JsonPipe, SlicePipe, DecimalPipe, PercentPipe, TitleCasePipe, CurrencyPipe, DatePipe, I18nPluralPipe, I18nSelectPipe, KeyValuePipe } from '@angular/common';
 import { isObservable, of } from 'rxjs';
-import { takeUntil, tap, catchError, debounceTime, map, take } from 'rxjs/operators';
-import { FormGroup, FormControl, Validators, NG_VALUE_ACCESSOR, NG_ASYNC_VALIDATORS, NG_VALIDATORS, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Component, ContentChild, Input, InjectionToken, Inject, Injectable, Directive, ElementRef, forwardRef, Renderer2, Attribute, EventEmitter, HostListener, Output, ComponentFactoryResolver, ViewChild, ViewContainerRef, defineInjectable, inject, NgModule, Optional, SkipSelf } from '@angular/core';
+import { takeUntil, tap, map, debounceTime, catchError, take } from 'rxjs/operators';
+import { HttpClientModule } from '@angular/common/http';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- */
+// let UNIQUE_ID: number = 0;
 class ControlOption {
-    /**
-     * @param {?=} options
-     */
     constructor(options) {
         this.schema = 'text';
         if (options) {
@@ -25,10 +16,6 @@ class ControlOption {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ControlCheckbox extends ControlOption {
     constructor() {
         super(...arguments);
@@ -36,33 +23,110 @@ class ControlCheckbox extends ControlOption {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+const _c0 = ["inputRef"];
+const _c1 = ["errorRef"];
+function ControlComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelement(0, "input", 4);
+    ɵɵpipe(1, "label");
+} if (rf & 2) {
+    const context_r6 = ctx.$implicit;
+    ɵɵpropertyInterpolate("placeholder", ɵɵpipeBind1(1, 3, context_r6.option.placeholder));
+    ɵɵproperty("id", context_r6.option.key)("formControlName", context_r6.option.key);
+} }
+function ControlComponent_ng_container_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+function ControlComponent_ng_template_4_div_0_div_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.required"));
+} }
+const _c2 = function (a0) { return { minlength: a0 }; };
+function ControlComponent_ng_template_4_div_0_div_2_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r7 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.minlength", null, ɵɵpureFunction1(5, _c2, context_r7.option.minlength)));
+} }
+const _c3 = function (a0) { return { maxlength: a0 }; };
+function ControlComponent_ng_template_4_div_0_div_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r7 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.maxlength", null, ɵɵpureFunction1(5, _c3, context_r7.option.maxlength)));
+} }
+function ControlComponent_ng_template_4_div_0_div_4_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.pattern"));
+} }
+function ControlComponent_ng_template_4_div_0_div_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.match"));
+} }
+function ControlComponent_ng_template_4_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 6);
+    ɵɵtemplate(1, ControlComponent_ng_template_4_div_0_div_1_Template, 3, 3, "div", 7);
+    ɵɵtemplate(2, ControlComponent_ng_template_4_div_0_div_2_Template, 3, 7, "div", 7);
+    ɵɵtemplate(3, ControlComponent_ng_template_4_div_0_div_3_Template, 3, 7, "div", 7);
+    ɵɵtemplate(4, ControlComponent_ng_template_4_div_0_div_4_Template, 3, 3, "div", 7);
+    ɵɵtemplate(5, ControlComponent_ng_template_4_div_0_div_5_Template, 3, 3, "div", 7);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r7 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r7.control.errors.required);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r7.control.errors.minlength);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r7.control.errors.maxlength);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r7.control.errors.pattern);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r7.control.errors.match);
+} }
+function ControlComponent_ng_template_4_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlComponent_ng_template_4_div_0_Template, 6, 5, "div", 5);
+} if (rf & 2) {
+    const context_r7 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r7.control.invalid && (context_r7.control.dirty || context_r7.control.touched));
+} }
+function ControlComponent_ng_container_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c4 = function (a0) { return { $implicit: a0 }; };
 class ControlComponent extends DisposableComponent {
-    /**
-     * @return {?}
-     */
     get context() {
         return this;
     }
-    /**
-     * @return {?}
-     */
     get control() {
         // console.log('control', this.option.key, this.form.controls);
         return this.form.controls[this.option.key];
     }
-    /**
-     * @return {?}
-     */
     get isValid() {
         return this.control.valid;
     }
-    /**
-     * @return {?}
-     */
     get classes() {
         return {
             valid: this.control.valid,
@@ -74,39 +138,137 @@ class ControlComponent extends DisposableComponent {
         };
     }
 }
-ControlComponent.decorators = [
-    { type: Component, args: [{
+ControlComponent.ɵfac = function ControlComponent_Factory(t) { return ɵControlComponent_BaseFactory(t || ControlComponent); };
+ControlComponent.ɵcmp = ɵɵdefineComponent({ type: ControlComponent, selectors: [["control-component"]], contentQueries: function ControlComponent_ContentQueries(rf, ctx, dirIndex) { if (rf & 1) {
+        ɵɵcontentQuery(dirIndex, _c0, true);
+        ɵɵcontentQuery(dirIndex, _c1, true);
+    } if (rf & 2) {
+        var _t;
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.inputRef = _t.first);
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.errorRef = _t.first);
+    } }, inputs: { option: "option", form: "form" }, features: [ɵɵInheritDefinitionFeature], decls: 7, vars: 9, consts: [[3, "formGroup"], ["inputDef", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], ["errorDef", ""], ["type", "text", 1, "control__input", 3, "placeholder", "id", "formControlName"], ["class", "control__error", 4, "ngIf"], [1, "control__error"], [4, "ngIf"]], template: function ControlComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementContainerStart(0, 0);
+        ɵɵtemplate(1, ControlComponent_ng_template_1_Template, 2, 5, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(3, ControlComponent_ng_container_3_Template, 1, 0, "ng-container", 2);
+        ɵɵtemplate(4, ControlComponent_ng_template_4_Template, 1, 1, "ng-template", null, 3, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(6, ControlComponent_ng_container_6_Template, 1, 0, "ng-container", 2);
+        ɵɵelementContainerEnd();
+    } if (rf & 2) {
+        const _r0 = ɵɵreference(2);
+        const _r3 = ɵɵreference(5);
+        ɵɵproperty("formGroup", ctx.form);
+        ɵɵadvance(3);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.inputRef || _r0)("ngTemplateOutletContext", ɵɵpureFunction1(5, _c4, ctx.context));
+        ɵɵadvance(3);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.errorRef || _r3)("ngTemplateOutletContext", ɵɵpureFunction1(7, _c4, ctx.context));
+    } }, directives: [NgControlStatusGroup, FormGroupDirective, NgTemplateOutlet, DefaultValueAccessor, NgControlStatus, FormControlName, NgIf], pipes: [LabelPipe], encapsulation: 2 });
+const ɵControlComponent_BaseFactory = ɵɵgetInheritedFactory(ControlComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<input class=\"control__input\" placeholder=\"{{ context.option.placeholder | label }}\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\" type=\"text\">\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlComponent.propDecorators = {
-    inputRef: [{ type: ContentChild, args: ['inputRef',] }],
-    errorRef: [{ type: ContentChild, args: ['errorRef',] }],
-    option: [{ type: Input }],
-    form: [{ type: Input }]
-};
+                templateUrl: 'control.component.html',
+            }]
+    }], null, { inputRef: [{
+            type: ContentChild,
+            args: ['inputRef', /* TODO: add static flag */ {}]
+        }], errorRef: [{
+            type: ContentChild,
+            args: ['errorRef', /* TODO: add static flag */ {}]
+        }], option: [{
+            type: Input
+        }], form: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function ControlCheckboxComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "label", 4);
+    ɵɵelement(1, "input", 5);
+    ɵɵelementStart(2, "span", 6);
+    ɵɵtext(3);
+    ɵɵpipe(4, "label");
+    ɵɵelementEnd();
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r23 = ctx.$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("id", context_r23.option.key)("formControlName", context_r23.option.key);
+    ɵɵadvance(2);
+    ɵɵtextInterpolate(ɵɵpipeBind1(4, 3, context_r23.option.info));
+} }
+function ControlCheckboxComponent_ng_template_3_div_0_div_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.required"));
+} }
+function ControlCheckboxComponent_ng_template_3_div_0_div_2_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.required"));
+} }
+function ControlCheckboxComponent_ng_template_3_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 8);
+    ɵɵtemplate(1, ControlCheckboxComponent_ng_template_3_div_0_div_1_Template, 3, 3, "div", 9);
+    ɵɵtemplate(2, ControlCheckboxComponent_ng_template_3_div_0_div_2_Template, 3, 3, "div", 9);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r24 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r24.control.errors.required);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r24.control.errors.requiredTrue);
+} }
+function ControlCheckboxComponent_ng_template_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlCheckboxComponent_ng_template_3_div_0_Template, 3, 2, "div", 7);
+} if (rf & 2) {
+    const context_r24 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r24.control.invalid && (context_r24.control.dirty || context_r24.control.touched));
+} }
+function ControlCheckboxComponent_ng_container_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+function ControlCheckboxComponent_ng_container_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c0$1 = function (a0) { return { $implicit: a0 }; };
 class ControlCheckboxComponent extends ControlComponent {
 }
-ControlCheckboxComponent.decorators = [
-    { type: Component, args: [{
+ControlCheckboxComponent.ɵfac = function ControlCheckboxComponent_Factory(t) { return ɵControlCheckboxComponent_BaseFactory(t || ControlCheckboxComponent); };
+ControlCheckboxComponent.ɵcmp = ɵɵdefineComponent({ type: ControlCheckboxComponent, selectors: [["control-checkbox-component"]], inputs: { option: "option" }, features: [ɵɵInheritDefinitionFeature], decls: 7, vars: 9, consts: [[3, "formGroup"], ["inputDef", ""], ["errorDef", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [1, "control__group", "control__group--checkbox"], ["type", "checkbox", 1, "control__checkbox", 3, "id", "formControlName"], [1, "control__info"], ["class", "control__error control__error--checkbox", 4, "ngIf"], [1, "control__error", "control__error--checkbox"], [4, "ngIf"]], template: function ControlCheckboxComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementContainerStart(0, 0);
+        ɵɵtemplate(1, ControlCheckboxComponent_ng_template_1_Template, 5, 5, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(3, ControlCheckboxComponent_ng_template_3_Template, 1, 1, "ng-template", null, 2, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(5, ControlCheckboxComponent_ng_container_5_Template, 1, 0, "ng-container", 3);
+        ɵɵtemplate(6, ControlCheckboxComponent_ng_container_6_Template, 1, 0, "ng-container", 3);
+        ɵɵelementContainerEnd();
+    } if (rf & 2) {
+        const _r17 = ɵɵreference(2);
+        const _r19 = ɵɵreference(4);
+        ɵɵproperty("formGroup", ctx.form);
+        ɵɵadvance(5);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.inputRef || _r17)("ngTemplateOutletContext", ɵɵpureFunction1(5, _c0$1, ctx.context));
+        ɵɵadvance(1);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.errorRef || _r19)("ngTemplateOutletContext", ɵɵpureFunction1(7, _c0$1, ctx.context));
+    } }, directives: [NgControlStatusGroup, FormGroupDirective, NgTemplateOutlet, CheckboxControlValueAccessor, NgControlStatus, FormControlName, NgIf], pipes: [LabelPipe], encapsulation: 2 });
+const ɵControlCheckboxComponent_BaseFactory = ɵɵgetInheritedFactory(ControlCheckboxComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlCheckboxComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-checkbox-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<label class=\"control__group control__group--checkbox\">\r\n\t\t\t<input class=\"control__checkbox\" type=\"checkbox\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\">\r\n\t\t\t<span class=\"control__info\">{{ context.option.info | label }}</span>\r\n\t\t</label>\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--checkbox\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.requiredTrue\">{{ 'errors.required' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlCheckboxComponent.propDecorators = {
-    option: [{ type: Input }]
-};
+                templateUrl: 'control-checkbox.component.html',
+            }]
+    }], null, { option: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ControlEmail extends ControlOption {
     constructor() {
         super(...arguments);
@@ -115,26 +277,151 @@ class ControlEmail extends ControlOption {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function ControlEmailComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelement(0, "input", 4);
+    ɵɵpipe(1, "label");
+} if (rf & 2) {
+    const context_r35 = ctx.$implicit;
+    ɵɵpropertyInterpolate("placeholder", ɵɵpipeBind1(1, 3, context_r35.option.placeholder));
+    ɵɵproperty("id", context_r35.option.key)("formControlName", context_r35.option.key);
+} }
+function ControlEmailComponent_ng_template_3_div_0_div_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.required"));
+} }
+function ControlEmailComponent_ng_template_3_div_0_div_2_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.email"));
+} }
+const _c0$2 = function (a0) { return { minlength: a0 }; };
+function ControlEmailComponent_ng_template_3_div_0_div_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r36 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.minlength", null, ɵɵpureFunction1(5, _c0$2, context_r36.option.minlength)));
+} }
+const _c1$1 = function (a0) { return { maxlength: a0 }; };
+function ControlEmailComponent_ng_template_3_div_0_div_4_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r36 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.maxlength", null, ɵɵpureFunction1(5, _c1$1, context_r36.option.maxlength)));
+} }
+function ControlEmailComponent_ng_template_3_div_0_div_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.pattern"));
+} }
+function ControlEmailComponent_ng_template_3_div_0_div_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.match"));
+} }
+function ControlEmailComponent_ng_template_3_div_0_div_7_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.exists"));
+} }
+function ControlEmailComponent_ng_template_3_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 6);
+    ɵɵtemplate(1, ControlEmailComponent_ng_template_3_div_0_div_1_Template, 3, 3, "div", 7);
+    ɵɵtemplate(2, ControlEmailComponent_ng_template_3_div_0_div_2_Template, 3, 3, "div", 7);
+    ɵɵtemplate(3, ControlEmailComponent_ng_template_3_div_0_div_3_Template, 3, 7, "div", 7);
+    ɵɵtemplate(4, ControlEmailComponent_ng_template_3_div_0_div_4_Template, 3, 7, "div", 7);
+    ɵɵtemplate(5, ControlEmailComponent_ng_template_3_div_0_div_5_Template, 3, 3, "div", 7);
+    ɵɵtemplate(6, ControlEmailComponent_ng_template_3_div_0_div_6_Template, 3, 3, "div", 7);
+    ɵɵtemplate(7, ControlEmailComponent_ng_template_3_div_0_div_7_Template, 3, 3, "div", 7);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r36 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r36.control.errors.required);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r36.control.errors.email);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r36.control.errors.minlength);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r36.control.errors.maxlength);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r36.control.errors.pattern);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r36.control.errors.match);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r36.control.errors.exists);
+} }
+function ControlEmailComponent_ng_template_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlEmailComponent_ng_template_3_div_0_Template, 8, 7, "div", 5);
+} if (rf & 2) {
+    const context_r36 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r36.control.invalid && (context_r36.control.dirty || context_r36.control.touched));
+} }
+function ControlEmailComponent_ng_container_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+function ControlEmailComponent_ng_container_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c2$1 = function (a0) { return { $implicit: a0 }; };
 class ControlEmailComponent extends ControlComponent {
 }
-ControlEmailComponent.decorators = [
-    { type: Component, args: [{
+ControlEmailComponent.ɵfac = function ControlEmailComponent_Factory(t) { return ɵControlEmailComponent_BaseFactory(t || ControlEmailComponent); };
+ControlEmailComponent.ɵcmp = ɵɵdefineComponent({ type: ControlEmailComponent, selectors: [["control-email-component"]], inputs: { option: "option" }, features: [ɵɵInheritDefinitionFeature], decls: 7, vars: 9, consts: [[3, "formGroup"], ["inputDef", ""], ["errorDef", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], ["type", "email", 1, "control__input", "control__input--email", 3, "placeholder", "id", "formControlName"], ["class", "control__error control__error--email", 4, "ngIf"], [1, "control__error", "control__error--email"], [4, "ngIf"]], template: function ControlEmailComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementContainerStart(0, 0);
+        ɵɵtemplate(1, ControlEmailComponent_ng_template_1_Template, 2, 5, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(3, ControlEmailComponent_ng_template_3_Template, 1, 1, "ng-template", null, 2, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(5, ControlEmailComponent_ng_container_5_Template, 1, 0, "ng-container", 3);
+        ɵɵtemplate(6, ControlEmailComponent_ng_container_6_Template, 1, 0, "ng-container", 3);
+        ɵɵelementContainerEnd();
+    } if (rf & 2) {
+        const _r29 = ɵɵreference(2);
+        const _r31 = ɵɵreference(4);
+        ɵɵproperty("formGroup", ctx.form);
+        ɵɵadvance(5);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.inputRef || _r29)("ngTemplateOutletContext", ɵɵpureFunction1(5, _c2$1, ctx.context));
+        ɵɵadvance(1);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.errorRef || _r31)("ngTemplateOutletContext", ɵɵpureFunction1(7, _c2$1, ctx.context));
+    } }, directives: [NgControlStatusGroup, FormGroupDirective, NgTemplateOutlet, DefaultValueAccessor, NgControlStatus, FormControlName, NgIf], pipes: [LabelPipe], encapsulation: 2 });
+const ɵControlEmailComponent_BaseFactory = ɵɵgetInheritedFactory(ControlEmailComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlEmailComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-email-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<input class=\"control__input control__input--email\" placeholder=\"{{ context.option.placeholder | label }}\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\" type=\"email\">\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--email\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.email\">{{ 'errors.email' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.exists\">{{ 'errors.exists' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlEmailComponent.propDecorators = {
-    option: [{ type: Input }]
-};
+                templateUrl: 'control-email.component.html',
+            }]
+    }], null, { option: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ControlGroup extends ControlOption {
     constructor() {
         super(...arguments);
@@ -142,26 +429,96 @@ class ControlGroup extends ControlOption {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function ControlGroupComponent_ng_template_1_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 7);
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r54 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, context_r54.option.title));
+} }
+function ControlGroupComponent_ng_template_1_div_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 8);
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r54 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, context_r54.option.abstract));
+} }
+function ControlGroupComponent_ng_template_1_div_2_ng_container_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainerStart(0);
+    ɵɵelement(1, "control-outlet", 11);
+    ɵɵelementContainerEnd();
+} if (rf & 2) {
+    const option_r61 = ctx.$implicit;
+    const context_r54 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵclassMapInterpolate1("fieldset__field fieldset__field--", option_r61.schema, "");
+    ɵɵproperty("option", option_r61)("form", context_r54.control);
+} }
+function ControlGroupComponent_ng_template_1_div_2_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 9);
+    ɵɵtemplate(1, ControlGroupComponent_ng_template_1_div_2_ng_container_1_Template, 2, 5, "ng-container", 10);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r54 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("ngForOf", context_r54.option.options);
+} }
+function ControlGroupComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlGroupComponent_ng_template_1_div_0_Template, 3, 3, "div", 4);
+    ɵɵtemplate(1, ControlGroupComponent_ng_template_1_div_1_Template, 3, 3, "div", 5);
+    ɵɵtemplate(2, ControlGroupComponent_ng_template_1_div_2_Template, 2, 1, "div", 6);
+} if (rf & 2) {
+    const context_r54 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r54.option.title);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r54.option.abstract);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r54.option.options.length);
+} }
+function ControlGroupComponent_ng_template_3_Template(rf, ctx) { }
+function ControlGroupComponent_ng_container_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+function ControlGroupComponent_ng_container_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c0$3 = function (a0) { return { $implicit: a0 }; };
 class ControlGroupComponent extends ControlComponent {
 }
-ControlGroupComponent.decorators = [
-    { type: Component, args: [{
+ControlGroupComponent.ɵfac = function ControlGroupComponent_Factory(t) { return ɵControlGroupComponent_BaseFactory(t || ControlGroupComponent); };
+ControlGroupComponent.ɵcmp = ɵɵdefineComponent({ type: ControlGroupComponent, selectors: [["control-group-component"]], inputs: { option: "option" }, features: [ɵɵInheritDefinitionFeature], decls: 7, vars: 9, consts: [[3, "formGroup"], ["inputDef", ""], ["errorDef", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], ["class", "control__title", 4, "ngIf"], ["class", "control__abstract", 4, "ngIf"], ["class", "fieldset", 4, "ngIf"], [1, "control__title"], [1, "control__abstract"], [1, "fieldset"], [4, "ngFor", "ngForOf"], [3, "option", "form"]], template: function ControlGroupComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementContainerStart(0, 0);
+        ɵɵtemplate(1, ControlGroupComponent_ng_template_1_Template, 3, 3, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(3, ControlGroupComponent_ng_template_3_Template, 0, 0, "ng-template", null, 2, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(5, ControlGroupComponent_ng_container_5_Template, 1, 0, "ng-container", 3);
+        ɵɵtemplate(6, ControlGroupComponent_ng_container_6_Template, 1, 0, "ng-container", 3);
+        ɵɵelementContainerEnd();
+    } if (rf & 2) {
+        const _r48 = ɵɵreference(2);
+        const _r50 = ɵɵreference(4);
+        ɵɵproperty("formGroup", ctx.form);
+        ɵɵadvance(5);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.inputRef || _r48)("ngTemplateOutletContext", ɵɵpureFunction1(5, _c0$3, ctx.context));
+        ɵɵadvance(1);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.errorRef || _r50)("ngTemplateOutletContext", ɵɵpureFunction1(7, _c0$3, ctx.context));
+    } }, encapsulation: 2 });
+const ɵControlGroupComponent_BaseFactory = ɵɵgetInheritedFactory(ControlGroupComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlGroupComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-group-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<div class=\"control__title\" *ngIf=\"context.option.title\">{{ context.option.title | label }}</div>\r\n\t\t<div class=\"control__abstract\" *ngIf=\"context.option.abstract\">{{ context.option.abstract | label }}</div>\r\n\t\t<div class=\"fieldset\" *ngIf=\"context.option.options.length\">\r\n\t\t\t<ng-container *ngFor=\"let option of context.option.options\">\r\n\t\t\t\t<control-outlet class=\"fieldset__field fieldset__field--{{option.schema}}\" [option]=\"option\" [form]=\"context.control\"></control-outlet>\r\n\t\t\t</ng-container>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context></ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlGroupComponent.propDecorators = {
-    option: [{ type: Input }]
-};
+                templateUrl: 'control-group.component.html',
+            }]
+    }], null, { option: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ControlInfo extends ControlOption {
     constructor() {
         super(...arguments);
@@ -169,44 +526,73 @@ class ControlInfo extends ControlOption {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function ControlInfoComponent_ng_template_1_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 5);
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r68 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, context_r68.option.title));
+} }
+function ControlInfoComponent_ng_template_1_div_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 6);
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r68 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, context_r68.option.abstract));
+} }
+function ControlInfoComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlInfoComponent_ng_template_1_div_0_Template, 3, 3, "div", 3);
+    ɵɵtemplate(1, ControlInfoComponent_ng_template_1_div_1_Template, 3, 3, "div", 4);
+} if (rf & 2) {
+    const context_r68 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r68.option.title);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r68.option.abstract);
+} }
+function ControlInfoComponent_ng_container_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c0$4 = function (a0) { return { $implicit: a0 }; };
 class ControlInfoComponent extends ControlComponent {
-    /**
-     * @return {?}
-     */
     get control() {
         return null;
     }
-    /**
-     * @return {?}
-     */
     get isValid() {
         return true;
     }
-    /**
-     * @return {?}
-     */
     get classes() {
         return {};
     }
 }
-ControlInfoComponent.decorators = [
-    { type: Component, args: [{
+ControlInfoComponent.ɵfac = function ControlInfoComponent_Factory(t) { return ɵControlInfoComponent_BaseFactory(t || ControlInfoComponent); };
+ControlInfoComponent.ɵcmp = ɵɵdefineComponent({ type: ControlInfoComponent, selectors: [["control-info-component"]], inputs: { option: "option" }, features: [ɵɵInheritDefinitionFeature], decls: 4, vars: 5, consts: [[3, "formGroup"], ["inputDef", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], ["class", "control__title", 4, "ngIf"], ["class", "control__abstract", 4, "ngIf"], [1, "control__title"], [1, "control__abstract"]], template: function ControlInfoComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementContainerStart(0, 0);
+        ɵɵtemplate(1, ControlInfoComponent_ng_template_1_Template, 2, 2, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(3, ControlInfoComponent_ng_container_3_Template, 1, 0, "ng-container", 2);
+        ɵɵelementContainerEnd();
+    } if (rf & 2) {
+        const _r65 = ɵɵreference(2);
+        ɵɵproperty("formGroup", ctx.form);
+        ɵɵadvance(3);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.inputRef || _r65)("ngTemplateOutletContext", ɵɵpureFunction1(3, _c0$4, ctx.context));
+    } }, directives: [NgControlStatusGroup, FormGroupDirective, NgTemplateOutlet, NgIf], pipes: [LabelPipe], encapsulation: 2 });
+const ɵControlInfoComponent_BaseFactory = ɵɵgetInheritedFactory(ControlInfoComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlInfoComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-info-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<div class=\"control__title\" *ngIf=\"context.option.title\">{{ context.option.title | label }}</div>\r\n\t\t<div class=\"control__abstract\" *ngIf=\"context.option.abstract\">{{ context.option.abstract | label }}</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlInfoComponent.propDecorators = {
-    option: [{ type: Input }]
-};
+                templateUrl: 'control-info.component.html',
+            }]
+    }], null, { option: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ControlMarkdown extends ControlOption {
     constructor() {
         super(...arguments);
@@ -214,26 +600,103 @@ class ControlMarkdown extends ControlOption {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function ControlMarkdownComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelement(0, "textarea", 4);
+    ɵɵpipe(1, "label");
+} if (rf & 2) {
+    const context_r79 = ctx.$implicit;
+    ɵɵpropertyInterpolate("placeholder", ɵɵpipeBind1(1, 3, context_r79.option.placeholder));
+    ɵɵproperty("id", context_r79.option.key)("formControlName", context_r79.option.key);
+} }
+function ControlMarkdownComponent_ng_template_3_div_0_div_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.required"));
+} }
+const _c0$5 = function (a0) { return { minlength: a0 }; };
+function ControlMarkdownComponent_ng_template_3_div_0_div_2_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r80 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.minlength", null, ɵɵpureFunction1(5, _c0$5, context_r80.option.minlength)));
+} }
+const _c1$2 = function (a0) { return { maxlength: a0 }; };
+function ControlMarkdownComponent_ng_template_3_div_0_div_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r80 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.maxlength", null, ɵɵpureFunction1(5, _c1$2, context_r80.option.maxlength)));
+} }
+function ControlMarkdownComponent_ng_template_3_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 6);
+    ɵɵtemplate(1, ControlMarkdownComponent_ng_template_3_div_0_div_1_Template, 3, 3, "div", 7);
+    ɵɵtemplate(2, ControlMarkdownComponent_ng_template_3_div_0_div_2_Template, 3, 7, "div", 7);
+    ɵɵtemplate(3, ControlMarkdownComponent_ng_template_3_div_0_div_3_Template, 3, 7, "div", 7);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r80 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r80.control.errors.required);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r80.control.errors.minlength);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r80.control.errors.maxlength);
+} }
+function ControlMarkdownComponent_ng_template_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlMarkdownComponent_ng_template_3_div_0_Template, 4, 3, "div", 5);
+} if (rf & 2) {
+    const context_r80 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r80.control.invalid && (context_r80.control.dirty || context_r80.control.touched));
+} }
+function ControlMarkdownComponent_ng_container_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+function ControlMarkdownComponent_ng_container_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c2$2 = function (a0) { return { $implicit: a0 }; };
 class ControlMarkdownComponent extends ControlComponent {
 }
-ControlMarkdownComponent.decorators = [
-    { type: Component, args: [{
+ControlMarkdownComponent.ɵfac = function ControlMarkdownComponent_Factory(t) { return ɵControlMarkdownComponent_BaseFactory(t || ControlMarkdownComponent); };
+ControlMarkdownComponent.ɵcmp = ɵɵdefineComponent({ type: ControlMarkdownComponent, selectors: [["control-markdown-component"]], inputs: { option: "option" }, features: [ɵɵInheritDefinitionFeature], decls: 7, vars: 9, consts: [[3, "formGroup"], ["inputDef", ""], ["errorDef", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], ["rows", "4", 1, "control__input", "control__input--markdown", 3, "placeholder", "id", "formControlName"], ["class", "control__error control__error--markdown", 4, "ngIf"], [1, "control__error", "control__error--markdown"], [4, "ngIf"]], template: function ControlMarkdownComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementContainerStart(0, 0);
+        ɵɵtemplate(1, ControlMarkdownComponent_ng_template_1_Template, 2, 5, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(3, ControlMarkdownComponent_ng_template_3_Template, 1, 1, "ng-template", null, 2, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(5, ControlMarkdownComponent_ng_container_5_Template, 1, 0, "ng-container", 3);
+        ɵɵtemplate(6, ControlMarkdownComponent_ng_container_6_Template, 1, 0, "ng-container", 3);
+        ɵɵelementContainerEnd();
+    } if (rf & 2) {
+        const _r73 = ɵɵreference(2);
+        const _r75 = ɵɵreference(4);
+        ɵɵproperty("formGroup", ctx.form);
+        ɵɵadvance(5);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.inputRef || _r73)("ngTemplateOutletContext", ɵɵpureFunction1(5, _c2$2, ctx.context));
+        ɵɵadvance(1);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.errorRef || _r75)("ngTemplateOutletContext", ɵɵpureFunction1(7, _c2$2, ctx.context));
+    } }, directives: [NgControlStatusGroup, FormGroupDirective, NgTemplateOutlet, DefaultValueAccessor, NgControlStatus, FormControlName, NgIf], pipes: [LabelPipe], encapsulation: 2 });
+const ɵControlMarkdownComponent_BaseFactory = ɵɵgetInheritedFactory(ControlMarkdownComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlMarkdownComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-markdown-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<textarea class=\"control__input control__input--markdown\" placeholder=\"{{ context.option.placeholder | label }}\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\" rows=\"4\"></textarea>\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--markdown\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlMarkdownComponent.propDecorators = {
-    option: [{ type: Input }]
-};
+                templateUrl: 'control-markdown.component.html',
+            }]
+    }], null, { option: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ControlNumber extends ControlOption {
     constructor() {
         super(...arguments);
@@ -241,26 +704,104 @@ class ControlNumber extends ControlOption {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function ControlNumberComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelement(0, "input", 4);
+    ɵɵpipe(1, "label");
+} if (rf & 2) {
+    const context_r94 = ctx.$implicit;
+    ɵɵpropertyInterpolate("placeholder", ɵɵpipeBind1(1, 4, context_r94.option.placeholder));
+    ɵɵproperty("id", context_r94.option.key)("formControlName", context_r94.option.key);
+    ɵɵattribute("step", context_r94.option.step);
+} }
+function ControlNumberComponent_ng_template_3_div_0_div_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.required"));
+} }
+const _c0$6 = function (a0) { return { min: a0 }; };
+function ControlNumberComponent_ng_template_3_div_0_div_2_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r95 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.min", null, ɵɵpureFunction1(5, _c0$6, context_r95.option.min)));
+} }
+const _c1$3 = function (a0) { return { max: a0 }; };
+function ControlNumberComponent_ng_template_3_div_0_div_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r95 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.max", null, ɵɵpureFunction1(5, _c1$3, context_r95.option.max)));
+} }
+function ControlNumberComponent_ng_template_3_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 6);
+    ɵɵtemplate(1, ControlNumberComponent_ng_template_3_div_0_div_1_Template, 3, 3, "div", 7);
+    ɵɵtemplate(2, ControlNumberComponent_ng_template_3_div_0_div_2_Template, 3, 7, "div", 7);
+    ɵɵtemplate(3, ControlNumberComponent_ng_template_3_div_0_div_3_Template, 3, 7, "div", 7);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r95 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r95.control.errors.required);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r95.control.errors.min);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r95.control.errors.max);
+} }
+function ControlNumberComponent_ng_template_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlNumberComponent_ng_template_3_div_0_Template, 4, 3, "div", 5);
+} if (rf & 2) {
+    const context_r95 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r95.control.invalid && (context_r95.control.dirty || context_r95.control.touched));
+} }
+function ControlNumberComponent_ng_container_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+function ControlNumberComponent_ng_container_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c2$3 = function (a0) { return { $implicit: a0 }; };
 class ControlNumberComponent extends ControlComponent {
 }
-ControlNumberComponent.decorators = [
-    { type: Component, args: [{
+ControlNumberComponent.ɵfac = function ControlNumberComponent_Factory(t) { return ɵControlNumberComponent_BaseFactory(t || ControlNumberComponent); };
+ControlNumberComponent.ɵcmp = ɵɵdefineComponent({ type: ControlNumberComponent, selectors: [["control-number-component"]], inputs: { option: "option" }, features: [ɵɵInheritDefinitionFeature], decls: 7, vars: 9, consts: [[3, "formGroup"], ["inputDef", ""], ["errorDef", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], ["type", "number", 1, "control__input", "control__input--number", 3, "placeholder", "id", "formControlName"], ["class", "control__error control__error--number", 4, "ngIf"], [1, "control__error", "control__error--number"], [4, "ngIf"]], template: function ControlNumberComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementContainerStart(0, 0);
+        ɵɵtemplate(1, ControlNumberComponent_ng_template_1_Template, 2, 6, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(3, ControlNumberComponent_ng_template_3_Template, 1, 1, "ng-template", null, 2, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(5, ControlNumberComponent_ng_container_5_Template, 1, 0, "ng-container", 3);
+        ɵɵtemplate(6, ControlNumberComponent_ng_container_6_Template, 1, 0, "ng-container", 3);
+        ɵɵelementContainerEnd();
+    } if (rf & 2) {
+        const _r88 = ɵɵreference(2);
+        const _r90 = ɵɵreference(4);
+        ɵɵproperty("formGroup", ctx.form);
+        ɵɵadvance(5);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.inputRef || _r88)("ngTemplateOutletContext", ɵɵpureFunction1(5, _c2$3, ctx.context));
+        ɵɵadvance(1);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.errorRef || _r90)("ngTemplateOutletContext", ɵɵpureFunction1(7, _c2$3, ctx.context));
+    } }, directives: [NgControlStatusGroup, FormGroupDirective, NgTemplateOutlet, NumberValueAccessor, DefaultValueAccessor, NgControlStatus, FormControlName, NgIf], pipes: [LabelPipe], encapsulation: 2 });
+const ɵControlNumberComponent_BaseFactory = ɵɵgetInheritedFactory(ControlNumberComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlNumberComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-number-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<input class=\"control__input control__input--number\" placeholder=\"{{ context.option.placeholder | label }}\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\" type=\"number\" [attr.step]=\"context.option.step\">\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--number\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.min\">{{ 'errors.min' | label : null : { min: context.option.min } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.max\">{{ 'errors.max' | label : null : { max: context.option.max } }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlNumberComponent.propDecorators = {
-    option: [{ type: Input }]
-};
+                templateUrl: 'control-number.component.html',
+            }]
+    }], null, { option: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ControlPassword extends ControlOption {
     constructor() {
         super(...arguments);
@@ -268,30 +809,143 @@ class ControlPassword extends ControlOption {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function ControlPasswordComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
+    const _r113 = ɵɵgetCurrentView();
+    ɵɵelementStart(0, "div", 4);
+    ɵɵelement(1, "input", 5, 6);
+    ɵɵpipe(3, "label");
+    ɵɵelementStart(4, "div", 7);
+    ɵɵelementStart(5, "input", 8, 9);
+    ɵɵlistener("input", function ControlPasswordComponent_ng_template_1_Template_input_input_5_listener($event) { ɵɵrestoreView(_r113); const _r111 = ɵɵreference(6); const _r110 = ɵɵreference(2); return _r110.setAttribute("type", _r111.checked ? "text" : "password"); });
+    ɵɵpipe(7, "label");
+    ɵɵelementEnd();
+    ɵɵelementEnd();
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r109 = ctx.$implicit;
+    ɵɵadvance(1);
+    ɵɵpropertyInterpolate("placeholder", ɵɵpipeBind1(3, 3, context_r109.option.placeholder));
+    ɵɵproperty("formControlName", context_r109.option.key);
+    ɵɵadvance(4);
+    ɵɵattribute("aria-label", ɵɵpipeBind1(7, 5, context_r109.option.label));
+} }
+function ControlPasswordComponent_ng_template_3_div_0_div_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.required"));
+} }
+const _c0$7 = function (a0) { return { minlength: a0 }; };
+function ControlPasswordComponent_ng_template_3_div_0_div_2_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r114 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.minlength", null, ɵɵpureFunction1(5, _c0$7, context_r114.option.minlength)));
+} }
+const _c1$4 = function (a0) { return { maxlength: a0 }; };
+function ControlPasswordComponent_ng_template_3_div_0_div_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r114 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.maxlength", null, ɵɵpureFunction1(5, _c1$4, context_r114.option.maxlength)));
+} }
+function ControlPasswordComponent_ng_template_3_div_0_div_4_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.pattern"));
+} }
+function ControlPasswordComponent_ng_template_3_div_0_div_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.match"));
+} }
+function ControlPasswordComponent_ng_template_3_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 11);
+    ɵɵtemplate(1, ControlPasswordComponent_ng_template_3_div_0_div_1_Template, 3, 3, "div", 12);
+    ɵɵtemplate(2, ControlPasswordComponent_ng_template_3_div_0_div_2_Template, 3, 7, "div", 12);
+    ɵɵtemplate(3, ControlPasswordComponent_ng_template_3_div_0_div_3_Template, 3, 7, "div", 12);
+    ɵɵtemplate(4, ControlPasswordComponent_ng_template_3_div_0_div_4_Template, 3, 3, "div", 12);
+    ɵɵtemplate(5, ControlPasswordComponent_ng_template_3_div_0_div_5_Template, 3, 3, "div", 12);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r114 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r114.control.errors.required);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r114.control.errors.minlength);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r114.control.errors.maxlength);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r114.control.errors.pattern);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r114.control.errors.match);
+} }
+function ControlPasswordComponent_ng_template_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlPasswordComponent_ng_template_3_div_0_Template, 6, 5, "div", 10);
+} if (rf & 2) {
+    const context_r114 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r114.control.invalid && (context_r114.control.dirty || context_r114.control.touched));
+} }
+function ControlPasswordComponent_ng_container_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+function ControlPasswordComponent_ng_container_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c2$4 = function (a0) { return { $implicit: a0 }; };
 class ControlPasswordComponent extends ControlComponent {
     constructor() {
         super(...arguments);
         this.reveal = { checked: false };
     }
 }
-ControlPasswordComponent.decorators = [
-    { type: Component, args: [{
+ControlPasswordComponent.ɵfac = function ControlPasswordComponent_Factory(t) { return ɵControlPasswordComponent_BaseFactory(t || ControlPasswordComponent); };
+ControlPasswordComponent.ɵcmp = ɵɵdefineComponent({ type: ControlPasswordComponent, selectors: [["control-password-component"]], inputs: { option: "option" }, features: [ɵɵInheritDefinitionFeature], decls: 7, vars: 9, consts: [[3, "formGroup"], ["inputDef", ""], ["errorDef", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [1, "control__group", "control__group--password"], ["type", "password", 1, "control__input", "control__input--password", 3, "placeholder", "formControlName"], ["password", ""], [1, "control__addon"], ["type", "checkbox", 1, "control__checkbox", 3, "input"], ["reveal", ""], ["class", "control__error control__error--password", 4, "ngIf"], [1, "control__error", "control__error--password"], [4, "ngIf"]], template: function ControlPasswordComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementContainerStart(0, 0);
+        ɵɵtemplate(1, ControlPasswordComponent_ng_template_1_Template, 8, 7, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(3, ControlPasswordComponent_ng_template_3_Template, 1, 1, "ng-template", null, 2, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(5, ControlPasswordComponent_ng_container_5_Template, 1, 0, "ng-container", 3);
+        ɵɵtemplate(6, ControlPasswordComponent_ng_container_6_Template, 1, 0, "ng-container", 3);
+        ɵɵelementContainerEnd();
+    } if (rf & 2) {
+        const _r103 = ɵɵreference(2);
+        const _r105 = ɵɵreference(4);
+        ɵɵproperty("formGroup", ctx.form);
+        ɵɵadvance(5);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.inputRef || _r103)("ngTemplateOutletContext", ɵɵpureFunction1(5, _c2$4, ctx.context));
+        ɵɵadvance(1);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.errorRef || _r105)("ngTemplateOutletContext", ɵɵpureFunction1(7, _c2$4, ctx.context));
+    } }, directives: [NgControlStatusGroup, FormGroupDirective, NgTemplateOutlet, DefaultValueAccessor, NgControlStatus, FormControlName, NgIf], pipes: [LabelPipe], encapsulation: 2 });
+const ɵControlPasswordComponent_BaseFactory = ɵɵgetInheritedFactory(ControlPasswordComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlPasswordComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-password-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<div class=\"control__group control__group--password\">\r\n\t\t\t<input class=\"control__input control__input--password\" placeholder=\"{{ context.option.placeholder | label }}\" [formControlName]=\"context.option.key\" type=\"password\" #password>\r\n\t\t\t<div class=\"control__addon\">\r\n\t\t\t\t<input class=\"control__checkbox\" type=\"checkbox\" [attr.aria-label]=\"context.option.label | label\" (input)=\"password.setAttribute('type', reveal.checked ? 'text' : 'password')\" #reveal>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--password\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlPasswordComponent.propDecorators = {
-    option: [{ type: Input }]
-};
+                templateUrl: 'control-password.component.html',
+            }]
+    }], null, { option: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ControlRadio extends ControlOption {
     constructor() {
         super(...arguments);
@@ -299,26 +953,82 @@ class ControlRadio extends ControlOption {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function ControlRadioComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "label", 4);
+    ɵɵelement(1, "input", 5);
+    ɵɵelementStart(2, "span", 6);
+    ɵɵtext(3);
+    ɵɵpipe(4, "label");
+    ɵɵelementEnd();
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r130 = ctx.$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("id", context_r130.option.key)("formControlName", context_r130.option.key);
+    ɵɵadvance(2);
+    ɵɵtextInterpolate(ɵɵpipeBind1(4, 3, context_r130.option.info));
+} }
+function ControlRadioComponent_ng_template_3_div_0_div_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.required"));
+} }
+function ControlRadioComponent_ng_template_3_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 8);
+    ɵɵtemplate(1, ControlRadioComponent_ng_template_3_div_0_div_1_Template, 3, 3, "div", 9);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r131 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r131.control.errors.required);
+} }
+function ControlRadioComponent_ng_template_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlRadioComponent_ng_template_3_div_0_Template, 2, 1, "div", 7);
+} if (rf & 2) {
+    const context_r131 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r131.control.invalid && (context_r131.control.dirty || context_r131.control.touched));
+} }
+function ControlRadioComponent_ng_container_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+function ControlRadioComponent_ng_container_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c0$8 = function (a0) { return { $implicit: a0 }; };
 class ControlRadioComponent extends ControlComponent {
 }
-ControlRadioComponent.decorators = [
-    { type: Component, args: [{
+ControlRadioComponent.ɵfac = function ControlRadioComponent_Factory(t) { return ɵControlRadioComponent_BaseFactory(t || ControlRadioComponent); };
+ControlRadioComponent.ɵcmp = ɵɵdefineComponent({ type: ControlRadioComponent, selectors: [["control-radio-component"]], inputs: { option: "option" }, features: [ɵɵInheritDefinitionFeature], decls: 7, vars: 9, consts: [[3, "formGroup"], ["inputDef", ""], ["errorDef", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [1, "control__group", "control__group--radio"], ["type", "radio", 1, "control__radio", 3, "id", "formControlName"], [1, "control__info"], ["class", "control__error control__error--radio", 4, "ngIf"], [1, "control__error", "control__error--radio"], [4, "ngIf"]], template: function ControlRadioComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementContainerStart(0, 0);
+        ɵɵtemplate(1, ControlRadioComponent_ng_template_1_Template, 5, 5, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(3, ControlRadioComponent_ng_template_3_Template, 1, 1, "ng-template", null, 2, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(5, ControlRadioComponent_ng_container_5_Template, 1, 0, "ng-container", 3);
+        ɵɵtemplate(6, ControlRadioComponent_ng_container_6_Template, 1, 0, "ng-container", 3);
+        ɵɵelementContainerEnd();
+    } if (rf & 2) {
+        const _r124 = ɵɵreference(2);
+        const _r126 = ɵɵreference(4);
+        ɵɵproperty("formGroup", ctx.form);
+        ɵɵadvance(5);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.inputRef || _r124)("ngTemplateOutletContext", ɵɵpureFunction1(5, _c0$8, ctx.context));
+        ɵɵadvance(1);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.errorRef || _r126)("ngTemplateOutletContext", ɵɵpureFunction1(7, _c0$8, ctx.context));
+    } }, directives: [NgControlStatusGroup, FormGroupDirective, NgTemplateOutlet, RadioControlValueAccessor, DefaultValueAccessor, NgControlStatus, FormControlName, NgIf], pipes: [LabelPipe], encapsulation: 2 });
+const ɵControlRadioComponent_BaseFactory = ɵɵgetInheritedFactory(ControlRadioComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlRadioComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-radio-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<label class=\"control__group control__group--radio\">\r\n\t\t\t<input class=\"control__radio\" type=\"radio\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\">\r\n\t\t\t<span class=\"control__info\">{{ context.option.info | label }}</span>\r\n\t\t</label>\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--radio\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlRadioComponent.propDecorators = {
-    option: [{ type: Input }]
-};
+                templateUrl: 'control-radio.component.html',
+            }]
+    }], null, { option: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ControlSelect extends ControlOption {
     constructor() {
         super(...arguments);
@@ -326,10 +1036,63 @@ class ControlSelect extends ControlOption {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function ControlSelectComponent_ng_template_1_option_2_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "option", 7);
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const item_r143 = ctx.$implicit;
+    const context_r141 = ɵɵnextContext().$implicit;
+    ɵɵproperty("ngValue", context_r141.getValue(item_r143));
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 2, item_r143 == null ? null : item_r143.name));
+} }
+function ControlSelectComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 4);
+    ɵɵelementStart(1, "select", 5);
+    ɵɵtemplate(2, ControlSelectComponent_ng_template_1_option_2_Template, 3, 4, "option", 6);
+    ɵɵelementEnd();
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r141 = ctx.$implicit;
+    const ctx_r136 = ɵɵnextContext();
+    ɵɵadvance(1);
+    ɵɵproperty("id", context_r141.option.key)("formControlName", context_r141.option.key)("compareWith", context_r141.compareWith);
+    ɵɵadvance(1);
+    ɵɵproperty("ngForOf", ctx_r136.options);
+} }
+function ControlSelectComponent_ng_template_3_div_0_div_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.required"));
+} }
+function ControlSelectComponent_ng_template_3_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 9);
+    ɵɵtemplate(1, ControlSelectComponent_ng_template_3_div_0_div_1_Template, 3, 3, "div", 10);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r145 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r145.control.errors.required);
+} }
+function ControlSelectComponent_ng_template_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlSelectComponent_ng_template_3_div_0_Template, 2, 1, "div", 8);
+} if (rf & 2) {
+    const context_r145 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r145.control.invalid && (context_r145.control.dirty || context_r145.control.touched));
+} }
+function ControlSelectComponent_ng_container_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+function ControlSelectComponent_ng_container_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c0$9 = function (a0) { return { $implicit: a0 }; };
 class ControlSelectComponent extends ControlComponent {
     constructor() {
         super(...arguments);
@@ -337,37 +1100,17 @@ class ControlSelectComponent extends ControlComponent {
         this.getValue = this.getValue_.bind(this);
         this.compareWith = this.compareWith_.bind(this);
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
-        this.options$().pipe(takeUntil(this.unsubscribe), tap((/**
-         * @param {?} options
-         * @return {?}
-         */
-        options => {
+        this.options$().pipe(takeUntil(this.unsubscribe), tap(options => {
             if (this.option.asObject && this.control.value === null) {
-                /** @type {?} */
-                const firstNullOptions = options.find((/**
-                 * @param {?} x
-                 * @return {?}
-                 */
-                x => x.id === null));
+                const firstNullOptions = options.find(x => x.id === null);
                 if (firstNullOptions !== undefined) {
                     this.control.setValue(firstNullOptions);
                 }
             }
-        }))).subscribe((/**
-         * @param {?} options
-         * @return {?}
-         */
-        options => this.options = options));
+        })).subscribe(options => this.options = options);
     }
-    /**
-     * @return {?}
-     */
     options$() {
-        /** @type {?} */
         const options = this.option.options;
         if (options) {
             if (isObservable(options)) {
@@ -384,22 +1127,13 @@ class ControlSelectComponent extends ControlComponent {
             return of([]);
         }
     }
-    /**
-     * @param {?} item
-     * @return {?}
-     */
     getValue_(item) {
         return this.option.asObject ? item : item.id;
     }
-    /**
-     * @param {?} a
-     * @param {?} b
-     * @return {?}
-     */
     compareWith_(a, b) {
         if (this.option.asObject) {
-            a = (/** @type {?} */ (a));
-            b = (/** @type {?} */ (b));
+            a = a;
+            b = b;
             return (b && b.id !== undefined) ? a.id === b.id : a.id === b;
         }
         else {
@@ -407,20 +1141,34 @@ class ControlSelectComponent extends ControlComponent {
         }
     }
 }
-ControlSelectComponent.decorators = [
-    { type: Component, args: [{
+ControlSelectComponent.ɵfac = function ControlSelectComponent_Factory(t) { return ɵControlSelectComponent_BaseFactory(t || ControlSelectComponent); };
+ControlSelectComponent.ɵcmp = ɵɵdefineComponent({ type: ControlSelectComponent, selectors: [["control-select-component"]], inputs: { option: "option" }, features: [ɵɵInheritDefinitionFeature], decls: 7, vars: 9, consts: [[3, "formGroup"], ["inputDef", ""], ["errorDef", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [1, "control__input", "control__input--select"], [3, "id", "formControlName", "compareWith"], [3, "ngValue", 4, "ngFor", "ngForOf"], [3, "ngValue"], ["class", "control__error control__error--select", 4, "ngIf"], [1, "control__error", "control__error--select"], [4, "ngIf"]], template: function ControlSelectComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementContainerStart(0, 0);
+        ɵɵtemplate(1, ControlSelectComponent_ng_template_1_Template, 3, 4, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(3, ControlSelectComponent_ng_template_3_Template, 1, 1, "ng-template", null, 2, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(5, ControlSelectComponent_ng_container_5_Template, 1, 0, "ng-container", 3);
+        ɵɵtemplate(6, ControlSelectComponent_ng_container_6_Template, 1, 0, "ng-container", 3);
+        ɵɵelementContainerEnd();
+    } if (rf & 2) {
+        const _r135 = ɵɵreference(2);
+        const _r137 = ɵɵreference(4);
+        ɵɵproperty("formGroup", ctx.form);
+        ɵɵadvance(5);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.inputRef || _r135)("ngTemplateOutletContext", ɵɵpureFunction1(5, _c0$9, ctx.context));
+        ɵɵadvance(1);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.errorRef || _r137)("ngTemplateOutletContext", ɵɵpureFunction1(7, _c0$9, ctx.context));
+    } }, directives: [NgControlStatusGroup, FormGroupDirective, NgTemplateOutlet, SelectControlValueAccessor, NgControlStatus, FormControlName, NgForOf, NgSelectOption, ɵangular_packages_forms_forms_x, NgIf], pipes: [LabelPipe], encapsulation: 2 });
+const ɵControlSelectComponent_BaseFactory = ɵɵgetInheritedFactory(ControlSelectComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlSelectComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-select-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<div class=\"control__input control__input--select\">\r\n\t\t\t<select [id]=\"context.option.key\" [formControlName]=\"context.option.key\" [compareWith]=\"context.compareWith\">\r\n\t\t\t\t<option *ngFor=\"let item of options\" [ngValue]=\"context.getValue(item)\">{{item?.name | label}}</option>\r\n\t\t\t</select>\r\n\t\t\t<!-- control__accessory -->\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--select\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlSelectComponent.propDecorators = {
-    option: [{ type: Input }]
-};
+                templateUrl: 'control-select.component.html',
+            }]
+    }], null, { option: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ControlText extends ControlOption {
     constructor() {
         super(...arguments);
@@ -428,26 +1176,139 @@ class ControlText extends ControlOption {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function ControlTextComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelement(0, "input", 4);
+    ɵɵpipe(1, "label");
+} if (rf & 2) {
+    const context_r155 = ctx.$implicit;
+    ɵɵpropertyInterpolate("placeholder", ɵɵpipeBind1(1, 3, context_r155.option.placeholder));
+    ɵɵproperty("id", context_r155.option.key)("formControlName", context_r155.option.key);
+} }
+function ControlTextComponent_ng_container_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+function ControlTextComponent_ng_template_4_div_0_div_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.required"));
+} }
+const _c0$a = function (a0) { return { minlength: a0 }; };
+function ControlTextComponent_ng_template_4_div_0_div_2_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r156 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.minlength", null, ɵɵpureFunction1(5, _c0$a, context_r156.option.minlength)));
+} }
+const _c1$5 = function (a0) { return { maxlength: a0 }; };
+function ControlTextComponent_ng_template_4_div_0_div_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r156 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.maxlength", null, ɵɵpureFunction1(5, _c1$5, context_r156.option.maxlength)));
+} }
+function ControlTextComponent_ng_template_4_div_0_div_4_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.pattern"));
+} }
+function ControlTextComponent_ng_template_4_div_0_div_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.match"));
+} }
+function ControlTextComponent_ng_template_4_div_0_div_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.exists"));
+} }
+function ControlTextComponent_ng_template_4_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 6);
+    ɵɵtemplate(1, ControlTextComponent_ng_template_4_div_0_div_1_Template, 3, 3, "div", 7);
+    ɵɵtemplate(2, ControlTextComponent_ng_template_4_div_0_div_2_Template, 3, 7, "div", 7);
+    ɵɵtemplate(3, ControlTextComponent_ng_template_4_div_0_div_3_Template, 3, 7, "div", 7);
+    ɵɵtemplate(4, ControlTextComponent_ng_template_4_div_0_div_4_Template, 3, 3, "div", 7);
+    ɵɵtemplate(5, ControlTextComponent_ng_template_4_div_0_div_5_Template, 3, 3, "div", 7);
+    ɵɵtemplate(6, ControlTextComponent_ng_template_4_div_0_div_6_Template, 3, 3, "div", 7);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r156 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r156.control.errors.required);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r156.control.errors.minlength);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r156.control.errors.maxlength);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r156.control.errors.pattern);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r156.control.errors.match);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r156.control.errors.exists);
+} }
+function ControlTextComponent_ng_template_4_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlTextComponent_ng_template_4_div_0_Template, 7, 6, "div", 5);
+} if (rf & 2) {
+    const context_r156 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r156.control.invalid && (context_r156.control.dirty || context_r156.control.touched));
+} }
+function ControlTextComponent_ng_container_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c2$5 = function (a0) { return { $implicit: a0 }; };
 class ControlTextComponent extends ControlComponent {
 }
-ControlTextComponent.decorators = [
-    { type: Component, args: [{
+ControlTextComponent.ɵfac = function ControlTextComponent_Factory(t) { return ɵControlTextComponent_BaseFactory(t || ControlTextComponent); };
+ControlTextComponent.ɵcmp = ɵɵdefineComponent({ type: ControlTextComponent, selectors: [["control-text-component"]], inputs: { option: "option" }, features: [ɵɵInheritDefinitionFeature], decls: 7, vars: 9, consts: [[3, "formGroup"], ["inputDef", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], ["errorDef", ""], ["type", "text", 1, "control__input", "control__input--text", 3, "placeholder", "id", "formControlName"], ["class", "control__error control__error--text", 4, "ngIf"], [1, "control__error", "control__error--text"], [4, "ngIf"]], template: function ControlTextComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementContainerStart(0, 0);
+        ɵɵtemplate(1, ControlTextComponent_ng_template_1_Template, 2, 5, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(3, ControlTextComponent_ng_container_3_Template, 1, 0, "ng-container", 2);
+        ɵɵtemplate(4, ControlTextComponent_ng_template_4_Template, 1, 1, "ng-template", null, 3, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(6, ControlTextComponent_ng_container_6_Template, 1, 0, "ng-container", 2);
+        ɵɵelementContainerEnd();
+    } if (rf & 2) {
+        const _r149 = ɵɵreference(2);
+        const _r152 = ɵɵreference(5);
+        ɵɵproperty("formGroup", ctx.form);
+        ɵɵadvance(3);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.inputRef || _r149)("ngTemplateOutletContext", ɵɵpureFunction1(5, _c2$5, ctx.context));
+        ɵɵadvance(3);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.errorRef || _r152)("ngTemplateOutletContext", ɵɵpureFunction1(7, _c2$5, ctx.context));
+    } }, directives: [NgControlStatusGroup, FormGroupDirective, NgTemplateOutlet, DefaultValueAccessor, NgControlStatus, FormControlName, NgIf], pipes: [LabelPipe], encapsulation: 2 });
+const ɵControlTextComponent_BaseFactory = ɵɵgetInheritedFactory(ControlTextComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlTextComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-text-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<input class=\"control__input control__input--text\" placeholder=\"{{ context.option.placeholder | label }}\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\" type=\"text\">\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--text\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.pattern\">{{ 'errors.pattern' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.match\">{{ 'errors.match' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.exists\">{{ 'errors.exists' | label }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlTextComponent.propDecorators = {
-    option: [{ type: Input }]
-};
+                templateUrl: 'control-text.component.html',
+            }]
+    }], null, { option: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ControlTextarea extends ControlOption {
     constructor() {
         super(...arguments);
@@ -455,27 +1316,103 @@ class ControlTextarea extends ControlOption {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function ControlTextareaComponent_ng_template_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelement(0, "textarea", 4);
+    ɵɵpipe(1, "label");
+} if (rf & 2) {
+    const context_r173 = ctx.$implicit;
+    ɵɵpropertyInterpolate("placeholder", ɵɵpipeBind1(1, 3, context_r173.option.placeholder));
+    ɵɵproperty("id", context_r173.option.key)("formControlName", context_r173.option.key);
+} }
+function ControlTextareaComponent_ng_template_3_div_0_div_1_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 1, "errors.required"));
+} }
+const _c0$b = function (a0) { return { minlength: a0 }; };
+function ControlTextareaComponent_ng_template_3_div_0_div_2_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r174 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.minlength", null, ɵɵpureFunction1(5, _c0$b, context_r174.option.minlength)));
+} }
+const _c1$6 = function (a0) { return { maxlength: a0 }; };
+function ControlTextareaComponent_ng_template_3_div_0_div_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r174 = ɵɵnextContext(2).$implicit;
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind3(2, 1, "errors.maxlength", null, ɵɵpureFunction1(5, _c1$6, context_r174.option.maxlength)));
+} }
+function ControlTextareaComponent_ng_template_3_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div", 6);
+    ɵɵtemplate(1, ControlTextareaComponent_ng_template_3_div_0_div_1_Template, 3, 3, "div", 7);
+    ɵɵtemplate(2, ControlTextareaComponent_ng_template_3_div_0_div_2_Template, 3, 7, "div", 7);
+    ɵɵtemplate(3, ControlTextareaComponent_ng_template_3_div_0_div_3_Template, 3, 7, "div", 7);
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r174 = ɵɵnextContext().$implicit;
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r174.control.errors.required);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r174.control.errors.minlength);
+    ɵɵadvance(1);
+    ɵɵproperty("ngIf", context_r174.control.errors.maxlength);
+} }
+function ControlTextareaComponent_ng_template_3_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlTextareaComponent_ng_template_3_div_0_Template, 4, 3, "div", 5);
+} if (rf & 2) {
+    const context_r174 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r174.control.invalid && (context_r174.control.dirty || context_r174.control.touched));
+} }
+function ControlTextareaComponent_ng_container_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+function ControlTextareaComponent_ng_container_6_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c2$6 = function (a0) { return { $implicit: a0 }; };
 class ControlTextareaComponent extends ControlComponent {
 }
-ControlTextareaComponent.decorators = [
-    { type: Component, args: [{
+ControlTextareaComponent.ɵfac = function ControlTextareaComponent_Factory(t) { return ɵControlTextareaComponent_BaseFactory(t || ControlTextareaComponent); };
+ControlTextareaComponent.ɵcmp = ɵɵdefineComponent({ type: ControlTextareaComponent, selectors: [["control-textarea-component"]], inputs: { option: "option" }, features: [ɵɵInheritDefinitionFeature], decls: 7, vars: 9, consts: [[3, "formGroup"], ["inputDef", ""], ["errorDef", ""], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], ["rows", "4", 1, "control__input", "control__input--textarea", 3, "placeholder", "id", "formControlName"], ["class", "control__error control__error--textarea", 4, "ngIf"], [1, "control__error", "control__error--textarea"], [4, "ngIf"]], template: function ControlTextareaComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementContainerStart(0, 0);
+        ɵɵtemplate(1, ControlTextareaComponent_ng_template_1_Template, 2, 5, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(3, ControlTextareaComponent_ng_template_3_Template, 1, 1, "ng-template", null, 2, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(5, ControlTextareaComponent_ng_container_5_Template, 1, 0, "ng-container", 3);
+        ɵɵtemplate(6, ControlTextareaComponent_ng_container_6_Template, 1, 0, "ng-container", 3);
+        ɵɵelementContainerEnd();
+    } if (rf & 2) {
+        const _r167 = ɵɵreference(2);
+        const _r169 = ɵɵreference(4);
+        ɵɵproperty("formGroup", ctx.form);
+        ɵɵadvance(5);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.inputRef || _r167)("ngTemplateOutletContext", ɵɵpureFunction1(5, _c2$6, ctx.context));
+        ɵɵadvance(1);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.errorRef || _r169)("ngTemplateOutletContext", ɵɵpureFunction1(7, _c2$6, ctx.context));
+    } }, directives: [NgControlStatusGroup, FormGroupDirective, NgTemplateOutlet, DefaultValueAccessor, NgControlStatus, FormControlName, NgIf], pipes: [LabelPipe], encapsulation: 2 });
+const ɵControlTextareaComponent_BaseFactory = ɵɵgetInheritedFactory(ControlTextareaComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlTextareaComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-textarea-component',
-                template: "<ng-container [formGroup]=\"form\">\r\n\t<ng-template #inputDef let-context>\r\n\t\t<textarea class=\"control__input control__input--textarea\" placeholder=\"{{ context.option.placeholder | label }}\" [id]=\"context.option.key\" [formControlName]=\"context.option.key\" rows=\"4\"></textarea>\r\n\t</ng-template>\r\n\t<ng-template #errorDef let-context>\r\n\t\t<div class=\"control__error control__error--textarea\" *ngIf=\"context.control.invalid && (context.control.dirty || context.control.touched)\">\r\n\t\t\t<div *ngIf=\"context.control.errors.required\">{{ 'errors.required' | label }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.minlength\">{{ 'errors.minlength' | label : null : { minlength: context.option.minlength } }}</div>\r\n\t\t\t<div *ngIf=\"context.control.errors.maxlength\">{{ 'errors.maxlength' | label : null : { maxlength: context.option.maxlength } }}</div>\r\n\t\t</div>\r\n\t</ng-template>\r\n\t<ng-container *ngTemplateOutlet=\"context.inputRef || inputDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-container *ngTemplateOutlet=\"context.errorRef || errorDef; context: { $implicit: context }\"></ng-container>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlTextareaComponent.propDecorators = {
-    option: [{ type: Input }]
-};
+                templateUrl: 'control-textarea.component.html',
+            }]
+    }], null, { option: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const entryComponents = [
     ControlCheckboxComponent,
     ControlEmailComponent,
@@ -489,7 +1426,6 @@ const entryComponents = [
     ControlTextComponent,
     ControlTextareaComponent,
 ];
-/** @type {?} */
 const controls = {
     'checkbox': {
         component: ControlCheckboxComponent,
@@ -537,67 +1473,50 @@ const controls = {
     },
 };
 class ControlConfig {
-    /**
-     * @param {?=} options
-     */
     constructor(options) {
         this.controls = {};
         // console.log('ControlConfig', options);
         if (options) {
             Object.assign(this, options);
-            this.controls = Object.assign({}, controls, (options.controls || {}));
+            this.controls = Object.assign(Object.assign({}, controls), (options.controls || {}));
         }
     }
 }
-/** @type {?} */
 const CONTROL_CONFIG = new InjectionToken('control.config');
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class ControlModuleComponent {
     constructor() {
         this.version = '0.0.12';
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
     }
 }
-ControlModuleComponent.decorators = [
-    { type: Component, args: [{
+ControlModuleComponent.ɵfac = function ControlModuleComponent_Factory(t) { return new (t || ControlModuleComponent)(); };
+ControlModuleComponent.ɵcmp = ɵɵdefineComponent({ type: ControlModuleComponent, selectors: [["control-module"]], decls: 2, vars: 1, consts: [[1, "control-module"]], template: function ControlModuleComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementStart(0, "span", 0);
+        ɵɵtext(1);
+        ɵɵelementEnd();
+    } if (rf & 2) {
+        ɵɵadvance(1);
+        ɵɵtextInterpolate1("control ", ctx.version, "");
+    } }, encapsulation: 2 });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlModuleComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-module',
-                template: `<span class="control-module">control {{version}}</span>`
-            }] }
-];
-/** @nocollapse */
-ControlModuleComponent.ctorParameters = () => [];
+                template: `<span class="control-module">control {{version}}</span>`,
+                styles: []
+            }]
+    }], function () { return []; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const DEBOUNCE_TIME = 250;
-/**
- * @param {?} value
- * @param {?=} exists
- * @return {?}
- */
 function exists$(value, exists) {
     if (typeof exists === 'function') {
-        /** @type {?} */
         const oservableOrValue = exists(value);
         if (isObservable(oservableOrValue)) {
-            return oservableOrValue.pipe(map((/**
-             * @param {?} exists
-             * @return {?}
-             */
-            exists => {
+            return oservableOrValue.pipe(map(exists => {
                 return exists ? { exists: true } : null;
-            })));
+            }));
         }
         else {
             return of(oservableOrValue ? { exists: true } : null);
@@ -607,46 +1526,18 @@ function exists$(value, exists) {
         return of(null);
     }
 }
-/**
- * @param {?=} exists
- * @return {?}
- */
 function existsValidator(exists) {
-    return (/**
-     * @param {?} control
-     * @return {?}
-     */
-    (control) => {
-        return exists$(control.value, exists).pipe(debounceTime(DEBOUNCE_TIME), catchError((/**
-         * @param {?} error
-         * @return {?}
-         */
-        (error) => {
+    return (control) => {
+        return exists$(control.value, exists).pipe(debounceTime(DEBOUNCE_TIME), catchError((error) => {
             console.log('existsValidator.catchError', error);
             return of(null);
-        })), take(1));
-    });
+        }), take(1));
+    };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @param {?} otherKey
- * @param {?=} reverse
- * @param {?=} group
- * @return {?}
- */
 function matchValidator(otherKey, reverse = false, group) {
-    return (/**
-     * @param {?} control
-     * @return {?}
-     */
-    (control) => {
-        /** @type {?} */
+    return (control) => {
         const otherControl = group.controls[otherKey];
-        /** @type {?} */
         const value = control.value;
         // value not equal
         if (otherControl && value !== otherControl.value && !reverse) {
@@ -670,45 +1561,31 @@ function matchValidator(otherKey, reverse = false, group) {
             });
         }
         return null;
-    });
+    };
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function noopValidator() {
+    return (control) => {
+        console.log(control);
+        return null;
+    };
+}
 class ControlService {
-    /**
-     * @param {?} options
-     */
     constructor(options) {
         // console.log('ControlService', options);
         this.options = new ControlConfig(options || {});
     }
-    /**
-     * @param {?} options
-     * @return {?}
-     */
     toFormGroup(options) {
-        /** @type {?} */
-        const controls$$1 = {};
-        options.forEach((/**
-         * @param {?} option
-         * @return {?}
-         */
-        (option) => {
+        const controls = {};
+        options.forEach((option) => {
             // group[x.key] = new FormControl(x.value, this.getValidators(x, group));
             if (option instanceof ControlGroup) {
-                /** @type {?} */
                 const group = this.toFormGroup(option.options);
-                controls$$1[option.key] = group;
+                controls[option.key] = group;
             }
             else if (!(option instanceof ControlInfo)) {
-                /** @type {?} */
                 const validators = this.getValidators(option);
-                /** @type {?} */
                 const asyncValidators = this.getAsyncValidators(option);
-                /** @type {?} */
                 const control = new FormControl(option.value, {
                     validators: validators.length ? validators : undefined,
                     asyncValidators: asyncValidators.length ? asyncValidators : undefined,
@@ -716,22 +1593,16 @@ class ControlService {
                 if (option.disabled) {
                     control.disable();
                 }
-                controls$$1[option.key] = control;
+                controls[option.key] = control;
                 // control.updateValueAndValidity();
                 // x.setControl(control); // !!!
             }
-        }));
-        /** @type {?} */
-        const group = new FormGroup(controls$$1);
+        });
+        const group = new FormGroup(controls);
         group.markAsDirty();
         // console.log(group);
-        options.forEach((/**
-         * @param {?} option
-         * @return {?}
-         */
-        (option) => {
+        options.forEach((option) => {
             if (!(option instanceof ControlInfo)) {
-                /** @type {?} */
                 const groupValidators = this.getGroupValidators(option, group);
                 if (groupValidators.length) {
                     // console.log(validators);
@@ -739,15 +1610,10 @@ class ControlService {
                     // group.controls[option.key].updateValueAndValidity();
                 }
             }
-        }));
+        });
         return group;
     }
-    /**
-     * @param {?} option
-     * @return {?}
-     */
     getValidators(option) {
-        /** @type {?} */
         const validators = [];
         if (option.min) {
             validators.push(Validators.min(option.min));
@@ -775,37 +1641,21 @@ class ControlService {
         }
         return validators;
     }
-    /**
-     * @param {?} option
-     * @return {?}
-     */
     getAsyncValidators(option) {
-        /** @type {?} */
         const validators = [];
         if (option.exists) {
             validators.push(existsValidator(option.exists));
         }
         return validators;
     }
-    /**
-     * @param {?} option
-     * @param {?} group
-     * @return {?}
-     */
     getGroupValidators(option, group) {
-        /** @type {?} */
         const validators = [];
         if (option.match) {
             validators.push(matchValidator(option.match, option.reverse, group));
         }
         return validators;
     }
-    /**
-     * @param {?} option
-     * @return {?}
-     */
     resolve(option) {
-        /** @type {?} */
         let component;
         if (option) {
             component = this.options.controls[option.schema].component || ControlComponent;
@@ -816,67 +1666,85 @@ class ControlService {
         return component;
     }
 }
-ControlService.decorators = [
-    { type: Injectable, args: [{
+ControlService.ɵfac = function ControlService_Factory(t) { return new (t || ControlService)(ɵɵinject(CONTROL_CONFIG)); };
+ControlService.ɵprov = ɵɵdefineInjectable({ token: ControlService, factory: ControlService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-ControlService.ctorParameters = () => [
-    { type: ControlConfig, decorators: [{ type: Inject, args: [CONTROL_CONFIG,] }] }
-];
-/** @nocollapse */ ControlService.ngInjectableDef = defineInjectable({ factory: function ControlService_Factory() { return new ControlService(inject(CONTROL_CONFIG)); }, token: ControlService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: ControlConfig, decorators: [{
+                type: Inject,
+                args: [CONTROL_CONFIG]
+            }] }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+const _c0$c = ["inputRef"];
+const _c1$7 = ["errorRef"];
+const _c2$7 = ["labelRef"];
+const _c3$1 = ["descriptionRef"];
+const _c4$1 = ["descriptionDef"];
+const _c5 = ["labelDef"];
+const _c6 = ["outlet"];
+function ControlOutletComponent_ng_template_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "label");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r190 = ctx.$implicit;
+    ɵɵclassMapInterpolate1("control__label control__label--", context_r190.option.schema, "");
+    ɵɵattribute("for", context_r190.option.key);
+    ɵɵadvance(1);
+    ɵɵtextInterpolate(ɵɵpipeBind1(2, 5, context_r190.option.label));
+} }
+function ControlOutletComponent_ng_template_2_div_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementStart(0, "div");
+    ɵɵtext(1);
+    ɵɵpipe(2, "label");
+    ɵɵelementEnd();
+} if (rf & 2) {
+    const context_r191 = ɵɵnextContext().$implicit;
+    ɵɵclassMapInterpolate1("control__description control__description--", context_r191.option.schema, "");
+    ɵɵadvance(1);
+    ɵɵtextInterpolate1(" ", ɵɵpipeBind1(2, 4, context_r191.option.description), " ");
+} }
+function ControlOutletComponent_ng_template_2_Template(rf, ctx) { if (rf & 1) {
+    ɵɵtemplate(0, ControlOutletComponent_ng_template_2_div_0_Template, 3, 6, "div", 5);
+} if (rf & 2) {
+    const context_r191 = ctx.$implicit;
+    ɵɵproperty("ngIf", context_r191.option.description);
+} }
+function ControlOutletComponent_ng_container_5_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+function ControlOutletComponent_ng_template_6_Template(rf, ctx) { }
+function ControlOutletComponent_ng_container_8_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainer(0);
+} }
+const _c7 = function (a0) { return { $implicit: a0 }; };
 class ControlOutletComponent {
-    /**
-     * @param {?} componentFactoryResolver
-     * @param {?} controlService
-     */
     constructor(componentFactoryResolver, controlService) {
         this.componentFactoryResolver = componentFactoryResolver;
         this.controlService = controlService;
     }
-    /**
-     * @return {?}
-     */
     get context() {
         return this;
     }
-    /**
-     * @return {?}
-     */
     get classes() {
         // console.log('control', this.option.key, this.form.controls);
         return this.componentRef ? this.componentRef.instance.classes : null;
     }
-    /**
-     * @return {?}
-     */
     get control() {
         // console.log('control', this.option.key, this.form.controls);
         return this.componentRef ? this.componentRef.instance.control : null;
     }
-    /**
-     * @return {?}
-     */
     ngAfterViewInit() {
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
-        /** @type {?} */
         const component = this.controlService.resolve(this.option);
-        /** @type {?} */
         const factory = this.componentFactoryResolver.resolveComponentFactory(component);
         this.viewContainerRef.clear();
-        /** @type {?} */
         const componentRef = this.viewContainerRef.createComponent(factory);
-        /** @type {?} */
         const instance = componentRef.instance;
         instance.option = this.option;
         instance.form = this.form;
@@ -888,132 +1756,129 @@ class ControlOutletComponent {
         }
         this.componentRef = componentRef;
     }
-    /**
-     * @return {?}
-     */
     ngOnDestroy() {
         this.componentRef.destroy();
     }
 }
-ControlOutletComponent.decorators = [
-    { type: Component, args: [{
+ControlOutletComponent.ɵfac = function ControlOutletComponent_Factory(t) { return new (t || ControlOutletComponent)(ɵɵdirectiveInject(ComponentFactoryResolver), ɵɵdirectiveInject(ControlService)); };
+ControlOutletComponent.ɵcmp = ɵɵdefineComponent({ type: ControlOutletComponent, selectors: [["control-outlet"]], contentQueries: function ControlOutletComponent_ContentQueries(rf, ctx, dirIndex) { if (rf & 1) {
+        ɵɵstaticContentQuery(dirIndex, _c0$c, true);
+        ɵɵstaticContentQuery(dirIndex, _c1$7, true);
+        ɵɵstaticContentQuery(dirIndex, _c2$7, true);
+        ɵɵstaticContentQuery(dirIndex, _c3$1, true);
+    } if (rf & 2) {
+        var _t;
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.inputRef = _t.first);
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.errorRef = _t.first);
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.labelRef = _t.first);
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.descriptionRef = _t.first);
+    } }, viewQuery: function ControlOutletComponent_Query(rf, ctx) { if (rf & 1) {
+        ɵɵstaticViewQuery(_c4$1, true);
+        ɵɵstaticViewQuery(_c5, true);
+        ɵɵstaticViewQuery(_c6, true, ViewContainerRef);
+    } if (rf & 2) {
+        var _t;
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.descriptionDef = _t.first);
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.labelDef = _t.first);
+        ɵɵqueryRefresh(_t = ɵɵloadQuery()) && (ctx.viewContainerRef = _t.first);
+    } }, inputs: { option: "option", form: "form" }, decls: 9, vars: 12, consts: [["labelDef", ""], ["descriptionDef", ""], [3, "ngClass"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], ["outlet", ""], [3, "class", 4, "ngIf"]], template: function ControlOutletComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵtemplate(0, ControlOutletComponent_ng_template_0_Template, 3, 7, "ng-template", null, 0, ɵɵtemplateRefExtractor);
+        ɵɵtemplate(2, ControlOutletComponent_ng_template_2_Template, 1, 1, "ng-template", null, 1, ɵɵtemplateRefExtractor);
+        ɵɵelementStart(4, "div", 2);
+        ɵɵtemplate(5, ControlOutletComponent_ng_container_5_Template, 1, 0, "ng-container", 3);
+        ɵɵtemplate(6, ControlOutletComponent_ng_template_6_Template, 0, 0, "ng-template", null, 4, ɵɵtemplateRefExtractor);
+        ɵɵelementEnd();
+        ɵɵtemplate(8, ControlOutletComponent_ng_container_8_Template, 1, 0, "ng-container", 3);
+    } if (rf & 2) {
+        const _r182 = ɵɵreference(1);
+        const _r184 = ɵɵreference(3);
+        ɵɵadvance(4);
+        ɵɵclassMapInterpolate1("control control--", ctx.context.option.schema, "");
+        ɵɵproperty("ngClass", ctx.context.classes);
+        ɵɵadvance(1);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.labelRef || _r182)("ngTemplateOutletContext", ɵɵpureFunction1(8, _c7, ctx.context));
+        ɵɵadvance(3);
+        ɵɵproperty("ngTemplateOutlet", ctx.context.descriptionRef || _r184)("ngTemplateOutletContext", ɵɵpureFunction1(10, _c7, ctx.context));
+    } }, directives: [NgClass, NgTemplateOutlet, NgIf], pipes: [LabelPipe], encapsulation: 2 });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlOutletComponent, [{
+        type: Component,
+        args: [{
                 selector: 'control-outlet',
-                template: "<ng-template #labelDef let-context>\r\n\t<label class=\"control__label control__label--{{context.option.schema}}\" [attr.for]=\"context.option.key\">{{ context.option.label | label }}</label>\r\n</ng-template>\r\n<ng-template #descriptionDef let-context>\r\n\t<div class=\"control__description control__description--{{context.option.schema}}\" *ngIf=\"context.option.description\">\r\n\t\t{{ context.option.description | label }}\r\n\t</div>\r\n</ng-template>\r\n<div class=\"control control--{{context.option.schema}}\" [ngClass]=\"context.classes\">\r\n\t<ng-container *ngTemplateOutlet=\"context.labelRef || labelDef; context: { $implicit: context }\"></ng-container>\r\n\t<ng-template #outlet></ng-template>\r\n</div>\r\n<ng-container *ngTemplateOutlet=\"context.descriptionRef || descriptionDef; context: { $implicit: context }\"></ng-container>\r\n"
-            }] }
-];
-/** @nocollapse */
-ControlOutletComponent.ctorParameters = () => [
-    { type: ComponentFactoryResolver },
-    { type: ControlService }
-];
-ControlOutletComponent.propDecorators = {
-    inputRef: [{ type: ContentChild, args: ['inputRef',] }],
-    errorRef: [{ type: ContentChild, args: ['errorRef',] }],
-    labelRef: [{ type: ContentChild, args: ['labelRef',] }],
-    descriptionRef: [{ type: ContentChild, args: ['descriptionRef',] }],
-    descriptionDef: [{ type: ViewChild, args: ['descriptionDef',] }],
-    labelDef: [{ type: ViewChild, args: ['labelDef',] }],
-    viewContainerRef: [{ type: ViewChild, args: ['outlet', { read: ViewContainerRef },] }],
-    option: [{ type: Input }],
-    form: [{ type: Input }]
-};
+                templateUrl: 'control-outlet.component.html',
+            }]
+    }], function () { return [{ type: ComponentFactoryResolver }, { type: ControlService }]; }, { inputRef: [{
+            type: ContentChild,
+            args: ['inputRef', { static: true }]
+        }], errorRef: [{
+            type: ContentChild,
+            args: ['errorRef', { static: true }]
+        }], labelRef: [{
+            type: ContentChild,
+            args: ['labelRef', { static: true }]
+        }], descriptionRef: [{
+            type: ContentChild,
+            args: ['descriptionRef', { static: true }]
+        }], descriptionDef: [{
+            type: ViewChild,
+            args: ['descriptionDef', { static: true }]
+        }], labelDef: [{
+            type: ViewChild,
+            args: ['labelDef', { static: true }]
+        }], viewContainerRef: [{
+            type: ViewChild,
+            args: ['outlet', { read: ViewContainerRef, static: true }]
+        }], option: [{
+            type: Input
+        }], form: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const CONTROL_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
     // tslint:disable-next-line:no-use-before-declare
-    useExisting: forwardRef((/**
-     * @return {?}
-     */
-    () => ControlAccessor)),
+    useExisting: forwardRef(() => ControlAccessor),
     multi: true
 };
-/**
- * @template T
- */
 // tslint:disable-next-line:directive-class-suffix
 class ControlAccessor {
-    /**
-     * @param {?} renderer
-     * @param {?} element
-     */
     constructor(renderer, element) {
         this.renderer = renderer;
         this.element = element;
-        this.onChange = (/**
-         * @param {?} value
-         * @return {?}
-         */
-        (value) => { });
-        this.onTouched = (/**
-         * @return {?}
-         */
-        () => { });
+        this.onChange = (value) => { };
+        this.onTouched = () => { };
     }
-    /**
-     * @protected
-     * @param {?} value
-     * @return {?}
-     */
     formatValue(value) {
         return value.toString();
     }
-    /**
-     * @protected
-     * @param {?} value
-     * @return {?}
-     */
     parseValue(value) {
         return value && value !== '' ? value : null;
     }
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     writeValue(value) {
-        /** @type {?} */
         const formattedValue = this.formatValue(value);
         this.renderer.setProperty(this.element.nativeElement, 'value', formattedValue);
     }
-    /**
-     * @param {?} callback
-     * @return {?}
-     */
     registerOnChange(callback) {
-        this.onChange = (/**
-         * @param {?} value
-         * @return {?}
-         */
-        (value) => {
-            /** @type {?} */
+        this.onChange = (value) => {
             const parsedValue = this.parseValue(value);
-            /** @type {?} */
             const formattedValue = this.formatValue(parsedValue);
             this.renderer.setProperty(this.element.nativeElement, 'value', formattedValue);
             callback(parsedValue);
-        });
+        };
     }
-    /**
-     * @param {?} callback
-     * @return {?}
-     */
     registerOnTouched(callback) {
         this.onTouched = callback;
     }
-    /**
-     * @param {?} isDisabled
-     * @return {?}
-     */
     setDisabledState(isDisabled) {
         this.renderer.setProperty(this.element.nativeElement, 'disabled', isDisabled);
     }
 }
-ControlAccessor.decorators = [
-    { type: Directive, args: [{
+ControlAccessor.ɵfac = function ControlAccessor_Factory(t) { return new (t || ControlAccessor)(ɵɵdirectiveInject(Renderer2), ɵɵdirectiveInject(ElementRef)); };
+ControlAccessor.ɵdir = ɵɵdefineDirective({ type: ControlAccessor, selectors: [["input", "designr-accessor", "", "formControlName", ""], ["input", "designr-accessor", "", "formControl", ""], ["input", "designr-accessor", "", "ngModel", ""]], hostBindings: function ControlAccessor_HostBindings(rf, ctx) { if (rf & 1) {
+        ɵɵlistener("change", function ControlAccessor_change_HostBindingHandler($event) { return ctx.onChange($event.target.value); })("input", function ControlAccessor_input_HostBindingHandler($event) { return ctx.onChange($event.target.value); })("blur", function ControlAccessor_blur_HostBindingHandler($event) { return ctx.onTouched(); });
+    } }, features: [ɵɵProvidersFeature([CONTROL_VALUE_ACCESSOR])] });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlAccessor, [{
+        type: Directive,
+        args: [{
                 selector: 'input[designr-accessor][formControlName],input[designr-accessor][formControl],input[designr-accessor][ngModel]',
                 // tslint:disable-next-line:use-host-property-decorator
                 host: {
@@ -1022,54 +1887,50 @@ ControlAccessor.decorators = [
                     '(blur)': 'onTouched()'
                 },
                 providers: [CONTROL_VALUE_ACCESSOR]
-            },] }
-];
-/** @nocollapse */
-ControlAccessor.ctorParameters = () => [
-    { type: Renderer2 },
-    { type: ElementRef }
-];
+            }]
+    }], function () { return [{ type: Renderer2 }, { type: ElementRef }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+function ControlsComponent_ng_container_0_Template(rf, ctx) { if (rf & 1) {
+    ɵɵelementContainerStart(0);
+    ɵɵelement(1, "control-outlet", 1);
+    ɵɵelementContainerEnd();
+} if (rf & 2) {
+    const option_r195 = ctx.$implicit;
+    const ctx_r194 = ɵɵnextContext();
+    ɵɵadvance(1);
+    ɵɵclassMapInterpolate1("fieldset__field fieldset__field--", option_r195.schema, "");
+    ɵɵproperty("option", option_r195)("form", ctx_r194.form);
+} }
 class ControlsComponent extends DisposableComponent {
 }
-ControlsComponent.decorators = [
-    { type: Component, args: [{
+ControlsComponent.ɵfac = function ControlsComponent_Factory(t) { return ɵControlsComponent_BaseFactory(t || ControlsComponent); };
+ControlsComponent.ɵcmp = ɵɵdefineComponent({ type: ControlsComponent, selectors: [["controls-component"]], inputs: { options: "options", form: "form" }, features: [ɵɵInheritDefinitionFeature], decls: 1, vars: 1, consts: [[4, "ngFor", "ngForOf"], [3, "option", "form"]], template: function ControlsComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵtemplate(0, ControlsComponent_ng_container_0_Template, 2, 5, "ng-container", 0);
+    } if (rf & 2) {
+        ɵɵproperty("ngForOf", ctx.options);
+    } }, directives: [NgForOf, ControlOutletComponent], encapsulation: 2 });
+const ɵControlsComponent_BaseFactory = ɵɵgetInheritedFactory(ControlsComponent);
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlsComponent, [{
+        type: Component,
+        args: [{
                 selector: 'controls-component',
-                template: "<ng-container *ngFor=\"let option of options\">\r\n\t<control-outlet class=\"fieldset__field fieldset__field--{{option.schema}}\" [option]=\"option\" [form]=\"form\">\r\n\t\t<!--\r\n\t\t<ng-template #errorRef let-context>\r\n\t\t\t<div class=\"control__error control__error--{{context.option.schema}}\">\r\n\t\t\t\tAAA\r\n\t\t\t</div>\r\n\t\t</ng-template>\r\n\t\t-->\r\n\t</control-outlet>\r\n</ng-container>\r\n"
-            }] }
-];
-ControlsComponent.propDecorators = {
-    options: [{ type: Input }],
-    form: [{ type: Input }]
-};
+                templateUrl: 'controls.component.html',
+            }]
+    }], null, { options: [{
+            type: Input
+        }], form: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const DEBOUNCE_TIME$1 = 250;
 class ExistsValidator {
-    /**
-     * @param {?} value
-     * @return {?}
-     */
     exists$(value) {
         if (typeof this.exists === 'function') {
-            /** @type {?} */
             const oservableOrValue = this.exists(value);
             if (isObservable(oservableOrValue)) {
-                return oservableOrValue.pipe(map((/**
-                 * @param {?} exists
-                 * @return {?}
-                 */
-                exists => {
+                return oservableOrValue.pipe(map(exists => {
                     return exists ? { exists: true } : null;
-                })));
+                }));
             }
             else {
                 return of(oservableOrValue ? { exists: true } : null);
@@ -1079,69 +1940,44 @@ class ExistsValidator {
             return of(null);
         }
     }
-    /**
-     * @param {?} control
-     * @return {?}
-     */
     validate(control) {
-        return this.exists$(control.value).pipe(debounceTime(DEBOUNCE_TIME$1), catchError((/**
-         * @param {?} response
-         * @return {?}
-         */
-        (response) => {
+        return this.exists$(control.value).pipe(debounceTime(DEBOUNCE_TIME$1), catchError((response) => {
             console.log('ExistsValidator.debounced$.catchError', response);
             return of(null);
-        })), take(1));
+        }), take(1));
     }
 }
-ExistsValidator.decorators = [
-    { type: Directive, args: [{
+ExistsValidator.ɵfac = function ExistsValidator_Factory(t) { return new (t || ExistsValidator)(); };
+ExistsValidator.ɵdir = ɵɵdefineDirective({ type: ExistsValidator, selectors: [["", "exists", "", "formControlName", ""], ["", "exists", "", "formControl", ""], ["", "exists", "", "ngModel", ""]], inputs: { exists: "exists" }, features: [ɵɵProvidersFeature([
+            { provide: NG_ASYNC_VALIDATORS, useExisting: forwardRef(() => ExistsValidator), multi: true },
+        ])] });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ExistsValidator, [{
+        type: Directive,
+        args: [{
                 selector: '[exists][formControlName],[exists][formControl],[exists][ngModel]',
                 providers: [
-                    { provide: NG_ASYNC_VALIDATORS, useExisting: forwardRef((/**
-                         * @return {?}
-                         */
-                        () => ExistsValidator)), multi: true },
+                    { provide: NG_ASYNC_VALIDATORS, useExisting: forwardRef(() => ExistsValidator), multi: true },
                 ]
-            },] }
-];
-ExistsValidator.propDecorators = {
-    exists: [{ type: Input }]
-};
+            }]
+    }], null, { exists: [{
+            type: Input
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class MatchValidator {
-    /**
-     * @param {?} match
-     * @param {?} reverse
-     */
     constructor(match, reverse) {
         this.match = match;
         this.reverse = reverse;
     }
-    /**
-     * @private
-     * @return {?}
-     */
     get isReverse() {
         if (!this.reverse) {
             return false;
         }
         return this.reverse === 'true' ? true : false;
     }
-    /**
-     * @param {?} control
-     * @return {?}
-     */
     validate(control) {
         // self value
-        /** @type {?} */
         const value = control.value;
         // control value
-        /** @type {?} */
         const input = control.root.get(this.match);
         // value not equal
         if (input && value !== input.value && !this.isReverse) {
@@ -1165,88 +2001,64 @@ class MatchValidator {
         return null;
     }
 }
-MatchValidator.decorators = [
-    { type: Directive, args: [{
+MatchValidator.ɵfac = function MatchValidator_Factory(t) { return new (t || MatchValidator)(ɵɵinjectAttribute('match'), ɵɵinjectAttribute('reverse')); };
+MatchValidator.ɵdir = ɵɵdefineDirective({ type: MatchValidator, selectors: [["", "match", "", "formControlName", ""], ["", "match", "", "formControl", ""], ["", "match", "", "ngModel", ""]], features: [ɵɵProvidersFeature([
+            { provide: NG_VALIDATORS, useExisting: forwardRef(() => MatchValidator), multi: true }
+        ])] });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(MatchValidator, [{
+        type: Directive,
+        args: [{
                 selector: '[match][formControlName],[match][formControl],[match][ngModel]',
                 providers: [
-                    { provide: NG_VALIDATORS, useExisting: forwardRef((/**
-                         * @return {?}
-                         */
-                        () => MatchValidator)), multi: true }
+                    { provide: NG_VALIDATORS, useExisting: forwardRef(() => MatchValidator), multi: true }
                 ]
-            },] }
-];
-/** @nocollapse */
-MatchValidator.ctorParameters = () => [
-    { type: String, decorators: [{ type: Attribute, args: ['match',] }] },
-    { type: String, decorators: [{ type: Attribute, args: ['reverse',] }] }
-];
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Attribute,
+                args: ['match']
+            }] }, { type: undefined, decorators: [{
+                type: Attribute,
+                args: ['reverse']
+            }] }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class UppercaseDirective {
     constructor() {
         this.ngModelChange = new EventEmitter();
     }
-    /**
-     * @param {?} $event
-     * @return {?}
-     */
     onInputChange($event) {
         this.value = $event.target.value.toUpperCase();
         this.ngModelChange.emit(this.value);
     }
 }
-UppercaseDirective.decorators = [
-    { type: Directive, args: [{
+UppercaseDirective.ɵfac = function UppercaseDirective_Factory(t) { return new (t || UppercaseDirective)(); };
+UppercaseDirective.ɵdir = ɵɵdefineDirective({ type: UppercaseDirective, selectors: [["", "ngModel", "", "uppercase", ""]], hostBindings: function UppercaseDirective_HostBindings(rf, ctx) { if (rf & 1) {
+        ɵɵlistener("input", function UppercaseDirective_input_HostBindingHandler($event) { return ctx.onInputChange($event); });
+    } }, outputs: { ngModelChange: "ngModelChange" } });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(UppercaseDirective, [{
+        type: Directive,
+        args: [{
                 selector: '[ngModel][uppercase]'
-            },] }
-];
-UppercaseDirective.propDecorators = {
-    ngModelChange: [{ type: Output }],
-    onInputChange: [{ type: HostListener, args: ['input', ['$event'],] }]
-};
+            }]
+    }], null, { ngModelChange: [{
+            type: Output
+        }], onInputChange: [{
+            type: HostListener,
+            args: ['input', ['$event']]
+        }] }); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class FormService {
-    /**
-     * @param {?} controlService
-     */
     constructor(controlService) {
         this.controlService = controlService;
     }
-    /**
-     * @param {?} data
-     * @return {?}
-     */
     getOptions(data) {
-        /** @type {?} */
-        const options = data.map((/**
-         * @param {?} option
-         * @return {?}
-         */
-        (option) => {
-            /** @type {?} */
+        const options = data.map((option) => {
             const control = this.controlService.options.controls[option.schema];
             if (control) {
-                /** @type {?} */
                 const optionModel = control.model;
-                /** @type {?} */
                 const optionModelInstance = new optionModel(option);
                 if (optionModelInstance instanceof ControlGroup) {
-                    /** @type {?} */
                     const options = this.getOptions(optionModelInstance.options);
-                    options.sort((/**
-                     * @param {?} a
-                     * @param {?} b
-                     * @return {?}
-                     */
-                    (a, b) => a.order - b.order));
+                    options.sort((a, b) => a.order - b.order);
                     optionModelInstance.options = options;
                 }
                 return optionModelInstance;
@@ -1255,55 +2067,30 @@ class FormService {
                 console.error(`missing option for key ${option.schema}`);
                 return null;
             }
-        })).filter((/**
-         * @param {?} x
-         * @return {?}
-         */
-        x => x));
-        options.sort((/**
-         * @param {?} a
-         * @param {?} b
-         * @return {?}
-         */
-        (a, b) => a.order - b.order));
+        }).filter(x => x);
+        options.sort((a, b) => a.order - b.order);
         return options;
     }
-    /**
-     * @param {?} options
-     * @return {?}
-     */
     getFormGroup(options) {
         return this.controlService.toFormGroup(options);
     }
-    /**
-     * @param {?} options
-     * @return {?}
-     */
     getFormGroupFromOptions(options) {
         return this.getFormGroup(this.getOptions(options));
     }
 }
-FormService.decorators = [
-    { type: Injectable, args: [{
+FormService.ɵfac = function FormService_Factory(t) { return new (t || FormService)(ɵɵinject(ControlService)); };
+FormService.ɵprov = ɵɵdefineInjectable({ token: FormService, factory: FormService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(FormService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root'
-            },] }
-];
-/** @nocollapse */
-FormService.ctorParameters = () => [
-    { type: ControlService }
-];
-/** @nocollapse */ FormService.ngInjectableDef = defineInjectable({ factory: function FormService_Factory() { return new FormService(inject(ControlService)); }, token: FormService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: ControlService }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const services = [
     ControlService,
     FormService,
 ];
-/** @type {?} */
 const components = [
     ControlsComponent,
     ControlModuleComponent,
@@ -1311,22 +2098,17 @@ const components = [
     ControlComponent,
     ...entryComponents,
 ];
-/** @type {?} */
 const directives = [
     UppercaseDirective,
     ControlAccessor,
 ];
-/** @type {?} */
 const pipes = [];
-/** @type {?} */
 const validators = [
     ExistsValidator,
     MatchValidator,
 ];
+const guards = [];
 class ControlModule {
-    /**
-     * @param {?} parentModule
-     */
     constructor(parentModule) {
         /*
         if (parentModule) {
@@ -1334,10 +2116,6 @@ class ControlModule {
         }
         */
     }
-    /**
-     * @param {?=} config
-     * @return {?}
-     */
     static forRoot(config) {
         return {
             ngModule: ControlModule,
@@ -1347,8 +2125,38 @@ class ControlModule {
         };
     }
 }
-ControlModule.decorators = [
-    { type: NgModule, args: [{
+ControlModule.ɵmod = ɵɵdefineNgModule({ type: ControlModule });
+ControlModule.ɵinj = ɵɵdefineInjector({ factory: function ControlModule_Factory(t) { return new (t || ControlModule)(ɵɵinject(ControlModule, 12)); }, providers: [
+        ...services,
+        ...pipes,
+        ...validators,
+    ], imports: [[
+            CommonModule,
+            HttpClientModule,
+            FormsModule,
+            ReactiveFormsModule,
+            CoreModule,
+        ]] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && ɵɵsetNgModuleScope(ControlModule, { declarations: [ControlsComponent,
+        ControlModuleComponent,
+        ControlOutletComponent,
+        ControlComponent, ControlCheckboxComponent, ControlEmailComponent, ControlGroupComponent, ControlInfoComponent, ControlMarkdownComponent, ControlNumberComponent, ControlPasswordComponent, ControlRadioComponent, ControlSelectComponent, ControlTextComponent, ControlTextareaComponent, UppercaseDirective,
+        ControlAccessor,
+        ExistsValidator,
+        MatchValidator], imports: [CommonModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        CoreModule], exports: [ControlsComponent,
+        ControlModuleComponent,
+        ControlOutletComponent,
+        ControlComponent, ControlCheckboxComponent, ControlEmailComponent, ControlGroupComponent, ControlInfoComponent, ControlMarkdownComponent, ControlNumberComponent, ControlPasswordComponent, ControlRadioComponent, ControlSelectComponent, ControlTextComponent, ControlTextareaComponent, UppercaseDirective,
+        ControlAccessor,
+        ExistsValidator,
+        MatchValidator] }); })();
+/*@__PURE__*/ (function () { ɵsetClassMetadata(ControlModule, [{
+        type: NgModule,
+        args: [{
                 imports: [
                     CommonModule,
                     HttpClientModule,
@@ -1376,23 +2184,23 @@ ControlModule.decorators = [
                     ...pipes,
                     ...validators,
                 ],
-            },] }
-];
-/** @nocollapse */
-ControlModule.ctorParameters = () => [
-    { type: ControlModule, decorators: [{ type: Optional }, { type: SkipSelf }] }
-];
+            }]
+    }], function () { return [{ type: ControlModule, decorators: [{
+                type: Optional
+            }, {
+                type: SkipSelf
+            }] }]; }, null); })();
+ɵɵsetComponentScope(ControlGroupComponent, [ControlsComponent,
+    ControlModuleComponent,
+    ControlOutletComponent,
+    ControlComponent, ControlCheckboxComponent, ControlEmailComponent, ControlGroupComponent, ControlInfoComponent, ControlMarkdownComponent, ControlNumberComponent, ControlPasswordComponent, ControlRadioComponent, ControlSelectComponent, ControlTextComponent, ControlTextareaComponent, UppercaseDirective,
+    ControlAccessor,
+    ExistsValidator,
+    MatchValidator, NgClass, NgComponentOutlet, NgForOf, NgIf, NgTemplateOutlet, NgStyle, NgSwitch, NgSwitchCase, NgSwitchDefault, NgPlural, NgPluralCase, ɵangular_packages_forms_forms_y, NgSelectOption, ɵangular_packages_forms_forms_x, DefaultValueAccessor, NumberValueAccessor, RangeValueAccessor, CheckboxControlValueAccessor, SelectControlValueAccessor, SelectMultipleControlValueAccessor, RadioControlValueAccessor, NgControlStatus, NgControlStatusGroup, RequiredValidator, MinLengthValidator, MaxLengthValidator, PatternValidator, CheckboxRequiredValidator, EmailValidator, NgModel, NgModelGroup, NgForm, FormControlDirective, FormGroupDirective, FormControlName, FormGroupName, FormArrayName, CoreModuleComponent, DisposableComponent, DisposableDirective, JsonFormatterComponent, LoggerComponent, OutletComponent, OutletDefaultComponent, OutletRepeaterComponent, BundleDirective, DefaultContentDirective, LabelDirective, TranslateDirective], [AsyncPipe, UpperCasePipe, LowerCasePipe, JsonPipe, SlicePipe, DecimalPipe, PercentPipe, TitleCasePipe, CurrencyPipe, DatePipe, I18nPluralPipe, I18nSelectPipe, KeyValuePipe, AssetPipe, CustomAsyncPipe, HighlightPipe, ImagePipe, ImageUrlPipe, LabelPipe, PublicPipe, RoutePipe, SafeStylePipe, SafeUrlPipe, SegmentPipe, SlugPipe, TranslatePipe, TrustPipe]);
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { ControlConfig, CONTROL_CONFIG, ControlModuleComponent, ControlModule, ControlCheckbox, ControlCheckboxComponent, ControlOption, ControlOutletComponent, ControlAccessor, ControlComponent, ControlService, ControlsComponent, ControlEmail, ControlEmailComponent, ControlGroup, ControlGroupComponent, ControlInfo, ControlInfoComponent, ControlMarkdown, ControlMarkdownComponent, ControlNumber, ControlNumberComponent, ControlPassword, ControlPasswordComponent, ControlRadio, ControlRadioComponent, ControlSelect, ControlSelectComponent, ControlText, ControlTextComponent, ControlTextarea, ControlTextareaComponent, ExistsValidator, existsValidator, MatchValidator, matchValidator, UppercaseDirective, FormService, entryComponents as ɵa, CONTROL_VALUE_ACCESSOR as ɵb };
-
+export { CONTROL_CONFIG, ControlAccessor, ControlCheckbox, ControlCheckboxComponent, ControlComponent, ControlConfig, ControlEmail, ControlEmailComponent, ControlGroup, ControlGroupComponent, ControlInfo, ControlInfoComponent, ControlMarkdown, ControlMarkdownComponent, ControlModule, ControlModuleComponent, ControlNumber, ControlNumberComponent, ControlOption, ControlOutletComponent, ControlPassword, ControlPasswordComponent, ControlRadio, ControlRadioComponent, ControlSelect, ControlSelectComponent, ControlService, ControlText, ControlTextComponent, ControlTextarea, ControlTextareaComponent, ControlsComponent, ExistsValidator, FormService, MatchValidator, UppercaseDirective, existsValidator, matchValidator };
 //# sourceMappingURL=designr-control.js.map

@@ -1,5 +1,5 @@
 /**
  * Generated bundle index. Do not edit.
  */
+/// <amd-module name="@designr/page" />
 export * from './public_api';
-export { LinkService as ɵa } from './lib/page/link.service';

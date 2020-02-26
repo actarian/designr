@@ -1,0 +1,1290 @@
+import { NavigationEnd, Router, ActivatedRoute, RouterModule } from '@angular/router';
+import { Meta, Title } from '@angular/platform-browser';
+import { isPlatformBrowser, DOCUMENT, CommonModule } from '@angular/common';
+import { DisposableComponent, RouteService, EntityService, HttpStatusCodeService, ImageType, CoreModule } from '@designr/core';
+import { of, BehaviorSubject } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { InjectionToken, Inject, Injectable, Component, NgModule, Injector, ViewEncapsulation, Input, TemplateRef, ComponentFactoryResolver, Directive, ViewContainerRef, ViewChild, defineInjectable, inject, Optional, SkipSelf, PLATFORM_ID, INJECTOR } from '@angular/core';
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+import * as ɵngcc0 from '@angular/core';
+import * as ɵngcc1 from '@angular/common';
+import * as ɵngcc2 from '@angular/platform-browser';
+import * as ɵngcc3 from '@designr/core';
+import * as ɵngcc4 from '@angular/router';
+
+function LayoutComponent_ng_container_1_Template(rf, ctx) { if (rf & 1) {
+    ɵngcc0.ɵɵelementContainer(0);
+} }
+const _c0 = ["outlet"];
+function PageOutletComponent_ng_template_0_Template(rf, ctx) { }
+class PageConfig {
+    /**
+     * @param {?=} options
+     */
+    constructor(options) {
+        this.pages = {};
+        this.layouts = {};
+        // console.log('PageConfig', options);
+        if (options) {
+            this.layouts = options.layouts || {};
+            this.defaultLayout = options.defaultLayout;
+            this.pages = options.pages || {};
+            this.defaultPage = options.defaultPage;
+            this.notFoundPage = options.notFoundPage;
+        }
+    }
+}
+/** @type {?} */
+const PAGE_CONFIG = new InjectionToken('page.config');
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ConfigService {
+    /**
+     * @param {?} options
+     */
+    constructor(options) {
+        this.options = new PageConfig(options || {});
+    }
+}
+ConfigService.ɵfac = function ConfigService_Factory(t) { return new (t || ConfigService)(ɵngcc0.ɵɵinject(PAGE_CONFIG)); };
+ConfigService.ɵprov = ɵngcc0.ɵɵdefineInjectable({ token: ConfigService, factory: ConfigService.ɵfac, providedIn: 'root' });
+/** @nocollapse */
+ConfigService.ctorParameters = () => [
+    { type: PageConfig, decorators: [{ type: Inject, args: [PAGE_CONFIG,] }] }
+];
+/** @nocollapse */ ConfigService.ngInjectableDef = defineInjectable({ factory: function ConfigService_Factory() { return new ConfigService(inject(PAGE_CONFIG)); }, token: ConfigService, providedIn: "root" });
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(ConfigService, [{
+        type: Injectable,
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: PageConfig, decorators: [{
+                type: Inject,
+                args: [PAGE_CONFIG]
+            }] }]; }, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ILayoutComponent {
+}
+ILayoutComponent.ɵfac = function ILayoutComponent_Factory(t) { return new (t || ILayoutComponent)(); };
+ILayoutComponent.ɵdir = ɵngcc0.ɵɵdefineDirective({ type: ILayoutComponent, inputs: { template: "template" } });
+ILayoutComponent.propDecorators = {
+    template: [{ type: Input }]
+};
+
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class LayoutComponent {
+}
+LayoutComponent.ɵfac = function LayoutComponent_Factory(t) { return new (t || LayoutComponent)(); };
+LayoutComponent.ɵcmp = ɵngcc0.ɵɵdefineComponent({ type: LayoutComponent, selectors: [["layout-component"]], inputs: { template: "template" }, decls: 2, vars: 2, consts: [[3, "ngClass"], [4, "ngTemplateOutlet"]], template: function LayoutComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵelementStart(0, "div", 0);
+        ɵngcc0.ɵɵtemplate(1, LayoutComponent_ng_container_1_Template, 1, 0, "ng-container", 1);
+        ɵngcc0.ɵɵelementEnd();
+    } if (rf & 2) {
+        ɵngcc0.ɵɵproperty("ngClass", ctx.page == null ? null : ctx.page.component);
+        ɵngcc0.ɵɵadvance(1);
+        ɵngcc0.ɵɵproperty("ngTemplateOutlet", ctx.template);
+    } }, directives: [ɵngcc1.NgClass, ɵngcc1.NgTemplateOutlet], encapsulation: 2 });
+LayoutComponent.propDecorators = {
+    template: [{ type: Input }]
+};
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(LayoutComponent, [{
+        type: Component,
+        args: [{
+                selector: 'layout-component',
+                template: `<div [ngClass]="page?.component">
+	<ng-container *ngTemplateOutlet="template"></ng-container>
+</div>`
+            }]
+    }], null, { template: [{
+            type: Input
+        }] }); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class PageMeta {
+}
+class PageIndex {
+    /**
+     * @param {?=} options
+     */
+    constructor(options) {
+        if (options) {
+            Object.assign(this, options);
+        }
+    }
+}
+class PageRelation {
+}
+class Page {
+    /**
+     * @param {?=} options
+     */
+    constructor(options) {
+        this.meta = {};
+        if (options) {
+            Object.assign(this, options);
+            if (options.related) {
+                /** @type {?} */
+                const related = options.related.map((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                (x) => {
+                    // const item = new PageIndex(x.page);
+                    /** @type {?} */
+                    const item = new PageIndex(x);
+                    item.relationType = x.type;
+                    return item;
+                }));
+                this.related = related;
+            }
+        }
+    }
+    /**
+     * @param {?} id
+     * @return {?}
+     */
+    getFeature(id) {
+        return this.features.find((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => x.id === id)) || null;
+    }
+    /**
+     * @param {?} type
+     * @param {?} n
+     * @return {?}
+     */
+    getFeatures(type, n) {
+        return this.features ? this.features.filter((/**
+         * @param {?} x
+         * @param {?} i
+         * @return {?}
+         */
+        (x, i) => (n.indexOf(Number(x.id)) !== -1 && x.type === type))).sort((/**
+         * @param {?} a
+         * @param {?} b
+         * @return {?}
+         */
+        (a, b) => a.type - b.type)) : [];
+    }
+    /**
+     * @param {?} type
+     * @return {?}
+     */
+    getFeaturesByTypes(type) {
+        return this.features ? this.features.filter((/**
+         * @param {?} x
+         * @return {?}
+         */
+        (x) => (type.indexOf(Number(x.type)) !== -1))) : [];
+    }
+    /**
+     * @param {?} type
+     * @return {?}
+     */
+    getGroupedFeaturesByTypes(type) {
+        /** @type {?} */
+        const groups = {};
+        type.forEach((/**
+         * @param {?} type
+         * @return {?}
+         */
+        type => {
+            /** @type {?} */
+            const group = groups[type] || { features: [] };
+            if (this.features) {
+                this.features.forEach((/**
+                 * @param {?} x
+                 * @return {?}
+                 */
+                (x) => {
+                    if (Number(x.type) === type) {
+                        group.features.push(x);
+                    }
+                }));
+            }
+            groups[type] = group;
+        }));
+        /*
+        if (this.features) {
+            this.features.forEach((x: Feature) => {
+                if (type.indexOf(Number(x.type)) !== -1) {
+                    const group = groups[x.type] || { features: [] };
+                    group.features.push(x);
+                    groups[x.type] = group;
+                }
+            });
+        }
+        */
+        return groups;
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class UseLayoutDirective {
+    /**
+     * @param {?} templateRef
+     * @param {?} viewContainerRef
+     * @param {?} componentFactoryResolver
+     * @param {?} configService
+     */
+    constructor(templateRef, viewContainerRef, componentFactoryResolver, configService) {
+        this.templateRef = templateRef;
+        this.viewContainerRef = viewContainerRef;
+        this.componentFactoryResolver = componentFactoryResolver;
+        this.configService = configService;
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        /** @type {?} */
+        const options = this.configService.options;
+        /** @type {?} */
+        const component = options.layouts[this.layoutKey] || options.defaultLayout || LayoutComponent;
+        /** @type {?} */
+        const containerFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+        this.container = this.viewContainerRef.createComponent(containerFactory);
+        this.container.instance.template = this.templateRef;
+        this.container.instance.page = this.page;
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        if (this.container) {
+            this.container.destroy();
+            this.container = null;
+        }
+    }
+}
+UseLayoutDirective.ɵfac = function UseLayoutDirective_Factory(t) { return new (t || UseLayoutDirective)(ɵngcc0.ɵɵdirectiveInject(ɵngcc0.TemplateRef), ɵngcc0.ɵɵdirectiveInject(ɵngcc0.ViewContainerRef), ɵngcc0.ɵɵdirectiveInject(ɵngcc0.ComponentFactoryResolver), ɵngcc0.ɵɵdirectiveInject(ConfigService)); };
+UseLayoutDirective.ɵdir = ɵngcc0.ɵɵdefineDirective({ type: UseLayoutDirective, selectors: [["", "useLayout", ""]], inputs: { layoutKey: ["useLayout", "layoutKey"], page: "page" } });
+/** @nocollapse */
+UseLayoutDirective.ctorParameters = () => [
+    { type: TemplateRef },
+    { type: ViewContainerRef },
+    { type: ComponentFactoryResolver },
+    { type: ConfigService }
+];
+UseLayoutDirective.propDecorators = {
+    layoutKey: [{ type: Input, args: ['useLayout',] }],
+    page: [{ type: Input }]
+};
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(UseLayoutDirective, [{
+        type: Directive,
+        args: [{
+                selector: '[useLayout]'
+            }]
+    }], function () { return [{ type: ɵngcc0.TemplateRef }, { type: ɵngcc0.ViewContainerRef }, { type: ɵngcc0.ComponentFactoryResolver }, { type: ConfigService }]; }, { layoutKey: [{
+            type: Input,
+            args: ['useLayout']
+        }], page: [{
+            type: Input
+        }] }); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class PageModuleComponent {
+    constructor() {
+        this.version = '0.0.12';
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+    }
+}
+PageModuleComponent.ɵfac = function PageModuleComponent_Factory(t) { return new (t || PageModuleComponent)(); };
+PageModuleComponent.ɵcmp = ɵngcc0.ɵɵdefineComponent({ type: PageModuleComponent, selectors: [["page-module"]], decls: 2, vars: 1, consts: [[1, "page-module"]], template: function PageModuleComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵelementStart(0, "span", 0);
+        ɵngcc0.ɵɵtext(1);
+        ɵngcc0.ɵɵelementEnd();
+    } if (rf & 2) {
+        ɵngcc0.ɵɵadvance(1);
+        ɵngcc0.ɵɵtextInterpolate1("page ", ctx.version, "");
+    } }, encapsulation: 2 });
+/** @nocollapse */
+PageModuleComponent.ctorParameters = () => [];
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(PageModuleComponent, [{
+        type: Component,
+        args: [{
+                selector: 'page-module',
+                template: `<span class="page-module">page {{version}}</span>`
+            }]
+    }], function () { return []; }, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class PageComponent extends DisposableComponent {
+    /**
+     * @param {?} injector
+     */
+    constructor(injector) {
+        super();
+        this.injector = injector;
+        this.scrollToTop();
+    }
+    /**
+     * @return {?}
+     */
+    get platformId() {
+        return (/** @type {?} */ (this.injector.get(PLATFORM_ID)));
+    }
+    /**
+     * @return {?}
+     */
+    get routeService() {
+        return this.injector.get(RouteService);
+    }
+    /**
+     * @return {?}
+     */
+    get router() {
+        return this.injector.get(Router);
+    }
+    // !!! Scroll to top on page change
+    /**
+     * @private
+     * @return {?}
+     */
+    scrollToTop() {
+        // !!! PLATFORM_ID dependancy manually activated
+        // const platformId: string = RouteService.injector.get(PLATFORM_ID) as string;
+        if (isPlatformBrowser(this.platformId)) {
+            // !!! Router dependancy manually activated
+            // const router = RouteService.injector.get(Router);
+            this.router.events.subscribe((/**
+             * @param {?} e
+             * @return {?}
+             */
+            (e) => {
+                if (!(e instanceof NavigationEnd)) {
+                    return;
+                }
+                window.scrollTo(0, 0);
+            }));
+        }
+    }
+    /**
+     * @return {?}
+     */
+    getId() {
+        return this.routeService.getId() || (this.page ? this.page.id : 0);
+    }
+    /**
+     * @return {?}
+     */
+    getSlug() {
+        return this.routeService.getSlug() || (this.page ? this.page.slug : '');
+    }
+}
+PageComponent.ɵfac = function PageComponent_Factory(t) { return new (t || PageComponent)(ɵngcc0.ɵɵdirectiveInject(ɵngcc0.Injector)); };
+PageComponent.ɵcmp = ɵngcc0.ɵɵdefineComponent({ type: PageComponent, selectors: [["core-page"]], inputs: { page: "page", params: "params", queryParams: "queryParams" }, features: [ɵngcc0.ɵɵInheritDefinitionFeature], decls: 2, vars: 0, consts: [[1, "page"]], template: function PageComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵelementStart(0, "div", 0);
+        ɵngcc0.ɵɵtext(1, "Page not found!");
+        ɵngcc0.ɵɵelementEnd();
+    } }, encapsulation: 2 });
+/** @nocollapse */
+PageComponent.ctorParameters = () => [
+    { type: Injector }
+];
+PageComponent.propDecorators = {
+    page: [{ type: Input }],
+    params: [{ type: Input }],
+    queryParams: [{ type: Input }]
+};
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(PageComponent, [{
+        type: Component,
+        args: [{
+                selector: 'core-page',
+                template: `<div class="page">Page not found!</div>`
+            }]
+    }], function () { return [{ type: ɵngcc0.Injector }]; }, { page: [{
+            type: Input
+        }], params: [{
+            type: Input
+        }], queryParams: [{
+            type: Input
+        }] }); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class PageNotFoundComponent extends PageComponent {
+    /**
+     * @param {?} injector
+     */
+    constructor(injector) {
+        super(injector);
+        this.injector = injector;
+        this.url = this.router.url;
+    }
+}
+PageNotFoundComponent.ɵfac = function PageNotFoundComponent_Factory(t) { return new (t || PageNotFoundComponent)(ɵngcc0.ɵɵdirectiveInject(ɵngcc0.Injector)); };
+PageNotFoundComponent.ɵcmp = ɵngcc0.ɵɵdefineComponent({ type: PageNotFoundComponent, selectors: [["page-not-found-component"]], features: [ɵngcc0.ɵɵInheritDefinitionFeature], decls: 5, vars: 1, consts: [[1, "page"]], template: function PageNotFoundComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵelementStart(0, "div", 0);
+        ɵngcc0.ɵɵtext(1, "Page ");
+        ɵngcc0.ɵɵelementStart(2, "span");
+        ɵngcc0.ɵɵtext(3);
+        ɵngcc0.ɵɵelementEnd();
+        ɵngcc0.ɵɵtext(4, " not found");
+        ɵngcc0.ɵɵelementEnd();
+    } if (rf & 2) {
+        ɵngcc0.ɵɵadvance(3);
+        ɵngcc0.ɵɵtextInterpolate(ctx.url);
+    } }, encapsulation: 2 });
+/** @nocollapse */
+PageNotFoundComponent.ctorParameters = () => [
+    { type: Injector }
+];
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(PageNotFoundComponent, [{
+        type: Component,
+        args: [{
+                selector: 'page-not-found-component',
+                template: `<div class="page">Page <span>{{url}}</span> not found</div>`,
+                encapsulation: ViewEncapsulation.Emulated
+            }]
+    }], function () { return [{ type: ɵngcc0.Injector }]; }, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class LinkService {
+    /**
+     * @param {?} doc
+     */
+    constructor(doc) {
+        this.doc = doc;
+    }
+    /**
+     * @param {?} definition
+     * @return {?}
+     */
+    addTag(definition) {
+        /** @type {?} */
+        const element = this.doc.createElement(`link`);
+        this.updateElementDefinition(element, definition);
+        this.doc.head.appendChild(element);
+    }
+    /**
+     * @param {?} selector
+     * @return {?}
+     */
+    getTag(selector) {
+        /** @type {?} */
+        const element = this.doc.querySelector(`link${selector}`);
+        return element;
+    }
+    /**
+     * @param {?} selector
+     * @param {?} definition
+     * @return {?}
+     */
+    updateTag(selector, definition) {
+        /** @type {?} */
+        const element = this.doc.querySelector(`link${selector}`);
+        this.updateElementDefinition(element, definition);
+    }
+    /**
+     * @param {?} selector
+     * @return {?}
+     */
+    removeTag(selector) {
+        /** @type {?} */
+        const element = this.doc.querySelector(`link${selector}`);
+        element.remove();
+    }
+    /**
+     * @param {?} element
+     * @param {?} definition
+     * @return {?}
+     */
+    updateElementDefinition(element, definition) {
+        this.updateElementAttribute(element, 'href', definition.href);
+        this.updateElementAttribute(element, 'id', definition.id);
+        this.updateElementAttribute(element, 'rel', definition.rel);
+    }
+    /**
+     * @param {?} element
+     * @param {?} attribute
+     * @param {?} value
+     * @return {?}
+     */
+    updateElementAttribute(element, attribute, value) {
+        if (value) {
+            element.setAttribute(attribute, value);
+        }
+        else {
+            element.removeAttribute(attribute);
+        }
+    }
+}
+LinkService.ɵfac = function LinkService_Factory(t) { return new (t || LinkService)(ɵngcc0.ɵɵinject(DOCUMENT)); };
+LinkService.ɵprov = ɵngcc0.ɵɵdefineInjectable({ token: LinkService, factory: LinkService.ɵfac, providedIn: 'root' });
+/** @nocollapse */
+LinkService.ctorParameters = () => [
+    { type: undefined, decorators: [{ type: Inject, args: [DOCUMENT,] }] }
+];
+/** @nocollapse */ LinkService.ngInjectableDef = defineInjectable({ factory: function LinkService_Factory() { return new LinkService(inject(DOCUMENT)); }, token: LinkService, providedIn: "root" });
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(LinkService, [{
+        type: Injectable,
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: undefined, decorators: [{
+                type: Inject,
+                args: [DOCUMENT]
+            }] }]; }, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class PageService extends EntityService {
+    /**
+     * @param {?} injector
+     * @param {?} titleService
+     * @param {?} metaService
+     * @param {?} linkService
+     * @param {?} statusCodeService
+     */
+    constructor(injector, titleService, metaService, linkService, statusCodeService) {
+        super(injector);
+        this.injector = injector;
+        this.titleService = titleService;
+        this.metaService = metaService;
+        this.linkService = linkService;
+        this.statusCodeService = statusCodeService;
+        // console.log('PageService', options);
+    }
+    /**
+     * @return {?}
+     */
+    get collection() {
+        return '/api/page';
+    }
+    /**
+     * @param {?} slug
+     * @return {?}
+     */
+    getStatePageBySlug(slug) {
+        slug = slug.split('?')[0];
+        if (slug.indexOf('/') === 0) {
+            slug = slug.substr(1);
+        }
+        return this.stateGet(`?slug=/${slug}`).pipe(map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => {
+            x = new Page(Array.isArray(x) ? x.find((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => x.slug === `/${slug}`)) : x);
+            // console.log('PageService.getStatePageBySlug', x);
+            return x;
+        })), catchError((/**
+         * @param {?} error
+         * @return {?}
+         */
+        error => {
+            // console.log('getStatePageBySlug.error', error);
+            this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
+            return of(null);
+        })));
+    }
+    /**
+     * @param {?} id
+     * @return {?}
+     */
+    getStatePageById(id) {
+        return this.stateGet(`/${id}`).pipe(
+        // tap(x => console.log('PageService.getPageById', id, x)),
+        map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => new Page(x))), catchError((/**
+         * @param {?} error
+         * @return {?}
+         */
+        error => {
+            this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
+            return of(null);
+        })));
+    }
+    /**
+     * @param {?} id
+     * @return {?}
+     */
+    getPageById(id) {
+        return this.get(`/${id}`).pipe(
+        // tap(x => console.log('PageService.getPageById', id, x)),
+        map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => new Page(x))), catchError((/**
+         * @param {?} error
+         * @return {?}
+         */
+        error => {
+            this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
+            return of(null);
+        })));
+    }
+    /**
+     * @param {?} slug
+     * @return {?}
+     */
+    getPageBySlug(slug) {
+        slug = slug.split(';')[0];
+        // console.log('PageService.getPageBySlug', slug);
+        return this.get(`?slug=/${slug}`).pipe(map((/**
+         * @param {?} x
+         * @return {?}
+         */
+        x => new Page(x))), 
+        // tap(x => this.logger.log(`found pages matching "${slug}"`))
+        // tap(x => console.log('PageService.getPageBySlug', x, slug))
+        catchError((/**
+         * @param {?} error
+         * @return {?}
+         */
+        error => {
+            // console.log('PageService.getPageBySlug.error', error);
+            this.statusCodeService.setStatusCode(error.status, error.error ? error.error.redirectUrl : null);
+            return of(null);
+        })));
+    }
+    /**
+     * @param {?} page
+     * @return {?}
+     */
+    addOrUpdateMetaData(page) {
+        // console.log('PageService.addOrUpdateMetaData', page);
+        if (!page) {
+            return;
+        }
+        this.titleService.setTitle(page.title);
+        this.addOrUpdateMeta({ property: 'og:title', content: page.title });
+        this.addOrUpdateMeta({ property: 'og:image', content: this.getSocialImage(page).url });
+        this.addOrUpdateMeta({ property: 'og:image:width', content: '1200' });
+        this.addOrUpdateMeta({ property: 'og:image:height', content: '630' });
+        this.addOrUpdateMeta({ property: 'og:url', content: page.url || this.origin });
+        /** @type {?} */
+        const meta = page.meta;
+        if (meta) {
+            this.addOrUpdateMeta({ name: 'description', content: meta.description || 'Servizio di qualità senza costi aggiuntivi con i convenienti pacchetti viaggio Eurospin. Prenota comodamente online!' });
+            this.addOrUpdateMeta({ name: 'keywords', content: meta.keywords || 'viaggi,viaggi eurospin' });
+            this.addOrUpdateMeta({ name: 'robots', content: meta.robots || 'index,follow' });
+            this.addOrUpdateMeta({ property: 'og:locale', content: meta.locale || 'it_IT' });
+            this.addOrUpdateMeta({ property: 'og:type', content: meta.type || 'article' });
+            this.addOrUpdateMeta({ property: 'og:author', content: meta.author || 'Eurospin Viaggi' });
+            this.addOrUpdateLink({ rel: 'canonical', href: meta.canonical || (this.origin.indexOf(page.url) === 0 ? null : page.url) });
+        }
+        // console.log('PageOutletComponent.addOrUpdateMetaData', page.id, page.title, page.url);
+    }
+    /**
+     * @param {?} page
+     * @return {?}
+     */
+    getSocialImage(page) {
+        /** @type {?} */
+        const image = page.images ? (page.images.find((/**
+         * @param {?} i
+         * @return {?}
+         */
+        i => i.type === ImageType.Share)) ||
+            page.images.find((/**
+             * @param {?} i
+             * @return {?}
+             */
+            i => i.type === ImageType.Default)) ||
+            page.images.find((/**
+             * @param {?} i
+             * @return {?}
+             */
+            i => i.type === ImageType.Gallery))) : null;
+        return image || (/** @type {?} */ ({
+            url: 'https://s-static.ak.fbcdn.net/images/devsite/attachment_blank.png'
+        }));
+    }
+    /**
+     * @param {?} definition
+     * @return {?}
+     */
+    addOrUpdateMeta(definition) {
+        /** @type {?} */
+        const selector = definition.name ? `name="${definition.name}"` : `property="${definition.property}"`;
+        if (this.metaService.getTag(selector)) {
+            if (definition.content) {
+                this.metaService.updateTag(definition, selector);
+            }
+            else {
+                this.metaService.removeTag(selector);
+            }
+        }
+        else if (definition.content) {
+            this.metaService.addTag(definition);
+        }
+    }
+    /**
+     * @param {?} definition
+     * @return {?}
+     */
+    addOrUpdateLink(definition) {
+        /** @type {?} */
+        const selector = definition.id ? `#${definition.id}` : `[rel="${definition.rel}"]`;
+        if (this.linkService.getTag(selector)) {
+            if (definition.href) {
+                this.linkService.updateTag(selector, definition);
+            }
+            else {
+                this.linkService.removeTag(selector);
+            }
+        }
+        else if (definition.href) {
+            this.linkService.addTag(definition);
+        }
+    }
+}
+PageService.ɵfac = function PageService_Factory(t) { return new (t || PageService)(ɵngcc0.ɵɵinject(ɵngcc0.Injector), ɵngcc0.ɵɵinject(ɵngcc2.Title), ɵngcc0.ɵɵinject(ɵngcc2.Meta), ɵngcc0.ɵɵinject(LinkService), ɵngcc0.ɵɵinject(ɵngcc3.HttpStatusCodeService)); };
+PageService.ɵprov = ɵngcc0.ɵɵdefineInjectable({ token: PageService, factory: PageService.ɵfac, providedIn: 'root' });
+/** @nocollapse */
+PageService.ctorParameters = () => [
+    { type: Injector },
+    { type: Title },
+    { type: Meta },
+    { type: LinkService },
+    { type: HttpStatusCodeService }
+];
+/** @nocollapse */ PageService.ngInjectableDef = defineInjectable({ factory: function PageService_Factory() { return new PageService(inject(INJECTOR), inject(Title), inject(Meta), inject(LinkService), inject(HttpStatusCodeService)); }, token: PageService, providedIn: "root" });
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(PageService, [{
+        type: Injectable,
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: ɵngcc0.Injector }, { type: ɵngcc2.Title }, { type: ɵngcc2.Meta }, { type: LinkService }, { type: ɵngcc3.HttpStatusCodeService }]; }, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class PageOutletComponent extends DisposableComponent {
+    /**
+     * @param {?} router
+     * @param {?} route
+     * @param {?} componentFactoryResolver
+     * @param {?} routeService
+     * @param {?} pageService
+     */
+    constructor(router, route, componentFactoryResolver, routeService, pageService) {
+        super();
+        this.router = router;
+        this.route = route;
+        this.componentFactoryResolver = componentFactoryResolver;
+        this.routeService = routeService;
+        this.pageService = pageService;
+        // !!! keep -> Avoid PageOutlet Route Caching for different routes
+        this.router.routeReuseStrategy.shouldReuseRoute = (/**
+         * @return {?}
+         */
+        () => {
+            return false;
+        });
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        this.setSnapshot(this.route.snapshot);
+    }
+    /**
+     * @param {?} snapshot
+     * @return {?}
+     */
+    setSnapshot(snapshot) {
+        this.routeService.params = this.routeService.toData(snapshot.params);
+        this.routeService.queryParams = this.routeService.toData(snapshot.queryParams);
+        /** @type {?} */
+        const data = snapshot.data;
+        /** @type {?} */
+        const params = this.routeService.params;
+        /** @type {?} */
+        const queryParams = this.routeService.queryParams;
+        /** @type {?} */
+        let component = PageNotFoundComponent;
+        if (data.pageResolver) {
+            component = data.pageResolver.component;
+            /** @type {?} */
+            const page = data.pageResolver.page;
+            /** @type {?} */
+            const factory = this.componentFactoryResolver.resolveComponentFactory(component);
+            this.viewContainerRef.clear();
+            /** @type {?} */
+            const componentRef = this.viewContainerRef.createComponent(factory);
+            /** @type {?} */
+            const instance = componentRef.instance;
+            instance.page = page;
+            instance.params = params;
+            instance.queryParams = queryParams;
+            if (typeof instance['PageInit'] === 'function') {
+                instance['PageInit']();
+            }
+            this.componentRef = componentRef;
+            if (page) {
+                /** @type {?} */
+                const config = this.router.config.slice();
+                /** @type {?} */
+                const slug = page.slug;
+                if (slug) {
+                    config.push({
+                        path: slug.indexOf('/') === 0 ? slug.substr(1) : slug, component: component,
+                    });
+                    this.router.resetConfig(config);
+                }
+                this.pageService.addOrUpdateMetaData(page);
+            }
+        } /* else {
+            // console.log('PageOutletComponent.setSnapshot 404', data);
+        }*/
+    }
+    /**
+     * @return {?}
+     */
+    ngOnDestroy() {
+        this.componentRef.destroy();
+    }
+}
+PageOutletComponent.ɵfac = function PageOutletComponent_Factory(t) { return new (t || PageOutletComponent)(ɵngcc0.ɵɵdirectiveInject(ɵngcc4.Router), ɵngcc0.ɵɵdirectiveInject(ɵngcc4.ActivatedRoute), ɵngcc0.ɵɵdirectiveInject(ɵngcc0.ComponentFactoryResolver), ɵngcc0.ɵɵdirectiveInject(ɵngcc3.RouteService), ɵngcc0.ɵɵdirectiveInject(PageService)); };
+PageOutletComponent.ɵcmp = ɵngcc0.ɵɵdefineComponent({ type: PageOutletComponent, selectors: [["page-outlet"]], viewQuery: function PageOutletComponent_Query(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵviewQuery(_c0, true, ViewContainerRef);
+    } if (rf & 2) {
+        var _t;
+        ɵngcc0.ɵɵqueryRefresh(_t = ɵngcc0.ɵɵloadQuery()) && (ctx.viewContainerRef = _t.first);
+    } }, features: [ɵngcc0.ɵɵInheritDefinitionFeature], decls: 2, vars: 0, consts: [["outlet", ""]], template: function PageOutletComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵngcc0.ɵɵtemplate(0, PageOutletComponent_ng_template_0_Template, 0, 0, "ng-template", null, 0, ɵngcc0.ɵɵtemplateRefExtractor);
+    } }, encapsulation: 2 });
+/** @nocollapse */
+PageOutletComponent.ctorParameters = () => [
+    { type: Router },
+    { type: ActivatedRoute },
+    { type: ComponentFactoryResolver },
+    { type: RouteService },
+    { type: PageService }
+];
+PageOutletComponent.propDecorators = {
+    viewContainerRef: [{ type: ViewChild, args: ['outlet', { read: ViewContainerRef },] }]
+};
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(PageOutletComponent, [{
+        type: Component,
+        args: [{
+                selector: 'page-outlet',
+                template: '<ng-template #outlet></ng-template>'
+            }]
+    }], function () { return [{ type: ɵngcc4.Router }, { type: ɵngcc4.ActivatedRoute }, { type: ɵngcc0.ComponentFactoryResolver }, { type: ɵngcc3.RouteService }, { type: PageService }]; }, { viewContainerRef: [{
+            type: ViewChild,
+            args: ['outlet', { read: ViewContainerRef }]
+        }] }); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class PageResolver {
+    /**
+     * @param {?} configService
+     * @param {?} page
+     */
+    constructor(configService, page) {
+        this.configService = configService;
+        this.page = page;
+        this.component = PageComponent;
+        if (page && this.configService.options.pages) {
+            this.component = this.configService.options.pages[page.component] || this.configService.options.defaultPage;
+        }
+        else {
+            this.component = this.configService.options.notFoundPage || PageNotFoundComponent;
+        }
+    }
+}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class PageResolverService {
+    /**
+     * @param {?} configService
+     * @param {?} pageService
+     * @param {?} routeService
+     */
+    constructor(configService, pageService, routeService) {
+        this.configService = configService;
+        this.pageService = pageService;
+        this.routeService = routeService;
+        this.events$ = new BehaviorSubject(null);
+    }
+    /**
+     * @param {?} page
+     * @return {?}
+     */
+    pageToPageResolver(page) {
+        /** @type {?} */
+        const pageResolver = new PageResolver(this.configService, page);
+        this.events$.next(pageResolver);
+        return pageResolver;
+    }
+    /**
+     * @param {?} route
+     * @param {?} state
+     * @return {?}
+     */
+    resolve(route, state) {
+        if (route.params && route.params.id) {
+            return this.getPageById(route.params.id);
+        }
+        else {
+            /** @type {?} */
+            const paths = route.url.filter((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => {
+                return x.path;
+            })).map((/**
+             * @param {?} x
+             * @return {?}
+             */
+            x => {
+                return x.path;
+            }));
+            /** @type {?} */
+            const slug = this.routeService.toSlug(paths).join('/');
+            return this.getPageBySlug(slug);
+        }
+    }
+    /**
+     * @param {?} id
+     * @return {?}
+     */
+    getPageById(id) {
+        // console.log('PageResolverService.getPageById', id);
+        return this.pageService.getPageById(id).pipe(map((/**
+         * @param {?} page
+         * @return {?}
+         */
+        page => this.pageToPageResolver(page))));
+    }
+    /**
+     * @param {?} slug
+     * @return {?}
+     */
+    getPageBySlug(slug) {
+        // console.log('PageResolverService.getPageBySlug', slug);
+        return this.pageService.getStatePageBySlug(slug).pipe(map((/**
+         * @param {?} page
+         * @return {?}
+         */
+        page => this.pageToPageResolver(page))));
+    }
+}
+PageResolverService.ɵfac = function PageResolverService_Factory(t) { return new (t || PageResolverService)(ɵngcc0.ɵɵinject(ConfigService), ɵngcc0.ɵɵinject(PageService), ɵngcc0.ɵɵinject(ɵngcc3.RouteService)); };
+PageResolverService.ɵprov = ɵngcc0.ɵɵdefineInjectable({ token: PageResolverService, factory: PageResolverService.ɵfac, providedIn: 'root' });
+/** @nocollapse */
+PageResolverService.ctorParameters = () => [
+    { type: ConfigService },
+    { type: PageService },
+    { type: RouteService }
+];
+/** @nocollapse */ PageResolverService.ngInjectableDef = defineInjectable({ factory: function PageResolverService_Factory() { return new PageResolverService(inject(ConfigService), inject(PageService), inject(RouteService)); }, token: PageResolverService, providedIn: "root" });
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(PageResolverService, [{
+        type: Injectable,
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: ConfigService }, { type: PageService }, { type: ɵngcc3.RouteService }]; }, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class PageGuard {
+    /**
+     * @private
+     * @param {?} route
+     * @return {?}
+     */
+    match(route) {
+        /** @type {?} */
+        const lastPath = route.url.length ? route.url[route.url.length - 1].path : '';
+        /** @type {?} */
+        const pattern = /\.([0-9a-z]+)(?:[\?#]|$)/i;
+        /** @type {?} */
+        const match = (lastPath).match(pattern);
+        if (match !== null) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+    /**
+     * @param {?} route
+     * @param {?} state
+     * @return {?}
+     */
+    canActivate(route, state) {
+        return this.match(route);
+    }
+    /**
+     * @param {?} component
+     * @param {?} currentRoute
+     * @param {?} currentState
+     * @param {?=} nextState
+     * @return {?}
+     */
+    canDeactivate(component, currentRoute, currentState, nextState) {
+        return this.match(currentRoute);
+    }
+}
+PageGuard.ɵfac = function PageGuard_Factory(t) { return new (t || PageGuard)(); };
+PageGuard.ɵprov = ɵngcc0.ɵɵdefineInjectable({ token: PageGuard, factory: PageGuard.ɵfac });
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(PageGuard, [{
+        type: Injectable
+    }], null, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class StaticGuard {
+    /**
+     * @private
+     * @param {?} route
+     * @return {?}
+     */
+    match(route) {
+        /** @type {?} */
+        const lastPath = route.url[route.url.length - 1].path;
+        // console.log('StaticGuard.CanActivate', e, lastPath);
+        /** @type {?} */
+        const pattern = /\.([0-9a-z]+)(?:[\?#]|$)/i;
+        /** @type {?} */
+        const match = (lastPath).match(pattern);
+        if (match !== null) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+    /**
+     * @param {?} route
+     * @param {?} state
+     * @return {?}
+     */
+    canActivate(route, state) {
+        return this.match(route);
+    }
+    /**
+     * @param {?} component
+     * @param {?} currentRoute
+     * @param {?} currentState
+     * @param {?=} nextState
+     * @return {?}
+     */
+    canDeactivate(component, currentRoute, currentState, nextState) {
+        return this.match(currentRoute);
+    }
+}
+StaticGuard.ɵfac = function StaticGuard_Factory(t) { return new (t || StaticGuard)(); };
+StaticGuard.ɵprov = ɵngcc0.ɵɵdefineInjectable({ token: StaticGuard, factory: StaticGuard.ɵfac });
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(StaticGuard, [{
+        type: Injectable
+    }], null, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const routes = [
+    { path: 'page/:id', component: PageOutletComponent, resolve: { pageResolver: PageResolverService } },
+    { path: '**', component: PageOutletComponent, resolve: { pageResolver: PageResolverService }, canActivate: [PageGuard] },
+    { path: '**', component: PageNotFoundComponent, canActivate: [StaticGuard] },
+];
+class PageRouting {
+}
+PageRouting.ɵmod = ɵngcc0.ɵɵdefineNgModule({ type: PageRouting });
+PageRouting.ɵinj = ɵngcc0.ɵɵdefineInjector({ factory: function PageRouting_Factory(t) { return new (t || PageRouting)(); }, imports: [[
+            RouterModule.forChild(routes),
+        ],
+        RouterModule] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && ɵngcc0.ɵɵsetNgModuleScope(PageRouting, { imports: function () { return [ɵngcc4.RouterModule]; }, exports: function () { return [RouterModule]; } }); })();
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(PageRouting, [{
+        type: NgModule,
+        args: [{
+                imports: [
+                    RouterModule.forChild(routes),
+                ],
+                exports: [
+                    RouterModule,
+                ]
+            }]
+    }], null, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/** @type {?} */
+const services = [
+    ConfigService,
+    PageService,
+];
+/** @type {?} */
+const components = [
+    PageModuleComponent,
+    PageComponent,
+    PageNotFoundComponent,
+    PageOutletComponent,
+    LayoutComponent,
+];
+/** @type {?} */
+const directives = [
+    UseLayoutDirective
+];
+/** @type {?} */
+const guards = [
+    PageGuard,
+    StaticGuard,
+];
+class PageModule {
+    /**
+     * @param {?} parentModule
+     */
+    constructor(parentModule) {
+        if (parentModule) {
+            throw new Error('PageModule is already loaded. Import it in the AppModule only');
+        }
+    }
+    /**
+     * @param {?=} config
+     * @return {?}
+     */
+    static forRoot(config) {
+        return {
+            ngModule: PageModule,
+            providers: [{
+                    provide: PAGE_CONFIG, useValue: config
+                }]
+        };
+    }
+}
+PageModule.ɵmod = ɵngcc0.ɵɵdefineNgModule({ type: PageModule });
+PageModule.ɵinj = ɵngcc0.ɵɵdefineInjector({ factory: function PageModule_Factory(t) { return new (t || PageModule)(ɵngcc0.ɵɵinject(PageModule, 12)); }, providers: [
+        ...services,
+        ...guards,
+    ], imports: [[
+            CommonModule,
+            CoreModule,
+            PageRouting,
+        ],
+        CoreModule,
+        PageRouting] });
+/** @nocollapse */
+PageModule.ctorParameters = () => [
+    { type: PageModule, decorators: [{ type: Optional }, { type: SkipSelf }] }
+];
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && ɵngcc0.ɵɵsetNgModuleScope(PageModule, { declarations: function () { return [PageModuleComponent,
+        PageComponent,
+        PageNotFoundComponent,
+        PageOutletComponent,
+        LayoutComponent,
+        UseLayoutDirective]; }, imports: function () { return [CommonModule,
+        CoreModule,
+        PageRouting]; }, exports: function () { return [CoreModule,
+        PageRouting,
+        PageModuleComponent,
+        PageComponent,
+        PageNotFoundComponent,
+        PageOutletComponent,
+        LayoutComponent,
+        UseLayoutDirective]; } }); })();
+/*@__PURE__*/ (function () { ɵngcc0.ɵsetClassMetadata(PageModule, [{
+        type: NgModule,
+        args: [{
+                imports: [
+                    CommonModule,
+                    CoreModule,
+                    PageRouting,
+                ],
+                providers: [
+                    ...services,
+                    ...guards,
+                ],
+                declarations: [
+                    ...components,
+                    ...directives,
+                ],
+                entryComponents: [
+                    ...components,
+                ],
+                exports: [
+                    CoreModule,
+                    PageRouting,
+                    ...components,
+                    ...directives,
+                ]
+            }]
+    }], function () { return [{ type: PageModule, decorators: [{
+                type: Optional
+            }, {
+                type: SkipSelf
+            }] }]; }, null); })();
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+
+export { ConfigService, PageConfig, PAGE_CONFIG, ILayoutComponent, LayoutComponent, UseLayoutDirective, PageModuleComponent, PageModule, PageRouting, Page, PageIndex, PageMeta, PageRelation, PageNotFoundComponent, PageOutletComponent, PageResolver, PageResolverService, PageComponent, PageGuard, PageService, StaticGuard, LinkService as ɵa };
+
+//# sourceMappingURL=designr-page.js.map

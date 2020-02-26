@@ -1,13 +1,13 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Directive, ElementRef, EventEmitter, Inject, NgZone, OnDestroy, OnInit, Output, PLATFORM_ID } from '@angular/core';
-import { DisposableComponent } from '@designr/core';
+import { DisposableDirective } from '@designr/core';
 import { fromEvent, Observable, Observer } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Directive({
 	selector: '[scroll]'
 })
-export class ScrollDirective extends DisposableComponent implements OnInit, OnDestroy {
+export class ScrollDirective extends DisposableDirective implements OnInit, OnDestroy {
 
 	private eventOptions: boolean | { capture?: boolean, passive?: boolean };
 

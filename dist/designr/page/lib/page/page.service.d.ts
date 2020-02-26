@@ -4,6 +4,7 @@ import { EntityService, HttpStatusCodeService, Image } from '@designr/core';
 import { Observable } from 'rxjs';
 import { LinkDefinition, LinkService } from './link.service';
 import { Page } from './page';
+import * as i0 from "@angular/core";
 export declare class PageService extends EntityService<Page> {
     protected injector: Injector;
     private titleService;
@@ -11,7 +12,7 @@ export declare class PageService extends EntityService<Page> {
     private linkService;
     private statusCodeService;
     page: Page;
-    readonly collection: string;
+    get collection(): string;
     constructor(injector: Injector, titleService: Title, metaService: Meta, linkService: LinkService, statusCodeService: HttpStatusCodeService);
     getStatePageBySlug(slug: string): Observable<Page>;
     getStatePageById(id: number | string): Observable<Page>;
@@ -21,4 +22,6 @@ export declare class PageService extends EntityService<Page> {
     getSocialImage(page: Page): Image;
     addOrUpdateMeta(definition: MetaDefinition): void;
     addOrUpdateLink(definition: LinkDefinition): void;
+    static ɵfac: i0.ɵɵFactoryDef<PageService>;
+    static ɵprov: i0.ɵɵInjectableDef<PageService>;
 }

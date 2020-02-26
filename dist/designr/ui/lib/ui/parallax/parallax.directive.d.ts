@@ -1,8 +1,9 @@
 import { AfterViewInit, ElementRef, NgZone } from '@angular/core';
-import { DisposableComponent } from '@designr/core';
+import { DisposableDirective } from '@designr/core';
 import { Observable } from 'rxjs';
 import { RafService } from '../raf/raf.service';
-export declare class ParallaxDirective extends DisposableComponent implements AfterViewInit {
+import * as i0 from "@angular/core";
+export declare class ParallaxDirective extends DisposableDirective implements AfterViewInit {
     private platformId;
     private zone;
     private elementRef;
@@ -15,4 +16,6 @@ export declare class ParallaxDirective extends DisposableComponent implements Af
         p: number;
     }>;
     scrollTop$(): Observable<number>;
+    static ɵfac: i0.ɵɵFactoryDef<ParallaxDirective>;
+    static ɵdir: i0.ɵɵDirectiveDefWithMeta<ParallaxDirective, "[parallax]", never, { "parallax": "parallax"; }, {}, never>;
 }

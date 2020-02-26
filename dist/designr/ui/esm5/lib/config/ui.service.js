@@ -1,7 +1,3 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 import { Inject, Injectable } from '@angular/core';
 import { UIConfig, UI_CONFIG } from './ui.config';
 import * as i0 from "@angular/core";
@@ -12,21 +8,18 @@ var UIService = /** @class */ (function () {
         options = options || {};
         this.options = new UIConfig(options);
     }
-    UIService.decorators = [
-        { type: Injectable, args: [{
-                    providedIn: 'root'
-                },] }
-    ];
-    /** @nocollapse */
-    UIService.ctorParameters = function () { return [
-        { type: UIConfig, decorators: [{ type: Inject, args: [UI_CONFIG,] }] }
-    ]; };
-    /** @nocollapse */ UIService.ngInjectableDef = i0.defineInjectable({ factory: function UIService_Factory() { return new UIService(i0.inject(i1.UI_CONFIG)); }, token: UIService, providedIn: "root" });
+    UIService.ɵfac = function UIService_Factory(t) { return new (t || UIService)(i0.ɵɵinject(UI_CONFIG)); };
+    UIService.ɵprov = i0.ɵɵdefineInjectable({ token: UIService, factory: UIService.ɵfac, providedIn: 'root' });
     return UIService;
 }());
 export { UIService };
-if (false) {
-    /** @type {?} */
-    UIService.prototype.options;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidWkuc2VydmljZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BkZXNpZ25yL3VpLyIsInNvdXJjZXMiOlsibGliL2NvbmZpZy91aS5zZXJ2aWNlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7QUFDQSxPQUFPLEVBQUUsTUFBTSxFQUFFLFVBQVUsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUNuRCxPQUFPLEVBQUUsUUFBUSxFQUFFLFNBQVMsRUFBRSxNQUFNLGFBQWEsQ0FBQzs7O0FBRWxEO0lBT0MsbUJBQ29CLE9BQWlCO1FBRXBDLHFDQUFxQztRQUNyQyxPQUFPLEdBQUcsT0FBTyxJQUFJLEVBQUUsQ0FBQztRQUN4QixJQUFJLENBQUMsT0FBTyxHQUFHLElBQUksUUFBUSxDQUFDLE9BQU8sQ0FBQyxDQUFDO0lBQ3RDLENBQUM7O2dCQWJELFVBQVUsU0FBQztvQkFDWCxVQUFVLEVBQUUsTUFBTTtpQkFDbEI7Ozs7Z0JBSlEsUUFBUSx1QkFVZCxNQUFNLFNBQUMsU0FBUzs7O29CQVpuQjtDQW1CQyxBQWZELElBZUM7U0FaWSxTQUFTOzs7SUFFckIsNEJBQXlCIiwic291cmNlc0NvbnRlbnQiOlsiXG5pbXBvcnQgeyBJbmplY3QsIEluamVjdGFibGUgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IFVJQ29uZmlnLCBVSV9DT05GSUcgfSBmcm9tICcuL3VpLmNvbmZpZyc7XG5cbkBJbmplY3RhYmxlKHtcblx0cHJvdmlkZWRJbjogJ3Jvb3QnXG59KVxuZXhwb3J0IGNsYXNzIFVJU2VydmljZSB7XG5cblx0cHVibGljIG9wdGlvbnM6IFVJQ29uZmlnO1xuXG5cdGNvbnN0cnVjdG9yKFxuXHRcdEBJbmplY3QoVUlfQ09ORklHKSBvcHRpb25zOiBVSUNvbmZpZ1xuXHQpIHtcblx0XHQvLyBjb25zb2xlLmxvZygnVUlTZXJ2aWNlJywgb3B0aW9ucyk7XG5cdFx0b3B0aW9ucyA9IG9wdGlvbnMgfHwge307XG5cdFx0dGhpcy5vcHRpb25zID0gbmV3IFVJQ29uZmlnKG9wdGlvbnMpO1xuXHR9XG5cbn1cbiJdfQ==
+/*@__PURE__*/ (function () { i0.ɵsetClassMetadata(UIService, [{
+        type: Injectable,
+        args: [{
+                providedIn: 'root'
+            }]
+    }], function () { return [{ type: i1.UIConfig, decorators: [{
+                type: Inject,
+                args: [UI_CONFIG]
+            }] }]; }, null); })();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidWkuc2VydmljZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BkZXNpZ25yL3VpLyIsInNvdXJjZXMiOlsibGliL2NvbmZpZy91aS5zZXJ2aWNlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUNBLE9BQU8sRUFBRSxNQUFNLEVBQUUsVUFBVSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQ25ELE9BQU8sRUFBRSxRQUFRLEVBQUUsU0FBUyxFQUFFLE1BQU0sYUFBYSxDQUFDOzs7QUFFbEQ7SUFPQyxtQkFDb0IsT0FBaUI7UUFFcEMscUNBQXFDO1FBQ3JDLE9BQU8sR0FBRyxPQUFPLElBQUksRUFBRSxDQUFDO1FBQ3hCLElBQUksQ0FBQyxPQUFPLEdBQUcsSUFBSSxRQUFRLENBQUMsT0FBTyxDQUFDLENBQUM7SUFDdEMsQ0FBQztzRUFWVyxTQUFTLGNBS1osU0FBUztxREFMTixTQUFTLFdBQVQsU0FBUyxtQkFGVCxNQUFNO29CQUxuQjtDQW1CQyxBQWZELElBZUM7U0FaWSxTQUFTO2tEQUFULFNBQVM7Y0FIckIsVUFBVTtlQUFDO2dCQUNYLFVBQVUsRUFBRSxNQUFNO2FBQ2xCOztzQkFNRSxNQUFNO3VCQUFDLFNBQVMiLCJzb3VyY2VzQ29udGVudCI6WyJcbmltcG9ydCB7IEluamVjdCwgSW5qZWN0YWJsZSB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgVUlDb25maWcsIFVJX0NPTkZJRyB9IGZyb20gJy4vdWkuY29uZmlnJztcblxuQEluamVjdGFibGUoe1xuXHRwcm92aWRlZEluOiAncm9vdCdcbn0pXG5leHBvcnQgY2xhc3MgVUlTZXJ2aWNlIHtcblxuXHRwdWJsaWMgb3B0aW9uczogVUlDb25maWc7XG5cblx0Y29uc3RydWN0b3IoXG5cdFx0QEluamVjdChVSV9DT05GSUcpIG9wdGlvbnM6IFVJQ29uZmlnXG5cdCkge1xuXHRcdC8vIGNvbnNvbGUubG9nKCdVSVNlcnZpY2UnLCBvcHRpb25zKTtcblx0XHRvcHRpb25zID0gb3B0aW9ucyB8fCB7fTtcblx0XHR0aGlzLm9wdGlvbnMgPSBuZXcgVUlDb25maWcob3B0aW9ucyk7XG5cdH1cblxufVxuIl19

@@ -1,4 +1,5 @@
 import { Observable } from 'rxjs';
+import * as i0 from "@angular/core";
 export declare class StorageService {
     delete(name: string): void;
     exist(name: string): boolean;
@@ -6,6 +7,8 @@ export declare class StorageService {
     set(name: string, value: any, days?: number): void;
     on(): Observable<any>;
     tryGet(): StorageService;
+    static ɵfac: i0.ɵɵFactoryDef<StorageService>;
+    static ɵprov: i0.ɵɵInjectableDef<StorageService>;
 }
 export declare class CookieStorageService implements StorageService {
     private platformId;
@@ -19,6 +22,8 @@ export declare class CookieStorageService implements StorageService {
     on(): Observable<any>;
     private setter;
     private isSupported;
+    static ɵfac: i0.ɵɵFactoryDef<CookieStorageService>;
+    static ɵprov: i0.ɵɵInjectableDef<CookieStorageService>;
 }
 export declare class SessionStorageService implements StorageService {
     private platformId;
@@ -31,6 +36,8 @@ export declare class SessionStorageService implements StorageService {
     on(): Observable<any>;
     set(name: string, value: any, days?: number): void;
     private isSupported;
+    static ɵfac: i0.ɵɵFactoryDef<SessionStorageService>;
+    static ɵprov: i0.ɵɵInjectableDef<SessionStorageService>;
 }
 export declare class LocalStorageService implements StorageService {
     private platformId;
@@ -43,4 +50,6 @@ export declare class LocalStorageService implements StorageService {
     on(): Observable<any>;
     set(name: string, value: any, days?: number): void;
     private isSupported;
+    static ɵfac: i0.ɵɵFactoryDef<LocalStorageService>;
+    static ɵprov: i0.ɵɵInjectableDef<LocalStorageService>;
 }

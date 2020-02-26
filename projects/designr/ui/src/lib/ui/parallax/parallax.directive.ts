@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { AfterViewInit, Directive, ElementRef, Inject, Input, NgZone, PLATFORM_ID } from '@angular/core';
-import { DisposableComponent } from '@designr/core';
+import { DisposableDirective } from '@designr/core';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, takeUntil, tap } from 'rxjs/operators';
 import { RafService } from '../raf/raf.service';
@@ -9,7 +9,7 @@ import Rect from '../rect/rect';
 @Directive({
 	selector: '[parallax]'
 })
-export class ParallaxDirective extends DisposableComponent implements AfterViewInit {
+export class ParallaxDirective extends DisposableDirective implements AfterViewInit {
 
 	@Input() parallax: number;
 	// @ViewChild('img', { read: HTMLImageElement }) image;

@@ -1,40 +1,29 @@
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 import { Directive, EventEmitter, HostListener, Output } from '@angular/core';
+import * as i0 from "@angular/core";
 var UppercaseDirective = /** @class */ (function () {
     function UppercaseDirective() {
         this.ngModelChange = new EventEmitter();
     }
-    /**
-     * @param {?} $event
-     * @return {?}
-     */
-    UppercaseDirective.prototype.onInputChange = /**
-     * @param {?} $event
-     * @return {?}
-     */
-    function ($event) {
+    UppercaseDirective.prototype.onInputChange = function ($event) {
         this.value = $event.target.value.toUpperCase();
         this.ngModelChange.emit(this.value);
     };
-    UppercaseDirective.decorators = [
-        { type: Directive, args: [{
-                    selector: '[ngModel][uppercase]'
-                },] }
-    ];
-    UppercaseDirective.propDecorators = {
-        ngModelChange: [{ type: Output }],
-        onInputChange: [{ type: HostListener, args: ['input', ['$event'],] }]
-    };
+    UppercaseDirective.ɵfac = function UppercaseDirective_Factory(t) { return new (t || UppercaseDirective)(); };
+    UppercaseDirective.ɵdir = i0.ɵɵdefineDirective({ type: UppercaseDirective, selectors: [["", "ngModel", "", "uppercase", ""]], hostBindings: function UppercaseDirective_HostBindings(rf, ctx) { if (rf & 1) {
+            i0.ɵɵlistener("input", function UppercaseDirective_input_HostBindingHandler($event) { return ctx.onInputChange($event); });
+        } }, outputs: { ngModelChange: "ngModelChange" } });
     return UppercaseDirective;
 }());
 export { UppercaseDirective };
-if (false) {
-    /** @type {?} */
-    UppercaseDirective.prototype.ngModelChange;
-    /** @type {?} */
-    UppercaseDirective.prototype.value;
-}
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidXBwZXJjYXNlLmRpcmVjdGl2ZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BkZXNpZ25yL2NvbnRyb2wvIiwic291cmNlcyI6WyJsaWIvZGlyZWN0aXZlcy91cHBlcmNhc2UuZGlyZWN0aXZlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7QUFBQSxPQUFPLEVBQUUsU0FBUyxFQUFFLFlBQVksRUFBRSxZQUFZLEVBQUUsTUFBTSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBRTlFO0lBQUE7UUFLVyxrQkFBYSxHQUFzQixJQUFJLFlBQVksRUFBRSxDQUFDO0lBUWpFLENBQUM7Ozs7O0lBTG1DLDBDQUFhOzs7O0lBQWhELFVBQWlELE1BQU07UUFDdEQsSUFBSSxDQUFDLEtBQUssR0FBRyxNQUFNLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxXQUFXLEVBQUUsQ0FBQztRQUMvQyxJQUFJLENBQUMsYUFBYSxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLENBQUM7SUFDckMsQ0FBQzs7Z0JBWEQsU0FBUyxTQUFDO29CQUNWLFFBQVEsRUFBRSxzQkFBc0I7aUJBQ2hDOzs7Z0NBR0MsTUFBTTtnQ0FHTixZQUFZLFNBQUMsT0FBTyxFQUFFLENBQUMsUUFBUSxDQUFDOztJQUtsQyx5QkFBQztDQUFBLEFBYkQsSUFhQztTQVZZLGtCQUFrQjs7O0lBRTlCLDJDQUFnRTs7SUFDaEUsbUNBQVciLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBEaXJlY3RpdmUsIEV2ZW50RW1pdHRlciwgSG9zdExpc3RlbmVyLCBPdXRwdXQgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcblxuQERpcmVjdGl2ZSh7XG5cdHNlbGVjdG9yOiAnW25nTW9kZWxdW3VwcGVyY2FzZV0nXG59KVxuZXhwb3J0IGNsYXNzIFVwcGVyY2FzZURpcmVjdGl2ZSB7XG5cblx0QE91dHB1dCgpIG5nTW9kZWxDaGFuZ2U6IEV2ZW50RW1pdHRlcjxhbnk+ID0gbmV3IEV2ZW50RW1pdHRlcigpO1xuXHR2YWx1ZTogYW55O1xuXG5cdEBIb3N0TGlzdGVuZXIoJ2lucHV0JywgWyckZXZlbnQnXSkgb25JbnB1dENoYW5nZSgkZXZlbnQpIHtcblx0XHR0aGlzLnZhbHVlID0gJGV2ZW50LnRhcmdldC52YWx1ZS50b1VwcGVyQ2FzZSgpO1xuXHRcdHRoaXMubmdNb2RlbENoYW5nZS5lbWl0KHRoaXMudmFsdWUpO1xuXHR9XG5cbn1cbiJdfQ==
+/*@__PURE__*/ (function () { i0.ɵsetClassMetadata(UppercaseDirective, [{
+        type: Directive,
+        args: [{
+                selector: '[ngModel][uppercase]'
+            }]
+    }], null, { ngModelChange: [{
+            type: Output
+        }], onInputChange: [{
+            type: HostListener,
+            args: ['input', ['$event']]
+        }] }); })();
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidXBwZXJjYXNlLmRpcmVjdGl2ZS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0BkZXNpZ25yL2NvbnRyb2wvIiwic291cmNlcyI6WyJsaWIvZGlyZWN0aXZlcy91cHBlcmNhc2UuZGlyZWN0aXZlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQUUsWUFBWSxFQUFFLFlBQVksRUFBRSxNQUFNLEVBQUUsTUFBTSxlQUFlLENBQUM7O0FBRTlFO0lBQUE7UUFLVyxrQkFBYSxHQUFzQixJQUFJLFlBQVksRUFBRSxDQUFDO0tBUWhFO0lBTG1DLDBDQUFhLEdBQWhELFVBQWlELE1BQU07UUFDdEQsSUFBSSxDQUFDLEtBQUssR0FBRyxNQUFNLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxXQUFXLEVBQUUsQ0FBQztRQUMvQyxJQUFJLENBQUMsYUFBYSxDQUFDLElBQUksQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLENBQUM7SUFDckMsQ0FBQzt3RkFSVyxrQkFBa0I7MkRBQWxCLGtCQUFrQjs7OzZCQUwvQjtDQWVDLEFBYkQsSUFhQztTQVZZLGtCQUFrQjtrREFBbEIsa0JBQWtCO2NBSDlCLFNBQVM7ZUFBQztnQkFDVixRQUFRLEVBQUUsc0JBQXNCO2FBQ2hDOztrQkFHQyxNQUFNOztrQkFHTixZQUFZO21CQUFDLE9BQU8sRUFBRSxDQUFDLFFBQVEsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IERpcmVjdGl2ZSwgRXZlbnRFbWl0dGVyLCBIb3N0TGlzdGVuZXIsIE91dHB1dCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5ARGlyZWN0aXZlKHtcblx0c2VsZWN0b3I6ICdbbmdNb2RlbF1bdXBwZXJjYXNlXSdcbn0pXG5leHBvcnQgY2xhc3MgVXBwZXJjYXNlRGlyZWN0aXZlIHtcblxuXHRAT3V0cHV0KCkgbmdNb2RlbENoYW5nZTogRXZlbnRFbWl0dGVyPGFueT4gPSBuZXcgRXZlbnRFbWl0dGVyKCk7XG5cdHZhbHVlOiBhbnk7XG5cblx0QEhvc3RMaXN0ZW5lcignaW5wdXQnLCBbJyRldmVudCddKSBvbklucHV0Q2hhbmdlKCRldmVudCkge1xuXHRcdHRoaXMudmFsdWUgPSAkZXZlbnQudGFyZ2V0LnZhbHVlLnRvVXBwZXJDYXNlKCk7XG5cdFx0dGhpcy5uZ01vZGVsQ2hhbmdlLmVtaXQodGhpcy52YWx1ZSk7XG5cdH1cblxufVxuIl19

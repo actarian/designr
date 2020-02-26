@@ -1,20 +1,12 @@
+import { InjectionToken, ɵɵinject, ɵɵdefineInjectable, ɵsetClassMetadata, Injectable, Inject, ɵɵdefineComponent, ɵɵelementStart, ɵɵtext, ɵɵelementEnd, ɵɵadvance, ɵɵtextInterpolate1, Component, ɵɵdefineNgModule, ɵɵdefineInjector, NgModule, ɵɵsetNgModuleScope, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreModule } from '@designr/core';
 import { HttpHeaders, HttpParams, HttpResponse, HttpXhrBackend, XhrFactory, HttpBackend, HttpClientModule } from '@angular/common/http';
-import { concatMap, first, map } from 'rxjs/operators';
+import { CoreModule } from '@designr/core';
 import { Observable, BehaviorSubject, from, of } from 'rxjs';
-import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject } from '@angular/core';
+import { first, concatMap, map } from 'rxjs/operators';
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const DATA_CONFIG = new InjectionToken('data.config');
 class DataConfig {
-    /**
-     * @param {?=} options
-     */
     constructor(options) {
         this.datas = {};
         // console.log('DataConfig', options);
@@ -24,11 +16,6 @@ class DataConfig {
     }
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const STATUS_CODE = {
     CONTINUE: 100,
     SWITCHING_PROTOCOLS: 101,
@@ -88,7 +75,6 @@ const STATUS_CODE = {
     NETWORK_AUTHENTICATION_REQUIRED: 511
 };
 /*tslint:disable:quotemark max-line-length one-line */
-/** @type {?} */
 const STATUS_CODE_INFO = {
     '100': {
         'code': 100,
@@ -485,29 +471,18 @@ const STATUS_CODE_INFO = {
 };
 /**
  * get the status text from StatusCode
- * @param {?} status
- * @return {?}
  */
 function getStatusText(status) {
     return STATUS_CODE_INFO[status].text || 'Unknown Status';
 }
 /**
  * Returns true if the the Http Status Code is 200-299 (success)
- * @param {?} status
- * @return {?}
  */
 function isSuccess(status) {
     return status >= 200 && status < 300;
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class DataService {
-    /**
-     * @param {?} config
-     */
     constructor(config
     // @Inject(forwardRef(() => DataService)) public dataService: DataService
     // private dataService: DataService,
@@ -516,77 +491,36 @@ class DataService {
         config = config || {};
         this.config = new DataConfig(config);
     }
-    /**
-     * @return {?}
-     */
     createDb() {
         // console.log('DataService.createDb', this.config.datas);
         return this.config.datas || {};
     }
-    /**
-     * @param {?} url
-     * @param {?} service
-     * @return {?}
-     */
     parseRequestUrl(url, service) {
         // !!! REMAPPING
         /*
-                if (this.dataService.config.memory && this.dataService.config.memory.remap) {
-                    Object.keys(this.dataService.config.memory.remap).forEach((k: string) => {
-                        url = url.replace(k, this.dataService.config.memory.remap[k]);
-                    });
-                }
-                */
-        /** @type {?} */
+        if (this.dataService.config.memory && this.dataService.config.memory.remap) {
+            Object.keys(this.dataService.config.memory.remap).forEach((k: string) => {
+                url = url.replace(k, this.dataService.config.memory.remap[k]);
+            });
+        }
+        */
         const parsed = service.parseRequestUrl(url);
         return parsed;
     }
-    /**
-     * @param {?} request
-     * @param {?} service
-     * @return {?}
-     */
     requestInterceptor(request, service) {
         // console.log('requestInterceptor', request);
-        /** @type {?} */
         let body;
         if (request.method === 'post') {
             switch (request.collectionName) {
                 case 'slug':
-                    /** @type {?} */
                     const mnemonics = request.body;
-                    body = request.body.map((/**
-                     * @param {?} x
-                     * @return {?}
-                     */
-                    x => request.collection.find((/**
-                     * @param {?} c
-                     * @return {?}
-                     */
-                    c => c.mnemonic === x)) || null)).filter((/**
-                     * @param {?} x
-                     * @return {?}
-                     */
-                    x => x));
+                    body = request.body.map(x => request.collection.find(c => c.mnemonic === x) || null).filter(x => x);
                     // console.log(item);
                     return { headers: request.headers, body: service.bodify(body), status: STATUS_CODE.OK };
                     break;
                 case 'label':
-                    /** @type {?} */
-                    const ids = request.body.map((/**
-                     * @param {?} x
-                     * @return {?}
-                     */
-                    x => x.id));
-                    body = request.body.map((/**
-                     * @param {?} x
-                     * @return {?}
-                     */
-                    x => request.collection.find((/**
-                     * @param {?} c
-                     * @return {?}
-                     */
-                    c => c.id === x.id)) || x));
+                    const ids = request.body.map(x => x.id);
+                    body = request.body.map(x => request.collection.find(c => c.id === x.id) || x);
                     // console.log(item);
                     return { headers: request.headers, body: service.bodify(body), status: STATUS_CODE.OK };
                     break;
@@ -595,122 +529,77 @@ class DataService {
         return null;
     }
 }
-DataService.decorators = [
-    { type: Injectable, args: [{
+DataService.ɵfac = function DataService_Factory(t) { return new (t || DataService)(ɵɵinject(DATA_CONFIG)); };
+DataService.ɵprov = ɵɵdefineInjectable({ token: DataService, factory: DataService.ɵfac, providedIn: 'root' });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(DataService, [{
+        type: Injectable,
+        args: [{
                 providedIn: 'root',
-            },] }
-];
-/** @nocollapse */
-DataService.ctorParameters = () => [
-    { type: DataConfig, decorators: [{ type: Inject, args: [DATA_CONFIG,] }] }
-];
-/** @nocollapse */ DataService.ngInjectableDef = defineInjectable({ factory: function DataService_Factory() { return new DataService(inject(DATA_CONFIG)); }, token: DataService, providedIn: "root" });
+            }]
+    }], function () { return [{ type: DataConfig, decorators: [{
+                type: Inject,
+                args: [DATA_CONFIG]
+            }] }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class DataModuleComponent {
     constructor() {
         this.version = '0.0.12';
     }
-    /**
-     * @return {?}
-     */
     ngOnInit() {
     }
 }
-DataModuleComponent.decorators = [
-    { type: Component, args: [{
+DataModuleComponent.ɵfac = function DataModuleComponent_Factory(t) { return new (t || DataModuleComponent)(); };
+DataModuleComponent.ɵcmp = ɵɵdefineComponent({ type: DataModuleComponent, selectors: [["data-module"]], decls: 2, vars: 1, consts: [[1, "data-module"]], template: function DataModuleComponent_Template(rf, ctx) { if (rf & 1) {
+        ɵɵelementStart(0, "span", 0);
+        ɵɵtext(1);
+        ɵɵelementEnd();
+    } if (rf & 2) {
+        ɵɵadvance(1);
+        ɵɵtextInterpolate1("data ", ctx.version, "");
+    } }, encapsulation: 2 });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(DataModuleComponent, [{
+        type: Component,
+        args: [{
                 selector: 'data-module',
-                template: `<span class="data-module">data {{version}}</span>`
-            }] }
-];
-/** @nocollapse */
-DataModuleComponent.ctorParameters = () => [];
+                template: `<span class="data-module">data {{version}}</span>`,
+                styles: []
+            }]
+    }], function () { return []; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * @template T
- * @param {?} response$
- * @param {?} ms
- * @return {?}
- */
 function delayResponse(response$, ms) {
-    return new Observable((/**
-     * @param {?} observer
-     * @return {?}
-     */
-    observer => {
-        /** @type {?} */
+    return new Observable(observer => {
         let complete = false;
-        /** @type {?} */
         let next = false;
-        /** @type {?} */
-        const subscription = response$.subscribe((/**
-         * @param {?} value
-         * @return {?}
-         */
-        value => {
+        const subscription = response$.subscribe(value => {
             next = true;
-            setTimeout((/**
-             * @return {?}
-             */
-            () => {
+            setTimeout(() => {
                 observer.next(value);
                 if (complete) {
                     observer.complete();
                 }
-            }), ms);
-        }), (/**
-         * @param {?} error
-         * @return {?}
-         */
-        error => {
-            setTimeout((/**
-             * @return {?}
-             */
-            () => {
+            }, ms);
+        }, error => {
+            setTimeout(() => {
                 observer.error(error);
-            }), ms);
-        }), (/**
-         * @return {?}
-         */
-        () => {
+            }, ms);
+        }, () => {
             complete = true;
             if (!next) {
                 observer.complete();
             }
-        }));
-        return (/**
-         * @return {?}
-         */
-        () => {
-            return subscription.unsubscribe();
         });
-    }));
+        return () => {
+            return subscription.unsubscribe();
+        };
+    });
 }
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
- * Return information (UriInfo) about a URI
- * @param {?} str
- * @return {?}
- */
+/** Return information (UriInfo) about a URI  */
 function parseUri(str) {
     // Adapted from parseuri package - http://blog.stevenlevithan.com/archives/parseuri
     // tslint:disable-next-line:max-line-length
-    /** @type {?} */
     const URL_REGEX = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/;
-    /** @type {?} */
     const m = URL_REGEX.exec(str);
-    /** @type {?} */
     const uri = {
         source: '',
         protocol: '',
@@ -727,119 +616,79 @@ function parseUri(str) {
         query: '',
         anchor: ''
     };
-    /** @type {?} */
     const keys = Object.keys(uri);
-    /** @type {?} */
     let i = keys.length;
     while (i--) {
         uri[keys[i]] = m[i] || '';
     }
     return uri;
 }
-/**
- * @param {?} path
- * @return {?}
- */
 function removeTrailingSlash(path) {
     return path.replace(/\/$/, '');
 }
 /**
- * Interface for a class that creates an in-memory database
- *
- * Its `createDb` method creates a hash of named collections that represents the database
- *
- * For maximum flexibility, the service may define HTTP method overrides.
- * Such methods must match the spelling of an HTTP method in lower case (e.g, "get").
- * If a request has a matching method, it will be called as in
- * `get(info: requestInfo, db: {})` where `db` is the database object described above.
- * @abstract
- */
+* Interface for a class that creates an in-memory database
+*
+* Its `createDb` method creates a hash of named collections that represents the database
+*
+* For maximum flexibility, the service may define HTTP method overrides.
+* Such methods must match the spelling of an HTTP method in lower case (e.g, "get").
+* If a request has a matching method, it will be called as in
+* `get(info: requestInfo, db: {})` where `db` is the database object described above.
+*/
 class MemoryDataService {
 }
 /////////////////////////////////
 /**
- *  MemoryBackendConfig configuration options
- *  Usage:
- *    MemoryModule.forRoot(InMemHeroService, {delay: 600})
- *
- *  or if providing separately:
- *    provide(MemoryBackendConfig, {useValue: {delay: 600}}),
- */
+*  MemoryBackendConfig configuration options
+*  Usage:
+*    MemoryModule.forRoot(InMemHeroService, {delay: 600})
+*
+*  or if providing separately:
+*    provide(MemoryBackendConfig, {useValue: {delay: 600}}),
+*/
 class MemoryBackendConfig {
-    /**
-     * @param {?=} config
-     */
     constructor(config = {}) {
         Object.assign(this, {
             // default config:
             caseSensitiveSearch: false,
             dataEncapsulation: false,
-            // do NOT wrap content within an object with a `data` property
             delay: 500,
-            // simulate latency by delaying response
             delete404: false,
-            // don't complain if can't find entity to delete
             passThruUnknownUrl: false,
-            // 404 if can't process URL
             post204: true,
-            // don't return the item after a POST
             post409: false,
-            // don't update existing item with that ID
             put204: true,
-            // don't return the item after a PUT
             put404: false,
-            // create new item if PUT item with that ID not found
             apiBase: undefined,
-            // assumed to be the first path segment
             host: undefined,
-            // default value is actually set in MemoryBackendConfig ctor
             rootPath: undefined // default value is actually set in MemoryBackendConfig ctor
         }, config);
     }
 }
-MemoryBackendConfig.decorators = [
-    { type: Injectable }
-];
-/** @nocollapse */
-MemoryBackendConfig.ctorParameters = () => [
-    { type: MemoryBackendConfig }
-];
+MemoryBackendConfig.ɵfac = function MemoryBackendConfig_Factory(t) { return new (t || MemoryBackendConfig)(ɵɵinject(MemoryBackendConfig)); };
+MemoryBackendConfig.ɵprov = ɵɵdefineInjectable({ token: MemoryBackendConfig, factory: MemoryBackendConfig.ɵfac });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(MemoryBackendConfig, [{
+        type: Injectable
+    }], function () { return [{ type: MemoryBackendConfig }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
 class BackendService {
-    /**
-     * @param {?} dataService
-     * @param {?=} config
-     * @param {?=} factory
-     */
     constructor(dataService, config = {}, factory) {
         this.dataService = dataService;
         this.factory = factory;
         this.config = new MemoryBackendConfig();
-        /** @type {?} */
         const location = this.getLocation('/');
         this.config.host = location.host; // default to app web server host
         this.config.rootPath = location.path; // default to path when app is served (e.g.'/')
         Object.assign(this.config, config);
     }
-    /**
-     * @protected
-     * @return {?}
-     */
     get databaseReady() {
         if (!this.databaseReadySubject) {
             // first time the service is called.
             this.databaseReadySubject = new BehaviorSubject(false);
             this.resetDb();
         }
-        return this.databaseReadySubject.asObservable().pipe(first((/**
-         * @param {?} ready
-         * @return {?}
-         */
-        (ready) => ready)));
+        return this.databaseReadySubject.asObservable().pipe(first((ready) => ready));
     }
     /**
      * Process Request and return an Observable of Http Response object
@@ -864,36 +713,20 @@ class BackendService {
      *     `dataService.get(memoryRequest)`
      *     which must return either an Observable of the response type
      *     for this http library or null|undefined (which means "keep processing").
-     * @protected
-     * @param {?} request
-     * @return {?}
      */
     handleRequest(request) {
         //  handle the request when there is an in-memory database
-        return this.databaseReady.pipe(concatMap((/**
-         * @return {?}
-         */
-        () => this.handleRequest_(request))));
+        return this.databaseReady.pipe(concatMap(() => this.handleRequest_(request)));
     }
-    /**
-     * @protected
-     * @param {?} request
-     * @return {?}
-     */
     handleRequest_(request) {
-        /** @type {?} */
         const url = request.urlWithParams ? request.urlWithParams : request.url;
         // Try override parser
         // If no override parser or it returns nothing, use default parser
         // const parser = this.bind('parseRequestUrl');
         // const parsed: ParsedRequestUrl = (parser && parser(url, this)) || this.parseRequestUrl(url);
-        /** @type {?} */
         const parsed = this.parseRequestUrl(url);
-        /** @type {?} */
         const collectionName = parsed.collectionName;
-        /** @type {?} */
         const collection = this.database[collectionName];
-        /** @type {?} */
         const memoryRequest = {
             request: request,
             body: request.body,
@@ -908,38 +741,28 @@ class BackendService {
             url: url,
         };
         // If `dataService.requestInterceptor` exists, let it morph the response options
-        /** @type {?} */
         const interceptor = this.bind('requestInterceptor');
         if (/commands\/?$/i.test(memoryRequest.apiBase)) {
             return this.commands(memoryRequest);
         }
-        /** @type {?} */
         const methodInterceptor = this.bind(memoryRequest.method);
         if (methodInterceptor) {
             // MemoryDataService intercepts this HTTP method.
             // if interceptor produced a response, return it.
             // else MemoryDataService chose not to intercept; continue processing.
-            /** @type {?} */
             const interceptorResponse = methodInterceptor(memoryRequest);
             if (interceptorResponse) {
                 return interceptorResponse;
             }
         }
         // !!!
-        /** @type {?} */
         let response = interceptor ? interceptor(memoryRequest, this) : null;
         if (response) {
-            return this.createResponse$((/**
-             * @return {?}
-             */
-            () => response));
+            return this.createResponse$(() => response);
         }
         if (this.database[collectionName]) {
             // request is for a known collection of the MemoryDataService
-            return this.createResponse$((/**
-             * @return {?}
-             */
-            () => this.collectionHandler(memoryRequest)));
+            return this.createResponse$(() => this.collectionHandler(memoryRequest));
         }
         if (this.config.passThruUnknownUrl) {
             // unknown collection; pass request thru to a "real" backend.
@@ -947,10 +770,7 @@ class BackendService {
         }
         // 404 - can't handle this request
         response = this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, `Collection '${collectionName}' not found`);
-        return this.createResponse$((/**
-         * @return {?}
-         */
-        () => response));
+        return this.createResponse$(() => response);
     }
     /**
      * Parses the request URL into a `ParsedRequestUrl` object.
@@ -968,17 +788,11 @@ class BackendService {
      * The following api base strings are considered identical: 'a/b' ~ 'some/api/' ~ `two/segments'
      *
      * To replace this default method, assign your alternative to your MemoryDataService['parseRequestUrl']
-     * @protected
-     * @param {?} url
-     * @return {?}
      */
     parseRequestUrl(url) {
         try {
-            /** @type {?} */
             const location = this.getLocation(url);
-            /** @type {?} */
             let drop = this.config.rootPath.length;
-            /** @type {?} */
             let urlRoot = '';
             if (location.host !== this.config.host) {
                 // url for a server on a different host!
@@ -986,17 +800,13 @@ class BackendService {
                 drop = 1; // the leading slash
                 urlRoot = location.protocol + '//' + location.host + '/';
             }
-            /** @type {?} */
             const path = location.path.substring(drop);
-            /** @type {?} */
             const pathSegments = path.split('/');
-            /** @type {?} */
             let segmentIx = 0;
             // apiBase: the front part of the path devoted to getting to the api route
             // Assumes first path segment if no config.apiBase
             // else ignores as many path segments as are in config.apiBase
             // Does NOT care what the api base chars actually are.
-            /** @type {?} */
             let apiBase;
             // tslint:disable-next-line:triple-equals
             if (this.config.apiBase == undefined) {
@@ -1012,50 +822,33 @@ class BackendService {
                 }
             }
             apiBase += '/';
-            /** @type {?} */
             let collectionName = pathSegments[segmentIx++];
             // ignore anything after a '.' (e.g.,the "json" in "customers.json")
             collectionName = collectionName && collectionName.split('.')[0];
-            /** @type {?} */
             const id = pathSegments[segmentIx++];
-            /** @type {?} */
             const query = this.createQueryMap(location.query);
-            /** @type {?} */
             const resourceUrl = urlRoot + apiBase + collectionName + '/';
             return { apiBase, collectionName, id, query, resourceUrl };
         }
         catch (error) {
-            /** @type {?} */
             const message = `unable to parse url '${url}'; original error: ${error.message}`;
             throw new Error(message);
         }
     }
-    /**
-     * Parse the id as a number. Return original value if not a number.
-     * @protected
-     * @param {?} collection
-     * @param {?} collectionName
-     * @param {?} id
-     * @return {?}
-     */
+    /** Parse the id as a number. Return original value if not a number. */
     parseId(collection, collectionName, id) {
         if (!this.isCollectionIdNumeric(collection, collectionName)) {
             // Can't confirm that `id` is a numeric type; don't parse as a number
             // or else `'42'` -> `42` and _get by id_ fails.
             return id;
         }
-        /** @type {?} */
         const idNum = parseFloat(id);
         return isNaN(idNum) ? id : idNum;
     }
     /**
      * Add configured delay to response observable unless delay === 0
-     * @protected
-     * @param {?} response
-     * @return {?}
      */
     addDelay(response) {
-        /** @type {?} */
         const delay = this.config.delay;
         return delay === 0 ? response : delayResponse(response, delay || 500);
     }
@@ -1063,91 +856,48 @@ class BackendService {
      * Apply query/search parameters as a filter over the collection
      * This impl only supports RegExp queries on string properties of the collection
      * ANDs the conditions together
-     * @protected
-     * @param {?} collection
-     * @param {?} query
-     * @return {?}
      */
     applyQuery(collection, query) {
         // extract filtering conditions - {propertyName, RegExps) - from query/search parameters
-        /** @type {?} */
         const conditions = [];
-        /** @type {?} */
         const caseSensitive = this.config.caseSensitiveSearch ? undefined : 'i';
-        query.forEach((/**
-         * @param {?} value
-         * @param {?} name
-         * @return {?}
-         */
-        (value, name) => {
-            value.forEach((/**
-             * @param {?} x
-             * @return {?}
-             */
-            x => conditions.push({
+        query.forEach((value, name) => {
+            value.forEach(x => conditions.push({
                 name,
                 regexp: new RegExp(decodeURI(x), caseSensitive)
-            })));
-        }));
-        /** @type {?} */
+            }));
+        });
         const length = conditions.length;
         if (!length) {
             return collection;
         }
         // AND the RegExp conditions
-        return collection.filter((/**
-         * @param {?} row
-         * @return {?}
-         */
-        row => {
-            /** @type {?} */
+        return collection.filter(row => {
             let has = true;
-            /** @type {?} */
             let i = length;
             while (has && i) {
                 i -= 1;
-                /** @type {?} */
                 const cond = conditions[i];
                 has = cond.regexp.test(row[cond.name]);
             }
             return has;
-        }));
+        });
     }
     /**
      * Get a method from the `MemoryDataService` (if it exists), bound to that service
-     * @protected
-     * @template T
-     * @param {?} methodName
-     * @return {?}
      */
     bind(methodName) {
-        /** @type {?} */
-        const method = (/** @type {?} */ (this.dataService[methodName]));
-        return method ? (/** @type {?} */ (method.bind(this.dataService))) : undefined;
+        const method = this.dataService[methodName];
+        return method ? method.bind(this.dataService) : undefined;
     }
-    /**
-     * @param {?} data
-     * @return {?}
-     */
     bodify(data) {
         return this.config.dataEncapsulation ? { data } : data;
     }
-    /**
-     * @protected
-     * @param {?} data
-     * @return {?}
-     */
     clone(data) {
         return JSON.parse(JSON.stringify(data));
     }
-    /**
-     * @protected
-     * @param {?} request
-     * @return {?}
-     */
     collectionHandler(request) {
         // const request = request.request;
-        /** @type {?} */
         let response;
         switch (request.method) {
             case 'get':
@@ -1167,17 +917,10 @@ class BackendService {
                 break;
         }
         // If `dataService.responseInterceptor` exists, let it morph the response options
-        /** @type {?} */
         const interceptor = this.bind('responseInterceptor');
         // !!!
         return interceptor ? interceptor(response, request) : response;
     }
-    /**
-     * @param {?} url
-     * @param {?} status
-     * @param {?} message
-     * @return {?}
-     */
     createErrorResponse(url, status, message) {
         return {
             body: {
@@ -1192,31 +935,20 @@ class BackendService {
     }
     /**
      * Create a cold response Observable from a factory for MemoryResponse
-     * @protected
-     * @param {?} memoryResponseFactory - creates MemoryResponse when observable is subscribed
-     * @param {?=} withDelay - if true (default), add simulated latency delay from configuration
-     * @return {?}
+     * @param memoryResponseFactory - creates MemoryResponse when observable is subscribed
+     * @param withDelay - if true (default), add simulated latency delay from configuration
      */
     createResponse$(memoryResponseFactory, withDelay = true) {
-        /** @type {?} */
         const memoryResponse$ = this.createMemoryResponse$(memoryResponseFactory);
-        /** @type {?} */
         const response$ = this.createResponse$fromMemoryResponse$(memoryResponse$);
         return withDelay ? this.addDelay(response$) : response$;
     }
     /**
      * Create a cold Observable of MemoryResponse.
-     * @protected
-     * @param {?} memoryResponseFactory - creates MemoryResponse when observable is subscribed
-     * @return {?}
+     * @param memoryResponseFactory - creates MemoryResponse when observable is subscribed
      */
     createMemoryResponse$(memoryResponseFactory) {
-        return new Observable((/**
-         * @param {?} observer
-         * @return {?}
-         */
-        (observer) => {
-            /** @type {?} */
+        return new Observable((observer) => {
             let response;
             try {
                 response = memoryResponseFactory();
@@ -1225,7 +957,6 @@ class BackendService {
                 error = error.message || error;
                 response = this.createErrorResponse('', STATUS_CODE.INTERNAL_SERVER_ERROR, `${error}`);
             }
-            /** @type {?} */
             const status = response.status;
             try {
                 response.statusText = getStatusText(status);
@@ -1238,42 +969,26 @@ class BackendService {
             else {
                 observer.error(response);
             }
-            return (/**
-             * @return {?}
-             */
-            () => { }); // unsubscribe function
-        }));
+            return () => { }; // unsubscribe function
+        });
     }
     /**
      * Find first instance of item in collection by `item.id`
-     * @protected
-     * @template T
-     * @param {?} collection
-     * @param {?} id
-     * @return {?}
+     * @param collection
+     * @param id
      */
     findById(collection, id) {
-        return collection.find((/**
-         * @param {?} item
-         * @return {?}
-         */
-        (item) => item.id === id));
+        return collection.find((item) => item.id === id);
     }
     /**
      * Generate the next available id for item in this collection
      * Use method from `dataService` if it exists and returns a value,
      * else delegates to `genIdDefault`.
-     * @protected
-     * @template T
-     * @param {?} collection - collection of items with `id` key property
-     * @param {?} collectionName
-     * @return {?}
+     * @param collection - collection of items with `id` key property
      */
     genId(collection, collectionName) {
-        /** @type {?} */
         const genId = this.bind('genId');
         if (genId) {
-            /** @type {?} */
             const id = genId(collection, collectionName);
             // tslint:disable-next-line:triple-equals
             if (id != undefined) {
@@ -1285,41 +1000,27 @@ class BackendService {
     /**
      * Default generator of the next available id for item in this collection
      * This default implementation works only for numeric ids.
-     * @protected
-     * @template T
-     * @param {?} collection - collection of items with `id` key property
-     * @param {?} collectionName - name of the collection
-     * @return {?}
+     * @param collection - collection of items with `id` key property
+     * @param collectionName - name of the collection
      */
     genIdDefault(collection, collectionName) {
         if (!this.isCollectionIdNumeric(collection, collectionName)) {
             throw new Error(`Collection '${collectionName}' id type is non-numeric or unknown. Can only generate numeric ids.`);
         }
-        /** @type {?} */
         let maxId = 0;
-        collection.reduce((/**
-         * @param {?} prev
-         * @param {?} item
-         * @return {?}
-         */
-        (prev, item) => {
+        collection.reduce((prev, item) => {
             maxId = Math.max(maxId, typeof item.id === 'number' ? item.id : maxId);
-        }), undefined);
+        }, undefined);
         return maxId + 1;
     }
     /**
      * Get location info from a url, even on server where `document` is not defined
-     * @protected
-     * @param {?} url
-     * @return {?}
      */
     getLocation(url) {
         if (!url.startsWith('http')) {
             // get the document if running in browser
-            /** @type {?} */
             const document_ = (typeof document === 'undefined') ? undefined : document;
             // add host info to url before parsing.  Use a fake host when not in browser.
-            /** @type {?} */
             const base = document_ ? document_.location.protocol + '//' + document_.location.host : 'http://fake';
             url = url.startsWith('/') ? base + url : base + '/' + url;
         }
@@ -1328,49 +1029,24 @@ class BackendService {
     /**
      * get or create the function that passes unhandled requests
      * through to the "real" backend.
-     * @protected
-     * @return {?}
      */
     getPassThruBackend() {
         return this.passThruBackend ? this.passThruBackend : this.passThruBackend = this.createPassThruBackend();
     }
-    /**
-     * @protected
-     * @param {?} collection
-     * @param {?} id
-     * @return {?}
-     */
     indexOf(collection, id) {
-        return collection.findIndex((/**
-         * @param {?} item
-         * @return {?}
-         */
-        (item) => item.id === id));
+        return collection.findIndex((item) => item.id === id);
     }
     /**
      * return true if can determine that the collection's `item.id` is a number
      * This implementation can't tell if the collection is empty so it assumes NO
-     *
-     * @protected
-     * @template T
-     * @param {?} collection
-     * @param {?} collectionName
-     * @return {?}
-     */
+     * */
     isCollectionIdNumeric(collection, collectionName) {
         // collectionName not used now but override might maintain collection type information
         // so that it could know the type of the `id` even when the collection is empty.
         // return !!(collection && collection[0]) && typeof collection[0].id === 'number';
         return !!(collection && collection[0]);
     }
-    /**
-     * @protected
-     * @param {?} collection
-     * @param {?} id
-     * @return {?}
-     */
     removeById(collection, id) {
-        /** @type {?} */
         const index = this.indexOf(collection, id);
         if (index > -1) {
             collection.splice(index, 1);
@@ -1381,26 +1057,17 @@ class BackendService {
     /**
      * Tell your in-mem "database" to reset.
      * returns Observable of the database because resetting it could be async
-     * @protected
-     * @param {?=} request
-     * @return {?}
      */
     resetDb(request) {
         this.databaseReadySubject.next(false);
-        /** @type {?} */
         const database = this.dataService.createDb(request);
-        /** @type {?} */
         const database$ = database instanceof Observable ? database :
-            typeof ((/** @type {?} */ (database))).then === 'function' ? from((/** @type {?} */ (database))) :
+            typeof database.then === 'function' ? from(database) :
                 of(database);
-        database$.pipe(first()).subscribe((/**
-         * @param {?} database
-         * @return {?}
-         */
-        (database) => {
+        database$.pipe(first()).subscribe((database) => {
             this.database = database;
             this.databaseReadySubject.next(true);
-        }));
+        });
         return this.databaseReady;
     }
     /**
@@ -1419,29 +1086,17 @@ class BackendService {
      *   http.post('commands/resetdb', undefined);
      *   http.get('commands/config');
      *   http.post('commands/config', '{"delay":1000}');
-     * @protected
-     * @param {?} request
-     * @return {?}
      */
     commands(request) {
-        /** @type {?} */
         const command = request.collectionName.toLowerCase();
-        /** @type {?} */
         const method = request.method;
-        /** @type {?} */
         let response = {
             url: request.url
         };
         switch (command) {
             case 'resetdb':
                 response.status = STATUS_CODE.NO_CONTENT;
-                return this.resetDb(request).pipe(concatMap((/**
-                 * @return {?}
-                 */
-                () => this.createResponse$((/**
-                 * @return {?}
-                 */
-                () => response), false /* no latency delay */))));
+                return this.resetDb(request).pipe(concatMap(() => this.createResponse$(() => response, false /* no latency delay */)));
             case 'config':
                 if (method === 'get') {
                     response.status = STATUS_CODE.OK;
@@ -1449,7 +1104,6 @@ class BackendService {
                     // any other HTTP method is assumed to be a config update
                 }
                 else {
-                    /** @type {?} */
                     const body = request.request.body;
                     Object.assign(this.config, body);
                     this.passThruBackend = undefined; // re-create when needed
@@ -1459,18 +1113,9 @@ class BackendService {
             default:
                 response = this.createErrorResponse(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, `Unknown command "${command}"`);
         }
-        return this.createResponse$((/**
-         * @return {?}
-         */
-        () => response), false /* no latency delay */);
+        return this.createResponse$(() => response, false /* no latency delay */);
     }
-    /**
-     * @protected
-     * @param {?} __0
-     * @return {?}
-     */
     get({ collection, collectionName, headers, id, query, url }) {
-        /** @type {?} */
         let data = collection;
         // tslint:disable-next-line:triple-equals
         if (id != undefined && id !== '') {
@@ -1493,15 +1138,8 @@ class BackendService {
     }
     // Create entity
     // Can update an existing entity too if post409 is false.
-    /**
-     * @protected
-     * @param {?} __0
-     * @return {?}
-     */
     post({ collection, collectionName, headers, id, request, resourceUrl, url }) {
-        /** @type {?} */
         const requestBody = request.body;
-        /** @type {?} */
         const item = this.clone(requestBody);
         // tslint:disable-next-line:triple-equals
         if (item.id == undefined) {
@@ -1509,7 +1147,6 @@ class BackendService {
                 item.id = id || this.genId(collection, collectionName);
             }
             catch (error) {
-                /** @type {?} */
                 const message = error.message || '';
                 if (/id type is non-numeric/.test(message)) {
                     return this.createErrorResponse(url, STATUS_CODE.UNPROCESSABLE_ENTRY, message);
@@ -1526,9 +1163,7 @@ class BackendService {
         else {
             id = item.id;
         }
-        /** @type {?} */
         const existingIx = this.indexOf(collection, id);
-        /** @type {?} */
         const body = this.bodify(item);
         if (existingIx === -1) {
             collection.push(item);
@@ -1547,13 +1182,7 @@ class BackendService {
     }
     // Update existing entity
     // Can create an entity too if put404 is false.
-    /**
-     * @protected
-     * @param {?} __0
-     * @return {?}
-     */
     put({ collection, collectionName, headers, id, request, url }) {
-        /** @type {?} */
         const item = this.clone(request.body);
         // tslint:disable-next-line:triple-equals
         if (item.id == undefined) {
@@ -1565,9 +1194,7 @@ class BackendService {
         else {
             id = item.id;
         }
-        /** @type {?} */
         const existingIx = this.indexOf(collection, id);
-        /** @type {?} */
         const body = this.bodify(item);
         if (existingIx > -1) {
             collection[existingIx] = item;
@@ -1585,17 +1212,11 @@ class BackendService {
             return { headers, body, status: STATUS_CODE.CREATED };
         }
     }
-    /**
-     * @protected
-     * @param {?} __0
-     * @return {?}
-     */
     delete({ collection, collectionName, headers, id, url }) {
         // tslint:disable-next-line:triple-equals
         if (id == undefined) {
             return this.createErrorResponse(url, STATUS_CODE.NOT_FOUND, `Missing "${collectionName}" id`);
         }
-        /** @type {?} */
         const exists = this.removeById(collection, id);
         return {
             headers: headers,
@@ -1603,58 +1224,26 @@ class BackendService {
         };
     }
     ///////
-    /**
-     * @param {?} request
-     * @return {?}
-     */
     handle(request) {
         try {
             return this.handleRequest(request);
         }
         catch (error) {
-            /** @type {?} */
             const response = this.createErrorResponse(request.url, STATUS_CODE.INTERNAL_SERVER_ERROR, `${error.message || error}`);
-            return this.createResponse$((/**
-             * @return {?}
-             */
-            () => response));
+            return this.createResponse$(() => response);
         }
     }
-    /**
-     * @protected
-     * @param {?} search
-     * @return {?}
-     */
     createQueryMap(search) {
-        /** @type {?} */
-        const map$$1 = new Map();
+        const map = new Map();
         if (search) {
-            /** @type {?} */
             const params = new HttpParams({ fromString: search });
-            params.keys().forEach((/**
-             * @param {?} p
-             * @return {?}
-             */
-            p => map$$1.set(p, params.getAll(p))));
+            params.keys().forEach(p => map.set(p, params.getAll(p)));
         }
-        return map$$1;
+        return map;
     }
-    /**
-     * @protected
-     * @param {?} response$
-     * @return {?}
-     */
     createResponse$fromMemoryResponse$(response$) {
-        return response$.pipe(map((/**
-         * @param {?} options
-         * @return {?}
-         */
-        (options) => new HttpResponse(options))));
+        return response$.pipe(map((options) => new HttpResponse(options)));
     }
-    /**
-     * @protected
-     * @return {?}
-     */
     createPassThruBackend() {
         try {
             return new HttpXhrBackend(this.factory);
@@ -1665,39 +1254,20 @@ class BackendService {
         }
     }
 }
-BackendService.decorators = [
-    { type: Injectable }
-];
-/** @nocollapse */
-BackendService.ctorParameters = () => [
-    { type: MemoryDataService },
-    { type: MemoryBackendConfig },
-    { type: XhrFactory }
-];
+BackendService.ɵfac = function BackendService_Factory(t) { return new (t || BackendService)(ɵɵinject(MemoryDataService), ɵɵinject(MemoryBackendConfig), ɵɵinject(XhrFactory)); };
+BackendService.ɵprov = ɵɵdefineInjectable({ token: BackendService, factory: BackendService.ɵfac });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(BackendService, [{
+        type: Injectable
+    }], function () { return [{ type: MemoryDataService }, { type: MemoryBackendConfig }, { type: XhrFactory }]; }, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
+////// HttpClient-Only version ////
 // Internal - Creates the in-mem backend for the HttpClient module
 // AoT requires factory to be exported
-/**
- * @param {?} dataService
- * @param {?} config
- * @param {?} factory
- * @return {?}
- */
 function BackendServiceFactory(dataService, config, factory) {
-    /** @type {?} */
     const backend = new BackendService(dataService, config, factory);
     return backend;
 }
 class MemoryModule {
-    /**
-     * @param {?} dataService
-     * @param {?=} config
-     * @return {?}
-     */
     static forRoot(dataService, config) {
         return {
             ngModule: MemoryModule,
@@ -1708,44 +1278,33 @@ class MemoryModule {
             ]
         };
     }
-    /**
-     * @param {?} dataService
-     * @param {?=} config
-     * @return {?}
-     */
     static forFeature(dataService, config) {
         return MemoryModule.forRoot(dataService, config);
     }
 }
-MemoryModule.decorators = [
-    { type: NgModule, args: [{},] }
-];
+MemoryModule.ɵmod = ɵɵdefineNgModule({ type: MemoryModule });
+MemoryModule.ɵinj = ɵɵdefineInjector({ factory: function MemoryModule_Factory(t) { return new (t || MemoryModule)(); } });
+/*@__PURE__*/ (function () { ɵsetClassMetadata(MemoryModule, [{
+        type: NgModule,
+        args: [{}]
+    }], null, null); })();
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/** @type {?} */
 const services = [
     DataService,
 ];
-/** @type {?} */
 const components = [
     DataModuleComponent,
 ];
+const directives = [];
+const pipes = [];
+const validators = [];
+const guards = [];
 class DataModule {
-    /**
-     * @param {?} parentModule
-     */
     constructor(parentModule) {
         if (parentModule) {
             throw new Error('DataModule is already loaded. Import it in the AppModule only');
         }
     }
-    /**
-     * @param {?=} config
-     * @return {?}
-     */
     static forRoot(config) {
         return {
             ngModule: DataModule,
@@ -1756,8 +1315,26 @@ class DataModule {
         };
     }
 }
-DataModule.decorators = [
-    { type: NgModule, args: [{
+DataModule.ɵmod = ɵɵdefineNgModule({ type: DataModule });
+DataModule.ɵinj = ɵɵdefineInjector({ factory: function DataModule_Factory(t) { return new (t || DataModule)(ɵɵinject(DataModule, 12)); }, providers: [
+        ...services,
+    ], imports: [[
+            CommonModule,
+            HttpClientModule,
+            MemoryModule,
+            CoreModule,
+        ],
+        MemoryModule,
+        CoreModule] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && ɵɵsetNgModuleScope(DataModule, { declarations: [DataModuleComponent], imports: [CommonModule,
+        HttpClientModule,
+        MemoryModule,
+        CoreModule], exports: [MemoryModule,
+        CoreModule,
+        DataModuleComponent] }); })();
+/*@__PURE__*/ (function () { ɵsetClassMetadata(DataModule, [{
+        type: NgModule,
+        args: [{
                 imports: [
                     CommonModule,
                     HttpClientModule,
@@ -1775,23 +1352,16 @@ DataModule.decorators = [
                     CoreModule,
                     ...components,
                 ],
-            },] }
-];
-/** @nocollapse */
-DataModule.ctorParameters = () => [
-    { type: DataModule, decorators: [{ type: Optional }, { type: SkipSelf }] }
-];
+            }]
+    }], function () { return [{ type: DataModule, decorators: [{
+                type: Optional
+            }, {
+                type: SkipSelf
+            }] }]; }, null); })();
 
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ * Generated bundle index. Do not edit.
  */
 
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-
-export { DataConfig, DATA_CONFIG, DataService, DataModuleComponent, DataModule, MemoryBackendConfig as ɵd, MemoryDataService as ɵc, BackendServiceFactory as ɵa, MemoryModule as ɵb };
-
+export { DATA_CONFIG, DataConfig, DataModule, DataModuleComponent, DataService, MemoryModule };
 //# sourceMappingURL=designr-data.js.map

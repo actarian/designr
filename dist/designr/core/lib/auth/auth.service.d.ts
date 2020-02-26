@@ -1,6 +1,7 @@
 import { Injector } from '@angular/core';
 import { AuthToken } from './auth';
 import { LocalStorageService } from '../storage/storage.service';
+import * as i0 from "@angular/core";
 export declare class AuthService {
     private platformId;
     private injector;
@@ -15,4 +16,6 @@ export declare class AuthService {
     isAuthenticated(): boolean;
     collectFailedRequest(request: any): void;
     retryFailedRequests(): void;
+    static ɵfac: i0.ɵɵFactoryDef<AuthService>;
+    static ɵprov: i0.ɵɵInjectableDef<AuthService>;
 }

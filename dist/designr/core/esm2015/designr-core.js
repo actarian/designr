@@ -1,11 +1,5 @@
 /**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-/**
  * Generated bundle index. Do not edit.
  */
-export { ApiRequestOptions, ApiService, AuthStrategy, AuthToken, AuthService, BUNDLES, CoreConfig, CORE_CONFIG, CoreService, DefaultContentDirective, CoreModuleComponent, CoreModule, DisposableComponent, HighlightPipe, HttpResponseInterceptor, HttpStatusCodeService, JsonFormatterComponent, Label, LabelDirective, LabelPipe, LabelService, LoggerErrorStrategy, LoggerComponent, Logger, Document, DocumentIndex, DocumentService, Entity, EntityService, EventDispatcherService, Feature, Identity, IdentityService, Image, ImageType, MenuItem, MenuService, Taxonomy, OnceService, Outlet, OUTLETS, OutletDefaultComponent, OutletRepeaterComponent, OutletComponent, AssetPipe, CustomAsyncPipe, ImageUrlPipe, ImagePipe, PublicPipe, SegmentPipe, RoutePipe, RouteService, SlugPipe, SlugService, CookieStorageService, LocalStorageService, SessionStorageService, StorageService, Translate, TranslateDirective, TranslatePipe, TranslateService, SafeStylePipe, SafeUrlPipe, TrustPipe } from './public_api';
-export { BundleDirective as ɵc } from './lib/bundle/bundle.directive';
-export { OutletResolverService as ɵb } from './lib/outlet/outlet-resolver.service';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGVzaWduci1jb3JlLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQGRlc2lnbnIvY29yZS8iLCJzb3VyY2VzIjpbImRlc2lnbnItY29yZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7O0FBSUEsODhCQUFjLGNBQWMsQ0FBQztBQUU3QixPQUFPLEVBQUMsZUFBZSxJQUFJLEVBQUUsRUFBQyxNQUFNLCtCQUErQixDQUFDO0FBRXBFLE9BQU8sRUFBQyxxQkFBcUIsSUFBSSxFQUFFLEVBQUMsTUFBTSxzQ0FBc0MsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbIi8qKlxuICogR2VuZXJhdGVkIGJ1bmRsZSBpbmRleC4gRG8gbm90IGVkaXQuXG4gKi9cblxuZXhwb3J0ICogZnJvbSAnLi9wdWJsaWNfYXBpJztcblxuZXhwb3J0IHtCdW5kbGVEaXJlY3RpdmUgYXMgybVjfSBmcm9tICcuL2xpYi9idW5kbGUvYnVuZGxlLmRpcmVjdGl2ZSc7XG5leHBvcnQge091dGxldHMgYXMgybVhfSBmcm9tICcuL2xpYi9vdXRsZXQvb3V0bGV0JztcbmV4cG9ydCB7T3V0bGV0UmVzb2x2ZXJTZXJ2aWNlIGFzIMm1Yn0gZnJvbSAnLi9saWIvb3V0bGV0L291dGxldC1yZXNvbHZlci5zZXJ2aWNlJzsiXX0=
+export * from './public_api';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGVzaWduci1jb3JlLmpzIiwic291cmNlUm9vdCI6Im5nOi8vQGRlc2lnbnIvY29yZS8iLCJzb3VyY2VzIjpbImRlc2lnbnItY29yZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7R0FFRztBQUVILGNBQWMsY0FBYyxDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLyoqXG4gKiBHZW5lcmF0ZWQgYnVuZGxlIGluZGV4LiBEbyBub3QgZWRpdC5cbiAqL1xuXG5leHBvcnQgKiBmcm9tICcuL3B1YmxpY19hcGknO1xuIl19

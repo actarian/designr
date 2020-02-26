@@ -1,32 +1,10 @@
 (function (global, factory) {
-    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/forms'), require('@angular/common/http'), require('@angular/router'), require('json-formatter-js'), require('util'), require('@angular/platform-browser'), require('@angular/common'), require('@angular/core'), require('rxjs'), require('rxjs/operators')) :
-    typeof define === 'function' && define.amd ? define('@designr/core', ['exports', '@angular/forms', '@angular/common/http', '@angular/router', 'json-formatter-js', 'util', '@angular/platform-browser', '@angular/common', '@angular/core', 'rxjs', 'rxjs/operators'], factory) :
-    (factory((global.designr = global.designr || {}, global.designr.core = {}),global.ng.forms,global.ng.common.http,global.ng.router,global.JSONFormatter,global.util,global.ng.platformBrowser,global.ng.common,global.ng.core,global.rxjs,global.rxjs.operators));
-}(this, (function (exports,forms,http,i4,JSONFormatter,util,i1,i1$1,i0,rxjs,operators) { 'use strict';
+    typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('@angular/common'), require('@angular/common/http'), require('@angular/core'), require('@angular/platform-browser'), require('rxjs'), require('rxjs/operators'), require('@angular/forms'), require('@angular/router'), require('json-formatter-js'), require('util')) :
+    typeof define === 'function' && define.amd ? define('@designr/core', ['exports', '@angular/common', '@angular/common/http', '@angular/core', '@angular/platform-browser', 'rxjs', 'rxjs/operators', '@angular/forms', '@angular/router', 'json-formatter-js', 'util'], factory) :
+    (global = global || self, factory((global.designr = global.designr || {}, global.designr.core = {}), global.ng.common, global.ng.common.http, global.ng.core, global.ng.platformBrowser, global.rxjs, global.rxjs.operators, global.ng.forms, global.ng.router, global.JSONFormatter, global.util));
+}(this, (function (exports, common, http, core, platformBrowser, rxjs, operators, forms, router, JSONFormatter, util) { 'use strict';
 
     JSONFormatter = JSONFormatter && JSONFormatter.hasOwnProperty('default') ? JSONFormatter['default'] : JSONFormatter;
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @enum {number} */
-    var AuthStrategy = {
-        Bearer: 0,
-        Cookie: 1,
-    };
-    AuthStrategy[AuthStrategy.Bearer] = 'Bearer';
-    AuthStrategy[AuthStrategy.Cookie] = 'Cookie';
-    var AuthToken = /** @class */ (function () {
-        function AuthToken(accessToken, expiresIn) {
-            if (expiresIn === void 0) {
-                expiresIn = 0;
-            }
-            this.accessToken = accessToken;
-            this.expiresIn = expiresIn;
-        }
-        return AuthToken;
-    }());
 
     /*! *****************************************************************************
     Copyright (c) Microsoft Corporation. All rights reserved.
@@ -43,68 +21,227 @@
     and limitations under the License.
     ***************************************************************************** */
     /* global Reflect, Promise */
-    var extendStatics = function (d, b) {
+
+    var extendStatics = function(d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b)
-                if (b.hasOwnProperty(p))
-                    d[p] = b[p]; };
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
         return extendStatics(d, b);
     };
+
     function __extends(d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     }
+
+    var __assign = function() {
+        __assign = Object.assign || function __assign(t) {
+            for (var s, i = 1, n = arguments.length; i < n; i++) {
+                s = arguments[i];
+                for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+            }
+            return t;
+        };
+        return __assign.apply(this, arguments);
+    };
+
+    function __rest(s, e) {
+        var t = {};
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+            t[p] = s[p];
+        if (s != null && typeof Object.getOwnPropertySymbols === "function")
+            for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+                if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                    t[p[i]] = s[p[i]];
+            }
+        return t;
+    }
+
+    function __decorate(decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    }
+
+    function __param(paramIndex, decorator) {
+        return function (target, key) { decorator(target, key, paramIndex); }
+    }
+
+    function __metadata(metadataKey, metadataValue) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+    }
+
+    function __awaiter(thisArg, _arguments, P, generator) {
+        function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+        return new (P || (P = Promise))(function (resolve, reject) {
+            function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+            function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+            function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+            step((generator = generator.apply(thisArg, _arguments || [])).next());
+        });
+    }
+
+    function __generator(thisArg, body) {
+        var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+        return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+        function verb(n) { return function (v) { return step([n, v]); }; }
+        function step(op) {
+            if (f) throw new TypeError("Generator is already executing.");
+            while (_) try {
+                if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+                if (y = 0, t) op = [op[0] & 2, t.value];
+                switch (op[0]) {
+                    case 0: case 1: t = op; break;
+                    case 4: _.label++; return { value: op[1], done: false };
+                    case 5: _.label++; y = op[1]; op = [0]; continue;
+                    case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                    default:
+                        if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                        if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                        if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                        if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                        if (t[2]) _.ops.pop();
+                        _.trys.pop(); continue;
+                }
+                op = body.call(thisArg, _);
+            } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+            if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+        }
+    }
+
+    function __exportStar(m, exports) {
+        for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+    }
+
+    function __values(o) {
+        var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+        if (m) return m.call(o);
+        if (o && typeof o.length === "number") return {
+            next: function () {
+                if (o && i >= o.length) o = void 0;
+                return { value: o && o[i++], done: !o };
+            }
+        };
+        throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+    }
+
     function __read(o, n) {
         var m = typeof Symbol === "function" && o[Symbol.iterator];
-        if (!m)
-            return o;
+        if (!m) return o;
         var i = m.call(o), r, ar = [], e;
         try {
-            while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-                ar.push(r.value);
+            while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
         }
-        catch (error) {
-            e = { error: error };
-        }
+        catch (error) { e = { error: error }; }
         finally {
             try {
-                if (r && !r.done && (m = i["return"]))
-                    m.call(i);
+                if (r && !r.done && (m = i["return"])) m.call(i);
             }
-            finally {
-                if (e)
-                    throw e.error;
-            }
+            finally { if (e) throw e.error; }
         }
         return ar;
     }
+
     function __spread() {
         for (var ar = [], i = 0; i < arguments.length; i++)
             ar = ar.concat(__read(arguments[i]));
         return ar;
     }
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @enum {number} */
-    var LoggerErrorStrategy = {
-        Informational: 100,
-        Success: 200,
-        Redirect: 300,
-        Client: 400,
-        Server: 500,
-        None: 999,
+    function __spreadArrays() {
+        for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+        for (var r = Array(s), k = 0, i = 0; i < il; i++)
+            for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+                r[k] = a[j];
+        return r;
     };
-    LoggerErrorStrategy[LoggerErrorStrategy.Informational] = 'Informational';
-    LoggerErrorStrategy[LoggerErrorStrategy.Success] = 'Success';
-    LoggerErrorStrategy[LoggerErrorStrategy.Redirect] = 'Redirect';
-    LoggerErrorStrategy[LoggerErrorStrategy.Client] = 'Client';
-    LoggerErrorStrategy[LoggerErrorStrategy.Server] = 'Server';
-    LoggerErrorStrategy[LoggerErrorStrategy.None] = 'None';
+
+    function __await(v) {
+        return this instanceof __await ? (this.v = v, this) : new __await(v);
+    }
+
+    function __asyncGenerator(thisArg, _arguments, generator) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var g = generator.apply(thisArg, _arguments || []), i, q = [];
+        return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+        function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+        function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+        function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+        function fulfill(value) { resume("next", value); }
+        function reject(value) { resume("throw", value); }
+        function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+    }
+
+    function __asyncDelegator(o) {
+        var i, p;
+        return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+        function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+    }
+
+    function __asyncValues(o) {
+        if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+        var m = o[Symbol.asyncIterator], i;
+        return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+        function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+        function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+    }
+
+    function __makeTemplateObject(cooked, raw) {
+        if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+        return cooked;
+    };
+
+    function __importStar(mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+        result.default = mod;
+        return result;
+    }
+
+    function __importDefault(mod) {
+        return (mod && mod.__esModule) ? mod : { default: mod };
+    }
+
+    function __classPrivateFieldGet(receiver, privateMap) {
+        if (!privateMap.has(receiver)) {
+            throw new TypeError("attempted to get private field on non-instance");
+        }
+        return privateMap.get(receiver);
+    }
+
+    function __classPrivateFieldSet(receiver, privateMap, value) {
+        if (!privateMap.has(receiver)) {
+            throw new TypeError("attempted to set private field on non-instance");
+        }
+        privateMap.set(receiver, value);
+        return value;
+    }
+
+    (function (AuthStrategy) {
+        AuthStrategy[AuthStrategy["Bearer"] = 0] = "Bearer";
+        AuthStrategy[AuthStrategy["Cookie"] = 1] = "Cookie";
+    })(exports.AuthStrategy || (exports.AuthStrategy = {}));
+    var AuthToken = /** @class */ (function () {
+        function AuthToken(accessToken, expiresIn) {
+            if (expiresIn === void 0) { expiresIn = 0; }
+            this.accessToken = accessToken;
+            this.expiresIn = expiresIn;
+        }
+        return AuthToken;
+    }());
+
+
+    (function (LoggerErrorStrategy) {
+        LoggerErrorStrategy[LoggerErrorStrategy["Informational"] = 100] = "Informational";
+        LoggerErrorStrategy[LoggerErrorStrategy["Success"] = 200] = "Success";
+        LoggerErrorStrategy[LoggerErrorStrategy["Redirect"] = 300] = "Redirect";
+        LoggerErrorStrategy[LoggerErrorStrategy["Client"] = 400] = "Client";
+        LoggerErrorStrategy[LoggerErrorStrategy["Server"] = 500] = "Server";
+        LoggerErrorStrategy[LoggerErrorStrategy["None"] = 999] = "None";
+    })(exports.LoggerErrorStrategy || (exports.LoggerErrorStrategy = {}));
     var LoggerError = /** @class */ (function (_super) {
         __extends(LoggerError, _super);
         function LoggerError(response) {
@@ -117,20 +254,14 @@
             }) || this;
         }
         Object.defineProperty(LoggerError.prototype, "statusType", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 var _this = this;
-                return Object.keys(LoggerErrorStrategy).reduce(( /**
-                 * @param {?} type
-                 * @param {?} key
-                 * @return {?}
-                 */function (type, key) {
-                    if (_this.status >= LoggerErrorStrategy[key]) {
+                return Object.keys(exports.LoggerErrorStrategy).reduce(function (type, key) {
+                    if (_this.status >= exports.LoggerErrorStrategy[key]) {
                         type = key.toLowerCase();
                     }
                     return type;
-                }), null);
+                }, null);
             },
             enumerable: true,
             configurable: true
@@ -138,10 +269,11 @@
         return LoggerError;
     }(http.HttpErrorResponse));
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
+    var Language = /** @class */ (function () {
+        function Language() {
+        }
+        return Language;
+    }());
     var CoreTransitionConfig = /** @class */ (function () {
         function CoreTransitionConfig(options) {
             // console.log('CoreTransitionConfig', options);
@@ -154,10 +286,10 @@
     var CoreConfig = /** @class */ (function () {
         function CoreConfig(options) {
             this.assets = '';
-            this.authStrategy = AuthStrategy.Cookie;
+            this.authStrategy = exports.AuthStrategy.Cookie;
             this.defaultLanguage = 'it';
             this.defaultMarket = 'it';
-            this.loggerErrorStrategy = LoggerErrorStrategy.Server;
+            this.loggerErrorStrategy = exports.LoggerErrorStrategy.Server;
             this.languages = [{ id: 1, name: 'Italiano', lang: 'it' }];
             this.origin = '';
             this.production = false;
@@ -176,13 +308,8 @@
         }
         return CoreConfig;
     }());
-    /** @type {?} */
-    var CORE_CONFIG = new i0.InjectionToken('core.config');
+    var CORE_CONFIG = new core.InjectionToken('core.config');
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var CoreService = /** @class */ (function () {
         function CoreService(options) {
             // console.log('CoreService', options);
@@ -191,184 +318,114 @@
             // options.notFoundPage = (options.notFoundPage || PageNotFoundComponent) as Type<PageComponent>;
             this.options = new CoreConfig(options);
         }
-        CoreService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        CoreService.ctorParameters = function () {
-            return [
-                { type: CoreConfig, decorators: [{ type: i0.Inject, args: [CORE_CONFIG,] }] }
-            ];
-        };
-        /** @nocollapse */ CoreService.ngInjectableDef = i0.defineInjectable({ factory: function CoreService_Factory() { return new CoreService(i0.inject(CORE_CONFIG)); }, token: CoreService, providedIn: "root" });
+        CoreService.ɵfac = function CoreService_Factory(t) { return new (t || CoreService)(core["ɵɵinject"](CORE_CONFIG)); };
+        CoreService.ɵprov = core["ɵɵdefineInjectable"]({ token: CoreService, factory: CoreService.ɵfac, providedIn: 'root' });
         return CoreService;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](CoreService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: CoreConfig, decorators: [{
+                    type: core.Inject,
+                    args: [CORE_CONFIG]
+                }] }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var Logger = /** @class */ (function () {
         function Logger(coreService) {
             this.coreService = coreService;
             this.logs = [];
             //
         }
-        /**
-         * @param {...?} args
-         * @return {?}
-         */
-        Logger.prototype.request = /**
-         * @param {...?} args
-         * @return {?}
-         */
-            function () {
-                var args = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    args[_i] = arguments[_i];
-                }
-                if (!this.coreService.options.production) {
-                    /** @type {?} */
-                    var s = args.join(', ');
-                    this.logs.push(s);
-                    // console.log.apply(this, ['%c %s', 'background: #dddddd; color: #111'].concat(args));
-                }
-            };
-        /**
-         * @param {...?} args
-         * @return {?}
-         */
-        Logger.prototype.log = /**
-         * @param {...?} args
-         * @return {?}
-         */
-            function () {
-                var args = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    args[_i] = arguments[_i];
-                }
-                if (!this.coreService.options.production) {
-                    /** @type {?} */
-                    var s = args.join(', ');
-                    this.logs.push(s);
-                    console.log.apply(this, ['%c%s', 'background: #1976d2; color: #fff; border-radius: 3px; padding: 4px 8px; margin-bottom: 4px;'].concat(args));
-                }
-            };
-        /**
-         * @param {...?} args
-         * @return {?}
-         */
-        Logger.prototype.warn = /**
-         * @param {...?} args
-         * @return {?}
-         */
-            function () {
-                var args = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    args[_i] = arguments[_i];
-                }
-                if (!this.coreService.options.production) {
-                    /** @type {?} */
-                    var s = args.join(', ');
-                    this.logs.push(s);
-                    console.log.apply(this, ['%c%s', 'background: #ff5500; color: #fff'].concat(args));
-                }
-            };
-        /**
-         * @param {...?} args
-         * @return {?}
-         */
-        Logger.prototype.error = /**
-         * @param {...?} args
-         * @return {?}
-         */
-            function () {
-                var args = [];
-                for (var _i = 0; _i < arguments.length; _i++) {
-                    args[_i] = arguments[_i];
-                }
-                if (!this.coreService.options.production) {
-                    /** @type {?} */
-                    var s = args.join(', ');
-                    this.logs.push(s);
-                    console.error.apply(console, args);
-                }
-            };
-        /**
-         * @param {?} response
-         * @return {?}
-         */
-        Logger.prototype.http = /**
-         * @param {?} response
-         * @return {?}
-         */
-            function (response) {
-                this.httpError = new LoggerError(response);
-                if (!this.coreService.options.production) {
-                    this.logs.push(this.httpError.message);
-                }
-                console.warn('Logger.http.response', response.status, response.statusText, response.url);
-            };
-        /**
-         * @return {?}
-         */
-        Logger.prototype.clear = /**
-         * @return {?}
-         */
-            function () {
-                this.httpError = null;
-                this.logs = [];
-            };
-        Logger.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        Logger.ctorParameters = function () {
-            return [
-                { type: CoreService }
-            ];
+        Logger.prototype.request = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            if (!this.coreService.options.production) {
+                var s = args.join(', ');
+                this.logs.push(s);
+                // console.log.apply(this, ['%c %s', 'background: #dddddd; color: #111'].concat(args));
+            }
         };
-        /** @nocollapse */ Logger.ngInjectableDef = i0.defineInjectable({ factory: function Logger_Factory() { return new Logger(i0.inject(CoreService)); }, token: Logger, providedIn: "root" });
+        Logger.prototype.log = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            if (!this.coreService.options.production) {
+                var s = args.join(', ');
+                this.logs.push(s);
+                console.log.apply(this, ['%c%s', 'background: #1976d2; color: #fff; border-radius: 3px; padding: 4px 8px; margin-bottom: 4px;'].concat(args));
+            }
+        };
+        Logger.prototype.warn = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            if (!this.coreService.options.production) {
+                var s = args.join(', ');
+                this.logs.push(s);
+                console.log.apply(this, ['%c%s', 'background: #ff5500; color: #fff'].concat(args));
+            }
+        };
+        Logger.prototype.error = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i] = arguments[_i];
+            }
+            if (!this.coreService.options.production) {
+                var s = args.join(', ');
+                this.logs.push(s);
+                console.error.apply(console, args);
+            }
+        };
+        Logger.prototype.http = function (response) {
+            this.httpError = new LoggerError(response);
+            if (!this.coreService.options.production) {
+                this.logs.push(this.httpError.message);
+            }
+            console.warn('Logger.http.response', response.status, response.statusText, response.url);
+        };
+        Logger.prototype.clear = function () {
+            this.httpError = null;
+            this.logs = [];
+        };
+        Logger.ɵfac = function Logger_Factory(t) { return new (t || Logger)(core["ɵɵinject"](CoreService)); };
+        Logger.ɵprov = core["ɵɵdefineInjectable"]({ token: Logger, factory: Logger.ɵfac, providedIn: 'root' });
         return Logger;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](Logger, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: CoreService }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var ApiRequestOptions = /** @class */ (function () {
         function ApiRequestOptions(params) {
             this.headers = new http.HttpHeaders({
                 'Content-Type': 'application/json'
             });
-            this.params = ( /** @type {?} */(params));
+            this.params = params;
         }
         return ApiRequestOptions;
     }());
-    /**
-     * @template T
-     */
     var ApiService = /** @class */ (function () {
         function ApiService(injector) {
             this.injector = injector;
         }
         Object.defineProperty(ApiService.prototype, "collection", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return '/api';
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(ApiService.prototype, "logger", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 if (!this._logger) {
                     this._logger = this.injector.get(Logger);
                 }
@@ -378,9 +435,7 @@
             configurable: true
         });
         Object.defineProperty(ApiService.prototype, "http", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 if (!this._http) {
                     this._http = this.injector.get(http.HttpClient);
                 }
@@ -390,11 +445,9 @@
             configurable: true
         });
         Object.defineProperty(ApiService.prototype, "state", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 if (!this._state) {
-                    this._state = this.injector.get(i1.TransferState);
+                    this._state = this.injector.get(platformBrowser.TransferState);
                 }
                 return this._state;
             },
@@ -402,11 +455,9 @@
             configurable: true
         });
         Object.defineProperty(ApiService.prototype, "platformId", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 if (!this._platformId) {
-                    this._platformId = this.injector.get(i0.PLATFORM_ID);
+                    this._platformId = this.injector.get(core.PLATFORM_ID);
                 }
                 return this._platformId;
             },
@@ -414,9 +465,7 @@
             configurable: true
         });
         Object.defineProperty(ApiService.prototype, "config", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 if (!this._config) {
                     this._config = this.injector.get(CoreService).options;
                 }
@@ -426,9 +475,7 @@
             configurable: true
         });
         Object.defineProperty(ApiService.prototype, "origin", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 if (!this._origin) {
                     this._origin = this.config.origin;
                 }
@@ -438,12 +485,8 @@
             configurable: true
         });
         Object.defineProperty(ApiService.prototype, "url", {
-            get: /**
-             * @return {?}
-             */ function () {
-                /** @type {?} */
+            get: function () {
                 var base = this.origin;
-                /** @type {?} */
                 var collection = this.collection.toLowerCase();
                 if (collection.indexOf('http') === 0) {
                     base = '';
@@ -453,357 +496,154 @@
             enumerable: true,
             configurable: true
         });
-        /**
-         * @param {?=} method
-         * @return {?}
-         */
-        ApiService.prototype.getUrl = /**
-         * @param {?=} method
-         * @return {?}
-         */
-            function (method) {
-                if (method === void 0) {
-                    method = '';
-                }
-                return "" + this.url + method;
-            };
-        /**
-         * @param {?=} first
-         * @param {?=} second
-         * @return {?}
-         */
-        ApiService.prototype.get = /**
-         * @param {?=} first
-         * @param {?=} second
-         * @return {?}
-         */
-            function (first, second) {
-                var _this = this;
-                /** @type {?} */
-                var method = (typeof first === 'string' ? first : '');
-                /** @type {?} */
-                var params = (typeof first === 'object' ? first : second);
-                /** @type {?} */
-                var url = this.getUrl(method);
-                /** @type {?} */
-                var options = new ApiRequestOptions(params);
-                return this.http.get(url, options).pipe(operators.tap(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return _this.logger.request(url); })));
-            };
-        /**
-         * @param {?} first
-         * @param {?=} second
-         * @param {?=} third
-         * @return {?}
-         */
-        ApiService.prototype.post = /**
-         * @param {?} first
-         * @param {?=} second
-         * @param {?=} third
-         * @return {?}
-         */
-            function (first, second, third) {
-                var _this = this;
-                /** @type {?} */
-                var method = (typeof first === 'string' ? first : '');
-                /** @type {?} */
-                var model = (typeof first === 'object' ? first : second);
-                /** @type {?} */
-                var params = (typeof second === 'object' ? second : third);
-                /** @type {?} */
-                var url = this.getUrl(method);
-                /** @type {?} */
-                var options = new ApiRequestOptions(params);
-                return this.http.post(url, model, options).pipe(operators.tap(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return _this.logger.request(url); })));
-            };
-        /**
-         * @param {?} first
-         * @param {?=} second
-         * @param {?=} third
-         * @return {?}
-         */
-        ApiService.prototype.put = /**
-         * @param {?} first
-         * @param {?=} second
-         * @param {?=} third
-         * @return {?}
-         */
-            function (first, second, third) {
-                var _this = this;
-                /** @type {?} */
-                var method = (typeof first === 'string' ? first : '');
-                /** @type {?} */
-                var model = ( /** @type {?} */((typeof first === 'object' ? first : second)));
-                /** @type {?} */
-                var params = (typeof second === 'object' ? second : third);
-                /** @type {?} */
-                var url = this.getUrl(method);
-                /** @type {?} */
-                var options = new ApiRequestOptions(params);
-                return this.http.put(url, model, options).pipe(operators.tap(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return _this.logger.request(url); })));
-            };
-        /**
-         * @param {?} first
-         * @param {?=} second
-         * @param {?=} third
-         * @return {?}
-         */
-        ApiService.prototype.patch = /**
-         * @param {?} first
-         * @param {?=} second
-         * @param {?=} third
-         * @return {?}
-         */
-            function (first, second, third) {
-                var _this = this;
-                /** @type {?} */
-                var method = (typeof first === 'string' ? first : '');
-                /** @type {?} */
-                var model = ( /** @type {?} */((typeof first === 'object' ? first : second)));
-                /** @type {?} */
-                var params = (typeof second === 'object' ? second : third);
-                /** @type {?} */
-                var url = this.getUrl(method);
-                /** @type {?} */
-                var options = new ApiRequestOptions(params);
-                return this.http.patch(url, model, options).pipe(operators.tap(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return _this.logger.request(url); })));
-            };
-        /**
-         * @param {?} first
-         * @param {?=} second
-         * @param {?=} third
-         * @return {?}
-         */
-        ApiService.prototype.delete = /**
-         * @param {?} first
-         * @param {?=} second
-         * @param {?=} third
-         * @return {?}
-         */
-            function (first, second, third) {
-                var _this = this;
-                /** @type {?} */
-                var method = (typeof first === 'string' ? first : '');
-                /** @type {?} */
-                var identity = ( /** @type {?} */((typeof first !== 'string' ? first : second)));
-                /** @type {?} */
-                var id = identity ? (typeof identity === 'number' ? identity : (( /** @type {?} */(identity))).id) : null;
-                /** @type {?} */
-                var params = (typeof second === 'object' ? second : third);
-                /** @type {?} */
-                var url = id !== null ? this.getUrl(method + "/" + id) : this.getUrl(method);
-                /** @type {?} */
-                var options = new ApiRequestOptions(params);
-                return this.http.delete(url, options).pipe(operators.tap(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return _this.logger.request(url); })));
-            };
-        /**
-         * @param {?} input
-         * @return {?}
-         */
-        ApiService.prototype.toCamelCase = /**
-         * @param {?} input
-         * @return {?}
-         */
-            function (input) {
-                var _this = this;
-                /** @type {?} */
-                var output;
-                /** @type {?} */
-                var key;
-                /** @type {?} */
-                var keyCamelCase;
-                /** @type {?} */
-                var value;
-                if (input instanceof Array) {
-                    return input.map(( /**
-                     * @param {?} value
-                     * @return {?}
-                     */function (value) {
-                        if (typeof value === 'object') {
-                            value = _this.toCamelCase(value);
-                        }
-                        return value;
-                    }));
-                }
-                else {
-                    output = {};
-                    for (key in input) {
-                        if (input.hasOwnProperty(key)) {
-                            keyCamelCase = (key.charAt(0).toLowerCase() + key.slice(1) || key).toString();
-                            value = input[key];
-                            if (value instanceof Array || (value !== null && value.constructor === Object)) {
-                                value = this.toCamelCase(value);
-                            }
-                            output[keyCamelCase] = value;
-                        }
-                    }
-                }
-                return output;
-            };
-        // TRANSFER STATE
-        // TRANSFER STATE
-        /**
-         * @param {?} url
-         * @param {?} model
-         * @return {?}
-         */
-        ApiService.prototype.getStateKey =
-            // TRANSFER STATE
-            /**
-             * @param {?} url
-             * @param {?} model
-             * @return {?}
-             */
-            function (url, model) {
-                /** @type {?} */
-                var flatMap = ( /**
-                 * @param {?} s
-                 * @param {?} x
-                 * @return {?}
-                 */function (s, x) {
-                    if (typeof x === 'number') {
-                        s += x.toString();
-                    }
-                    else if (typeof x === 'string') {
-                        s += x.substr(0, 10);
-                    }
-                    else if (x && typeof x === 'object') {
-                        s += '_' + Object.keys(x).map(( /**
-                         * @param {?} k
-                         * @return {?}
-                         */function (k) { return k + '_' + flatMap('', x[k]); })).join('_');
-                    }
-                    return s;
-                });
-                url = flatMap(url, model);
-                // console.log('ApiService.getStateKey.url', url);
-                /** @type {?} */
-                var key = url.replace(/(\W)/gm, '_');
-                // this.logger.log('ApiService.getStateKey.key', key);
-                return i1.makeStateKey(key);
-            };
-        /**
-         * @param {?=} first
-         * @param {?=} second
-         * @return {?}
-         */
-        ApiService.prototype.stateGet = /**
-         * @param {?=} first
-         * @param {?=} second
-         * @return {?}
-         */
-            function (first, second) {
-                var _this = this;
-                /** @type {?} */
-                var method = (typeof first === 'string' ? first : '');
-                /** @type {?} */
-                var params = (typeof first === 'object' ? first : second);
-                /** @type {?} */
-                var url = this.getUrl(method);
-                /** @type {?} */
-                var options = new ApiRequestOptions(params);
-                /** @type {?} */
-                var stateKey = this.getStateKey(url, params);
-                if (i1$1.isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
-                    /** @type {?} */
-                    var cached = this.state.get(stateKey, null);
-                    this.state.remove(stateKey);
-                    return rxjs.of(cached);
-                }
-                else {
-                    return this.http.get(url, options).pipe(operators.tap(( /**
-                     * @param {?} x
-                     * @return {?}
-                     */function (x) {
-                        if (i1$1.isPlatformServer(_this.platformId)) {
-                            _this.state.onSerialize(stateKey, ( /**
-                             * @return {?}
-                             */function () { return x; }));
-                        }
-                    })));
-                }
-            };
-        /**
-         * @param {?} first
-         * @param {?=} second
-         * @param {?=} third
-         * @return {?}
-         */
-        ApiService.prototype.statePost = /**
-         * @param {?} first
-         * @param {?=} second
-         * @param {?=} third
-         * @return {?}
-         */
-            function (first, second, third) {
-                var _this = this;
-                /** @type {?} */
-                var method = (typeof first === 'string' ? first : '');
-                /** @type {?} */
-                var model = (typeof first === 'object' ? first : second);
-                /** @type {?} */
-                var params = (typeof second === 'object' ? second : third);
-                /** @type {?} */
-                var url = this.getUrl(method);
-                /** @type {?} */
-                var options = new ApiRequestOptions(params);
-                /** @type {?} */
-                var stateKey = this.getStateKey(url, model);
-                if (i1$1.isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
-                    /** @type {?} */
-                    var cached = this.state.get(stateKey, null);
-                    this.state.remove(stateKey);
-                    return rxjs.of(cached);
-                }
-                else {
-                    return this.http.post(url, model, options).pipe(operators.tap(( /**
-                     * @param {?} x
-                     * @return {?}
-                     */function (x) {
-                        if (i1$1.isPlatformServer(_this.platformId)) {
-                            _this.state.onSerialize(stateKey, ( /**
-                             * @return {?}
-                             */function () { return x; }));
-                        }
-                    })));
-                }
-            };
-        ApiService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        ApiService.ctorParameters = function () {
-            return [
-                { type: i0.Injector }
-            ];
+        ApiService.prototype.getUrl = function (method) {
+            if (method === void 0) { method = ''; }
+            return "" + this.url + method;
         };
-        /** @nocollapse */ ApiService.ngInjectableDef = i0.defineInjectable({ factory: function ApiService_Factory() { return new ApiService(i0.inject(i0.INJECTOR)); }, token: ApiService, providedIn: "root" });
+        ApiService.prototype.get = function (first, second) {
+            var _this = this;
+            var method = (typeof first === 'string' ? first : '');
+            var params = (typeof first === 'object' ? first : second);
+            var url = this.getUrl(method);
+            var options = new ApiRequestOptions(params);
+            return this.http.get(url, options).pipe(operators.tap(function (x) { return _this.logger.request(url); }));
+        };
+        ApiService.prototype.post = function (first, second, third) {
+            var _this = this;
+            var method = (typeof first === 'string' ? first : '');
+            var model = (typeof first === 'object' ? first : second);
+            var params = (typeof second === 'object' ? second : third);
+            var url = this.getUrl(method);
+            var options = new ApiRequestOptions(params);
+            return this.http.post(url, model, options).pipe(operators.tap(function (x) { return _this.logger.request(url); }));
+        };
+        ApiService.prototype.put = function (first, second, third) {
+            var _this = this;
+            var method = (typeof first === 'string' ? first : '');
+            var model = (typeof first === 'object' ? first : second);
+            var params = (typeof second === 'object' ? second : third);
+            var url = this.getUrl(method);
+            var options = new ApiRequestOptions(params);
+            return this.http.put(url, model, options).pipe(operators.tap(function (x) { return _this.logger.request(url); }));
+        };
+        ApiService.prototype.patch = function (first, second, third) {
+            var _this = this;
+            var method = (typeof first === 'string' ? first : '');
+            var model = (typeof first === 'object' ? first : second);
+            var params = (typeof second === 'object' ? second : third);
+            var url = this.getUrl(method);
+            var options = new ApiRequestOptions(params);
+            return this.http.patch(url, model, options).pipe(operators.tap(function (x) { return _this.logger.request(url); }));
+        };
+        ApiService.prototype.delete = function (first, second, third) {
+            var _this = this;
+            var method = (typeof first === 'string' ? first : '');
+            var identity = (typeof first !== 'string' ? first : second);
+            var id = identity ? (typeof identity === 'number' ? identity : identity.id) : null;
+            var params = (typeof second === 'object' ? second : third);
+            var url = id !== null ? this.getUrl(method + "/" + id) : this.getUrl(method);
+            var options = new ApiRequestOptions(params);
+            return this.http.delete(url, options).pipe(operators.tap(function (x) { return _this.logger.request(url); }));
+        };
+        ApiService.prototype.toCamelCase = function (input) {
+            var _this = this;
+            var output, key, keyCamelCase, value;
+            if (input instanceof Array) {
+                return input.map(function (value) {
+                    if (typeof value === 'object') {
+                        value = _this.toCamelCase(value);
+                    }
+                    return value;
+                });
+            }
+            else {
+                output = {};
+                for (key in input) {
+                    if (input.hasOwnProperty(key)) {
+                        keyCamelCase = (key.charAt(0).toLowerCase() + key.slice(1) || key).toString();
+                        value = input[key];
+                        if (value instanceof Array || (value !== null && value.constructor === Object)) {
+                            value = this.toCamelCase(value);
+                        }
+                        output[keyCamelCase] = value;
+                    }
+                }
+            }
+            return output;
+        };
+        // TRANSFER STATE
+        ApiService.prototype.getStateKey = function (url, model) {
+            var flatMap = function (s, x) {
+                if (typeof x === 'number') {
+                    s += x.toString();
+                }
+                else if (typeof x === 'string') {
+                    s += x.substr(0, 10);
+                }
+                else if (x && typeof x === 'object') {
+                    s += '_' + Object.keys(x).map(function (k) { return k + '_' + flatMap('', x[k]); }).join('_');
+                }
+                return s;
+            };
+            url = flatMap(url, model);
+            // console.log('ApiService.getStateKey.url', url);
+            var key = url.replace(/(\W)/gm, '_');
+            // this.logger.log('ApiService.getStateKey.key', key);
+            return platformBrowser.makeStateKey(key);
+        };
+        ApiService.prototype.stateGet = function (first, second) {
+            var _this = this;
+            var method = (typeof first === 'string' ? first : '');
+            var params = (typeof first === 'object' ? first : second);
+            var url = this.getUrl(method);
+            var options = new ApiRequestOptions(params);
+            var stateKey = this.getStateKey(url, params);
+            if (common.isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
+                var cached = this.state.get(stateKey, null);
+                this.state.remove(stateKey);
+                return rxjs.of(cached);
+            }
+            else {
+                return this.http.get(url, options).pipe(operators.tap(function (x) {
+                    if (common.isPlatformServer(_this.platformId)) {
+                        _this.state.onSerialize(stateKey, function () { return x; });
+                    }
+                }));
+            }
+        };
+        ApiService.prototype.statePost = function (first, second, third) {
+            var _this = this;
+            var method = (typeof first === 'string' ? first : '');
+            var model = (typeof first === 'object' ? first : second);
+            var params = (typeof second === 'object' ? second : third);
+            var url = this.getUrl(method);
+            var options = new ApiRequestOptions(params);
+            var stateKey = this.getStateKey(url, model);
+            if (common.isPlatformBrowser(this.platformId) && this.state.hasKey(stateKey)) {
+                var cached = this.state.get(stateKey, null);
+                this.state.remove(stateKey);
+                return rxjs.of(cached);
+            }
+            else {
+                return this.http.post(url, model, options).pipe(operators.tap(function (x) {
+                    if (common.isPlatformServer(_this.platformId)) {
+                        _this.state.onSerialize(stateKey, function () { return x; });
+                    }
+                }));
+            }
+        };
+        ApiService.ɵfac = function ApiService_Factory(t) { return new (t || ApiService)(core["ɵɵinject"](core.Injector)); };
+        ApiService.ɵprov = core["ɵɵdefineInjectable"]({ token: ApiService, factory: ApiService.ɵfac, providedIn: 'root' });
         return ApiService;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](ApiService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: core.Injector }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var TIMEOUT = 5 * 60 * 1000;
-    // five minutes
+    var TIMEOUT = 5 * 60 * 1000; // five minutes
     /*
     export class StorageEvent extends Event {}
 
@@ -816,644 +656,371 @@
     var StorageService = /** @class */ (function () {
         function StorageService() {
         }
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        StorageService.prototype.delete = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) { };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        StorageService.prototype.exist = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) { return false; };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        StorageService.prototype.get = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) { return null; };
-        /**
-         * @param {?} name
-         * @param {?} value
-         * @param {?=} days
-         * @return {?}
-         */
-        StorageService.prototype.set = /**
-         * @param {?} name
-         * @param {?} value
-         * @param {?=} days
-         * @return {?}
-         */
-            function (name, value, days) { };
-        /**
-         * @return {?}
-         */
-        StorageService.prototype.on = /**
-         * @return {?}
-         */
-            function () { return rxjs.of(null); };
-        /**
-         * @return {?}
-         */
-        StorageService.prototype.tryGet = /**
-         * @return {?}
-         */
-            function () {
-                // console.log('no StorageService available...');
-                return this;
-            };
-        StorageService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */ StorageService.ngInjectableDef = i0.defineInjectable({ factory: function StorageService_Factory() { return new StorageService(); }, token: StorageService, providedIn: "root" });
+        StorageService.prototype.delete = function (name) { };
+        StorageService.prototype.exist = function (name) { return false; };
+        StorageService.prototype.get = function (name) { return null; };
+        StorageService.prototype.set = function (name, value, days) { };
+        StorageService.prototype.on = function () { return rxjs.of(null); };
+        StorageService.prototype.tryGet = function () {
+            // console.log('no StorageService available...');
+            return this;
+        };
+        StorageService.ɵfac = function StorageService_Factory(t) { return new (t || StorageService)(); };
+        StorageService.ɵprov = core["ɵɵdefineInjectable"]({ token: StorageService, factory: StorageService.ɵfac, providedIn: 'root' });
         return StorageService;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](StorageService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], null, null); })();
     var CookieStorageService = /** @class */ (function () {
         function CookieStorageService(platformId, storageService) {
             this.platformId = platformId;
             this.storageService = storageService;
         }
-        /**
-         * @return {?}
-         */
-        CookieStorageService.prototype.tryGet = /**
-         * @return {?}
-         */
-            function () {
-                if (this.isSupported()) {
-                    // console.log('CookieStorageService.supported');
-                    return this;
+        CookieStorageService.prototype.tryGet = function () {
+            if (this.isSupported()) {
+                // console.log('CookieStorageService.supported');
+                return this;
+            }
+            else {
+                return this.storageService.tryGet();
+            }
+        };
+        CookieStorageService.prototype.delete = function (name) {
+            this.setter(name, '', -1);
+        };
+        CookieStorageService.prototype.exist = function (name) {
+            return document.cookie.indexOf(';' + name + '=') !== -1 || document.cookie.indexOf(name + '=') === 0;
+        };
+        CookieStorageService.prototype.get = function (name) {
+            var cookieName = name + '=';
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1, c.length);
                 }
-                else {
-                    return this.storageService.tryGet();
-                }
-            };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        CookieStorageService.prototype.delete = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) {
-                this.setter(name, '', -1);
-            };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        CookieStorageService.prototype.exist = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) {
-                return document.cookie.indexOf(';' + name + '=') !== -1 || document.cookie.indexOf(name + '=') === 0;
-            };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        CookieStorageService.prototype.get = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) {
-                /** @type {?} */
-                var cookieName = name + '=';
-                /** @type {?} */
-                var ca = document.cookie.split(';');
-                for (var i = 0; i < ca.length; i++) {
-                    /** @type {?} */
-                    var c = ca[i];
-                    while (c.charAt(0) === ' ') {
-                        c = c.substring(1, c.length);
+                if (c.indexOf(cookieName) === 0) {
+                    var value = c.substring(cookieName.length, c.length);
+                    var model = null;
+                    try {
+                        model = JSON.parse(decodeURIComponent(atob(value)));
                     }
-                    if (c.indexOf(cookieName) === 0) {
-                        /** @type {?} */
-                        var value = c.substring(cookieName.length, c.length);
-                        /** @type {?} */
-                        var model = null;
-                        try {
-                            model = JSON.parse(decodeURIComponent(atob(value)));
-                        }
-                        catch (e) {
-                            console.log('Cookie.get.error parsing', name, e);
-                        }
-                        return model;
+                    catch (e) {
+                        console.log('Cookie.get.error parsing', name, e);
                     }
+                    return model;
                 }
-                return null;
-            };
-        /**
-         * @param {?} name
-         * @param {?} value
-         * @param {?=} days
-         * @return {?}
-         */
-        CookieStorageService.prototype.set = /**
-         * @param {?} name
-         * @param {?} value
-         * @param {?=} days
-         * @return {?}
-         */
-            function (name, value, days) {
-                try {
-                    /** @type {?} */
-                    var cache_1 = [];
-                    /** @type {?} */
-                    var json = JSON.stringify(value, ( /**
-                     * @param {?} key
-                     * @param {?} value
-                     * @return {?}
-                     */function (key, value) {
-                        if (key === 'pool') {
+            }
+            return null;
+        };
+        CookieStorageService.prototype.set = function (name, value, days) {
+            try {
+                var cache_1 = [];
+                var json = JSON.stringify(value, function (key, value) {
+                    if (key === 'pool') {
+                        return;
+                    }
+                    if (typeof value === 'object' && value !== null) {
+                        if (cache_1.indexOf(value) !== -1) {
+                            // throw (new Error('circular reference found, discard key'));
                             return;
                         }
-                        if (typeof value === 'object' && value !== null) {
-                            if (cache_1.indexOf(value) !== -1) {
-                                // throw (new Error('circular reference found, discard key'));
-                                return;
-                            }
-                            cache_1.push(value);
-                        }
-                        return value;
-                    }));
-                    cache_1 = null;
-                    this.setter(name, btoa(encodeURIComponent(json)), days);
-                }
-                catch (e) {
-                    console.log('CookieSet.error serializing', name, value, e);
-                }
-            };
-        /**
-         * @return {?}
-         */
-        CookieStorageService.prototype.on = /**
-         * @return {?}
-         */
-            function () {
-                // todo
-                /** @type {?} */
-                var interval = 1000;
-                /** @type {?} */
-                var timeout = TIMEOUT;
-                /** @type {?} */
-                var i;
-                /** @type {?} */
-                var elapsed = 0;
-                /**
-                 * @return {?}
-                 */
-                function checkCookie() {
-                    if (elapsed > timeout) ;
-                    else {
-                        /** @type {?} */
-                        var c = this.get(name);
-                        if (c) ;
-                        else {
-                            elapsed += interval;
-                            i = setTimeout(checkCookie, interval);
-                        }
+                        cache_1.push(value);
                     }
-                }
-                checkCookie();
-                return rxjs.of(null);
-            };
-        /**
-         * @private
-         * @param {?} name
-         * @param {?} value
-         * @param {?=} days
-         * @return {?}
-         */
-        CookieStorageService.prototype.setter = /**
-         * @private
-         * @param {?} name
-         * @param {?} value
-         * @param {?=} days
-         * @return {?}
-         */
-            function (name, value, days) {
-                /** @type {?} */
-                var expires;
-                if (days) {
-                    /** @type {?} */
-                    var date = new Date();
-                    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                    expires = '; expires=' + date.toUTCString();
+                    return value;
+                });
+                cache_1 = null;
+                this.setter(name, btoa(encodeURIComponent(json)), days);
+            }
+            catch (e) {
+                console.log('CookieSet.error serializing', name, value, e);
+            }
+        };
+        CookieStorageService.prototype.on = function () {
+            // todo
+            var interval = 1000, timeout = TIMEOUT;
+            var i, elapsed = 0;
+            function checkCookie() {
+                if (elapsed > timeout) {
+                    // promise.reject('timeout');
                 }
                 else {
-                    expires = '';
+                    var c = this.get(name);
+                    if (c) {
+                        // promise.resolve(c);
+                    }
+                    else {
+                        elapsed += interval;
+                        i = setTimeout(checkCookie, interval);
+                    }
                 }
-                document.cookie = name + '=' + value + expires + '; path=/';
-            };
-        /**
-         * @private
-         * @return {?}
-         */
-        CookieStorageService.prototype.isSupported = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                return i1$1.isPlatformBrowser(this.platformId);
-            };
-        CookieStorageService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        CookieStorageService.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: StorageService }
-            ];
+            }
+            checkCookie();
+            return rxjs.of(null);
         };
-        /** @nocollapse */ CookieStorageService.ngInjectableDef = i0.defineInjectable({ factory: function CookieStorageService_Factory() { return new CookieStorageService(i0.inject(i0.PLATFORM_ID), i0.inject(StorageService)); }, token: CookieStorageService, providedIn: "root" });
+        CookieStorageService.prototype.setter = function (name, value, days) {
+            var expires;
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = '; expires=' + date.toUTCString();
+            }
+            else {
+                expires = '';
+            }
+            document.cookie = name + '=' + value + expires + '; path=/';
+        };
+        CookieStorageService.prototype.isSupported = function () {
+            return common.isPlatformBrowser(this.platformId);
+        };
+        CookieStorageService.ɵfac = function CookieStorageService_Factory(t) { return new (t || CookieStorageService)(core["ɵɵinject"](core.PLATFORM_ID), core["ɵɵinject"](StorageService)); };
+        CookieStorageService.ɵprov = core["ɵɵdefineInjectable"]({ token: CookieStorageService, factory: CookieStorageService.ɵfac, providedIn: 'root' });
         return CookieStorageService;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](CookieStorageService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: undefined, decorators: [{
+                    type: core.Inject,
+                    args: [core.PLATFORM_ID]
+                }] }, { type: StorageService }]; }, null); })();
     var SessionStorageService = /** @class */ (function () {
         function SessionStorageService(platformId, cookieStorageService) {
             this.platformId = platformId;
             this.cookieStorageService = cookieStorageService;
         }
-        /**
-         * @return {?}
-         */
-        SessionStorageService.prototype.tryGet = /**
-         * @return {?}
-         */
-            function () {
-                if (this.isSupported()) {
-                    // console.log('SessionStorageService.supported');
-                    return this;
-                }
-                else {
-                    return this.cookieStorageService.tryGet();
-                }
-            };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        SessionStorageService.prototype.delete = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) {
-                window.sessionStorage.removeItem(name);
-            };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        SessionStorageService.prototype.exist = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) {
-                return window.sessionStorage[name] !== undefined;
-            };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        SessionStorageService.prototype.get = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) {
-                /** @type {?} */
-                var value = null;
-                if (window.sessionStorage[name] !== undefined) {
-                    try {
-                        value = JSON.parse(window.sessionStorage[name]);
-                    }
-                    catch (e) {
-                        console.log('SessionStorage.get.error parsing', name, e);
-                    }
-                }
-                return value;
-            };
-        /**
-         * @return {?}
-         */
-        SessionStorageService.prototype.on = /**
-         * @return {?}
-         */
-            function () {
-                /*
-                return $promise(function (promise) {
-                    const timeout = TIMEOUT;
-                    let i;
-                    function storageEvent(e) {
-                        if (i) {
-                            clearTimeout(i);
-                        }
-                        if (e.originalEvent.key === name) {
-                            try {
-                                let value = JSON.parse(e.originalEvent.newValue);
-                                promise.resolve(value);
-                            } catch (error) {
-                                console.log('SessionStorage.on.error parsing', name, error);
-                                promise.reject('error parsing ' + name);
-                            }
-                        }
-                    }
-                    // return fromEvent(window, 'storage');
-                    angular.element(window).on('storage', storageEvent);
-                    i = setTimeout(function () {
-                        promise.reject('timeout');
-                    }, timeout);
-                });
-                */
-                return rxjs.of(null);
-            };
-        /**
-         * @param {?} name
-         * @param {?} value
-         * @param {?=} days
-         * @return {?}
-         */
-        SessionStorageService.prototype.set = /**
-         * @param {?} name
-         * @param {?} value
-         * @param {?=} days
-         * @return {?}
-         */
-            function (name, value, days) {
+        SessionStorageService.prototype.tryGet = function () {
+            if (this.isSupported()) {
+                // console.log('SessionStorageService.supported');
+                return this;
+            }
+            else {
+                return this.cookieStorageService.tryGet();
+            }
+        };
+        SessionStorageService.prototype.delete = function (name) {
+            window.sessionStorage.removeItem(name);
+        };
+        SessionStorageService.prototype.exist = function (name) {
+            return window.sessionStorage[name] !== undefined;
+        };
+        SessionStorageService.prototype.get = function (name) {
+            var value = null;
+            if (window.sessionStorage[name] !== undefined) {
                 try {
-                    /** @type {?} */
-                    var cache_2 = [];
-                    /** @type {?} */
-                    var json = JSON.stringify(value, ( /**
-                     * @param {?} key
-                     * @param {?} value
-                     * @return {?}
-                     */function (key, value) {
-                        if (key === 'pool') {
-                            return;
-                        }
-                        if (typeof value === 'object' && value !== null) {
-                            if (cache_2.indexOf(value) !== -1) {
-                                // throw (new Error('circular reference found, discard key'));
-                                return;
-                            }
-                            cache_2.push(value);
-                        }
-                        return value;
-                    }));
-                    cache_2 = null;
-                    window.sessionStorage.setItem(name, json);
+                    value = JSON.parse(window.sessionStorage[name]);
                 }
                 catch (e) {
-                    console.log('SessionStorage.set.error serializing', name, value, e);
+                    console.log('SessionStorage.get.error parsing', name, e);
                 }
-            };
-        /**
-         * @private
-         * @return {?}
-         */
-        SessionStorageService.prototype.isSupported = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                /** @type {?} */
-                var supported = false;
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    try {
-                        supported = 'sessionStorage' in window && window.sessionStorage !== null;
-                        if (supported) {
-                            window.sessionStorage.setItem('test', '1');
-                            window.sessionStorage.removeItem('test');
-                        }
-                        else {
-                            supported = false;
+            }
+            return value;
+        };
+        SessionStorageService.prototype.on = function () {
+            /*
+            return $promise(function (promise) {
+                const timeout = TIMEOUT;
+                let i;
+                function storageEvent(e) {
+                    if (i) {
+                        clearTimeout(i);
+                    }
+                    if (e.originalEvent.key === name) {
+                        try {
+                            let value = JSON.parse(e.originalEvent.newValue);
+                            promise.resolve(value);
+                        } catch (error) {
+                            console.log('SessionStorage.on.error parsing', name, error);
+                            promise.reject('error parsing ' + name);
                         }
                     }
-                    catch (e) {
+                }
+                // return fromEvent(window, 'storage');
+                angular.element(window).on('storage', storageEvent);
+                i = setTimeout(function () {
+                    promise.reject('timeout');
+                }, timeout);
+            });
+            */
+            return rxjs.of(null);
+        };
+        SessionStorageService.prototype.set = function (name, value, days) {
+            try {
+                var cache_2 = [];
+                var json = JSON.stringify(value, function (key, value) {
+                    if (key === 'pool') {
+                        return;
+                    }
+                    if (typeof value === 'object' && value !== null) {
+                        if (cache_2.indexOf(value) !== -1) {
+                            // throw (new Error('circular reference found, discard key'));
+                            return;
+                        }
+                        cache_2.push(value);
+                    }
+                    return value;
+                });
+                cache_2 = null;
+                window.sessionStorage.setItem(name, json);
+            }
+            catch (e) {
+                console.log('SessionStorage.set.error serializing', name, value, e);
+            }
+        };
+        SessionStorageService.prototype.isSupported = function () {
+            var supported = false;
+            if (common.isPlatformBrowser(this.platformId)) {
+                try {
+                    supported = 'sessionStorage' in window && window.sessionStorage !== null;
+                    if (supported) {
+                        window.sessionStorage.setItem('test', '1');
+                        window.sessionStorage.removeItem('test');
+                    }
+                    else {
                         supported = false;
                     }
                 }
-                return supported;
-            };
-        SessionStorageService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        SessionStorageService.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: CookieStorageService }
-            ];
+                catch (e) {
+                    supported = false;
+                }
+            }
+            return supported;
         };
-        /** @nocollapse */ SessionStorageService.ngInjectableDef = i0.defineInjectable({ factory: function SessionStorageService_Factory() { return new SessionStorageService(i0.inject(i0.PLATFORM_ID), i0.inject(CookieStorageService)); }, token: SessionStorageService, providedIn: "root" });
+        SessionStorageService.ɵfac = function SessionStorageService_Factory(t) { return new (t || SessionStorageService)(core["ɵɵinject"](core.PLATFORM_ID), core["ɵɵinject"](CookieStorageService)); };
+        SessionStorageService.ɵprov = core["ɵɵdefineInjectable"]({ token: SessionStorageService, factory: SessionStorageService.ɵfac, providedIn: 'root' });
         return SessionStorageService;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](SessionStorageService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: undefined, decorators: [{
+                    type: core.Inject,
+                    args: [core.PLATFORM_ID]
+                }] }, { type: CookieStorageService }]; }, null); })();
     var LocalStorageService = /** @class */ (function () {
         function LocalStorageService(platformId, cookieStorageService) {
             this.platformId = platformId;
             this.cookieStorageService = cookieStorageService;
         }
-        /**
-         * @return {?}
-         */
-        LocalStorageService.prototype.tryGet = /**
-         * @return {?}
-         */
-            function () {
-                if (this.isSupported()) {
-                    // console.log('LocalStorageService.supported');
-                    return this;
-                }
-                else {
-                    return this.cookieStorageService.tryGet();
-                }
-            };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        LocalStorageService.prototype.delete = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) {
-                window.localStorage.removeItem(name);
-            };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        LocalStorageService.prototype.exist = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) {
-                return window.localStorage[name] !== undefined;
-            };
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        LocalStorageService.prototype.get = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) {
-                /** @type {?} */
-                var value = null;
-                if (window.localStorage[name] !== undefined) {
-                    try {
-                        value = JSON.parse(window.localStorage[name]);
-                    }
-                    catch (e) {
-                        console.log('LocalStorage.get.error parsing', name, e);
-                    }
-                }
-                return value;
-            };
-        /**
-         * @return {?}
-         */
-        LocalStorageService.prototype.on = /**
-         * @return {?}
-         */
-            function () {
-                /*
-                return $promise(function (promise) {
-                    const timeout = TIMEOUT;
-                    let i;
-                    function storageEvent(e) {
-                        if (i) {
-                            clearTimeout(i);
-                        }
-                        if (e.originalEvent.key === name) {
-                            try {
-                                let value = JSON.parse(e.originalEvent.newValue);
-                                promise.resolve(value);
-                            } catch (error) {
-                                console.log('LocalStorage.on.error parsing', name, error);
-                                promise.reject('error parsing ' + name);
-                            }
-                        }
-                    }
-                    // return fromEvent(window, 'storage');
-                    angular.element(window).on('storage', storageEvent);
-                    i = setTimeout(function () {
-                        promise.reject('timeout');
-                    }, timeout);
-                });
-                */
-                return rxjs.of(null);
-            };
-        /**
-         * @param {?} name
-         * @param {?} value
-         * @param {?=} days
-         * @return {?}
-         */
-        LocalStorageService.prototype.set = /**
-         * @param {?} name
-         * @param {?} value
-         * @param {?=} days
-         * @return {?}
-         */
-            function (name, value, days) {
+        LocalStorageService.prototype.tryGet = function () {
+            if (this.isSupported()) {
+                // console.log('LocalStorageService.supported');
+                return this;
+            }
+            else {
+                return this.cookieStorageService.tryGet();
+            }
+        };
+        LocalStorageService.prototype.delete = function (name) {
+            window.localStorage.removeItem(name);
+        };
+        LocalStorageService.prototype.exist = function (name) {
+            return window.localStorage[name] !== undefined;
+        };
+        LocalStorageService.prototype.get = function (name) {
+            var value = null;
+            if (window.localStorage[name] !== undefined) {
                 try {
-                    /** @type {?} */
-                    var cache_3 = [];
-                    /** @type {?} */
-                    var json = JSON.stringify(value, ( /**
-                     * @param {?} key
-                     * @param {?} value
-                     * @return {?}
-                     */function (key, value) {
-                        if (key === 'pool') {
-                            return;
-                        }
-                        if (typeof value === 'object' && value !== null) {
-                            if (cache_3.indexOf(value) !== -1) {
-                                // throw (new Error('circular reference found, discard key'));
-                                return;
-                            }
-                            cache_3.push(value);
-                        }
-                        return value;
-                    }));
-                    cache_3 = null;
-                    window.localStorage.setItem(name, json);
+                    value = JSON.parse(window.localStorage[name]);
                 }
                 catch (e) {
-                    console.log('LocalStorage.set.error serializing', name, value, e);
+                    console.log('LocalStorage.get.error parsing', name, e);
                 }
-            };
-        /**
-         * @private
-         * @return {?}
-         */
-        LocalStorageService.prototype.isSupported = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                /** @type {?} */
-                var supported = false;
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    try {
-                        supported = 'localStorage' in window && window.localStorage !== null;
-                        if (supported) {
-                            window.localStorage.setItem('test', '1');
-                            window.localStorage.removeItem('test');
-                        }
-                        else {
-                            supported = false;
+            }
+            return value;
+        };
+        LocalStorageService.prototype.on = function () {
+            /*
+            return $promise(function (promise) {
+                const timeout = TIMEOUT;
+                let i;
+                function storageEvent(e) {
+                    if (i) {
+                        clearTimeout(i);
+                    }
+                    if (e.originalEvent.key === name) {
+                        try {
+                            let value = JSON.parse(e.originalEvent.newValue);
+                            promise.resolve(value);
+                        } catch (error) {
+                            console.log('LocalStorage.on.error parsing', name, error);
+                            promise.reject('error parsing ' + name);
                         }
                     }
-                    catch (e) {
+                }
+                // return fromEvent(window, 'storage');
+                angular.element(window).on('storage', storageEvent);
+                i = setTimeout(function () {
+                    promise.reject('timeout');
+                }, timeout);
+            });
+            */
+            return rxjs.of(null);
+        };
+        LocalStorageService.prototype.set = function (name, value, days) {
+            try {
+                var cache_3 = [];
+                var json = JSON.stringify(value, function (key, value) {
+                    if (key === 'pool') {
+                        return;
+                    }
+                    if (typeof value === 'object' && value !== null) {
+                        if (cache_3.indexOf(value) !== -1) {
+                            // throw (new Error('circular reference found, discard key'));
+                            return;
+                        }
+                        cache_3.push(value);
+                    }
+                    return value;
+                });
+                cache_3 = null;
+                window.localStorage.setItem(name, json);
+            }
+            catch (e) {
+                console.log('LocalStorage.set.error serializing', name, value, e);
+            }
+        };
+        LocalStorageService.prototype.isSupported = function () {
+            var supported = false;
+            if (common.isPlatformBrowser(this.platformId)) {
+                try {
+                    supported = 'localStorage' in window && window.localStorage !== null;
+                    if (supported) {
+                        window.localStorage.setItem('test', '1');
+                        window.localStorage.removeItem('test');
+                    }
+                    else {
                         supported = false;
                     }
                 }
-                return supported;
-            };
-        LocalStorageService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        LocalStorageService.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: CookieStorageService }
-            ];
+                catch (e) {
+                    supported = false;
+                }
+            }
+            return supported;
         };
-        /** @nocollapse */ LocalStorageService.ngInjectableDef = i0.defineInjectable({ factory: function LocalStorageService_Factory() { return new LocalStorageService(i0.inject(i0.PLATFORM_ID), i0.inject(CookieStorageService)); }, token: LocalStorageService, providedIn: "root" });
+        LocalStorageService.ɵfac = function LocalStorageService_Factory(t) { return new (t || LocalStorageService)(core["ɵɵinject"](core.PLATFORM_ID), core["ɵɵinject"](CookieStorageService)); };
+        LocalStorageService.ɵprov = core["ɵɵdefineInjectable"]({ token: LocalStorageService, factory: LocalStorageService.ɵfac, providedIn: 'root' });
         return LocalStorageService;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](LocalStorageService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: undefined, decorators: [{
+                    type: core.Inject,
+                    args: [core.PLATFORM_ID]
+                }] }, { type: CookieStorageService }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var AuthService = /** @class */ (function () {
         function AuthService(platformId, injector, localStorageService) {
             this.platformId = platformId;
@@ -1462,196 +1029,48 @@
             this.cachedRequests = [];
             this.paths = [];
         }
-        /**
-         * @param {?} authToken
-         * @return {?}
-         */
-        AuthService.prototype.setToken = /**
-         * @param {?} authToken
-         * @return {?}
-         */
-            function (authToken) {
-                this.localStorageService.set('authToken', authToken);
-                this.retryFailedRequests();
-            };
-        /**
-         * @return {?}
-         */
-        AuthService.prototype.getToken = /**
-         * @return {?}
-         */
-            function () {
-                return ( /** @type {?} */(this.localStorageService.get('authToken')));
-            };
-        /**
-         * @return {?}
-         */
-        AuthService.prototype.getFakeToken = /**
-         * @return {?}
-         */
-            function () {
-                return new AuthToken('fakeToken');
-            };
-        /**
-         * @param {?} authToken
-         * @return {?}
-         */
-        AuthService.prototype.isValid = /**
-         * @param {?} authToken
-         * @return {?}
-         */
-            function (authToken) {
-                // return a boolean reflecting whether or not the token is expired
-                return authToken && (authToken.expiresIn > Date.now() || authToken.expiresIn === 0);
-            };
-        /**
-         * @return {?}
-         */
-        AuthService.prototype.isAuthenticated = /**
-         * @return {?}
-         */
-            function () {
-                /** @type {?} */
-                var authToken = this.getToken();
-                return this.isValid(authToken);
-            };
-        /**
-         * @param {?} request
-         * @return {?}
-         */
-        AuthService.prototype.collectFailedRequest = /**
-         * @param {?} request
-         * @return {?}
-         */
-            function (request) {
-                this.cachedRequests.push(request);
-            };
-        /**
-         * @return {?}
-         */
-        AuthService.prototype.retryFailedRequests = /**
-         * @return {?}
-         */
-            function () {
-                // this method can be called after the token is refreshed
-                // console.log('AuthService.retryFailedRequests');
-                // retry the requests.
-            };
-        AuthService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AuthService.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: i0.Injector },
-                { type: LocalStorageService }
-            ];
+        AuthService.prototype.setToken = function (authToken) {
+            this.localStorageService.set('authToken', authToken);
+            this.retryFailedRequests();
         };
-        /** @nocollapse */ AuthService.ngInjectableDef = i0.defineInjectable({ factory: function AuthService_Factory() { return new AuthService(i0.inject(i0.PLATFORM_ID), i0.inject(i0.INJECTOR), i0.inject(LocalStorageService)); }, token: AuthService, providedIn: "root" });
+        AuthService.prototype.getToken = function () {
+            return this.localStorageService.get('authToken');
+        };
+        AuthService.prototype.getFakeToken = function () {
+            return new AuthToken('fakeToken');
+        };
+        AuthService.prototype.isValid = function (authToken) {
+            // return a boolean reflecting whether or not the token is expired
+            return authToken && (authToken.expiresIn > Date.now() || authToken.expiresIn === 0);
+        };
+        AuthService.prototype.isAuthenticated = function () {
+            var authToken = this.getToken();
+            return this.isValid(authToken);
+        };
+        AuthService.prototype.collectFailedRequest = function (request) {
+            this.cachedRequests.push(request);
+        };
+        AuthService.prototype.retryFailedRequests = function () {
+            // this method can be called after the token is refreshed
+            // console.log('AuthService.retryFailedRequests');
+            // retry the requests.
+        };
+        AuthService.ɵfac = function AuthService_Factory(t) { return new (t || AuthService)(core["ɵɵinject"](core.PLATFORM_ID), core["ɵɵinject"](core.Injector), core["ɵɵinject"](LocalStorageService)); };
+        AuthService.ɵprov = core["ɵɵdefineInjectable"]({ token: AuthService, factory: AuthService.ɵfac, providedIn: 'root' });
         return AuthService;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](AuthService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: undefined, decorators: [{
+                    type: core.Inject,
+                    args: [core.PLATFORM_ID]
+                }] }, { type: core.Injector }, { type: LocalStorageService }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var BUNDLES = new i0.InjectionToken('core.bundles');
+    var BUNDLES = new core.InjectionToken('core.bundles');
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var DefaultContentDirective = /** @class */ (function () {
-        function DefaultContentDirective(element, container, renderer) {
-            this.container = container;
-            this.renderer = renderer;
-            this.hasContent = true;
-            this.element = element.nativeElement;
-        }
-        /**
-         * @return {?}
-         */
-        DefaultContentDirective.prototype.ngAfterContentChecked = /**
-         * @return {?}
-         */
-            function () {
-                /** @type {?} */
-                var hasContent = false;
-                console.log('DefaultContentDirective', this.element.childNodes);
-                for (var i = this.element.childNodes.length - 1; i >= 0; --i) {
-                    /** @type {?} */
-                    var node = this.element.childNodes[i];
-                    if (node.nodeType === 1 || node.nodeType === 3) {
-                        hasContent = true;
-                        break;
-                    }
-                }
-                if (hasContent !== this.hasContent) {
-                    this.hasContent = hasContent;
-                    if (hasContent) {
-                        // this.renderer.removeClass(this.element, 'is-empty');
-                        this.container.clear();
-                    }
-                    else {
-                        // this.renderer.addClass(this.element, 'is-empty');
-                        this.container.createEmbeddedView(this.default);
-                    }
-                }
-            };
-        DefaultContentDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[default]',
-                    },] }
-        ];
-        /** @nocollapse */
-        DefaultContentDirective.ctorParameters = function () {
-            return [
-                { type: i0.ElementRef },
-                { type: i0.ViewContainerRef },
-                { type: i0.Renderer2 }
-            ];
-        };
-        DefaultContentDirective.propDecorators = {
-            default: [{ type: i0.Input }]
-        };
-        return DefaultContentDirective;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var CoreModuleComponent = /** @class */ (function () {
-        function CoreModuleComponent() {
-            this.version = '0.0.12';
-        }
-        /**
-         * @return {?}
-         */
-        CoreModuleComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-            };
-        CoreModuleComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'core-module',
-                        template: "<span class=\"core-module\">core {{version}}</span>"
-                    }] }
-        ];
-        /** @nocollapse */
-        CoreModuleComponent.ctorParameters = function () { return []; };
-        return CoreModuleComponent;
-    }());
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var BundleDirective = /** @class */ (function () {
         function BundleDirective(bundles, injector, loader, container) {
             this.bundles = bundles;
@@ -1659,228 +1078,228 @@
             this.loader = loader;
             this.container = container;
         }
-        /**
-         * @return {?}
-         */
-        BundleDirective.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                this.loader.load(this.bundles[this.bundle]).then(( /**
-                 * @param {?} moduleFactory
-                 * @return {?}
-                 */function (moduleFactory) {
-                    /** @type {?} */
-                    var moduleRef = moduleFactory.create(_this.injector);
-                    _this.moduleRef_ = moduleRef;
-                    /** @type {?} */
-                    var rootComponentType = moduleRef.injector.get('LAZY_ROOT_COMPONENT');
-                    // console.log(rootComponentType);
-                    /** @type {?} */
-                    var factory = moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
-                    /** @type {?} */
-                    var componentRef = _this.container.createComponent(factory);
-                    /** @type {?} */
-                    var instance = componentRef.instance;
-                    // instance.data = this.data; // !!!
-                    _this.componentRef_ = componentRef;
-                }));
-            };
-        /**
-         * @return {?}
-         */
-        BundleDirective.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                if (this.componentRef_) {
-                    this.componentRef_.destroy();
-                }
-                if (this.moduleRef_) {
-                    this.moduleRef_.destroy();
-                }
-            };
-        BundleDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[bundle]'
-                    },] }
-        ];
-        /** @nocollapse */
-        BundleDirective.ctorParameters = function () {
-            return [
-                { type: undefined, decorators: [{ type: i0.Inject, args: [BUNDLES,] }] },
-                { type: i0.Injector },
-                { type: i0.NgModuleFactoryLoader },
-                { type: i0.ViewContainerRef }
-            ];
+        BundleDirective.prototype.ngOnInit = function () {
+            var _this = this;
+            this.loader.load(this.bundles[this.bundle]).then(function (moduleFactory) {
+                var moduleRef = moduleFactory.create(_this.injector);
+                _this.moduleRef_ = moduleRef;
+                var rootComponentType = moduleRef.injector.get('LAZY_ROOT_COMPONENT');
+                // console.log(rootComponentType);
+                var factory = moduleRef.componentFactoryResolver.resolveComponentFactory(rootComponentType);
+                var componentRef = _this.container.createComponent(factory);
+                var instance = componentRef.instance;
+                // instance.data = this.data; // !!!
+                _this.componentRef_ = componentRef;
+            });
         };
-        BundleDirective.propDecorators = {
-            bundle: [{ type: i0.Input }],
-            data: [{ type: i0.Input }]
+        BundleDirective.prototype.ngOnDestroy = function () {
+            if (this.componentRef_) {
+                this.componentRef_.destroy();
+            }
+            if (this.moduleRef_) {
+                this.moduleRef_.destroy();
+            }
         };
+        BundleDirective.ɵfac = function BundleDirective_Factory(t) { return new (t || BundleDirective)(core["ɵɵdirectiveInject"](BUNDLES), core["ɵɵdirectiveInject"](core.Injector), core["ɵɵdirectiveInject"](core.NgModuleFactoryLoader), core["ɵɵdirectiveInject"](core.ViewContainerRef)); };
+        BundleDirective.ɵdir = core["ɵɵdefineDirective"]({ type: BundleDirective, selectors: [["", "bundle", ""]], inputs: { bundle: "bundle", data: "data" } });
         return BundleDirective;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](BundleDirective, [{
+            type: core.Directive,
+            args: [{
+                    selector: '[bundle]'
+                }]
+        }], function () { return [{ type: undefined, decorators: [{
+                    type: core.Inject,
+                    args: [BUNDLES]
+                }] }, { type: core.Injector }, { type: core.NgModuleFactoryLoader }, { type: core.ViewContainerRef }]; }, { bundle: [{
+                type: core.Input
+            }], data: [{
+                type: core.Input
+            }] }); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
+    var DefaultContentDirective = /** @class */ (function () {
+        function DefaultContentDirective(element, container, renderer) {
+            this.container = container;
+            this.renderer = renderer;
+            this.hasContent = true;
+            this.element = element.nativeElement;
+        }
+        DefaultContentDirective.prototype.ngAfterContentChecked = function () {
+            var hasContent = false;
+            console.log('DefaultContentDirective', this.element.childNodes);
+            for (var i = this.element.childNodes.length - 1; i >= 0; --i) {
+                var node = this.element.childNodes[i];
+                if (node.nodeType === 1 || node.nodeType === 3) {
+                    hasContent = true;
+                    break;
+                }
+            }
+            if (hasContent !== this.hasContent) {
+                this.hasContent = hasContent;
+                if (hasContent) {
+                    // this.renderer.removeClass(this.element, 'is-empty');
+                    this.container.clear();
+                }
+                else {
+                    // this.renderer.addClass(this.element, 'is-empty');
+                    this.container.createEmbeddedView(this.default);
+                }
+            }
+        };
+        DefaultContentDirective.ɵfac = function DefaultContentDirective_Factory(t) { return new (t || DefaultContentDirective)(core["ɵɵdirectiveInject"](core.ElementRef), core["ɵɵdirectiveInject"](core.ViewContainerRef), core["ɵɵdirectiveInject"](core.Renderer2)); };
+        DefaultContentDirective.ɵdir = core["ɵɵdefineDirective"]({ type: DefaultContentDirective, selectors: [["", "default", ""]], inputs: { default: "default" } });
+        return DefaultContentDirective;
+    }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](DefaultContentDirective, [{
+            type: core.Directive,
+            args: [{
+                    selector: '[default]',
+                }]
+        }], function () { return [{ type: core.ElementRef }, { type: core.ViewContainerRef }, { type: core.Renderer2 }]; }, { default: [{
+                type: core.Input
+            }] }); })();
+
+    var CoreModuleComponent = /** @class */ (function () {
+        function CoreModuleComponent() {
+            this.version = '0.0.12';
+        }
+        CoreModuleComponent.prototype.ngOnInit = function () {
+        };
+        CoreModuleComponent.ɵfac = function CoreModuleComponent_Factory(t) { return new (t || CoreModuleComponent)(); };
+        CoreModuleComponent.ɵcmp = core["ɵɵdefineComponent"]({ type: CoreModuleComponent, selectors: [["core-module"]], decls: 2, vars: 1, consts: [[1, "core-module"]], template: function CoreModuleComponent_Template(rf, ctx) { if (rf & 1) {
+                core["ɵɵelementStart"](0, "span", 0);
+                core["ɵɵtext"](1);
+                core["ɵɵelementEnd"]();
+            } if (rf & 2) {
+                core["ɵɵadvance"](1);
+                core["ɵɵtextInterpolate1"]("core ", ctx.version, "");
+            } }, encapsulation: 2 });
+        return CoreModuleComponent;
+    }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](CoreModuleComponent, [{
+            type: core.Component,
+            args: [{
+                    selector: 'core-module',
+                    template: "<span class=\"core-module\">core {{version}}</span>",
+                    styles: []
+                }]
+        }], function () { return []; }, null); })();
+
     var DisposableComponent = /** @class */ (function () {
         function DisposableComponent() {
             this.unsubscribe = new rxjs.Subject();
         }
-        /**
-         * @return {?}
-         */
-        DisposableComponent.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                this.unsubscribe.next();
-                this.unsubscribe.complete();
-                // console.log('DisposableComponent.ngOnDestroy', this);
-            };
-        DisposableComponent.decorators = [
-            { type: i0.Component, args: [{
-                        template: ''
-                    }] }
-        ];
+        DisposableComponent.prototype.ngOnDestroy = function () {
+            this.unsubscribe.next();
+            this.unsubscribe.complete();
+            // console.log('DisposableComponent.ngOnDestroy', this);
+        };
+        DisposableComponent.ɵfac = function DisposableComponent_Factory(t) { return new (t || DisposableComponent)(); };
+        DisposableComponent.ɵcmp = core["ɵɵdefineComponent"]({ type: DisposableComponent, selectors: [["ng-component"]], decls: 0, vars: 0, template: function DisposableComponent_Template(rf, ctx) { }, encapsulation: 2 });
         return DisposableComponent;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](DisposableComponent, [{
+            type: core.Component,
+            args: [{
+                    template: ''
+                }]
+        }], null, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
+    var DisposableDirective = /** @class */ (function () {
+        function DisposableDirective() {
+            this.unsubscribe = new rxjs.Subject();
+        }
+        DisposableDirective.prototype.ngOnDestroy = function () {
+            this.unsubscribe.next();
+            this.unsubscribe.complete();
+            // console.log('DisposableDirective.ngOnDestroy', this);
+        };
+        DisposableDirective.ɵfac = function DisposableDirective_Factory(t) { return new (t || DisposableDirective)(); };
+        DisposableDirective.ɵdir = core["ɵɵdefineDirective"]({ type: DisposableDirective, selectors: [["", "disposable-directive", ""]] });
+        return DisposableDirective;
+    }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](DisposableDirective, [{
+            type: core.Directive,
+            args: [{
+                    selector: '[disposable-directive]'
+                }]
+        }], null, null); })();
+
     var HighlightPipe = /** @class */ (function () {
         function HighlightPipe() {
         }
-        /**
-         * @param {?} text
-         * @param {?} query
-         * @return {?}
-         */
-        HighlightPipe.prototype.transform = /**
-         * @param {?} text
-         * @param {?} query
-         * @return {?}
-         */
-            function (text, query) {
-                if (!query) {
-                    return text;
-                }
-                text = this.encodeHTML(text);
-                query = this.encodeHTML(query);
-                /** @type {?} */
-                var regExp = new RegExp('&[^;]+;|' + this.escapeRegexChars(query), 'gi');
-                return text.replace(regExp, ( /**
-                 * @param {?} match
-                 * @return {?}
-                 */function (match) {
-                    return match.toLowerCase() === query.toLowerCase() ? '<strong>' + match + '</strong>' : match;
-                }));
-            };
-        /**
-         * @param {?} text
-         * @return {?}
-         */
-        HighlightPipe.prototype.escapeRegexChars = /**
-         * @param {?} text
-         * @return {?}
-         */
-            function (text) {
-                return text.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
-            };
-        /**
-         * @param {?} text
-         * @return {?}
-         */
-        HighlightPipe.prototype.safeToString = /**
-         * @param {?} text
-         * @return {?}
-         */
-            function (text) {
-                return text === undefined || text === null ? '' : text.toString().trim();
-            };
-        /**
-         * @param {?} text
-         * @return {?}
-         */
-        HighlightPipe.prototype.encodeHTML = /**
-         * @param {?} text
-         * @return {?}
-         */
-            function (text) {
-                return this.safeToString(text)
-                    .replace(/&/g, '&amp;')
-                    .replace(/</g, '&lt;')
-                    .replace(/>/g, '&gt;');
-            };
-        HighlightPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'highlight',
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */ HighlightPipe.ngInjectableDef = i0.defineInjectable({ factory: function HighlightPipe_Factory() { return new HighlightPipe(); }, token: HighlightPipe, providedIn: "root" });
+        HighlightPipe.prototype.transform = function (text, query) {
+            if (!query) {
+                return text;
+            }
+            text = this.encodeHTML(text);
+            query = this.encodeHTML(query);
+            var regExp = new RegExp('&[^;]+;|' + this.escapeRegexChars(query), 'gi');
+            return text.replace(regExp, function (match) {
+                return match.toLowerCase() === query.toLowerCase() ? '<strong>' + match + '</strong>' : match;
+            });
+        };
+        HighlightPipe.prototype.escapeRegexChars = function (text) {
+            return text.replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
+        };
+        HighlightPipe.prototype.safeToString = function (text) {
+            return text === undefined || text === null ? '' : text.toString().trim();
+        };
+        HighlightPipe.prototype.encodeHTML = function (text) {
+            return this.safeToString(text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        };
+        HighlightPipe.ɵfac = function HighlightPipe_Factory(t) { return new (t || HighlightPipe)(); };
+        HighlightPipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "highlight", type: HighlightPipe, pure: true });
+        HighlightPipe.ɵprov = core["ɵɵdefineInjectable"]({ token: HighlightPipe, factory: HighlightPipe.ɵfac, providedIn: 'root' });
         return HighlightPipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](HighlightPipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'highlight',
+                }]
+        }, {
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], null, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var SegmentPipe = /** @class */ (function () {
         function SegmentPipe(location) {
             this.location = location;
         }
-        /**
-         * @param {?} segments
-         * @return {?}
-         */
-        SegmentPipe.prototype.transform = /**
-         * @param {?} segments
-         * @return {?}
-         */
-            function (segments) {
-                segments = segments != null ? (Array.isArray(segments) ? segments : segments.split('/')) : [];
-                /** @type {?} */
-                var path = segments.join('/');
-                path = this.location.normalize(path);
-                if (path.indexOf('/') !== 0) {
-                    path = "/" + path;
-                }
-                segments = path.split('/');
-                return segments;
-            };
-        SegmentPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'segment',
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        SegmentPipe.ctorParameters = function () {
-            return [
-                { type: i1$1.Location }
-            ];
+        SegmentPipe.prototype.transform = function (segments) {
+            segments = segments != null ? (Array.isArray(segments) ? segments : segments.split('/')) : [];
+            var path = segments.join('/');
+            path = this.location.normalize(path);
+            if (path.indexOf('/') !== 0) {
+                path = "/" + path;
+            }
+            segments = path.split('/');
+            return segments;
         };
-        /** @nocollapse */ SegmentPipe.ngInjectableDef = i0.defineInjectable({ factory: function SegmentPipe_Factory() { return new SegmentPipe(i0.inject(i1$1.Location)); }, token: SegmentPipe, providedIn: "root" });
+        SegmentPipe.ɵfac = function SegmentPipe_Factory(t) { return new (t || SegmentPipe)(core["ɵɵdirectiveInject"](common.Location)); };
+        SegmentPipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "segment", type: SegmentPipe, pure: true });
+        SegmentPipe.ɵprov = core["ɵɵdefineInjectable"]({ token: SegmentPipe, factory: SegmentPipe.ɵfac, providedIn: 'root' });
         return SegmentPipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](SegmentPipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'segment',
+                }]
+        }, {
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: common.Location }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @template T
-     */
     var IdentityService = /** @class */ (function (_super) {
         __extends(IdentityService, _super);
         function IdentityService(injector) {
@@ -1889,87 +1308,54 @@
             return _this;
         }
         Object.defineProperty(IdentityService.prototype, "collection", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return '/api/identity';
             },
             enumerable: true,
             configurable: true
         });
-        /**
-         * @param {?} id
-         * @return {?}
-         */
-        IdentityService.prototype.getDetailById = /**
-         * @param {?} id
-         * @return {?}
-         */
-            function (id) {
-                return this.get({ id: id });
-            };
-        IdentityService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        IdentityService.ctorParameters = function () {
-            return [
-                { type: i0.Injector }
-            ];
+        IdentityService.prototype.getDetailById = function (id) {
+            return this.get({ id: id });
         };
-        /** @nocollapse */ IdentityService.ngInjectableDef = i0.defineInjectable({ factory: function IdentityService_Factory() { return new IdentityService(i0.inject(i0.INJECTOR)); }, token: IdentityService, providedIn: "root" });
+        IdentityService.ɵfac = function IdentityService_Factory(t) { return new (t || IdentityService)(core["ɵɵinject"](core.Injector)); };
+        IdentityService.ɵprov = core["ɵɵdefineInjectable"]({ token: IdentityService, factory: IdentityService.ɵfac, providedIn: 'root' });
         return IdentityService;
     }(ApiService));
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](IdentityService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: core.Injector }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @template T
-     */
     var TranslateService = /** @class */ (function (_super) {
         __extends(TranslateService, _super);
         function TranslateService(injector) {
             var _this = _super.call(this, injector) || this;
             _this.injector = injector;
-            _this.events = new i0.EventEmitter();
+            _this.events = new core.EventEmitter();
             _this.language_ = new rxjs.BehaviorSubject(undefined);
             _this.languages_ = new rxjs.BehaviorSubject([]);
             _this.languages_.next(_this.config.languages);
             return _this;
         }
         Object.defineProperty(TranslateService.prototype, "collection", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return '/api/translate';
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(TranslateService.prototype, "lang", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return TranslateService.lang_;
             },
-            set: /**
-             * @param {?} lang
-             * @return {?}
-             */ function (lang) {
+            set: function (lang) {
                 if (lang !== TranslateService.lang_) {
                     TranslateService.lang_ = lang;
-                    /** @type {?} */
                     var languages = this.languages_.getValue();
                     if (languages.length) {
-                        /** @type {?} */
-                        var language = languages.find(( /**
-                         * @param {?} x
-                         * @return {?}
-                         */function (x) { return x.lang === lang; }));
+                        var language = languages.find(function (x) { return x.lang === lang; });
                         this.language_.next(language);
                     }
                 }
@@ -1978,304 +1364,147 @@
             configurable: true
         });
         Object.defineProperty(TranslateService.prototype, "language", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this.language_.getValue();
             },
             enumerable: true,
             configurable: true
         });
         Object.defineProperty(TranslateService.prototype, "languages", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this.languages_.getValue();
             },
             enumerable: true,
             configurable: true
         });
-        /**
-         * @return {?}
-         */
-        TranslateService.prototype.observe$ = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                // console.log(new Error().stack);
-                return this.language_.pipe(operators.filter(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return x !== undefined; })), operators.switchMap(( /**
-                 * @param {?} language
-                 * @return {?}
-                 */function (language) { return _this.getTranslation(language.lang); })));
-            };
-        /**
-         * @param {?} lang
-         * @return {?}
-         */
-        TranslateService.prototype.getTranslation = /**
-         * @param {?} lang
-         * @return {?}
-         */
-            function (lang) {
-                var _this = this;
-                if (!lang || !lang.trim()) {
-                    return rxjs.of(null);
-                }
-                TranslateService.lang_ = lang;
-                if (TranslateService.cache[lang]) {
-                    return rxjs.of(TranslateService.cache[lang]);
-                }
-                else {
-                    return this.get("?lang=" + lang, { lang: lang }).pipe(
-                    // take(1),
-                    operators.map(( /**
-                     * @param {?} x
-                     * @return {?}
-                     */function (x) {
-                        if (x.length && x[0]) {
-                            /** @type {?} */
-                            var labels = x[0].labels;
-                            TranslateService.cache[lang] = labels;
-                            _this.events.emit(labels);
-                            return labels;
-                        }
-                        else {
-                            return rxjs.of(null);
-                        }
-                    })));
-                }
-            };
-        /**
-         * @param {?} key
-         * @param {?=} defaultValue
-         * @param {?=} params
-         * @return {?}
-         */
-        TranslateService.prototype.getTranslate = /**
-         * @param {?} key
-         * @param {?=} defaultValue
-         * @param {?=} params
-         * @return {?}
-         */
-            function (key, defaultValue, params) {
-                // console.log('TranslateService.getTranslate', key, TranslateService.cache, TranslateService.lang_);
-                if (key) {
-                    /** @type {?} */
-                    var value = null;
-                    /** @type {?} */
-                    var labels = TranslateService.cache[TranslateService.lang_];
-                    // console.log('labels', TranslateService.lang_, TranslateService.cache, labels);
-                    if (labels) {
-                        /** @type {?} */
-                        var keys = key.split('.');
-                        /** @type {?} */
-                        var k = keys.shift();
-                        while (keys.length > 0 && labels[k]) {
-                            labels = labels[k];
-                            k = keys.shift();
-                        }
-                        value = labels[k]; // || `{${k}}`;
-                        if (typeof value !== 'string') {
-                            value = null;
-                        }
+        TranslateService.prototype.observe$ = function () {
+            var _this = this;
+            // console.log(new Error().stack);
+            return this.language_.pipe(operators.filter(function (x) { return x !== undefined; }), operators.switchMap(function (language) { return _this.getTranslation(language.lang); }));
+        };
+        TranslateService.prototype.getTranslation = function (lang) {
+            var _this = this;
+            if (!lang || !lang.trim()) {
+                return rxjs.of(null);
+            }
+            TranslateService.lang_ = lang;
+            if (TranslateService.cache[lang]) {
+                return rxjs.of(TranslateService.cache[lang]);
+            }
+            else {
+                return this.get("?lang=" + lang, { lang: lang }).pipe(
+                // take(1),
+                operators.map(function (x) {
+                    if (x.length && x[0]) {
+                        var labels = x[0].labels;
+                        TranslateService.cache[lang] = labels;
+                        _this.events.emit(labels);
+                        return labels;
                     }
-                    return this.parseTranslate(value, key, defaultValue, params);
-                }
-            };
-        /**
-         * @param {?} key
-         * @param {?=} defaultValue
-         * @param {?=} params
-         * @return {?}
-         */
-        TranslateService.prototype.transform = /**
-         * @param {?} key
-         * @param {?=} defaultValue
-         * @param {?=} params
-         * @return {?}
-         */
-            function (key, defaultValue, params) {
-                /** @type {?} */
-                var value = this.getTranslate(key, defaultValue, params);
-                return value;
-            };
-        /**
-         * @private
-         * @param {?} value
-         * @param {?} key
-         * @param {?=} defaultValue
-         * @param {?=} params
-         * @return {?}
-         */
-        TranslateService.prototype.parseTranslate = /**
-         * @private
-         * @param {?} value
-         * @param {?} key
-         * @param {?=} defaultValue
-         * @param {?=} params
-         * @return {?}
-         */
-            function (value, key, defaultValue, params) {
-                if (value == null) {
-                    return defaultValue || this.missingTranslate(key);
-                }
-                else if (params) {
-                    return this.parseParams(value, params);
-                }
-                return value;
-            };
-        /**
-         * @private
-         * @param {?} key
-         * @return {?}
-         */
-        TranslateService.prototype.missingTranslate = /**
-         * @private
-         * @param {?} key
-         * @return {?}
-         */
-            function (key) {
-                if (this.missingHandler) {
-                    return typeof this.missingHandler === 'function' ?
-                        this.missingHandler(key) :
-                        this.missingHandler;
-                }
-                return key;
-            };
-        /**
-         * @private
-         * @param {?} value
-         * @param {?} params
-         * @return {?}
-         */
-        TranslateService.prototype.parseParams = /**
-         * @private
-         * @param {?} value
-         * @param {?} params
-         * @return {?}
-         */
-            function (value, params) {
-                /** @type {?} */
-                var TEMPLATEREGEXP_ = /@([^{}\s]*)/g;
-                return value.replace(TEMPLATEREGEXP_, ( /**
-                 * @param {?} text
-                 * @param {?} key
-                 * @return {?}
-                 */function (text, key) {
-                    /** @type {?} */
-                    var replacer = ( /** @type {?} */(params[key]));
-                    return typeof replacer !== 'undefined' ? replacer : text;
+                    else {
+                        return rxjs.of(null);
+                    }
                 }));
-            };
-        /**
-         * @param {?} lang
-         * @return {?}
-         */
-        TranslateService.prototype.use = /**
-         * @param {?} lang
-         * @return {?}
-         */
-            function (lang) {
-            };
-        /**
-         * @param {?} lang
-         * @return {?}
-         */
-        TranslateService.prototype.setDefaultLang = /**
-         * @param {?} lang
-         * @return {?}
-         */
-            function (lang) {
-            };
-        /**
-         * @param {?} lang
-         * @return {?}
-         */
-        TranslateService.prototype.addLangs = /**
-         * @param {?} lang
-         * @return {?}
-         */
-            function (lang) {
-            };
-        /**
-         * @return {?}
-         */
-        TranslateService.prototype.getBrowserLang = /**
-         * @return {?}
-         */
-            function () {
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    /** @type {?} */
-                    var lang = this.getFirstBrowserLang() || this.config.defaultLanguage;
-                    // console.log('getBrowserLang', lang, navigator.languages);
-                    return lang;
+            }
+        };
+        TranslateService.prototype.getTranslate = function (key, defaultValue, params) {
+            // console.log('TranslateService.getTranslate', key, TranslateService.cache, TranslateService.lang_);
+            if (key) {
+                var value = null;
+                var labels = TranslateService.cache[TranslateService.lang_];
+                // console.log('labels', TranslateService.lang_, TranslateService.cache, labels);
+                if (labels) {
+                    var keys = key.split('.');
+                    var k = keys.shift();
+                    while (keys.length > 0 && labels[k]) {
+                        labels = labels[k];
+                        k = keys.shift();
+                    }
+                    value = labels[k]; // || `{${k}}`;
+                    if (typeof value !== 'string') {
+                        value = null;
+                    }
                 }
-                else {
-                    return this.config.defaultLanguage;
-                }
-            };
-        /**
-         * @return {?}
-         */
-        TranslateService.prototype.getFirstBrowserLang = /**
-         * @return {?}
-         */
-            function () {
-                /** @type {?} */
-                var lang = this.getFirstBrowserLocale();
-                if (lang) {
-                    return lang.split('-')[0];
-                }
-            };
-        /**
-         * @return {?}
-         */
-        TranslateService.prototype.getFirstBrowserLocale = /**
-         * @return {?}
-         */
-            function () {
-                /** @type {?} */
-                var navigator = window.navigator;
-                /** @type {?} */
-                var properties = ['language', 'browserLanguage', 'systemLanguage', 'userLanguage'];
-                /** @type {?} */
-                var lang;
-                if (Array.isArray(navigator.languages)) {
-                    lang = navigator.languages[0];
-                }
-                /** @type {?} */
-                var i = 0;
-                while (!lang && i < properties.length) {
-                    lang = navigator[properties[i]];
-                    i++;
-                }
+                return this.parseTranslate(value, key, defaultValue, params);
+            }
+        };
+        TranslateService.prototype.transform = function (key, defaultValue, params) {
+            var value = this.getTranslate(key, defaultValue, params);
+            return value;
+        };
+        TranslateService.prototype.parseTranslate = function (value, key, defaultValue, params) {
+            if (value == null) {
+                return defaultValue || this.missingTranslate(key);
+            }
+            else if (params) {
+                return this.parseParams(value, params);
+            }
+            return value;
+        };
+        TranslateService.prototype.missingTranslate = function (key) {
+            if (this.missingHandler) {
+                return typeof this.missingHandler === 'function' ?
+                    this.missingHandler(key) :
+                    this.missingHandler;
+            }
+            return key;
+        };
+        TranslateService.prototype.parseParams = function (value, params) {
+            var TEMPLATEREGEXP_ = /@([^{}\s]*)/g; // /{{\s?([^{}\s]*)\s?}}/g;
+            return value.replace(TEMPLATEREGEXP_, function (text, key) {
+                var replacer = params[key];
+                return typeof replacer !== 'undefined' ? replacer : text;
+            });
+        };
+        TranslateService.prototype.use = function (lang) {
+        };
+        TranslateService.prototype.setDefaultLang = function (lang) {
+        };
+        TranslateService.prototype.addLangs = function (lang) {
+        };
+        TranslateService.prototype.getBrowserLang = function () {
+            if (common.isPlatformBrowser(this.platformId)) {
+                var lang = this.getFirstBrowserLang() || this.config.defaultLanguage; // navigator.languages ? navigator.languages[0] : (navigator.language || navigator['userLanguage'] || this.config.defaultLanguage);
+                // console.log('getBrowserLang', lang, navigator.languages);
                 return lang;
-            };
+            }
+            else {
+                return this.config.defaultLanguage;
+            }
+        };
+        TranslateService.prototype.getFirstBrowserLang = function () {
+            var lang = this.getFirstBrowserLocale();
+            if (lang) {
+                return lang.split('-')[0];
+            }
+        };
+        TranslateService.prototype.getFirstBrowserLocale = function () {
+            var navigator = window.navigator;
+            var properties = ['language', 'browserLanguage', 'systemLanguage', 'userLanguage'];
+            var lang;
+            if (Array.isArray(navigator.languages)) {
+                lang = navigator.languages[0];
+            }
+            var i = 0;
+            while (!lang && i < properties.length) {
+                lang = navigator[properties[i]];
+                i++;
+            }
+            return lang;
+        };
         TranslateService.cache = {};
         TranslateService.lang_ = null;
-        TranslateService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        TranslateService.ctorParameters = function () {
-            return [
-                { type: i0.Injector }
-            ];
-        };
-        /** @nocollapse */ TranslateService.ngInjectableDef = i0.defineInjectable({ factory: function TranslateService_Factory() { return new TranslateService(i0.inject(i0.INJECTOR)); }, token: TranslateService, providedIn: "root" });
+        TranslateService.ɵfac = function TranslateService_Factory(t) { return new (t || TranslateService)(core["ɵɵinject"](core.Injector)); };
+        TranslateService.ɵprov = core["ɵɵdefineInjectable"]({ token: TranslateService, factory: TranslateService.ɵfac, providedIn: 'root' });
         return TranslateService;
     }(IdentityService));
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](TranslateService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: core.Injector }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     // @dynamic
     var RouteService = /** @class */ (function () {
         function RouteService(platformId, coreService, injector, translateService, location, route, router, segment) {
@@ -2301,31 +1530,18 @@
             }
         }
         Object.defineProperty(RouteService.prototype, "lang", {
-            get: /**
-             * @private
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._lang;
             },
-            set: /**
-             * @private
-             * @param {?} lang
-             * @return {?}
-             */ function (lang) {
+            set: function (lang) {
                 if (lang !== this._lang) {
                     this._lang = lang;
-                    /** @type {?} */
-                    var language = this._languages.getValue().find(( /**
-                     * @param {?} x
-                     * @return {?}
-                     */function (x) { return x.lang === lang; }));
+                    var language = this._languages.getValue().find(function (x) { return x.lang === lang; });
                     this._language.next(language);
                     this.translateService.use(lang);
                     // console.log('RouteService.set lang', lang, this.coreService.options.useLang);
                     if (this.coreService.options.useLang) {
-                        /** @type {?} */
                         var _lang = this._lang;
-                        /** @type {?} */
                         var path = this.location.path();
                         if (path.indexOf("/" + _lang) === 0) {
                             path = path.replace("/" + _lang, "/" + lang);
@@ -2342,231 +1558,119 @@
             configurable: true
         });
         Object.defineProperty(RouteService.prototype, "currentLang", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return this._lang;
             },
             enumerable: true,
             configurable: true
         });
-        /**
-         * @return {?}
-         */
-        RouteService.prototype.getPageParams = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                // console.log('RouteService.getPageParams', this.router.url);
-                return this.route.queryParams.pipe(operators.distinctUntilChanged(), operators.switchMap(( /**
-                 * @param {?} params
-                 * @return {?}
-                 */function (params) {
-                    // console.log(params);
-                    /** @type {?} */
-                    var parsed = _this.parseParams(params);
-                    _this.pageParams$.next(parsed);
-                    return rxjs.of(parsed);
-                })));
-            };
-        /**
-         * @param {?} params
-         * @return {?}
-         */
-        RouteService.prototype.parseParams = /**
-         * @param {?} params
-         * @return {?}
-         */
-            function (params) {
-                var _this = this;
-                /** @type {?} */
-                var parsed = {};
-                Object.keys(params).forEach(( /**
-                 * @param {?} k
-                 * @return {?}
-                 */function (k) { return parsed[k] = _this.parse(params[k]); }));
-                /*
-                for (const key in params) {
-                    if (typeof (params[key]) === 'string') {
-                        parsed[key] = this.parse(params[key]);
-                    } else {
-                        parsed[key] = params[key];
-                    }
+        RouteService.prototype.getPageParams = function () {
+            var _this = this;
+            // console.log('RouteService.getPageParams', this.router.url);
+            return this.route.queryParams.pipe(operators.distinctUntilChanged(), operators.switchMap(function (params) {
+                // console.log(params);
+                var parsed = _this.parseParams(params);
+                _this.pageParams$.next(parsed);
+                return rxjs.of(parsed);
+            }));
+        };
+        RouteService.prototype.parseParams = function (params) {
+            var _this = this;
+            var parsed = {};
+            Object.keys(params).forEach(function (k) { return parsed[k] = _this.parse(params[k]); });
+            /*
+            for (const key in params) {
+                if (typeof (params[key]) === 'string') {
+                    parsed[key] = this.parse(params[key]);
+                } else {
+                    parsed[key] = params[key];
                 }
-                */
-                return parsed;
-            };
-        /**
-         * @param {?} params
-         * @return {?}
-         */
-        RouteService.prototype.serializeParams = /**
-         * @param {?} params
-         * @return {?}
-         */
-            function (params) {
-                var _this = this;
-                /** @type {?} */
-                var serialized = {};
-                Object.keys(params).forEach(( /**
-                 * @param {?} k
-                 * @return {?}
-                 */function (k) { return serialized[k] = _this.serialize(params[k]); }));
-                return serialized;
-            };
-        /**
-         * @param {?} base64
-         * @return {?}
-         */
-        RouteService.prototype.parse = /**
-         * @param {?} base64
-         * @return {?}
-         */
-            function (base64) {
-                try {
-                    if (i1$1.isPlatformBrowser(this.platformId)) {
-                        return JSON.parse(window.atob(base64));
-                    }
-                    else {
-                        return JSON.parse(Buffer.from(base64, 'base64').toString('ascii'));
-                    }
-                }
-                catch (_a) {
-                    return null;
-                }
-            };
-        /**
-         * @param {?} object
-         * @return {?}
-         */
-        RouteService.prototype.serialize = /**
-         * @param {?} object
-         * @return {?}
-         */
-            function (object) {
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    return window.btoa(JSON.stringify(object));
+            }
+            */
+            return parsed;
+        };
+        RouteService.prototype.serializeParams = function (params) {
+            var _this = this;
+            var serialized = {};
+            Object.keys(params).forEach(function (k) { return serialized[k] = _this.serialize(params[k]); });
+            return serialized;
+        };
+        RouteService.prototype.parse = function (base64) {
+            try {
+                if (common.isPlatformBrowser(this.platformId)) {
+                    return JSON.parse(window.atob(base64));
                 }
                 else {
-                    return Buffer.from(JSON.stringify(object), 'ascii').toString('base64');
+                    return JSON.parse(Buffer.from(base64, 'base64').toString('ascii'));
                 }
-            };
-        /**
-         * @return {?}
-         */
-        RouteService.prototype.getId = /**
-         * @return {?}
-         */
-            function () {
-                return +this.route.snapshot.paramMap.get('id');
-            };
-        /**
-         * @return {?}
-         */
-        RouteService.prototype.getSlug = /**
-         * @return {?}
-         */
-            function () {
-                return this.route.snapshot.paramMap.get('slug');
-            };
-        /**
-         * @param {?} data
-         * @return {?}
-         */
-        RouteService.prototype.toRoute = /**
-         * @param {?} data
-         * @return {?}
-         */
-            function (data) {
-                /** @type {?} */
-                var segments = this.segment.transform(data);
-                if (this.coreService.options.useMarket) {
-                    /** @type {?} */
-                    var market = this.currentMarket;
-                    /** @type {?} */
-                    var marketIndex = this.urlStrategy.split('/').indexOf(':market');
-                    segments.splice(marketIndex, 0, market);
+            }
+            catch (_a) {
+                return null;
+            }
+        };
+        RouteService.prototype.serialize = function (object) {
+            if (common.isPlatformBrowser(this.platformId)) {
+                return window.btoa(JSON.stringify(object));
+            }
+            else {
+                return Buffer.from(JSON.stringify(object), 'ascii').toString('base64');
+            }
+        };
+        RouteService.prototype.getId = function () {
+            return +this.route.snapshot.paramMap.get('id');
+        };
+        RouteService.prototype.getSlug = function () {
+            return this.route.snapshot.paramMap.get('slug');
+        };
+        RouteService.prototype.toRoute = function (data) {
+            var segments = this.segment.transform(data);
+            if (this.coreService.options.useMarket) {
+                var market = this.currentMarket;
+                var marketIndex = this.urlStrategy.split('/').indexOf(':market');
+                segments.splice(marketIndex, 0, market);
+            }
+            if (this.coreService.options.useLang) {
+                var lang = this._lang;
+                var langIndex = this.urlStrategy.split('/').indexOf(':lang');
+                segments.splice(langIndex, 0, lang);
+            }
+            // console.log('RouteService.toRoute', segments);
+            return segments;
+        };
+        RouteService.prototype.toSlug = function (data) {
+            var segments = this.segment.transform(data);
+            var paths = segments.filter(function (x) {
+                return typeof x === 'string';
+            });
+            var datas = segments.filter(function (x) {
+                return typeof x !== 'string';
+            });
+            if (this.coreService.options.useMarket) {
+                var marketIndex = this.urlStrategy.split('/').indexOf(':market');
+                if (paths.length > marketIndex) {
+                    paths[marketIndex] = '*';
                 }
-                if (this.coreService.options.useLang) {
-                    /** @type {?} */
-                    var lang = this._lang;
-                    /** @type {?} */
-                    var langIndex = this.urlStrategy.split('/').indexOf(':lang');
-                    segments.splice(langIndex, 0, lang);
+            }
+            if (this.coreService.options.useLang) {
+                var langIndex = this.urlStrategy.split('/').indexOf(':lang');
+                if (paths.length > langIndex) {
+                    paths[langIndex] = '*';
                 }
-                // console.log('RouteService.toRoute', segments);
-                return segments;
+            }
+            paths = paths.join('/').replace(/\/\*/gi, '').split('/');
+            // console.log('RouteService.toSlug', data, paths);
+            return paths.concat(datas);
+        };
+        RouteService.prototype.toParams = function (data) {
+            return {
+                data: window.btoa(JSON.stringify(data))
             };
-        /**
-         * @param {?} data
-         * @return {?}
-         */
-        RouteService.prototype.toSlug = /**
-         * @param {?} data
-         * @return {?}
-         */
-            function (data) {
-                /** @type {?} */
-                var segments = this.segment.transform(data);
-                /** @type {?} */
-                var paths = segments.filter(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) {
-                    return typeof x === 'string';
-                }));
-                /** @type {?} */
-                var datas = segments.filter(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) {
-                    return typeof x !== 'string';
-                }));
-                if (this.coreService.options.useMarket) {
-                    /** @type {?} */
-                    var marketIndex = this.urlStrategy.split('/').indexOf(':market');
-                    if (paths.length > marketIndex) {
-                        paths[marketIndex] = '*';
-                    }
-                }
-                if (this.coreService.options.useLang) {
-                    /** @type {?} */
-                    var langIndex = this.urlStrategy.split('/').indexOf(':lang');
-                    if (paths.length > langIndex) {
-                        paths[langIndex] = '*';
-                    }
-                }
-                paths = paths.join('/').replace(/\/\*/gi, '').split('/');
-                // console.log('RouteService.toSlug', data, paths);
-                return paths.concat(datas);
-            };
-        /**
-         * @param {?} data
-         * @return {?}
-         */
-        RouteService.prototype.toParams = /**
-         * @param {?} data
-         * @return {?}
-         */
-            function (data) {
-                return {
-                    data: window.btoa(JSON.stringify(data))
-                };
-            };
-        /**
-         * @param {?} params
-         * @return {?}
-         */
-        RouteService.prototype.toData = /**
-         * @param {?} params
-         * @return {?}
-         */
-            function (params) {
-                if (params && params.data) {
-                    return JSON.parse(window.atob(params.data));
-                }
-            };
+        };
+        RouteService.prototype.toData = function (params) {
+            if (params && params.data) {
+                return JSON.parse(window.atob(params.data));
+            }
+        };
         /*
         public getParams(): Observable<ComponentFactory<PageComponent>> {
             return this.router.events.pipe(
@@ -2581,311 +1685,158 @@
             );
         }
         */
-        /*
-            public getParams(): Observable<ComponentFactory<PageComponent>> {
-                return this.router.events.pipe(
-                    filter(event => event instanceof ActivationEnd),
-                    map(() => this.route),
-                    distinctUntilChanged(),
-                    map(route => route.firstChild),
-                    switchMap(route => route.params),
-                    concatMap(x => {
-                        return of(this.toData(x));
-                    })
-                );
-            }
-            */
-        /**
-         * @param {?} lang
-         * @param {?=} silent
-         * @return {?}
-         */
-        RouteService.prototype.setLanguage = /*
-            public getParams(): Observable<ComponentFactory<PageComponent>> {
-                return this.router.events.pipe(
-                    filter(event => event instanceof ActivationEnd),
-                    map(() => this.route),
-                    distinctUntilChanged(),
-                    map(route => route.firstChild),
-                    switchMap(route => route.params),
-                    concatMap(x => {
-                        return of(this.toData(x));
-                    })
-                );
-            }
-            */
-            /**
-             * @param {?} lang
-             * @param {?=} silent
-             * @return {?}
-             */
-            function (lang, silent) {
-                this.lang = lang;
-                if (this.coreService.options.useLang && this.path) {
-                    // console.log('RouteService.setLanguage', this.path, this._lang, lang, silent);
-                    if (silent) {
-                        this.location.replaceState(this.path);
-                    }
-                    else {
-                        this.router.navigate([this.path]);
-                    }
-                }
-            };
-        // PRIVATE METHODS
-        // PRIVATE METHODS
-        /**
-         * @private
-         * @return {?}
-         */
-        RouteService.prototype.setLanguages =
-            // PRIVATE METHODS
-            /**
-             * @private
-             * @return {?}
-             */
-            function () {
-                this.translateService.addLangs(this.coreService.options.languages ? this.coreService.options.languages.map(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return x.lang; })) : []);
-                this.translateService.setDefaultLang(this.coreService.options.defaultLanguage);
-                // this.setLanguage(this.detectLanguage(), true);
-                this.setLanguage(this.coreService.options.defaultLanguage, true);
-                /*
-                this.translateService.onLangChange.subscribe((e: LangChangeEvent) => {
-                    // console.log('RouteService.onLangChange', e);
-                });
-                */
-            };
-        /**
-         * @private
-         * @return {?}
-         */
-        RouteService.prototype.subscribeToRouter = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                this.router.events.pipe(operators.filter(( /**
-                 * @param {?} event
-                 * @return {?}
-                 */function (event) { return event instanceof i4.NavigationStart; }))).subscribe(( /**
-                 * @param {?} event
-                 * @return {?}
-                 */function (event) {
-                    /** @type {?} */
-                    var location = _this.location.normalize(event.url).split('/');
-                    if (_this.coreService.options.useMarket) {
-                        /** @type {?} */
-                        var marketIndex = _this.urlStrategy.split('/').indexOf(':market');
-                        /** @type {?} */
-                        var market = location[marketIndex];
-                        if (market !== _this.currentMarket) {
-                            _this.currentMarket = market;
-                            // console.log('RouteService.setMarket', market, event.url);
-                        }
-                    }
-                    if (_this.coreService.options.useLang) {
-                        /** @type {?} */
-                        var langIndex = _this.urlStrategy.split('/').indexOf(':lang');
-                        /** @type {?} */
-                        var lang_1 = location[langIndex];
-                        if (lang_1 !== _this._lang) {
-                            /** @type {?} */
-                            var language = _this._languages.getValue().find(( /**
-                             * @param {?} x
-                             * @return {?}
-                             */function (x) { return x.lang === lang_1; }));
-                            _this._language.next(language);
-                            _this.translateService.use(lang_1);
-                            // console.log('RouteService.setLang', lang, this._lang, langIndex, location, event.url);
-                        }
-                    }
-                }));
-            };
-        /**
-         * @private
-         * @return {?}
-         */
-        RouteService.prototype.detectLanguage = /**
-         * @private
-         * @return {?}
-         */
-            function () {
-                /** @type {?} */
-                var acceptLanguage = null;
-                if (i1$1.isPlatformServer(this.platformId)) {
-                    /*
-                                // server side express engine
-                                app.engine('html',  (_, options, callback) => {
-                                    let engine = ngExpressEngine({
-                                        bootstrap: ServerAppModule,
-                                        providers: [ { provide: 'request', useFactory: () => options.req } ]
-                                    });
-                                    engine(_, options, callback)
-                                })
-                                */
-                    /** @type {?} */
-                    var request = this.injector.get('request');
-                    if (request) {
-                        acceptLanguage = request.headers['accept-language'];
-                        /** @type {?} */
-                        var languages = acceptLanguage.match(/[a-zA-Z\-]{2,10}/g) || [];
-                        if (languages.length > 0) {
-                            acceptLanguage = languages[0].split('-')[0];
-                        }
-                        else {
-                            acceptLanguage = null;
-                        }
-                        // console.log('request', request, 'acceptLanguage', acceptLanguage);
-                    }
-                    // console.log('RouteService.isPlatformServer', this.platformId, acceptLanguage);
-                }
-                else if (i1$1.isPlatformBrowser(this.platformId)) {
-                    acceptLanguage = this.translateService.getBrowserLang();
-                    // console.log('RouteService.isPlatformBrowser', this.platformId, acceptLanguage);
-                }
-                /** @type {?} */
-                var detectedLanguage = this.coreService.options.defaultLanguage;
-                /** @type {?} */
-                var regexp = new RegExp("(" + (this.coreService.options.languages ? this.coreService.options.languages.map(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return x.lang; })).join('|') : '') + ")", 'gi');
-                /** @type {?} */
-                var match = (acceptLanguage || '').match(regexp);
-                detectedLanguage = match ? match[0] : detectedLanguage;
-                // console.log('RouteService.detectLanguage', detectedLanguage);
-                return detectedLanguage;
-            };
-        /**
-         * @return {?}
-         */
-        RouteService.prototype.getTime = /**
-         * @return {?}
-         */
-            function () {
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    return (performance || Date).now();
+        RouteService.prototype.setLanguage = function (lang, silent) {
+            this.lang = lang;
+            if (this.coreService.options.useLang && this.path) {
+                // console.log('RouteService.setLanguage', this.path, this._lang, lang, silent);
+                if (silent) {
+                    this.location.replaceState(this.path);
                 }
                 else {
-                    /** @type {?} */
-                    var time = process.hrtime();
-                    return (time[0] * 1e9 + time[1]) / 1e6;
+                    this.router.navigate([this.path]);
                 }
-            };
-        /**
-         * @return {?}
-         */
-        RouteService.prototype.start = /**
-         * @return {?}
-         */
-            function () {
-                RouteService.startTime = this.getTime();
-            };
-        /**
-         * @return {?}
-         */
-        RouteService.prototype.end = /**
-         * @return {?}
-         */
-            function () {
-                RouteService.endTime = this.getTime();
-                console.log('RouteService.end', RouteService.endTime - RouteService.startTime);
-            };
-        RouteService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        RouteService.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: CoreService },
-                { type: i0.Injector },
-                { type: TranslateService },
-                { type: i1$1.Location },
-                { type: i4.ActivatedRoute },
-                { type: i4.Router },
-                { type: SegmentPipe }
-            ];
+            }
         };
-        /** @nocollapse */ RouteService.ngInjectableDef = i0.defineInjectable({ factory: function RouteService_Factory() { return new RouteService(i0.inject(i0.PLATFORM_ID), i0.inject(CoreService), i0.inject(i0.INJECTOR), i0.inject(TranslateService), i0.inject(i1$1.Location), i0.inject(i4.ActivatedRoute), i0.inject(i4.Router), i0.inject(SegmentPipe)); }, token: RouteService, providedIn: "root" });
+        // PRIVATE METHODS
+        RouteService.prototype.setLanguages = function () {
+            this.translateService.addLangs(this.coreService.options.languages ? this.coreService.options.languages.map(function (x) { return x.lang; }) : []);
+            this.translateService.setDefaultLang(this.coreService.options.defaultLanguage);
+            // this.setLanguage(this.detectLanguage(), true);
+            this.setLanguage(this.coreService.options.defaultLanguage, true);
+            /*
+            this.translateService.onLangChange.subscribe((e: LangChangeEvent) => {
+                // console.log('RouteService.onLangChange', e);
+            });
+            */
+        };
+        RouteService.prototype.subscribeToRouter = function () {
+            var _this = this;
+            this.router.events.pipe(operators.filter(function (event) { return event instanceof router.NavigationStart; })).subscribe(function (event) {
+                var location = _this.location.normalize(event.url).split('/');
+                if (_this.coreService.options.useMarket) {
+                    var marketIndex = _this.urlStrategy.split('/').indexOf(':market');
+                    var market = location[marketIndex];
+                    if (market !== _this.currentMarket) {
+                        _this.currentMarket = market;
+                        // console.log('RouteService.setMarket', market, event.url);
+                    }
+                }
+                if (_this.coreService.options.useLang) {
+                    var langIndex = _this.urlStrategy.split('/').indexOf(':lang');
+                    var lang_1 = location[langIndex];
+                    if (lang_1 !== _this._lang) {
+                        var language = _this._languages.getValue().find(function (x) { return x.lang === lang_1; });
+                        _this._language.next(language);
+                        _this.translateService.use(lang_1);
+                        // console.log('RouteService.setLang', lang, this._lang, langIndex, location, event.url);
+                    }
+                }
+            });
+        };
+        RouteService.prototype.detectLanguage = function () {
+            var acceptLanguage = null;
+            if (common.isPlatformServer(this.platformId)) {
+                /*
+                // server side express engine
+                app.engine('html',  (_, options, callback) => {
+                    let engine = ngExpressEngine({
+                        bootstrap: ServerAppModule,
+                        providers: [ { provide: 'request', useFactory: () => options.req } ]
+                    });
+                    engine(_, options, callback)
+                })
+                */
+                var request = this.injector.get('request');
+                if (request) {
+                    acceptLanguage = request.headers['accept-language'];
+                    var languages = acceptLanguage.match(/[a-zA-Z\-]{2,10}/g) || [];
+                    if (languages.length > 0) {
+                        acceptLanguage = languages[0].split('-')[0];
+                    }
+                    else {
+                        acceptLanguage = null;
+                    }
+                    // console.log('request', request, 'acceptLanguage', acceptLanguage);
+                }
+                // console.log('RouteService.isPlatformServer', this.platformId, acceptLanguage);
+            }
+            else if (common.isPlatformBrowser(this.platformId)) {
+                acceptLanguage = this.translateService.getBrowserLang();
+                // console.log('RouteService.isPlatformBrowser', this.platformId, acceptLanguage);
+            }
+            var detectedLanguage = this.coreService.options.defaultLanguage;
+            var regexp = new RegExp("(" + (this.coreService.options.languages ? this.coreService.options.languages.map(function (x) { return x.lang; }).join('|') : '') + ")", 'gi');
+            var match = (acceptLanguage || '').match(regexp);
+            detectedLanguage = match ? match[0] : detectedLanguage;
+            // console.log('RouteService.detectLanguage', detectedLanguage);
+            return detectedLanguage;
+        };
+        RouteService.prototype.getTime = function () {
+            if (common.isPlatformBrowser(this.platformId)) {
+                return (performance || Date).now();
+            }
+            else {
+                var time = process.hrtime();
+                return (time[0] * 1e9 + time[1]) / 1e6;
+            }
+        };
+        RouteService.prototype.start = function () {
+            RouteService.startTime = this.getTime();
+        };
+        RouteService.prototype.end = function () {
+            RouteService.endTime = this.getTime();
+            console.log('RouteService.end', RouteService.endTime - RouteService.startTime);
+        };
+        RouteService.ɵfac = function RouteService_Factory(t) { return new (t || RouteService)(core["ɵɵinject"](core.PLATFORM_ID), core["ɵɵinject"](CoreService), core["ɵɵinject"](core.Injector), core["ɵɵinject"](TranslateService), core["ɵɵinject"](common.Location), core["ɵɵinject"](router.ActivatedRoute), core["ɵɵinject"](router.Router), core["ɵɵinject"](SegmentPipe)); };
+        RouteService.ɵprov = core["ɵɵdefineInjectable"]({ token: RouteService, factory: RouteService.ɵfac, providedIn: 'root' });
         return RouteService;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](RouteService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: undefined, decorators: [{
+                    type: core.Inject,
+                    args: [core.PLATFORM_ID]
+                }] }, { type: CoreService }, { type: core.Injector }, { type: TranslateService }, { type: common.Location }, { type: router.ActivatedRoute }, { type: router.Router }, { type: SegmentPipe }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var HttpStatusCodeService = /** @class */ (function () {
         function HttpStatusCodeService() {
             this.statusCode = 200;
             this.redirectUrl = null;
         }
-        /**
-         * @param {?} statusCode
-         * @param {?=} redirectUrl
-         * @return {?}
-         */
-        HttpStatusCodeService.prototype.setStatusCode = /**
-         * @param {?} statusCode
-         * @param {?=} redirectUrl
-         * @return {?}
-         */
-            function (statusCode, redirectUrl) {
-                if (redirectUrl === void 0) {
-                    redirectUrl = null;
-                }
-                this.statusCode = statusCode;
-                this.redirectUrl = redirectUrl;
-            };
-        /**
-         * @return {?}
-         */
-        HttpStatusCodeService.prototype.getStatusCode = /**
-         * @return {?}
-         */
-            function () {
-                return (this.statusCode === 309 ? 301 : this.statusCode);
-            };
-        /**
-         * @return {?}
-         */
-        HttpStatusCodeService.prototype.getRedirectUrl = /**
-         * @return {?}
-         */
-            function () {
-                return this.redirectUrl;
-            };
-        HttpStatusCodeService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        HttpStatusCodeService.ctorParameters = function () { return []; };
-        /** @nocollapse */ HttpStatusCodeService.ngInjectableDef = i0.defineInjectable({ factory: function HttpStatusCodeService_Factory() { return new HttpStatusCodeService(); }, token: HttpStatusCodeService, providedIn: "root" });
+        HttpStatusCodeService.prototype.setStatusCode = function (statusCode, redirectUrl) {
+            if (redirectUrl === void 0) { redirectUrl = null; }
+            this.statusCode = statusCode;
+            this.redirectUrl = redirectUrl;
+        };
+        HttpStatusCodeService.prototype.getStatusCode = function () {
+            return (this.statusCode === 309 ? 301 : this.statusCode);
+        };
+        HttpStatusCodeService.prototype.getRedirectUrl = function () {
+            return this.redirectUrl;
+        };
+        HttpStatusCodeService.ɵfac = function HttpStatusCodeService_Factory(t) { return new (t || HttpStatusCodeService)(); };
+        HttpStatusCodeService.ɵprov = core["ɵɵdefineInjectable"]({ token: HttpStatusCodeService, factory: HttpStatusCodeService.ɵfac, providedIn: 'root' });
         return HttpStatusCodeService;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](HttpStatusCodeService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return []; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var HttpResponseInterceptor = /** @class */ (function () {
         function HttpResponseInterceptor(injector, statusCodeService) {
             this.injector = injector;
             this.statusCodeService = statusCodeService;
-            this.loggerErrorStrategy_ = LoggerErrorStrategy.Server;
-            this.loggerErrorStrategy_ = this.config.loggerErrorStrategy || LoggerErrorStrategy.Server;
+            this.loggerErrorStrategy_ = exports.LoggerErrorStrategy.Server;
+            this.loggerErrorStrategy_ = this.config.loggerErrorStrategy || exports.LoggerErrorStrategy.Server;
         }
         Object.defineProperty(HttpResponseInterceptor.prototype, "config", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 if (!this.config_) {
                     this.config_ = this.injector.get(CoreService).options;
                 }
@@ -2895,9 +1846,7 @@
             configurable: true
         });
         Object.defineProperty(HttpResponseInterceptor.prototype, "logger", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 if (!this.logger_) {
                     this.logger_ = this.injector.get(Logger);
                 }
@@ -2907,11 +1856,9 @@
             configurable: true
         });
         Object.defineProperty(HttpResponseInterceptor.prototype, "router", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 if (!this.router_) {
-                    this.router_ = this.injector.get(i4.Router);
+                    this.router_ = this.injector.get(router.Router);
                 }
                 return this.router_;
             },
@@ -2919,9 +1866,7 @@
             configurable: true
         });
         Object.defineProperty(HttpResponseInterceptor.prototype, "routeService", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 if (!this.routeService_) {
                     this.routeService_ = this.injector.get(RouteService);
                 }
@@ -2930,141 +1875,115 @@
             enumerable: true,
             configurable: true
         });
-        /**
-         * @param {?} request
-         * @param {?} next
-         * @return {?}
-         */
-        HttpResponseInterceptor.prototype.intercept = /**
-         * @param {?} request
-         * @param {?} next
-         * @return {?}
-         */
-            function (request, next) {
-                var _this = this;
-                // injecting request
-                // parsing response
-                return next.handle(request).pipe(operators.tap(( /**
-                 * @param {?} response
-                 * @return {?}
-                 */function (response) {
-                    _this.logger.httpError = null;
-                    // this.logger.log(response);
-                    if (response instanceof http.HttpResponse) {
-                        // console.log('response instanceof HttpResponse');
-                        // do stuff with response if you want
-                        if (response.status >= _this.loggerErrorStrategy_) {
-                            _this.logger.http(response);
-                        }
+        HttpResponseInterceptor.prototype.intercept = function (request, next) {
+            var _this = this;
+            // injecting request
+            // parsing response
+            return next.handle(request).pipe(operators.tap(function (response) {
+                _this.logger.httpError = null;
+                // this.logger.log(response);
+                if (response instanceof http.HttpResponse) {
+                    // console.log('response instanceof HttpResponse');
+                    // do stuff with response if you want
+                    if (response.status >= _this.loggerErrorStrategy_) {
+                        _this.logger.http(response);
                     }
-                })), operators.catchError(( /**
-                 * @param {?} response
-                 * @return {?}
-                 */function (response) {
-                    // console.warn('HttpResponseInterceptor', response);
-                    if (response instanceof http.HttpErrorResponse) {
-                        // this.statusCodeService.setStatusCode(response.status);
-                        // !!! add logErrorStrategy (100 INFORMATIONAL, 200 SUCCESS, 300 REDIRECT, 400 CLIENT, 500 SERVER, 999 NONE)
-                        if (response.status >= _this.loggerErrorStrategy_) {
-                            _this.logger.http(response);
-                        }
-                        /*
-                        switch (response.status) {
-                            case 401:
-                                // unauthorized
-                                break;
-                            case 404:
-                                // not found
-                                break;
-                            case 409:
-                                break;
-                            case 410:
-                                break;
-                            default:
-                                this.logger.http(response);
-                                break;
-                        }
-                        */
+                }
+            }), operators.catchError(function (response) {
+                // console.warn('HttpResponseInterceptor', response);
+                if (response instanceof http.HttpErrorResponse) {
+                    // this.statusCodeService.setStatusCode(response.status);
+                    // !!! add logErrorStrategy (100 INFORMATIONAL, 200 SUCCESS, 300 REDIRECT, 400 CLIENT, 500 SERVER, 999 NONE)
+                    if (response.status >= _this.loggerErrorStrategy_) {
+                        _this.logger.http(response);
                     }
-                    return rxjs.throwError(response);
-                })));
-            };
-        HttpResponseInterceptor.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        HttpResponseInterceptor.ctorParameters = function () {
-            return [
-                { type: i0.Injector },
-                { type: HttpStatusCodeService }
-            ];
+                    /*
+                    switch (response.status) {
+                        case 401:
+                            // unauthorized
+                            break;
+                        case 404:
+                            // not found
+                            break;
+                        case 409:
+                            break;
+                        case 410:
+                            break;
+                        default:
+                            this.logger.http(response);
+                            break;
+                    }
+                    */
+                }
+                return rxjs.throwError(response);
+            }));
         };
-        /** @nocollapse */ HttpResponseInterceptor.ngInjectableDef = i0.defineInjectable({ factory: function HttpResponseInterceptor_Factory() { return new HttpResponseInterceptor(i0.inject(i0.INJECTOR), i0.inject(HttpStatusCodeService)); }, token: HttpResponseInterceptor, providedIn: "root" });
+        HttpResponseInterceptor.ɵfac = function HttpResponseInterceptor_Factory(t) { return new (t || HttpResponseInterceptor)(core["ɵɵinject"](core.Injector), core["ɵɵinject"](HttpStatusCodeService)); };
+        HttpResponseInterceptor.ɵprov = core["ɵɵdefineInjectable"]({ token: HttpResponseInterceptor, factory: HttpResponseInterceptor.ɵfac, providedIn: 'root' });
         return HttpResponseInterceptor;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](HttpResponseInterceptor, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: core.Injector }, { type: HttpStatusCodeService }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
+    var _c0 = ["jsonFormatter"];
     var JsonFormatterComponent = /** @class */ (function () {
         function JsonFormatterComponent(platformId) {
             this.platformId = platformId;
         }
-        /**
-         * @return {?}
-         */
-        JsonFormatterComponent.prototype.ngOnChanges = /**
-         * @return {?}
-         */
-            function () {
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    if (!util.isObject(this.json) && !util.isArray(this.json)) {
-                        return;
-                    }
-                    // console.log('JsonFormatterComponent', this.json);
-                    if (this.elementRef) {
-                        this.input.nativeElement.removeChild(this.elementRef.nativeElement);
-                    }
-                    // const JSONFormatter = require('json-formatter-js').default;
-                    /** @type {?} */
-                    var formatter = new JSONFormatter(this.json);
-                    /** @type {?} */
-                    var elementRef = formatter.render();
-                    this.input.nativeElement.appendChild(elementRef);
-                    this.elementRef = new i0.ElementRef(elementRef);
+        JsonFormatterComponent.prototype.ngOnChanges = function () {
+            if (common.isPlatformBrowser(this.platformId)) {
+                if (!util.isObject(this.json) && !util.isArray(this.json)) {
+                    return;
                 }
-            };
-        JsonFormatterComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'json-formatter',
-                        template: "<div #jsonFormatter></div>",
-                        encapsulation: i0.ViewEncapsulation.Emulated,
-                        styles: [""]
-                    }] }
-        ];
-        /** @nocollapse */
-        JsonFormatterComponent.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] }
-            ];
+                // console.log('JsonFormatterComponent', this.json);
+                if (this.elementRef) {
+                    this.input.nativeElement.removeChild(this.elementRef.nativeElement);
+                }
+                // const JSONFormatter = require('json-formatter-js').default;
+                var formatter = new JSONFormatter(this.json);
+                var elementRef = formatter.render();
+                this.input.nativeElement.appendChild(elementRef);
+                this.elementRef = new core.ElementRef(elementRef);
+            }
         };
-        JsonFormatterComponent.propDecorators = {
-            input: [{ type: i0.ViewChild, args: ["jsonFormatter",] }],
-            json: [{ type: i0.Input }]
-        };
+        JsonFormatterComponent.ɵfac = function JsonFormatterComponent_Factory(t) { return new (t || JsonFormatterComponent)(core["ɵɵdirectiveInject"](core.PLATFORM_ID)); };
+        JsonFormatterComponent.ɵcmp = core["ɵɵdefineComponent"]({ type: JsonFormatterComponent, selectors: [["json-formatter"]], viewQuery: function JsonFormatterComponent_Query(rf, ctx) { if (rf & 1) {
+                core["ɵɵstaticViewQuery"](_c0, true);
+            } if (rf & 2) {
+                var _t;
+                core["ɵɵqueryRefresh"](_t = core["ɵɵloadQuery"]()) && (ctx.input = _t.first);
+            } }, inputs: { json: "json" }, features: [core["ɵɵNgOnChangesFeature"]()], decls: 2, vars: 0, consts: [["jsonFormatter", ""]], template: function JsonFormatterComponent_Template(rf, ctx) { if (rf & 1) {
+                core["ɵɵelement"](0, "div", null, 0);
+            } }, styles: [""] });
         return JsonFormatterComponent;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](JsonFormatterComponent, [{
+            type: core.Component,
+            args: [{
+                    selector: 'json-formatter',
+                    template: "<div #jsonFormatter></div>",
+                    styleUrls: ['./json-formatter.component.scss'],
+                    encapsulation: core.ViewEncapsulation.Emulated,
+                }]
+        }], function () { return [{ type: undefined, decorators: [{
+                    type: core.Inject,
+                    args: [core.PLATFORM_ID]
+                }] }]; }, { input: [{
+                type: core.ViewChild,
+                args: ["jsonFormatter", { static: true }]
+            }], json: [{
+                type: core.Input
+            }] }); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @template T
-     */
+    var LabelKey = /** @class */ (function () {
+        function LabelKey() {
+        }
+        return LabelKey;
+    }());
     var LabelService = /** @class */ (function (_super) {
         __extends(LabelService, _super);
         function LabelService(injector) {
@@ -3072,232 +1991,115 @@
             _this.injector = injector;
             _this.keys = {};
             _this.values$ = new rxjs.BehaviorSubject({});
-            _this.emitter$ = new i0.EventEmitter();
+            _this.emitter$ = new core.EventEmitter();
             return _this;
         }
         Object.defineProperty(LabelService.prototype, "collection", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return '/api/label';
             },
             enumerable: true,
             configurable: true
         });
-        /**
-         * @param {?} key
-         * @param {?=} defaultValue
-         * @param {?=} params
-         * @return {?}
-         */
-        LabelService.prototype.transform = /**
-         * @param {?} key
-         * @param {?=} defaultValue
-         * @param {?=} params
-         * @return {?}
-         */
-            function (key, defaultValue, params) {
-                /** @type {?} */
-                var values = this.values$.getValue();
-                if (values.hasOwnProperty(key)) {
-                    return this.parseLabel(values[key], params);
-                }
-                else if (!this.keys.hasOwnProperty(key)) {
-                    values[key] = null;
-                    Object.defineProperty(this.keys, key, {
-                        value: { id: key, defaultValue: defaultValue },
-                        enumerable: true,
-                        writable: false,
-                    });
-                    this.emitter$.emit();
-                    return null;
-                }
-            };
-        /**
-         * @param {?} key
-         * @param {?=} defaultValue
-         * @param {?=} params
-         * @return {?}
-         */
-        LabelService.prototype.transform$ = /**
-         * @param {?} key
-         * @param {?=} defaultValue
-         * @param {?=} params
-         * @return {?}
-         */
-            function (key, defaultValue, params) {
-                var _this = this;
-                /** @type {?} */
-                var values = this.values$.getValue();
-                if (values.hasOwnProperty(key)) {
-                    return rxjs.of(this.parseLabel(values[key], params));
-                }
-                else if (!this.keys.hasOwnProperty(key)) {
-                    values[key] = null;
-                    Object.defineProperty(this.keys, key, {
-                        value: { id: key, defaultValue: defaultValue },
-                        enumerable: true,
-                        writable: false,
-                    });
-                    this.emitter$.emit();
-                }
-                return this.values$.pipe(operators.map(( /**
-                 * @param {?} values
-                 * @return {?}
-                 */function (values) { return _this.parseLabel(values[key], params); })));
-            };
-        /**
-         * @return {?}
-         */
-        LabelService.prototype.observe$ = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return this.emitter$.pipe(operators.debounceTime(1), operators.switchMap(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return _this.collect$(); })), operators.filter(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return x !== null; })));
-            };
-        /**
-         * @return {?}
-         */
-        LabelService.prototype.collect$ = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                if (Object.keys(this.keys).length) {
-                    /** @type {?} */
-                    var keys_1 = Object.keys(this.keys).map(( /**
-                     * @param {?} x
-                     * @return {?}
-                     */function (x) { return _this.keys[x]; }));
-                    this.keys = {};
-                    return this.statePost(keys_1).pipe(operators.map(( /**
-                     * @param {?} labels
-                     * @return {?}
-                     */function (labels) {
-                        return labels.reduce(( /**
-                         * @param {?} values
-                         * @param {?} x
-                         * @return {?}
-                         */function (values, x) {
-                            values[x.id] = _this.getLabel(x);
-                            return values;
-                        }), {});
-                    })), operators.tap(( /**
-                     * @param {?} labels
-                     * @return {?}
-                     */function (labels) {
-                        /** @type {?} */
-                        var values = _this.values$.getValue();
-                        Object.assign(values, labels);
-                        _this.values$.next(values);
-                    })), operators.catchError(( /**
-                     * @param {?} error
-                     * @return {?}
-                     */function (error) {
-                        console.log(error);
-                        /** @type {?} */
-                        var labels = keys_1.reduce(( /**
-                         * @param {?} values
-                         * @param {?} x
-                         * @return {?}
-                         */function (values, x) {
-                            values[x.id] = _this.getLabel(x);
-                            return values;
-                        }), {});
-                        /** @type {?} */
-                        var values = _this.values$.getValue();
-                        Object.assign(values, labels);
-                        // return this.values$.next(values);
-                        return rxjs.of(null);
-                    })));
-                }
-                else {
-                    return rxjs.of(null);
-                }
-            };
-        /**
-         * @param {?} value
-         * @param {?} params
-         * @return {?}
-         */
-        LabelService.prototype.parseLabel = /**
-         * @param {?} value
-         * @param {?} params
-         * @return {?}
-         */
-            function (value, params) {
-                if (value && params) {
-                    /** @type {?} */
-                    var TEMPLATE_REGEXP = /@([^{}\s]*)/g;
-                    return value.replace(TEMPLATE_REGEXP, ( /**
-                     * @param {?} text
-                     * @param {?} key
-                     * @return {?}
-                     */function (text, key) {
-                        /** @type {?} */
-                        var replacer = ( /** @type {?} */(params[key]));
-                        return typeof replacer !== 'undefined' ? replacer : text;
-                    }));
-                }
-                else {
-                    return value;
-                }
-            };
-        /**
-         * @private
-         * @param {?} label
-         * @return {?}
-         */
-        LabelService.prototype.getLabel = /**
-         * @private
-         * @param {?} label
-         * @return {?}
-         */
-            function (label) {
-                return label.value || label.defaultValue || this.getMissingLabel(label);
-            };
-        /**
-         * @private
-         * @param {?} label
-         * @return {?}
-         */
-        LabelService.prototype.getMissingLabel = /**
-         * @private
-         * @param {?} label
-         * @return {?}
-         */
-            function (label) {
-                if (typeof this.missingHandler === 'function') {
-                    return this.missingHandler(label);
-                }
-                return label.id;
-            };
-        LabelService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        LabelService.ctorParameters = function () {
-            return [
-                { type: i0.Injector }
-            ];
+        LabelService.prototype.transform = function (key, defaultValue, params) {
+            var values = this.values$.getValue();
+            if (values.hasOwnProperty(key)) {
+                return this.parseLabel(values[key], params);
+            }
+            else if (!this.keys.hasOwnProperty(key)) {
+                values[key] = null;
+                Object.defineProperty(this.keys, key, {
+                    value: { id: key, defaultValue: defaultValue },
+                    enumerable: true,
+                    writable: false,
+                });
+                this.emitter$.emit();
+                return null;
+            }
         };
-        /** @nocollapse */ LabelService.ngInjectableDef = i0.defineInjectable({ factory: function LabelService_Factory() { return new LabelService(i0.inject(i0.INJECTOR)); }, token: LabelService, providedIn: "root" });
+        LabelService.prototype.transform$ = function (key, defaultValue, params) {
+            var _this = this;
+            var values = this.values$.getValue();
+            if (values.hasOwnProperty(key)) {
+                return rxjs.of(this.parseLabel(values[key], params));
+            }
+            else if (!this.keys.hasOwnProperty(key)) {
+                values[key] = null;
+                Object.defineProperty(this.keys, key, {
+                    value: { id: key, defaultValue: defaultValue },
+                    enumerable: true,
+                    writable: false,
+                });
+                this.emitter$.emit();
+            }
+            return this.values$.pipe(operators.map(function (values) { return _this.parseLabel(values[key], params); }));
+        };
+        LabelService.prototype.observe$ = function () {
+            var _this = this;
+            return this.emitter$.pipe(operators.debounceTime(1), operators.switchMap(function (x) { return _this.collect$(); }), operators.filter(function (x) { return x !== null; }));
+        };
+        LabelService.prototype.collect$ = function () {
+            var _this = this;
+            if (Object.keys(this.keys).length) {
+                var keys_1 = Object.keys(this.keys).map(function (x) { return _this.keys[x]; });
+                this.keys = {};
+                return this.statePost(keys_1).pipe(operators.map(function (labels) {
+                    return labels.reduce(function (values, x) {
+                        values[x.id] = _this.getLabel(x);
+                        return values;
+                    }, {});
+                }), operators.tap(function (labels) {
+                    var values = _this.values$.getValue();
+                    Object.assign(values, labels);
+                    _this.values$.next(values);
+                }), operators.catchError(function (error) {
+                    console.log(error);
+                    var labels = keys_1.reduce(function (values, x) {
+                        values[x.id] = _this.getLabel(x);
+                        return values;
+                    }, {});
+                    var values = _this.values$.getValue();
+                    Object.assign(values, labels);
+                    // return this.values$.next(values);
+                    return rxjs.of(null);
+                }));
+            }
+            else {
+                return rxjs.of(null);
+            }
+        };
+        LabelService.prototype.parseLabel = function (value, params) {
+            if (value && params) {
+                var TEMPLATE_REGEXP = /@([^{}\s]*)/g;
+                return value.replace(TEMPLATE_REGEXP, function (text, key) {
+                    var replacer = params[key];
+                    return typeof replacer !== 'undefined' ? replacer : text;
+                });
+            }
+            else {
+                return value;
+            }
+        };
+        LabelService.prototype.getLabel = function (label) {
+            return label.value || label.defaultValue || this.getMissingLabel(label);
+        };
+        LabelService.prototype.getMissingLabel = function (label) {
+            if (typeof this.missingHandler === 'function') {
+                return this.missingHandler(label);
+            }
+            return label.id;
+        };
+        LabelService.ɵfac = function LabelService_Factory(t) { return new (t || LabelService)(core["ɵɵinject"](core.Injector)); };
+        LabelService.ɵprov = core["ɵɵdefineInjectable"]({ token: LabelService, factory: LabelService.ɵfac, providedIn: 'root' });
         return LabelService;
     }(ApiService));
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](LabelService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: core.Injector }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var LabelDirective = /** @class */ (function (_super) {
         __extends(LabelDirective, _super);
         function LabelDirective(element, labelService) {
@@ -3306,215 +2108,166 @@
             _this.labelService = labelService;
             return _this;
         }
-        /**
-         * @return {?}
-         */
-        LabelDirective.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                this.labelService.transform$(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(operators.takeUntil(this.unsubscribe)).subscribe(( /**
-                 * @param {?} label
-                 * @return {?}
-                 */function (label) {
-                    _this.element.nativeElement.innerHTML = label;
-                }));
-            };
-        LabelDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[label]'
-                    },] }
-        ];
-        /** @nocollapse */
-        LabelDirective.ctorParameters = function () {
-            return [
-                { type: i0.ElementRef },
-                { type: LabelService }
-            ];
+        LabelDirective.prototype.ngOnInit = function () {
+            var _this = this;
+            this.labelService.transform$(this.label, this.element.nativeElement.innerHTML, this.labelParams).pipe(operators.takeUntil(this.unsubscribe)).subscribe(function (label) {
+                _this.element.nativeElement.innerHTML = label;
+            });
         };
-        LabelDirective.propDecorators = {
-            label: [{ type: i0.Input }],
-            labelParams: [{ type: i0.Input }]
-        };
+        LabelDirective.ɵfac = function LabelDirective_Factory(t) { return new (t || LabelDirective)(core["ɵɵdirectiveInject"](core.ElementRef), core["ɵɵdirectiveInject"](LabelService)); };
+        LabelDirective.ɵdir = core["ɵɵdefineDirective"]({ type: LabelDirective, selectors: [["", "label", ""]], inputs: { label: "label", labelParams: "labelParams" }, features: [core["ɵɵInheritDefinitionFeature"]] });
         return LabelDirective;
-    }(DisposableComponent));
+    }(DisposableDirective));
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](LabelDirective, [{
+            type: core.Directive,
+            args: [{
+                    selector: '[label]'
+                }]
+        }], function () { return [{ type: core.ElementRef }, { type: LabelService }]; }, { label: [{
+                type: core.Input
+            }], labelParams: [{
+                type: core.Input
+            }] }); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var LabelPipe = /** @class */ (function () {
         function LabelPipe(labelService) {
             this.labelService = labelService;
         }
-        /**
-         * @param {?} key
-         * @param {?=} defaultValue
-         * @param {?=} params
-         * @return {?}
-         */
-        LabelPipe.prototype.transform = /**
-         * @param {?} key
-         * @param {?=} defaultValue
-         * @param {?=} params
-         * @return {?}
-         */
-            function (key, defaultValue, params) {
-                return this.labelService.transform(key, defaultValue, params);
-            };
-        LabelPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'label',
-                        pure: false
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        LabelPipe.ctorParameters = function () {
-            return [
-                { type: LabelService }
-            ];
+        LabelPipe.prototype.transform = function (key, defaultValue, params) {
+            return this.labelService.transform(key, defaultValue, params);
         };
-        /** @nocollapse */ LabelPipe.ngInjectableDef = i0.defineInjectable({ factory: function LabelPipe_Factory() { return new LabelPipe(i0.inject(LabelService)); }, token: LabelPipe, providedIn: "root" });
+        LabelPipe.ɵfac = function LabelPipe_Factory(t) { return new (t || LabelPipe)(core["ɵɵdirectiveInject"](LabelService)); };
+        LabelPipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "label", type: LabelPipe, pure: false });
+        LabelPipe.ɵprov = core["ɵɵdefineInjectable"]({ token: LabelPipe, factory: LabelPipe.ɵfac, providedIn: 'root' });
         return LabelPipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](LabelPipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'label',
+                    pure: false
+                }]
+        }, {
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: LabelService }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
+    function LoggerComponent_div_0_Template(rf, ctx) { if (rf & 1) {
+        core["ɵɵelementStart"](0, "div", 1);
+        core["ɵɵelementStart"](1, "span");
+        core["ɵɵtext"](2);
+        core["ɵɵelementEnd"]();
+        core["ɵɵtext"](3, "\u00A0 ");
+        core["ɵɵelementStart"](4, "span", 2);
+        core["ɵɵtext"](5);
+        core["ɵɵelementEnd"]();
+        core["ɵɵtext"](6, "\u00A0 ");
+        core["ɵɵelementStart"](7, "span", 3);
+        core["ɵɵtext"](8);
+        core["ɵɵelementEnd"]();
+        core["ɵɵtext"](9, "\u00A0 ");
+        core["ɵɵelementStart"](10, "span", 4);
+        core["ɵɵtext"](11);
+        core["ɵɵelementEnd"]();
+        core["ɵɵelementEnd"]();
+    } if (rf & 2) {
+        var ctx_r5 = core["ɵɵnextContext"]();
+        core["ɵɵproperty"]("ngClass", "http--" + ctx_r5.logger.httpError.statusType);
+        core["ɵɵadvance"](2);
+        core["ɵɵtextInterpolate"](ctx_r5.logger.httpError.statusType);
+        core["ɵɵadvance"](3);
+        core["ɵɵtextInterpolate"](ctx_r5.logger.httpError.status);
+        core["ɵɵadvance"](3);
+        core["ɵɵtextInterpolate"](ctx_r5.logger.httpError.url);
+        core["ɵɵadvance"](3);
+        core["ɵɵtextInterpolate"](ctx_r5.logger.httpError.body == null ? null : ctx_r5.logger.httpError.body.error);
+    } }
     var LoggerComponent = /** @class */ (function () {
         function LoggerComponent(logger) {
             this.logger = logger;
         }
-        /**
-         * @return {?}
-         */
-        LoggerComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-            };
-        LoggerComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'core-logger',
-                        template: "<div class=\"error-http\" [ngClass]=\"'http--' + logger.httpError.statusType\" *ngIf=\"logger.httpError\">\n\t<span>{{logger.httpError.statusType}}</span>&nbsp;\n\t<span class=\"status\">{{logger.httpError.status}}</span>&nbsp;\n\t<span class=\"url\">{{logger.httpError.url}}</span>&nbsp;\n\t<span class=\"message\">{{logger.httpError.body?.error}}</span>\n</div>\n<!--\n<div *ngIf=\"logger.logs.length\">\n\t<ul class=\"list-group \">\n\t\t<li class=\"list-group-item\">\n\t\t\t<button type=\"button\" class=\"btn btn-outline-primary btn-sm float-right\" (click)=\"logger.clear()\" title=\"Clear Logs\">{{ 'app.clear' | translate }}</button>\n\t\t</li>\n\t\t<li class=\"list-group-item\" *ngFor='let log of logger.logs'>\n\t\t\t<span>{{log}}</span>\n\t\t</li>\n\t</ul>\n\t<br>\n</div>\n-->\n",
-                        encapsulation: i0.ViewEncapsulation.Emulated,
-                        styles: [".error-http{padding:15px;max-width:1140px;margin:0 auto 10px;background:#faebd7;font-size:13px;font-family:monospace;color:#d2691e}"]
-                    }] }
-        ];
-        /** @nocollapse */
-        LoggerComponent.ctorParameters = function () {
-            return [
-                { type: Logger }
-            ];
+        LoggerComponent.prototype.ngOnInit = function () {
         };
+        LoggerComponent.ɵfac = function LoggerComponent_Factory(t) { return new (t || LoggerComponent)(core["ɵɵdirectiveInject"](Logger)); };
+        LoggerComponent.ɵcmp = core["ɵɵdefineComponent"]({ type: LoggerComponent, selectors: [["core-logger"]], decls: 1, vars: 1, consts: [["class", "error-http", 3, "ngClass", 4, "ngIf"], [1, "error-http", 3, "ngClass"], [1, "status"], [1, "url"], [1, "message"]], template: function LoggerComponent_Template(rf, ctx) { if (rf & 1) {
+                core["ɵɵtemplate"](0, LoggerComponent_div_0_Template, 12, 5, "div", 0);
+            } if (rf & 2) {
+                core["ɵɵproperty"]("ngIf", ctx.logger.httpError);
+            } }, directives: [common.NgIf, common.NgClass], styles: [".error-http[_ngcontent-%COMP%]{padding:15px;max-width:1140px;margin:0 auto 10px;background:#faebd7;font-size:13px;font-family:monospace;color:#d2691e}"] });
         return LoggerComponent;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](LoggerComponent, [{
+            type: core.Component,
+            args: [{
+                    selector: 'core-logger',
+                    templateUrl: './logger.component.html',
+                    styleUrls: ['./logger.component.scss'],
+                    encapsulation: core.ViewEncapsulation.Emulated,
+                }]
+        }], function () { return [{ type: Logger }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var OutletDefaultComponent = /** @class */ (function (_super) {
-        __extends(OutletDefaultComponent, _super);
-        function OutletDefaultComponent() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        OutletDefaultComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'outlet-content-component',
-                        template: "<div class=\"outlet\">Outlet not found!</div>"
-                    }] }
-        ];
-        OutletDefaultComponent.propDecorators = {
-            outlet: [{ type: i0.Input }]
-        };
-        return OutletDefaultComponent;
-    }(DisposableComponent));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    var OutletRepeaterComponent = /** @class */ (function (_super) {
-        __extends(OutletRepeaterComponent, _super);
-        function OutletRepeaterComponent() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        OutletRepeaterComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'outlet-repeater-component',
-                        template: "<ng-container *ngFor=\"let outlet of outlets\"><outlet-component [outlet]=\"outlet\"></outlet-component></ng-container>"
-                    }] }
-        ];
-        OutletRepeaterComponent.propDecorators = {
-            outlets: [{ type: i0.Input }]
-        };
-        return OutletRepeaterComponent;
-    }(DisposableComponent));
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
-    var OUTLETS = new i0.InjectionToken('core.outlets');
+    var OUTLETS = new core.InjectionToken('core.outlets');
     var Outlet = /** @class */ (function () {
         function Outlet() {
         }
         return Outlet;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
+    var OutletDefaultComponent = /** @class */ (function (_super) {
+        __extends(OutletDefaultComponent, _super);
+        function OutletDefaultComponent() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        OutletDefaultComponent.ɵfac = function OutletDefaultComponent_Factory(t) { return ɵOutletDefaultComponent_BaseFactory(t || OutletDefaultComponent); };
+        OutletDefaultComponent.ɵcmp = core["ɵɵdefineComponent"]({ type: OutletDefaultComponent, selectors: [["outlet-content-component"]], inputs: { outlet: "outlet" }, features: [core["ɵɵInheritDefinitionFeature"]], decls: 2, vars: 0, consts: [[1, "outlet"]], template: function OutletDefaultComponent_Template(rf, ctx) { if (rf & 1) {
+                core["ɵɵelementStart"](0, "div", 0);
+                core["ɵɵtext"](1, "Outlet not found!");
+                core["ɵɵelementEnd"]();
+            } }, encapsulation: 2 });
+        return OutletDefaultComponent;
+    }(DisposableComponent));
+    var ɵOutletDefaultComponent_BaseFactory = core["ɵɵgetInheritedFactory"](OutletDefaultComponent);
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](OutletDefaultComponent, [{
+            type: core.Component,
+            args: [{
+                    selector: 'outlet-content-component',
+                    template: "<div class=\"outlet\">Outlet not found!</div>",
+                }]
+        }], null, { outlet: [{
+                type: core.Input
+            }] }); })();
+
     var OutletResolverService = /** @class */ (function () {
         function OutletResolverService(outlets) {
             outlets = outlets || {};
         }
-        /**
-         * @param {?} outlet
-         * @return {?}
-         */
-        OutletResolverService.prototype.resolve = /**
-         * @param {?} outlet
-         * @return {?}
-         */
-            function (outlet) {
-                /** @type {?} */
-                var component;
-                if (outlet) {
-                    component = this.outlets[outlet.component] || OutletDefaultComponent;
-                }
-                else {
-                    component = OutletDefaultComponent;
-                }
-                return component;
-            };
-        OutletResolverService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        OutletResolverService.ctorParameters = function () {
-            return [
-                { type: undefined, decorators: [{ type: i0.Inject, args: [OUTLETS,] }] }
-            ];
+        OutletResolverService.prototype.resolve = function (outlet) {
+            var component;
+            if (outlet) {
+                component = this.outlets[outlet.component] || OutletDefaultComponent;
+            }
+            else {
+                component = OutletDefaultComponent;
+            }
+            return component;
         };
-        /** @nocollapse */ OutletResolverService.ngInjectableDef = i0.defineInjectable({ factory: function OutletResolverService_Factory() { return new OutletResolverService(i0.inject(OUTLETS)); }, token: OutletResolverService, providedIn: "root" });
+        OutletResolverService.ɵfac = function OutletResolverService_Factory(t) { return new (t || OutletResolverService)(core["ɵɵinject"](OUTLETS)); };
+        OutletResolverService.ɵprov = core["ɵɵdefineInjectable"]({ token: OutletResolverService, factory: OutletResolverService.ɵfac, providedIn: 'root' });
         return OutletResolverService;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](OutletResolverService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: undefined, decorators: [{
+                    type: core.Inject,
+                    args: [OUTLETS]
+                }] }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
+    var _c0$1 = ["outlet"];
     var OutletComponent = /** @class */ (function (_super) {
         __extends(OutletComponent, _super);
         function OutletComponent(componentFactoryResolver, outletResolverService) {
@@ -3523,108 +2276,108 @@
             _this.outletResolverService = outletResolverService;
             return _this;
         }
-        /**
-         * @return {?}
-         */
-        OutletComponent.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                /** @type {?} */
-                var component = this.outletResolverService.resolve(this.outlet);
-                /** @type {?} */
-                var factory = this.componentFactoryResolver.resolveComponentFactory(component);
-                this.viewContainerRef.clear();
-                /** @type {?} */
-                var componentRef = this.viewContainerRef.createComponent(factory);
-                /** @type {?} */
-                var instance = componentRef.instance;
-                instance.outlet = this.outlet;
-                if (typeof instance['OutletInit'] === 'function') {
-                    instance['OutletInit']();
-                }
-                this.componentRef = componentRef;
-            };
-        /**
-         * @return {?}
-         */
-        OutletComponent.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                this.componentRef.destroy();
-            };
-        OutletComponent.decorators = [
-            { type: i0.Component, args: [{
-                        selector: 'outlet-component',
-                        template: ''
-                    }] }
-        ];
-        /** @nocollapse */
-        OutletComponent.ctorParameters = function () {
-            return [
-                { type: i0.ComponentFactoryResolver },
-                { type: OutletResolverService }
-            ];
+        OutletComponent.prototype.ngOnInit = function () {
+            var component = this.outletResolverService.resolve(this.outlet);
+            var factory = this.componentFactoryResolver.resolveComponentFactory(component);
+            this.viewContainerRef.clear();
+            var componentRef = this.viewContainerRef.createComponent(factory);
+            var instance = componentRef.instance;
+            instance.outlet = this.outlet;
+            if (typeof instance['OutletInit'] === 'function') {
+                instance['OutletInit']();
+            }
+            this.componentRef = componentRef;
         };
-        OutletComponent.propDecorators = {
-            outlet: [{ type: i0.Input }],
-            viewContainerRef: [{ type: i0.ViewChild, args: ['outlet', { read: i0.ViewContainerRef },] }]
+        OutletComponent.prototype.ngOnDestroy = function () {
+            this.componentRef.destroy();
         };
+        OutletComponent.ɵfac = function OutletComponent_Factory(t) { return new (t || OutletComponent)(core["ɵɵdirectiveInject"](core.ComponentFactoryResolver), core["ɵɵdirectiveInject"](OutletResolverService)); };
+        OutletComponent.ɵcmp = core["ɵɵdefineComponent"]({ type: OutletComponent, selectors: [["outlet-component"]], viewQuery: function OutletComponent_Query(rf, ctx) { if (rf & 1) {
+                core["ɵɵviewQuery"](_c0$1, true, core.ViewContainerRef);
+            } if (rf & 2) {
+                var _t;
+                core["ɵɵqueryRefresh"](_t = core["ɵɵloadQuery"]()) && (ctx.viewContainerRef = _t.first);
+            } }, inputs: { outlet: "outlet" }, features: [core["ɵɵInheritDefinitionFeature"]], decls: 0, vars: 0, template: function OutletComponent_Template(rf, ctx) { }, encapsulation: 2 });
         return OutletComponent;
     }(DisposableComponent));
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](OutletComponent, [{
+            type: core.Component,
+            args: [{
+                    selector: 'outlet-component',
+                    template: '',
+                }]
+        }], function () { return [{ type: core.ComponentFactoryResolver }, { type: OutletResolverService }]; }, { outlet: [{
+                type: core.Input
+            }], viewContainerRef: [{
+                type: core.ViewChild,
+                args: ['outlet', { read: core.ViewContainerRef, static: false }]
+            }] }); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
+    function OutletRepeaterComponent_ng_container_0_Template(rf, ctx) { if (rf & 1) {
+        core["ɵɵelementContainerStart"](0);
+        core["ɵɵelement"](1, "outlet-component", 1);
+        core["ɵɵelementContainerEnd"]();
+    } if (rf & 2) {
+        var outlet_r7 = ctx.$implicit;
+        core["ɵɵadvance"](1);
+        core["ɵɵproperty"]("outlet", outlet_r7);
+    } }
+    var OutletRepeaterComponent = /** @class */ (function (_super) {
+        __extends(OutletRepeaterComponent, _super);
+        function OutletRepeaterComponent() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        OutletRepeaterComponent.ɵfac = function OutletRepeaterComponent_Factory(t) { return ɵOutletRepeaterComponent_BaseFactory(t || OutletRepeaterComponent); };
+        OutletRepeaterComponent.ɵcmp = core["ɵɵdefineComponent"]({ type: OutletRepeaterComponent, selectors: [["outlet-repeater-component"]], inputs: { outlets: "outlets" }, features: [core["ɵɵInheritDefinitionFeature"]], decls: 1, vars: 1, consts: [[4, "ngFor", "ngForOf"], [3, "outlet"]], template: function OutletRepeaterComponent_Template(rf, ctx) { if (rf & 1) {
+                core["ɵɵtemplate"](0, OutletRepeaterComponent_ng_container_0_Template, 2, 1, "ng-container", 0);
+            } if (rf & 2) {
+                core["ɵɵproperty"]("ngForOf", ctx.outlets);
+            } }, directives: [common.NgForOf, OutletComponent], encapsulation: 2 });
+        return OutletRepeaterComponent;
+    }(DisposableComponent));
+    var ɵOutletRepeaterComponent_BaseFactory = core["ɵɵgetInheritedFactory"](OutletRepeaterComponent);
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](OutletRepeaterComponent, [{
+            type: core.Component,
+            args: [{
+                    selector: 'outlet-repeater-component',
+                    template: "<ng-container *ngFor=\"let outlet of outlets\"><outlet-component [outlet]=\"outlet\"></outlet-component></ng-container>",
+                }]
+        }], null, { outlets: [{
+                type: core.Input
+            }] }); })();
+
     var AssetPipe = /** @class */ (function () {
         function AssetPipe(coreService, segment) {
             this.coreService = coreService;
             this.segment = segment;
         }
-        /**
-         * @param {?} data
-         * @return {?}
-         */
-        AssetPipe.prototype.transform = /**
-         * @param {?} data
-         * @return {?}
-         */
-            function (data) {
-                if (typeof data === 'string' && (data.indexOf('http') === 0 || data.indexOf('/media/') === 0)) {
-                    return data;
-                }
-                else {
-                    /** @type {?} */
-                    var segments = this.segment.transform(data);
-                    segments.unshift(this.coreService.options.assets);
-                    return segments.join('/');
-                }
-            };
-        AssetPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'asset',
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        AssetPipe.ctorParameters = function () {
-            return [
-                { type: CoreService },
-                { type: SegmentPipe }
-            ];
+        AssetPipe.prototype.transform = function (data) {
+            if (typeof data === 'string' && (data.indexOf('http') === 0 || data.indexOf('/media/') === 0)) {
+                return data;
+            }
+            else {
+                var segments = this.segment.transform(data);
+                segments.unshift(this.coreService.options.assets);
+                return segments.join('/');
+            }
         };
-        /** @nocollapse */ AssetPipe.ngInjectableDef = i0.defineInjectable({ factory: function AssetPipe_Factory() { return new AssetPipe(i0.inject(CoreService), i0.inject(SegmentPipe)); }, token: AssetPipe, providedIn: "root" });
+        AssetPipe.ɵfac = function AssetPipe_Factory(t) { return new (t || AssetPipe)(core["ɵɵdirectiveInject"](CoreService), core["ɵɵdirectiveInject"](SegmentPipe)); };
+        AssetPipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "asset", type: AssetPipe, pure: true });
+        AssetPipe.ɵprov = core["ɵɵdefineInjectable"]({ token: AssetPipe, factory: AssetPipe.ɵfac, providedIn: 'root' });
         return AssetPipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](AssetPipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'asset',
+                }]
+        }, {
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: CoreService }, { type: SegmentPipe }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var CustomAsyncPipe = /** @class */ (function () {
         function CustomAsyncPipe(changeDetector) {
             this.changeDetector = changeDetector;
@@ -3633,399 +2386,248 @@
             this.value = null;
             this.cachedValue = null;
         }
-        /**
-         * @param {?} subject
-         * @return {?}
-         */
-        CustomAsyncPipe.prototype.transform = /**
-         * @param {?} subject
-         * @return {?}
-         */
-            function (subject) {
-                return this.observableToValue(subject);
-            };
-        /**
-         * @private
-         * @param {?} subject
-         * @return {?}
-         */
-        CustomAsyncPipe.prototype.observableToValue = /**
-         * @private
-         * @param {?} subject
-         * @return {?}
-         */
-            function (subject) {
-                var _this = this;
-                if (subject !== this.subject) {
-                    if (this.subject) {
-                        this.dispose();
-                    }
-                    if (subject) {
-                        this.subject = subject;
-                        this.subscription = this.subject.subscribe(( /**
-                         * @param {?} value
-                         * @return {?}
-                         */function (value) {
-                            // console.log('CustomAsyncPipe.A', value);
-                            _this.value = value;
-                            _this.changeDetector.markForCheck(); // mark pipe as dirty
-                        }));
-                        this.cachedValue = this.value; // ???
-                        return this.value;
-                    }
+        CustomAsyncPipe.prototype.transform = function (subject) {
+            return this.observableToValue(subject);
+        };
+        CustomAsyncPipe.prototype.observableToValue = function (subject) {
+            var _this = this;
+            if (subject !== this.subject) {
+                if (this.subject) {
+                    this.dispose();
                 }
-                // console.log('CustomAsyncPipe.B', this.value);
-                if (this.cachedValue !== this.value) {
-                    this.cachedValue = this.value;
-                    return i0.WrappedValue.wrap(this.value); // notify that value has changed
-                }
-                return this.cachedValue; // return cachedValue
-            };
-        /**
-         * @return {?}
-         */
-        CustomAsyncPipe.prototype.dispose = /**
-         * @return {?}
-         */
-            function () {
-                if (this.subscription) {
-                    this.subscription.unsubscribe();
-                }
-                this.value = null;
-                this.cachedValue = null;
-                this.subscription = null;
-                this.subject = null;
-            };
-        /**
-         * @return {?}
-         */
-        CustomAsyncPipe.prototype.ngOnDestroy = /**
-         * @return {?}
-         */
-            function () {
-                this.dispose();
-            };
-        /**
-         * @private
-         * @param {?} subject
-         * @return {?}
-         */
-        CustomAsyncPipe.prototype._observableToValue = /**
-         * @private
-         * @param {?} subject
-         * @return {?}
-         */
-            function (subject) {
-                var _this = this;
-                if (!this.subject) {
-                    if (subject) {
-                        this.subject = subject;
-                        this.subscription = this.subject.subscribe(( /**
-                         * @param {?} value
-                         * @return {?}
-                         */function (value) {
-                            _this.value = value;
-                            _this.changeDetector.markForCheck(); // value has changed
-                        }));
-                    }
-                    this.cachedValue = this.value;
+                if (subject) {
+                    this.subject = subject;
+                    this.subscription = this.subject.subscribe(function (value) {
+                        // console.log('CustomAsyncPipe.A', value);
+                        _this.value = value;
+                        _this.changeDetector.markForCheck(); // mark pipe as dirty
+                    });
+                    this.cachedValue = this.value; // ???
                     return this.value;
                 }
-                if (subject !== this.subject) {
-                    this.dispose();
-                    return this.transform(( /** @type {?} */(subject)));
-                }
-                if (this.value === this.cachedValue) {
-                    return this.cachedValue;
+            }
+            // console.log('CustomAsyncPipe.B', this.value);
+            if (this.cachedValue !== this.value) {
+                this.cachedValue = this.value;
+                return core.WrappedValue.wrap(this.value); // notify that value has changed
+            }
+            return this.cachedValue; // return cachedValue
+        };
+        CustomAsyncPipe.prototype.dispose = function () {
+            if (this.subscription) {
+                this.subscription.unsubscribe();
+            }
+            this.value = null;
+            this.cachedValue = null;
+            this.subscription = null;
+            this.subject = null;
+        };
+        CustomAsyncPipe.prototype.ngOnDestroy = function () {
+            this.dispose();
+        };
+        CustomAsyncPipe.prototype._observableToValue = function (subject) {
+            var _this = this;
+            if (!this.subject) {
+                if (subject) {
+                    this.subject = subject;
+                    this.subscription = this.subject.subscribe(function (value) {
+                        _this.value = value;
+                        _this.changeDetector.markForCheck(); // value has changed
+                    });
                 }
                 this.cachedValue = this.value;
-                return i0.WrappedValue.wrap(this.value); // value has changed
-            };
-        CustomAsyncPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'customAsync',
-                        pure: false
-                    },] }
-        ];
-        /** @nocollapse */
-        CustomAsyncPipe.ctorParameters = function () {
-            return [
-                { type: i0.ChangeDetectorRef }
-            ];
+                return this.value;
+            }
+            if (subject !== this.subject) {
+                this.dispose();
+                return this.transform(subject);
+            }
+            if (this.value === this.cachedValue) {
+                return this.cachedValue;
+            }
+            this.cachedValue = this.value;
+            return core.WrappedValue.wrap(this.value); // value has changed
         };
+        CustomAsyncPipe.ɵfac = function CustomAsyncPipe_Factory(t) { return new (t || CustomAsyncPipe)(core["ɵɵinjectPipeChangeDetectorRef"]()); };
+        CustomAsyncPipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "customAsync", type: CustomAsyncPipe, pure: false });
         return CustomAsyncPipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](CustomAsyncPipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'customAsync',
+                    pure: false
+                }]
+        }], function () { return [{ type: core.ChangeDetectorRef }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @enum {number} */
-    var ImageType = {
-        Default: 1,
-        Gallery: 2,
-        Share: 3,
-    };
-    ImageType[ImageType.Default] = 'Default';
-    ImageType[ImageType.Gallery] = 'Gallery';
-    ImageType[ImageType.Share] = 'Share';
+
+    (function (ImageType) {
+        ImageType[ImageType["Default"] = 1] = "Default";
+        ImageType[ImageType["Gallery"] = 2] = "Gallery";
+        ImageType[ImageType["Share"] = 3] = "Share";
+    })(exports.ImageType || (exports.ImageType = {}));
     var Image = /** @class */ (function () {
         function Image() {
         }
         return Image;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var ImageUrlPipe = /** @class */ (function () {
         function ImageUrlPipe() {
         }
-        /**
-         * @param {?} images
-         * @param {?=} type
-         * @param {?=} queryString
-         * @return {?}
-         */
-        ImageUrlPipe.prototype.transform = /**
-         * @param {?} images
-         * @param {?=} type
-         * @param {?=} queryString
-         * @return {?}
-         */
-            function (images, type, queryString) {
-                type = type || 'Default';
-                queryString = queryString ? "?" + queryString : '';
-                /** @type {?} */
-                var imageType = ImageType[type] || ImageType.Default;
-                /** @type {?} */
-                var image = null;
-                if (images && images.length) {
-                    image = images.find(( /**
-                     * @param {?} i
-                     * @return {?}
-                     */function (i) { return i.type === imageType; })) || images[0];
-                }
-                return image ? (image.url + queryString).replace(/ /g, '%20') : null;
-            };
-        ImageUrlPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'imageUrl',
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */ ImageUrlPipe.ngInjectableDef = i0.defineInjectable({ factory: function ImageUrlPipe_Factory() { return new ImageUrlPipe(); }, token: ImageUrlPipe, providedIn: "root" });
+        ImageUrlPipe.prototype.transform = function (images, type, queryString) {
+            type = type || 'Default';
+            queryString = queryString ? "?" + queryString : '';
+            var imageType = exports.ImageType[type] || exports.ImageType.Default;
+            var image = null;
+            if (images && images.length) {
+                image = images.find(function (i) { return i.type === imageType; }) || images[0];
+            }
+            return image ? (image.url + queryString).replace(/ /g, '%20') : null;
+        };
+        ImageUrlPipe.ɵfac = function ImageUrlPipe_Factory(t) { return new (t || ImageUrlPipe)(); };
+        ImageUrlPipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "imageUrl", type: ImageUrlPipe, pure: true });
+        ImageUrlPipe.ɵprov = core["ɵɵdefineInjectable"]({ token: ImageUrlPipe, factory: ImageUrlPipe.ɵfac, providedIn: 'root' });
         return ImageUrlPipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](ImageUrlPipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'imageUrl',
+                }]
+        }, {
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], null, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var ImagePipe = /** @class */ (function () {
         function ImagePipe() {
         }
-        /**
-         * @param {?} images
-         * @param {?=} type
-         * @param {?=} queryString
-         * @return {?}
-         */
-        ImagePipe.prototype.transform = /**
-         * @param {?} images
-         * @param {?=} type
-         * @param {?=} queryString
-         * @return {?}
-         */
-            function (images, type, queryString) {
-                type = type || 'Default';
-                /** @type {?} */
-                var imageType = ImageType[type] || ImageType.Default;
-                return (images && images.length) ? images.find(( /**
-                 * @param {?} i
-                 * @return {?}
-                 */function (i) { return i.type === imageType; })) || null : null; // images[0]
-            };
+        ImagePipe.prototype.transform = function (images, type, queryString) {
+            type = type || 'Default';
+            var imageType = exports.ImageType[type] || exports.ImageType.Default;
+            return (images && images.length) ? images.find(function (i) { return i.type === imageType; }) || null : null; // images[0]
+        };
         // 21 marzo 2019
-        // 21 marzo 2019
-        /**
-         * @param {?} images
-         * @param {?=} type
-         * @param {?=} queryString
-         * @return {?}
-         */
-        ImagePipe.prototype.transform__ =
-            // 21 marzo 2019
-            /**
-             * @param {?} images
-             * @param {?=} type
-             * @param {?=} queryString
-             * @return {?}
-             */
-            function (images, type, queryString) {
-                type = type || 'Default';
-                queryString = queryString ? "?" + queryString : '';
-                /** @type {?} */
-                var imageType = ImageType[type] || ImageType.Default;
-                /** @type {?} */
-                var image = null;
-                if (images && images.length) {
-                    image = images.find(( /**
-                     * @param {?} i
-                     * @return {?}
-                     */function (i) { return i.type === imageType; })); // || images[0];
-                    if (!image && imageType !== ImageType.Default) {
-                        image = images.find(( /**
-                         * @param {?} i
-                         * @return {?}
-                         */function (i) { return i.type === ImageType.Default; }));
-                    }
+        ImagePipe.prototype.transform__ = function (images, type, queryString) {
+            type = type || 'Default';
+            queryString = queryString ? "?" + queryString : '';
+            var imageType = exports.ImageType[type] || exports.ImageType.Default;
+            var image = null;
+            if (images && images.length) {
+                image = images.find(function (i) { return i.type === imageType; }); // || images[0];
+                if (!image && imageType !== exports.ImageType.Default) {
+                    image = images.find(function (i) { return i.type === exports.ImageType.Default; });
                 }
-                return image ? (image.url + queryString).replace(/ /g, '%20') : null;
-            };
-        ImagePipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'image',
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */ ImagePipe.ngInjectableDef = i0.defineInjectable({ factory: function ImagePipe_Factory() { return new ImagePipe(); }, token: ImagePipe, providedIn: "root" });
+            }
+            return image ? (image.url + queryString).replace(/ /g, '%20') : null;
+        };
+        ImagePipe.ɵfac = function ImagePipe_Factory(t) { return new (t || ImagePipe)(); };
+        ImagePipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "image", type: ImagePipe, pure: true });
+        ImagePipe.ɵprov = core["ɵɵdefineInjectable"]({ token: ImagePipe, factory: ImagePipe.ɵfac, providedIn: 'root' });
         return ImagePipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](ImagePipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'image',
+                }]
+        }, {
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], null, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var PublicPipe = /** @class */ (function () {
         function PublicPipe(coreService, segment) {
             this.coreService = coreService;
             this.segment = segment;
         }
-        /**
-         * @param {?} data
-         * @return {?}
-         */
-        PublicPipe.prototype.transform = /**
-         * @param {?} data
-         * @return {?}
-         */
-            function (data) {
-                /** @type {?} */
-                var segments = this.segment.transform(data);
-                segments.unshift(this.coreService.options.public);
-                return segments.join('/');
-            };
-        PublicPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'public',
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        PublicPipe.ctorParameters = function () {
-            return [
-                { type: CoreService },
-                { type: SegmentPipe }
-            ];
+        PublicPipe.prototype.transform = function (data) {
+            var segments = this.segment.transform(data);
+            segments.unshift(this.coreService.options.public);
+            return segments.join('/');
         };
-        /** @nocollapse */ PublicPipe.ngInjectableDef = i0.defineInjectable({ factory: function PublicPipe_Factory() { return new PublicPipe(i0.inject(CoreService), i0.inject(SegmentPipe)); }, token: PublicPipe, providedIn: "root" });
+        PublicPipe.ɵfac = function PublicPipe_Factory(t) { return new (t || PublicPipe)(core["ɵɵdirectiveInject"](CoreService), core["ɵɵdirectiveInject"](SegmentPipe)); };
+        PublicPipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "public", type: PublicPipe, pure: true });
+        PublicPipe.ɵprov = core["ɵɵdefineInjectable"]({ token: PublicPipe, factory: PublicPipe.ɵfac, providedIn: 'root' });
         return PublicPipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](PublicPipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'public',
+                }]
+        }, {
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: CoreService }, { type: SegmentPipe }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var RoutePipe = /** @class */ (function () {
         function RoutePipe(routeService) {
             this.routeService = routeService;
         }
-        /**
-         * @param {?} data
-         * @return {?}
-         */
-        RoutePipe.prototype.transform = /**
-         * @param {?} data
-         * @return {?}
-         */
-            function (data) {
-                return this.routeService.toRoute(data);
-            };
-        RoutePipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'route',
-                        pure: false
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        RoutePipe.ctorParameters = function () {
-            return [
-                { type: RouteService }
-            ];
+        RoutePipe.prototype.transform = function (data) {
+            return this.routeService.toRoute(data);
         };
-        /** @nocollapse */ RoutePipe.ngInjectableDef = i0.defineInjectable({ factory: function RoutePipe_Factory() { return new RoutePipe(i0.inject(RouteService)); }, token: RoutePipe, providedIn: "root" });
+        RoutePipe.ɵfac = function RoutePipe_Factory(t) { return new (t || RoutePipe)(core["ɵɵdirectiveInject"](RouteService)); };
+        RoutePipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "route", type: RoutePipe, pure: false });
+        RoutePipe.ɵprov = core["ɵɵdefineInjectable"]({ token: RoutePipe, factory: RoutePipe.ɵfac, providedIn: 'root' });
         return RoutePipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](RoutePipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'route',
+                    pure: false
+                }]
+        }, {
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: RouteService }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @template T
-     */
     var EntityService = /** @class */ (function (_super) {
         __extends(EntityService, _super);
         function EntityService() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         Object.defineProperty(EntityService.prototype, "collection", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return '/api/entity';
             },
             enumerable: true,
             configurable: true
         });
-        /**
-         * @param {?} name
-         * @return {?}
-         */
-        EntityService.prototype.getDetailByName = /**
-         * @param {?} name
-         * @return {?}
-         */
-            function (name) {
-                if (!name.trim()) {
-                    return rxjs.of([]);
-                }
-                return this.get({ name: name });
-            };
-        EntityService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */ EntityService.ngInjectableDef = i0.defineInjectable({ factory: function EntityService_Factory() { return new EntityService(i0.inject(i0.INJECTOR)); }, token: EntityService, providedIn: "root" });
+        EntityService.prototype.getDetailByName = function (name) {
+            if (!name.trim()) {
+                return rxjs.of([]);
+            }
+            return this.get({ name: name });
+        };
+        EntityService.ɵfac = function EntityService_Factory(t) { return ɵEntityService_BaseFactory(t || EntityService); };
+        EntityService.ɵprov = core["ɵɵdefineInjectable"]({ token: EntityService, factory: EntityService.ɵfac, providedIn: 'root' });
         return EntityService;
     }(IdentityService));
+    var ɵEntityService_BaseFactory = core["ɵɵgetInheritedFactory"](EntityService);
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](EntityService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], null, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
+    var SlugKey = /** @class */ (function () {
+        function SlugKey() {
+        }
+        return SlugKey;
+    }());
     var SlugService = /** @class */ (function (_super) {
         __extends(SlugService, _super);
         function SlugService(injector) {
@@ -4033,218 +2635,127 @@
             _this.injector = injector;
             _this.keys = {};
             _this.values$ = new rxjs.BehaviorSubject({});
-            _this.emitter$ = new i0.EventEmitter();
+            _this.emitter$ = new core.EventEmitter();
             return _this;
         }
         Object.defineProperty(SlugService.prototype, "collection", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return "/api/slug";
             },
             enumerable: true,
             configurable: true
         });
-        /**
-         * @param {?} key
-         * @return {?}
-         */
-        SlugService.prototype.transform = /**
-         * @param {?} key
-         * @return {?}
-         */
-            function (key) {
-                /** @type {?} */
-                var values = this.values$.getValue();
-                if (values.hasOwnProperty(key)) {
-                    return values[key];
-                }
-                else if (!this.keys.hasOwnProperty(key)) {
-                    values[key] = null;
-                    Object.defineProperty(this.keys, key, {
-                        value: { mnemonic: key },
-                        enumerable: true,
-                        writable: false,
-                    });
-                    this.emitter$.emit();
-                    return null;
-                }
-            };
-        /**
-         * @param {?} key
-         * @return {?}
-         */
-        SlugService.prototype.transform$ = /**
-         * @param {?} key
-         * @return {?}
-         */
-            function (key) {
-                /** @type {?} */
-                var values = this.values$.getValue();
-                if (values.hasOwnProperty(key)) {
-                    return rxjs.of(values[key]);
-                }
-                else if (!this.keys.hasOwnProperty(key)) {
-                    Object.defineProperty(this.keys, key, {
-                        value: { mnemonic: key },
-                        enumerable: true,
-                        writable: false,
-                    });
-                    this.emitter$.emit();
-                }
-                return this.values$.pipe(operators.map(( /**
-                 * @param {?} values
-                 * @return {?}
-                 */function (values) { return values[key]; })));
-            };
-        /**
-         * @return {?}
-         */
-        SlugService.prototype.observe$ = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                return this.emitter$.pipe(operators.debounceTime(1), operators.switchMap(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return _this.collect$(); })), operators.filter(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return x !== null; })), operators.first());
-            };
-        /**
-         * @return {?}
-         */
-        SlugService.prototype.collect$ = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                if (Object.keys(this.keys).length) {
-                    /** @type {?} */
-                    var keys_1 = Object.keys(this.keys).map(( /**
-                     * @param {?} x
-                     * @return {?}
-                     */function (x) { return _this.keys[x]; }));
-                    this.keys = {};
-                    return this.statePost(keys_1).pipe(operators.map(( /**
-                     * @param {?} items
-                     * @return {?}
-                     */function (items) {
-                        return items.reduce(( /**
-                         * @param {?} values
-                         * @param {?} x
-                         * @return {?}
-                         */function (values, x) {
-                            values[x.mnemonic] = [x.slug];
-                            return values;
-                        }), {});
-                    })), operators.tap(( /**
-                     * @param {?} slugs
-                     * @return {?}
-                     */function (slugs) {
-                        /** @type {?} */
-                        var values = _this.values$.getValue();
-                        Object.assign(values, slugs);
-                        _this.values$.next(values);
-                    })), operators.catchError(( /**
-                     * @param {?} error
-                     * @return {?}
-                     */function (error) {
-                        console.log(error);
-                        /** @type {?} */
-                        var labels = keys_1.reduce(( /**
-                         * @param {?} values
-                         * @param {?} x
-                         * @return {?}
-                         */function (values, x) {
-                            values[x.mnemonic] = null;
-                            return values;
-                        }), {});
-                        /** @type {?} */
-                        var values = _this.values$.getValue();
-                        Object.assign(values, labels);
-                        return rxjs.of(null);
-                    })));
-                }
-                else {
-                    return rxjs.of(null);
-                }
-            };
-        SlugService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        SlugService.ctorParameters = function () {
-            return [
-                { type: i0.Injector }
-            ];
+        SlugService.prototype.transform = function (key) {
+            var values = this.values$.getValue();
+            if (values.hasOwnProperty(key)) {
+                return values[key];
+            }
+            else if (!this.keys.hasOwnProperty(key)) {
+                values[key] = null;
+                Object.defineProperty(this.keys, key, {
+                    value: { mnemonic: key },
+                    enumerable: true,
+                    writable: false,
+                });
+                this.emitter$.emit();
+                return null;
+            }
         };
-        /** @nocollapse */ SlugService.ngInjectableDef = i0.defineInjectable({ factory: function SlugService_Factory() { return new SlugService(i0.inject(i0.INJECTOR)); }, token: SlugService, providedIn: "root" });
+        SlugService.prototype.transform$ = function (key) {
+            var values = this.values$.getValue();
+            if (values.hasOwnProperty(key)) {
+                return rxjs.of(values[key]);
+            }
+            else if (!this.keys.hasOwnProperty(key)) {
+                Object.defineProperty(this.keys, key, {
+                    value: { mnemonic: key },
+                    enumerable: true,
+                    writable: false,
+                });
+                this.emitter$.emit();
+            }
+            return this.values$.pipe(operators.map(function (values) { return values[key]; }));
+        };
+        SlugService.prototype.observe$ = function () {
+            var _this = this;
+            return this.emitter$.pipe(operators.debounceTime(1), operators.switchMap(function (x) { return _this.collect$(); }), operators.filter(function (x) { return x !== null; }), operators.first());
+        };
+        SlugService.prototype.collect$ = function () {
+            var _this = this;
+            if (Object.keys(this.keys).length) {
+                var keys_1 = Object.keys(this.keys).map(function (x) { return _this.keys[x]; });
+                this.keys = {};
+                return this.statePost(keys_1).pipe(operators.map(function (items) {
+                    return items.reduce(function (values, x) {
+                        values[x.mnemonic] = [x.slug];
+                        return values;
+                    }, {});
+                }), operators.tap(function (slugs) {
+                    var values = _this.values$.getValue();
+                    Object.assign(values, slugs);
+                    _this.values$.next(values);
+                }), operators.catchError(function (error) {
+                    console.log(error);
+                    var labels = keys_1.reduce(function (values, x) {
+                        values[x.mnemonic] = null;
+                        return values;
+                    }, {});
+                    var values = _this.values$.getValue();
+                    Object.assign(values, labels);
+                    return rxjs.of(null);
+                }));
+            }
+            else {
+                return rxjs.of(null);
+            }
+        };
+        SlugService.ɵfac = function SlugService_Factory(t) { return new (t || SlugService)(core["ɵɵinject"](core.Injector)); };
+        SlugService.ɵprov = core["ɵɵdefineInjectable"]({ token: SlugService, factory: SlugService.ɵfac, providedIn: 'root' });
         return SlugService;
     }(EntityService));
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](SlugService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: core.Injector }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var SlugPipe = /** @class */ (function () {
         function SlugPipe(slugService, routePipe) {
             this.slugService = slugService;
             this.routePipe = routePipe;
         }
-        /**
-         * @param {?} key
-         * @param {?=} segments
-         * @return {?}
-         */
-        SlugPipe.prototype.transform = /**
-         * @param {?} key
-         * @param {?=} segments
-         * @return {?}
-         */
-            function (key, segments) {
-                /** @type {?} */
-                var slug = this.slugService.transform(key);
-                if (slug) {
-                    /** @type {?} */
-                    var slugs = this.routePipe.transform(slug);
-                    if (slugs && segments) {
-                        slugs = slugs.concat(segments);
-                    }
-                    return slugs;
+        SlugPipe.prototype.transform = function (key, segments) {
+            var slug = this.slugService.transform(key);
+            if (slug) {
+                var slugs = this.routePipe.transform(slug);
+                if (slugs && segments) {
+                    slugs = slugs.concat(segments);
                 }
-                else {
-                    return [];
-                }
-            };
-        SlugPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'slug',
-                        pure: false
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        SlugPipe.ctorParameters = function () {
-            return [
-                { type: SlugService },
-                { type: RoutePipe }
-            ];
+                return slugs;
+            }
+            else {
+                return [];
+            }
         };
-        /** @nocollapse */ SlugPipe.ngInjectableDef = i0.defineInjectable({ factory: function SlugPipe_Factory() { return new SlugPipe(i0.inject(SlugService), i0.inject(RoutePipe)); }, token: SlugPipe, providedIn: "root" });
+        SlugPipe.ɵfac = function SlugPipe_Factory(t) { return new (t || SlugPipe)(core["ɵɵdirectiveInject"](SlugService), core["ɵɵdirectiveInject"](RoutePipe)); };
+        SlugPipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "slug", type: SlugPipe, pure: false });
+        SlugPipe.ɵprov = core["ɵɵdefineInjectable"]({ token: SlugPipe, factory: SlugPipe.ɵfac, providedIn: 'root' });
         return SlugPipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](SlugPipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'slug',
+                    pure: false
+                }]
+        }, {
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: SlugService }, { type: RoutePipe }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var TranslateDirective = /** @class */ (function (_super) {
         __extends(TranslateDirective, _super);
         function TranslateDirective(element, translateService) {
@@ -4253,227 +2764,145 @@
             _this.translateService = translateService;
             return _this;
         }
-        /**
-         * @return {?}
-         */
-        TranslateDirective.prototype.ngOnInit = /**
-         * @return {?}
-         */
-            function () {
-                var _this = this;
-                // console.log('TranslateDirective.ngOnInit', this.element.nativeElement.innerHTML);
-                this.translateService.getTranslate(this.translate, this.element.nativeElement.innerHTML, this.translateParams).pipe(operators.takeUntil(this.unsubscribe)).subscribe(( /**
-                 * @param {?} translate
-                 * @return {?}
-                 */function (translate) {
-                    _this.element.nativeElement.innerHTML = translate;
-                    // console.log('TranslateDirective.ngOnInit', translate);
-                }));
-                // console.log('TranslateDirective.ngOnInit', this.translate, this.translateParams, this.template, this.view);
-            };
-        TranslateDirective.decorators = [
-            { type: i0.Directive, args: [{
-                        selector: '[translate]'
-                    },] }
-        ];
-        /** @nocollapse */
-        TranslateDirective.ctorParameters = function () {
-            return [
-                { type: i0.ElementRef },
-                { type: TranslateService }
-            ];
+        TranslateDirective.prototype.ngOnInit = function () {
+            var _this = this;
+            // console.log('TranslateDirective.ngOnInit', this.element.nativeElement.innerHTML);
+            this.translateService.getTranslate(this.translate, this.element.nativeElement.innerHTML, this.translateParams).pipe(operators.takeUntil(this.unsubscribe)).subscribe(function (translate) {
+                _this.element.nativeElement.innerHTML = translate;
+                // console.log('TranslateDirective.ngOnInit', translate);
+            });
+            // console.log('TranslateDirective.ngOnInit', this.translate, this.translateParams, this.template, this.view);
         };
-        TranslateDirective.propDecorators = {
-            translate: [{ type: i0.Input }],
-            translateParams: [{ type: i0.Input }]
-        };
+        TranslateDirective.ɵfac = function TranslateDirective_Factory(t) { return new (t || TranslateDirective)(core["ɵɵdirectiveInject"](core.ElementRef), core["ɵɵdirectiveInject"](TranslateService)); };
+        TranslateDirective.ɵdir = core["ɵɵdefineDirective"]({ type: TranslateDirective, selectors: [["", "translate", ""]], inputs: { translate: "translate", translateParams: "translateParams" }, features: [core["ɵɵInheritDefinitionFeature"]] });
         return TranslateDirective;
-    }(DisposableComponent));
+    }(DisposableDirective));
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](TranslateDirective, [{
+            type: core.Directive,
+            args: [{
+                    selector: '[translate]'
+                }]
+        }], function () { return [{ type: core.ElementRef }, { type: TranslateService }]; }, { translate: [{
+                type: core.Input
+            }], translateParams: [{
+                type: core.Input
+            }] }); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var TranslatePipe = /** @class */ (function () {
         function TranslatePipe(ref, translateService) {
             var _this = this;
             this.ref = ref;
             this.translateService = translateService;
-            this.translateService.events.subscribe(( /**
-             * @param {?} x
-             * @return {?}
-             */function (x) { return _this.ref.markForCheck(); }));
+            this.translateService.events.subscribe(function (x) { return _this.ref.markForCheck(); });
         }
-        /**
-         * @param {?} key
-         * @param {?=} text
-         * @param {?=} params
-         * @return {?}
-         */
-        TranslatePipe.prototype.transform = /**
-         * @param {?} key
-         * @param {?=} text
-         * @param {?=} params
-         * @return {?}
-         */
-            function (key, text, params) {
-                // console.log(key, params);
-                /** @type {?} */
-                var label = this.translateService.getTranslate(key, text, params);
-                // console.log('label', label, this.translateService.cache);
-                return label;
-            };
-        TranslatePipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'translate',
-                        pure: false,
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        TranslatePipe.ctorParameters = function () {
-            return [
-                { type: i0.ChangeDetectorRef },
-                { type: TranslateService }
-            ];
+        TranslatePipe.prototype.transform = function (key, text, params) {
+            // console.log(key, params);
+            var label = this.translateService.getTranslate(key, text, params);
+            // console.log('label', label, this.translateService.cache);
+            return label;
         };
-        /** @nocollapse */ TranslatePipe.ngInjectableDef = i0.defineInjectable({ factory: function TranslatePipe_Factory() { return new TranslatePipe(i0.inject(i0.ChangeDetectorRef), i0.inject(TranslateService)); }, token: TranslatePipe, providedIn: "root" });
+        TranslatePipe.ɵfac = function TranslatePipe_Factory(t) { return new (t || TranslatePipe)(core["ɵɵinjectPipeChangeDetectorRef"](), core["ɵɵdirectiveInject"](TranslateService)); };
+        TranslatePipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "translate", type: TranslatePipe, pure: false });
+        TranslatePipe.ɵprov = core["ɵɵdefineInjectable"]({ token: TranslatePipe, factory: TranslatePipe.ɵfac, providedIn: 'root' });
         return TranslatePipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](TranslatePipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'translate',
+                    pure: false,
+                }]
+        }, {
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: core.ChangeDetectorRef }, { type: TranslateService }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var SafeStylePipe = /** @class */ (function () {
         function SafeStylePipe(sanitizer) {
             this.sanitizer = sanitizer;
         }
-        /**
-         * @param {?} style
-         * @return {?}
-         */
-        SafeStylePipe.prototype.transform = /**
-         * @param {?} style
-         * @return {?}
-         */
-            function (style) {
-                return this.sanitizer.bypassSecurityTrustStyle(style);
-            };
-        SafeStylePipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'safeStyle'
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        SafeStylePipe.ctorParameters = function () {
-            return [
-                { type: i1.DomSanitizer }
-            ];
+        SafeStylePipe.prototype.transform = function (style) {
+            return this.sanitizer.bypassSecurityTrustStyle(style);
         };
-        /** @nocollapse */ SafeStylePipe.ngInjectableDef = i0.defineInjectable({ factory: function SafeStylePipe_Factory() { return new SafeStylePipe(i0.inject(i1.DomSanitizer)); }, token: SafeStylePipe, providedIn: "root" });
+        SafeStylePipe.ɵfac = function SafeStylePipe_Factory(t) { return new (t || SafeStylePipe)(core["ɵɵdirectiveInject"](platformBrowser.DomSanitizer)); };
+        SafeStylePipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "safeStyle", type: SafeStylePipe, pure: true });
+        SafeStylePipe.ɵprov = core["ɵɵdefineInjectable"]({ token: SafeStylePipe, factory: SafeStylePipe.ɵfac, providedIn: 'root' });
         return SafeStylePipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](SafeStylePipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'safeStyle'
+                }]
+        }, {
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: platformBrowser.DomSanitizer }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var SafeUrlPipe = /** @class */ (function () {
         function SafeUrlPipe(sanitizer) {
             this.sanitizer = sanitizer;
         }
-        /**
-         * @param {?} url
-         * @return {?}
-         */
-        SafeUrlPipe.prototype.transform = /**
-         * @param {?} url
-         * @return {?}
-         */
-            function (url) {
-                return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-            };
-        SafeUrlPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'safeUrl'
-                    },] },
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        SafeUrlPipe.ctorParameters = function () {
-            return [
-                { type: i1.DomSanitizer }
-            ];
+        SafeUrlPipe.prototype.transform = function (url) {
+            return this.sanitizer.bypassSecurityTrustResourceUrl(url);
         };
-        /** @nocollapse */ SafeUrlPipe.ngInjectableDef = i0.defineInjectable({ factory: function SafeUrlPipe_Factory() { return new SafeUrlPipe(i0.inject(i1.DomSanitizer)); }, token: SafeUrlPipe, providedIn: "root" });
+        SafeUrlPipe.ɵfac = function SafeUrlPipe_Factory(t) { return new (t || SafeUrlPipe)(core["ɵɵdirectiveInject"](platformBrowser.DomSanitizer)); };
+        SafeUrlPipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "safeUrl", type: SafeUrlPipe, pure: true });
+        SafeUrlPipe.ɵprov = core["ɵɵdefineInjectable"]({ token: SafeUrlPipe, factory: SafeUrlPipe.ɵfac, providedIn: 'root' });
         return SafeUrlPipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](SafeUrlPipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'safeUrl'
+                }]
+        }, {
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: platformBrowser.DomSanitizer }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var TrustPipe = /** @class */ (function () {
         function TrustPipe(sanitizer) {
             this.sanitizer = sanitizer;
         }
-        /**
-         * @param {?} text
-         * @return {?}
-         */
-        TrustPipe.prototype.transform = /**
-         * @param {?} text
-         * @return {?}
-         */
-            function (text) {
-                return this.sanitizer.bypassSecurityTrustHtml(text);
-                // return this.sanitizer.bypassSecurityTrustStyle(text);
-                // return this.sanitizer.bypassSecurityTrustXxx(text); - see docs
-            };
-        TrustPipe.decorators = [
-            { type: i0.Pipe, args: [{
-                        name: 'safeHtml'
-                    },] }
-        ];
-        /** @nocollapse */
-        TrustPipe.ctorParameters = function () {
-            return [
-                { type: i1.DomSanitizer }
-            ];
+        TrustPipe.prototype.transform = function (text) {
+            return this.sanitizer.bypassSecurityTrustHtml(text);
+            // return this.sanitizer.bypassSecurityTrustStyle(text);
+            // return this.sanitizer.bypassSecurityTrustXxx(text); - see docs
         };
+        TrustPipe.ɵfac = function TrustPipe_Factory(t) { return new (t || TrustPipe)(core["ɵɵdirectiveInject"](platformBrowser.DomSanitizer)); };
+        TrustPipe.ɵpipe = core["ɵɵdefinePipe"]({ name: "safeHtml", type: TrustPipe, pure: true });
         return TrustPipe;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](TrustPipe, [{
+            type: core.Pipe,
+            args: [{
+                    name: 'safeHtml'
+                }]
+        }], function () { return [{ type: platformBrowser.DomSanitizer }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /** @type {?} */
     var components = [
         CoreModuleComponent,
         DisposableComponent,
+        DisposableDirective,
         JsonFormatterComponent,
         LoggerComponent,
         OutletComponent,
         OutletDefaultComponent,
         OutletRepeaterComponent,
     ];
-    /** @type {?} */
     var directives = [
         BundleDirective,
         DefaultContentDirective,
         LabelDirective,
         TranslateDirective,
     ];
-    /** @type {?} */
     var pipes = [
         AssetPipe,
         CustomAsyncPipe,
@@ -4490,8 +2919,8 @@
         TranslatePipe,
         TrustPipe,
     ];
-    /** @type {?} */
     var validators = [];
+    var guards = [];
     var CoreModule = /** @class */ (function () {
         function CoreModule(parentModule) {
             /*
@@ -4500,66 +2929,111 @@
             }
             */
         }
-        /**
-         * @param {?=} bundles
-         * @param {?=} config
-         * @return {?}
-         */
-        CoreModule.forRoot = /**
-         * @param {?=} bundles
-         * @param {?=} config
-         * @return {?}
-         */
-            function (bundles, config) {
-                return {
-                    ngModule: CoreModule,
-                    providers: [{
-                            provide: CORE_CONFIG, useValue: config
-                        }, {
-                            provide: BUNDLES, useValue: bundles || {}
-                        }]
-                };
+        CoreModule.forRoot = function (bundles, config) {
+            return {
+                ngModule: CoreModule,
+                providers: [{
+                        provide: CORE_CONFIG, useValue: config
+                    }, {
+                        provide: BUNDLES, useValue: bundles || {}
+                    }]
             };
-        CoreModule.decorators = [
-            { type: i0.NgModule, args: [{
-                        imports: [
-                            i1$1.CommonModule,
-                            http.HttpClientModule,
-                            forms.FormsModule,
-                            forms.ReactiveFormsModule,
-                        ],
-                        providers: __spread([
-                            { provide: http.HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
-                            { provide: i0.NgModuleFactoryLoader, useClass: i0.SystemJsNgModuleLoader }
-                        ], validators),
-                        declarations: __spread(components, directives, pipes, validators),
-                        entryComponents: __spread(components),
-                        exports: __spread(components, directives, pipes, validators),
-                    },] }
-        ];
-        /** @nocollapse */
-        CoreModule.ctorParameters = function () {
-            return [
-                { type: CoreModule, decorators: [{ type: i0.Optional }, { type: i0.SkipSelf }] }
-            ];
         };
+        CoreModule.ɵmod = core["ɵɵdefineNgModule"]({ type: CoreModule });
+        CoreModule.ɵinj = core["ɵɵdefineInjector"]({ factory: function CoreModule_Factory(t) { return new (t || CoreModule)(core["ɵɵinject"](CoreModule, 12)); }, providers: __spread([
+                { provide: http.HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
+                { provide: core.NgModuleFactoryLoader, useClass: core.SystemJsNgModuleLoader }
+            ], validators), imports: [[
+                    common.CommonModule,
+                    http.HttpClientModule,
+                    forms.FormsModule,
+                    forms.ReactiveFormsModule,
+                ]] });
         return CoreModule;
     }());
+    (function () { (typeof ngJitMode === "undefined" || ngJitMode) && core["ɵɵsetNgModuleScope"](CoreModule, { declarations: [CoreModuleComponent,
+            DisposableComponent,
+            DisposableDirective,
+            JsonFormatterComponent,
+            LoggerComponent,
+            OutletComponent,
+            OutletDefaultComponent,
+            OutletRepeaterComponent,
+            BundleDirective,
+            DefaultContentDirective,
+            LabelDirective,
+            TranslateDirective,
+            AssetPipe,
+            CustomAsyncPipe,
+            HighlightPipe,
+            ImagePipe,
+            ImageUrlPipe,
+            LabelPipe,
+            PublicPipe,
+            RoutePipe,
+            SafeStylePipe,
+            SafeUrlPipe,
+            SegmentPipe,
+            SlugPipe,
+            TranslatePipe,
+            TrustPipe], imports: [common.CommonModule,
+            http.HttpClientModule,
+            forms.FormsModule,
+            forms.ReactiveFormsModule], exports: [CoreModuleComponent,
+            DisposableComponent,
+            DisposableDirective,
+            JsonFormatterComponent,
+            LoggerComponent,
+            OutletComponent,
+            OutletDefaultComponent,
+            OutletRepeaterComponent,
+            BundleDirective,
+            DefaultContentDirective,
+            LabelDirective,
+            TranslateDirective,
+            AssetPipe,
+            CustomAsyncPipe,
+            HighlightPipe,
+            ImagePipe,
+            ImageUrlPipe,
+            LabelPipe,
+            PublicPipe,
+            RoutePipe,
+            SafeStylePipe,
+            SafeUrlPipe,
+            SegmentPipe,
+            SlugPipe,
+            TranslatePipe,
+            TrustPipe] }); })();
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](CoreModule, [{
+            type: core.NgModule,
+            args: [{
+                    imports: [
+                        common.CommonModule,
+                        http.HttpClientModule,
+                        forms.FormsModule,
+                        forms.ReactiveFormsModule,
+                    ],
+                    providers: __spread([
+                        { provide: http.HTTP_INTERCEPTORS, useClass: HttpResponseInterceptor, multi: true },
+                        { provide: core.NgModuleFactoryLoader, useClass: core.SystemJsNgModuleLoader }
+                    ], validators),
+                    declarations: __spread(components, directives, pipes, validators),
+                    entryComponents: __spread(components),
+                    exports: __spread(components, directives, pipes, validators),
+                }]
+        }], function () { return [{ type: CoreModule, decorators: [{
+                    type: core.Optional
+                }, {
+                    type: core.SkipSelf
+                }] }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var Label = /** @class */ (function () {
         function Label() {
         }
         return Label;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var Document = /** @class */ (function () {
         function Document() {
         }
@@ -4571,112 +3045,71 @@
         return DocumentIndex;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-    /**
-     * @template T
-     */
     var DocumentService = /** @class */ (function (_super) {
         __extends(DocumentService, _super);
         function DocumentService() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         Object.defineProperty(DocumentService.prototype, "collection", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return '/api/document';
             },
             enumerable: true,
             configurable: true
         });
-        /**
-         * @param {?} slug
-         * @return {?}
-         */
-        DocumentService.prototype.getDetailBySlug = /**
-         * @param {?} slug
-         * @return {?}
-         */
-            function (slug) {
-                if (!slug.trim()) {
-                    // if not search term, return empty identity array.
-                    return rxjs.of();
-                }
-                return this.get({ slug: slug }).pipe(
-                // tap(x => this.logger.log(`found identities matching "${slug}"`)),
-                operators.switchMap(( /**
-                 * @param {?} x
-                 * @return {?}
-                 */function (x) { return rxjs.of(x[0]); })));
-            };
-        DocumentService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */ DocumentService.ngInjectableDef = i0.defineInjectable({ factory: function DocumentService_Factory() { return new DocumentService(i0.inject(i0.INJECTOR)); }, token: DocumentService, providedIn: "root" });
+        DocumentService.prototype.getDetailBySlug = function (slug) {
+            if (!slug.trim()) {
+                // if not search term, return empty identity array.
+                return rxjs.of();
+            }
+            return this.get({ slug: slug }).pipe(
+            // tap(x => this.logger.log(`found identities matching "${slug}"`)),
+            operators.switchMap(function (x) { return rxjs.of(x[0]); }));
+        };
+        DocumentService.ɵfac = function DocumentService_Factory(t) { return ɵDocumentService_BaseFactory(t || DocumentService); };
+        DocumentService.ɵprov = core["ɵɵdefineInjectable"]({ token: DocumentService, factory: DocumentService.ɵfac, providedIn: 'root' });
         return DocumentService;
     }(EntityService));
+    var ɵDocumentService_BaseFactory = core["ɵɵgetInheritedFactory"](DocumentService);
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](DocumentService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], null, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var Entity = /** @class */ (function () {
         function Entity() {
         }
         return Entity;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
+    var EventEntity = /** @class */ (function () {
+        function EventEntity() {
+        }
+        return EventEntity;
+    }());
     var EventDispatcherService = /** @class */ (function () {
         function EventDispatcherService() {
-            this.emitter = new i0.EventEmitter();
+            this.emitter = new core.EventEmitter();
         }
-        /**
-         * @param {?} event
-         * @return {?}
-         */
-        EventDispatcherService.prototype.emit = /**
-         * @param {?} event
-         * @return {?}
-         */
-            function (event) {
-                return this.emitter.emit(event);
-            };
-        /**
-         * @return {?}
-         */
-        EventDispatcherService.prototype.observe = /**
-         * @return {?}
-         */
-            function () {
-                return this.emitter.pipe(operators.tap(( /**
-                 * @param {?} event
-                 * @return {?}
-                 */function (event) { return console.log('EventDispatcherService', event); })));
-            };
-        EventDispatcherService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        EventDispatcherService.ctorParameters = function () { return []; };
-        /** @nocollapse */ EventDispatcherService.ngInjectableDef = i0.defineInjectable({ factory: function EventDispatcherService_Factory() { return new EventDispatcherService(); }, token: EventDispatcherService, providedIn: "root" });
+        EventDispatcherService.prototype.emit = function (event) {
+            return this.emitter.emit(event);
+        };
+        EventDispatcherService.prototype.observe = function () {
+            return this.emitter.pipe(operators.tap(function (event) { return console.log('EventDispatcherService', event); }));
+        };
+        EventDispatcherService.ɵfac = function EventDispatcherService_Factory(t) { return new (t || EventDispatcherService)(); };
+        EventDispatcherService.ɵprov = core["ɵɵdefineInjectable"]({ token: EventDispatcherService, factory: EventDispatcherService.ɵfac, providedIn: 'root' });
         return EventDispatcherService;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](EventDispatcherService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return []; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var Feature = /** @class */ (function () {
         function Feature() {
             this.readmore = false;
@@ -4684,39 +3117,24 @@
         return Feature;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var Identity = /** @class */ (function () {
         function Identity() {
         }
         return Identity;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var MenuItem = /** @class */ (function () {
         function MenuItem(options) {
             if (options) {
                 Object.assign(this, options);
                 if (options.items) {
-                    this.items = options.items.map(( /**
-                     * @param {?} item
-                     * @return {?}
-                     */function (item) { return new MenuItem(item); }));
+                    this.items = options.items.map(function (item) { return new MenuItem(item); });
                 }
             }
         }
         return MenuItem;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var MenuService = /** @class */ (function (_super) {
         __extends(MenuService, _super);
         function MenuService(injector) {
@@ -4725,43 +3143,29 @@
             return _this;
         }
         Object.defineProperty(MenuService.prototype, "collection", {
-            get: /**
-             * @return {?}
-             */ function () {
+            get: function () {
                 return '/api/menu';
             },
             enumerable: true,
             configurable: true
         });
-        MenuService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        MenuService.ctorParameters = function () {
-            return [
-                { type: i0.Injector }
-            ];
-        };
-        /** @nocollapse */ MenuService.ngInjectableDef = i0.defineInjectable({ factory: function MenuService_Factory() { return new MenuService(i0.inject(i0.INJECTOR)); }, token: MenuService, providedIn: "root" });
+        MenuService.ɵfac = function MenuService_Factory(t) { return new (t || MenuService)(core["ɵɵinject"](core.Injector)); };
+        MenuService.ɵprov = core["ɵɵdefineInjectable"]({ token: MenuService, factory: MenuService.ɵfac, providedIn: 'root' });
         return MenuService;
     }(EntityService));
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](MenuService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: core.Injector }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var Taxonomy = /** @class */ (function () {
         function Taxonomy() {
         }
         return Taxonomy;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     // export class OnceEvent extends Event { }
     var OnceService = /** @class */ (function () {
         function OnceService(platformId, zone) {
@@ -4770,135 +3174,87 @@
             this.uid = 0;
             this.paths = [];
         }
-        /**
-         * @param {?} url
-         * @param {?=} callback
-         * @return {?}
-         */
-        OnceService.prototype.script = /**
-         * @param {?} url
-         * @param {?=} callback
-         * @return {?}
-         */
-            function (url, callback) {
-                if (i1$1.isPlatformBrowser(this.platformId)) {
-                    // !!! this.zone.runOutsideAngular(() => {
-                    if (this.paths.indexOf(url) === -1) {
-                        this.paths.push(url);
-                        /** @type {?} */
-                        var callbackName_1;
-                        if (callback === true) {
-                            callbackName_1 = 'OnceCallback' + (++this.uid);
-                            url = url.split('{{callback}}').join(callbackName_1);
-                        }
-                        else {
-                            callbackName_1 = ( /** @type {?} */(callback));
-                        }
-                        /** @type {?} */
-                        var callback$ = void 0;
-                        /** @type {?} */
-                        var element = document.createElement('script');
-                        element.type = 'text/javascript';
-                        if (callback) {
-                            callback$ = rxjs.from(new Promise(( /**
-                             * @param {?} resolve
-                             * @param {?} reject
-                             * @return {?}
-                             */function (resolve, reject) {
-                                window[callbackName_1] = ( /**
-                                 * @param {?} data
-                                 * @return {?}
-                                 */function (data) {
-                                    resolve(data);
-                                });
-                            })));
-                        }
-                        else {
-                            element.async = true;
-                            callback$ = rxjs.fromEvent(element, 'load').pipe(operators.map(( /**
-                             * @param {?} x
-                             * @return {?}
-                             */function (x) { return ( /** @type {?} */(x)); })));
-                        }
-                        /** @type {?} */
-                        var scripts = document.getElementsByTagName('script');
-                        if (scripts.length) {
-                            /** @type {?} */
-                            var script = scripts[scripts.length - 1];
-                            script.parentNode.insertBefore(element, script.nextSibling);
-                        }
-                        element.src = url;
-                        return callback$;
+        OnceService.prototype.script = function (url, callback) {
+            if (common.isPlatformBrowser(this.platformId)) {
+                // !!! this.zone.runOutsideAngular(() => {
+                if (this.paths.indexOf(url) === -1) {
+                    this.paths.push(url);
+                    var callbackName_1;
+                    if (callback === true) {
+                        callbackName_1 = 'OnceCallback' + (++this.uid);
+                        url = url.split('{{callback}}').join(callbackName_1);
                     }
                     else {
-                        return rxjs.of(new Event('loaded!'));
+                        callbackName_1 = callback;
                     }
-                    // });
+                    var callback$ = void 0;
+                    var element = document.createElement('script');
+                    element.type = 'text/javascript';
+                    if (callback) {
+                        callback$ = rxjs.from(new Promise(function (resolve, reject) {
+                            window[callbackName_1] = function (data) {
+                                resolve(data);
+                            };
+                        }));
+                    }
+                    else {
+                        element.async = true;
+                        callback$ = rxjs.fromEvent(element, 'load').pipe(operators.map(function (x) { return x; }));
+                    }
+                    var scripts = document.getElementsByTagName('script');
+                    if (scripts.length) {
+                        var script = scripts[scripts.length - 1];
+                        script.parentNode.insertBefore(element, script.nextSibling);
+                    }
+                    element.src = url;
+                    return callback$;
                 }
                 else {
-                    return rxjs.of(null);
+                    return rxjs.of(new Event('loaded!'));
                 }
-            };
-        OnceService.decorators = [
-            { type: i0.Injectable, args: [{
-                        providedIn: 'root'
-                    },] }
-        ];
-        /** @nocollapse */
-        OnceService.ctorParameters = function () {
-            return [
-                { type: String, decorators: [{ type: i0.Inject, args: [i0.PLATFORM_ID,] }] },
-                { type: i0.NgZone }
-            ];
+                // });
+            }
+            else {
+                return rxjs.of(null);
+            }
         };
-        /** @nocollapse */ OnceService.ngInjectableDef = i0.defineInjectable({ factory: function OnceService_Factory() { return new OnceService(i0.inject(i0.PLATFORM_ID), i0.inject(i0.NgZone)); }, token: OnceService, providedIn: "root" });
+        OnceService.ɵfac = function OnceService_Factory(t) { return new (t || OnceService)(core["ɵɵinject"](core.PLATFORM_ID), core["ɵɵinject"](core.NgZone)); };
+        OnceService.ɵprov = core["ɵɵdefineInjectable"]({ token: OnceService, factory: OnceService.ɵfac, providedIn: 'root' });
         return OnceService;
     }());
+    /*@__PURE__*/ (function () { core["ɵsetClassMetadata"](OnceService, [{
+            type: core.Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], function () { return [{ type: undefined, decorators: [{
+                    type: core.Inject,
+                    args: [core.PLATFORM_ID]
+                }] }, { type: core.NgZone }]; }, null); })();
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
     var Translate = /** @class */ (function () {
         function Translate() {
         }
         return Translate;
     }());
 
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
-    /**
-     * @fileoverview added by tsickle
-     * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
-     */
-
     exports.ApiRequestOptions = ApiRequestOptions;
     exports.ApiService = ApiService;
-    exports.AuthStrategy = AuthStrategy;
-    exports.AuthToken = AuthToken;
+    exports.AssetPipe = AssetPipe;
     exports.AuthService = AuthService;
+    exports.AuthToken = AuthToken;
     exports.BUNDLES = BUNDLES;
-    exports.CoreConfig = CoreConfig;
+    exports.BundleDirective = BundleDirective;
     exports.CORE_CONFIG = CORE_CONFIG;
-    exports.CoreService = CoreService;
-    exports.DefaultContentDirective = DefaultContentDirective;
-    exports.CoreModuleComponent = CoreModuleComponent;
+    exports.CookieStorageService = CookieStorageService;
+    exports.CoreConfig = CoreConfig;
     exports.CoreModule = CoreModule;
+    exports.CoreModuleComponent = CoreModuleComponent;
+    exports.CoreService = CoreService;
+    exports.CustomAsyncPipe = CustomAsyncPipe;
+    exports.DefaultContentDirective = DefaultContentDirective;
     exports.DisposableComponent = DisposableComponent;
-    exports.HighlightPipe = HighlightPipe;
-    exports.HttpResponseInterceptor = HttpResponseInterceptor;
-    exports.HttpStatusCodeService = HttpStatusCodeService;
-    exports.JsonFormatterComponent = JsonFormatterComponent;
-    exports.Label = Label;
-    exports.LabelDirective = LabelDirective;
-    exports.LabelPipe = LabelPipe;
-    exports.LabelService = LabelService;
-    exports.LoggerErrorStrategy = LoggerErrorStrategy;
-    exports.LoggerComponent = LoggerComponent;
-    exports.Logger = Logger;
+    exports.DisposableDirective = DisposableDirective;
     exports.Document = Document;
     exports.DocumentIndex = DocumentIndex;
     exports.DocumentService = DocumentService;
@@ -4906,45 +3262,48 @@
     exports.EntityService = EntityService;
     exports.EventDispatcherService = EventDispatcherService;
     exports.Feature = Feature;
+    exports.HighlightPipe = HighlightPipe;
+    exports.HttpResponseInterceptor = HttpResponseInterceptor;
+    exports.HttpStatusCodeService = HttpStatusCodeService;
     exports.Identity = Identity;
     exports.IdentityService = IdentityService;
     exports.Image = Image;
-    exports.ImageType = ImageType;
+    exports.ImagePipe = ImagePipe;
+    exports.ImageUrlPipe = ImageUrlPipe;
+    exports.JsonFormatterComponent = JsonFormatterComponent;
+    exports.Label = Label;
+    exports.LabelDirective = LabelDirective;
+    exports.LabelPipe = LabelPipe;
+    exports.LabelService = LabelService;
+    exports.LocalStorageService = LocalStorageService;
+    exports.Logger = Logger;
+    exports.LoggerComponent = LoggerComponent;
     exports.MenuItem = MenuItem;
     exports.MenuService = MenuService;
-    exports.Taxonomy = Taxonomy;
+    exports.OUTLETS = OUTLETS;
     exports.OnceService = OnceService;
     exports.Outlet = Outlet;
-    exports.OUTLETS = OUTLETS;
+    exports.OutletComponent = OutletComponent;
     exports.OutletDefaultComponent = OutletDefaultComponent;
     exports.OutletRepeaterComponent = OutletRepeaterComponent;
-    exports.OutletComponent = OutletComponent;
-    exports.AssetPipe = AssetPipe;
-    exports.CustomAsyncPipe = CustomAsyncPipe;
-    exports.ImageUrlPipe = ImageUrlPipe;
-    exports.ImagePipe = ImagePipe;
     exports.PublicPipe = PublicPipe;
-    exports.SegmentPipe = SegmentPipe;
     exports.RoutePipe = RoutePipe;
     exports.RouteService = RouteService;
+    exports.SafeStylePipe = SafeStylePipe;
+    exports.SafeUrlPipe = SafeUrlPipe;
+    exports.SegmentPipe = SegmentPipe;
+    exports.SessionStorageService = SessionStorageService;
     exports.SlugPipe = SlugPipe;
     exports.SlugService = SlugService;
-    exports.CookieStorageService = CookieStorageService;
-    exports.LocalStorageService = LocalStorageService;
-    exports.SessionStorageService = SessionStorageService;
     exports.StorageService = StorageService;
+    exports.Taxonomy = Taxonomy;
     exports.Translate = Translate;
     exports.TranslateDirective = TranslateDirective;
     exports.TranslatePipe = TranslatePipe;
     exports.TranslateService = TranslateService;
-    exports.SafeStylePipe = SafeStylePipe;
-    exports.SafeUrlPipe = SafeUrlPipe;
     exports.TrustPipe = TrustPipe;
-    exports.ɵc = BundleDirective;
-    exports.ɵb = OutletResolverService;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-
 //# sourceMappingURL=designr-core.umd.js.map
