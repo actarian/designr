@@ -620,7 +620,7 @@
      */
     var DataModuleComponent = /** @class */ (function () {
         function DataModuleComponent() {
-            this.version = '0.0.12';
+            this.version = '0.0.13';
         }
         /**
          * @return {?}

@@ -4,9 +4,9 @@ import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import JSONFormatter from 'json-formatter-js';
 import { isArray, isObject } from 'util';
 import { makeStateKey, TransferState, DomSanitizer } from '@angular/platform-browser';
-import { __extends, __spread } from 'tslib';
+import { __spread, __extends } from 'tslib';
 import { isPlatformBrowser, isPlatformServer, Location, CommonModule } from '@angular/common';
-import { InjectionToken, Inject, Injectable, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, PLATFORM_ID, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, ComponentFactoryResolver, ViewChild, INJECTOR, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf, NgZone } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Directive, Injector, Input, NgModuleFactoryLoader, ViewContainerRef, Component, PLATFORM_ID, ElementRef, Renderer2, Pipe, ViewEncapsulation, EventEmitter, ChangeDetectorRef, WrappedValue, defineInjectable, inject, NgModule, SystemJsNgModuleLoader, Optional, SkipSelf, ComponentFactoryResolver, ViewChild, INJECTOR, NgZone } from '@angular/core';
 import { of, Subject, BehaviorSubject, throwError, from, fromEvent } from 'rxjs';
 import { tap, filter, map, switchMap, distinctUntilChanged, catchError, debounceTime, takeUntil, first } from 'rxjs/operators';
 
@@ -1578,7 +1578,7 @@ var DefaultContentDirective = /** @class */ (function () {
  */
 var CoreModuleComponent = /** @class */ (function () {
     function CoreModuleComponent() {
-        this.version = '0.0.12';
+        this.version = '0.0.13';
     }
     /**
      * @return {?}
@@ -3375,7 +3375,7 @@ var LoggerComponent = /** @class */ (function () {
     LoggerComponent.decorators = [
         { type: Component, args: [{
                     selector: 'core-logger',
-                    template: "<div class=\"error-http\" [ngClass]=\"'http--' + logger.httpError.statusType\" *ngIf=\"logger.httpError\">\n\t<span>{{logger.httpError.statusType}}</span>&nbsp;\n\t<span class=\"status\">{{logger.httpError.status}}</span>&nbsp;\n\t<span class=\"url\">{{logger.httpError.url}}</span>&nbsp;\n\t<span class=\"message\">{{logger.httpError.body?.error}}</span>\n</div>\n<!--\n<div *ngIf=\"logger.logs.length\">\n\t<ul class=\"list-group \">\n\t\t<li class=\"list-group-item\">\n\t\t\t<button type=\"button\" class=\"btn btn-outline-primary btn-sm float-right\" (click)=\"logger.clear()\" title=\"Clear Logs\">{{ 'app.clear' | translate }}</button>\n\t\t</li>\n\t\t<li class=\"list-group-item\" *ngFor='let log of logger.logs'>\n\t\t\t<span>{{log}}</span>\n\t\t</li>\n\t</ul>\n\t<br>\n</div>\n-->\n",
+                    template: "<div class=\"error-http\" [ngClass]=\"'http--' + logger.httpError.statusType\" *ngIf=\"logger.httpError\">\r\n\t<span>{{logger.httpError.statusType}}</span>&nbsp;\r\n\t<span class=\"status\">{{logger.httpError.status}}</span>&nbsp;\r\n\t<span class=\"url\">{{logger.httpError.url}}</span>&nbsp;\r\n\t<span class=\"message\">{{logger.httpError.body?.error}}</span>\r\n</div>\r\n<!--\r\n<div *ngIf=\"logger.logs.length\">\r\n\t<ul class=\"list-group \">\r\n\t\t<li class=\"list-group-item\">\r\n\t\t\t<button type=\"button\" class=\"btn btn-outline-primary btn-sm float-right\" (click)=\"logger.clear()\" title=\"Clear Logs\">{{ 'app.clear' | translate }}</button>\r\n\t\t</li>\r\n\t\t<li class=\"list-group-item\" *ngFor='let log of logger.logs'>\r\n\t\t\t<span>{{log}}</span>\r\n\t\t</li>\r\n\t</ul>\r\n\t<br>\r\n</div>\r\n-->\r\n",
                     encapsulation: ViewEncapsulation.Emulated,
                     styles: [".error-http{padding:15px;max-width:1140px;margin:0 auto 10px;background:#faebd7;font-size:13px;font-family:monospace;color:#d2691e}"]
                 }] }

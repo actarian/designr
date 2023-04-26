@@ -4,7 +4,7 @@ import { isPlatformBrowser, DOCUMENT, CommonModule } from '@angular/common';
 import { DisposableComponent, RouteService, EntityService, HttpStatusCodeService, ImageType, CoreModule } from '@designr/core';
 import { of, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { InjectionToken, Inject, Injectable, Component, NgModule, Injector, ViewEncapsulation, Input, TemplateRef, ComponentFactoryResolver, Directive, ViewContainerRef, ViewChild, defineInjectable, inject, Optional, SkipSelf, PLATFORM_ID, INJECTOR } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, NgModule, Injector, ViewEncapsulation, ComponentFactoryResolver, ViewChild, ViewContainerRef, Input, TemplateRef, Directive, defineInjectable, inject, Optional, SkipSelf, PLATFORM_ID, INJECTOR } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -270,7 +270,7 @@ UseLayoutDirective.propDecorators = {
  */
 class PageModuleComponent {
     constructor() {
-        this.version = '0.0.12';
+        this.version = '0.0.13';
     }
     /**
      * @return {?}

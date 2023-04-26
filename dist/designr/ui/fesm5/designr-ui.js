@@ -5,7 +5,7 @@ import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { DisposableComponent, CoreModule } from '@designr/core';
 import { BehaviorSubject, of, range, fromEvent, Observable } from 'rxjs';
 import { map, takeUntil, shareReplay, distinctUntilChanged, filter, tap } from 'rxjs/operators';
-import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, Output, NgModule, Optional, SkipSelf, defineInjectable, inject, ViewEncapsulation, PLATFORM_ID, NgZone, Injector, ComponentFactoryResolver, ViewChild, ViewContainerRef, Renderer2 } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, Input, Directive, ElementRef, EventEmitter, Output, NgModule, Optional, SkipSelf, defineInjectable, inject, PLATFORM_ID, Renderer2, NgZone, ViewEncapsulation, Injector, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
 
 /**
  * @fileoverview added by tsickle
@@ -52,7 +52,7 @@ var UIService = /** @class */ (function () {
  */
 var UIModuleComponent = /** @class */ (function () {
     function UIModuleComponent() {
-        this.version = '0.0.12';
+        this.version = '0.0.13';
     }
     /**
      * @return {?}

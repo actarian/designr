@@ -208,7 +208,7 @@ class EditorRootComponent extends DisposableComponent {
 EditorRootComponent.decorators = [
     { type: Component, args: [{
                 selector: 'editor-root-component',
-                template: "<ng-container *ngIf=\"page\">\n\t<form class=\"form\" name=\"form\" [formGroup]=\"form\" (ngSubmit)=\"form.valid && onSubmit(form.value)\" #form=\"ngForm\" role=\"form\" novalidate autocomplete=\"off\">\n\t\t<div class=\"info\">\n\t\t\t<span class=\"id\">{{page.id}}</span>\n\t\t\t<span class=\"status\" [ngClass]=\"{ active: page.active }\">{{page.active ? 'active' : 'inactive'}}</span>\n\t\t\t<span class=\"component\">{{componentName}}</span>\n\t\t</div>\n\t\t<hr>\n\t\t<h2 class=\"h1\" [innerHTML]=\"page.title\"></h2>\n\t\t<!--\n\t\t\t\t<p [innerHTML]=\"page.description\"></p>\n\t\t\t\t-->\n\t\t<hr>\n\t\t<div *ngFor=\"let option of options\">\n\t\t\t<control-outlet class=\"fieldset__field fieldset__field--{{option.schema}}\" [option]=\"option\" [form]=\"form\"></control-outlet>\n\t\t</div>\n\t\t<!-- <control-editable formControlName=\"email\"></control-editable> -->\n\t\t<div class=\"action-bar\">\n\t\t\t<button type=\"text\" class=\"btn btn--secondary\" [disabled]=\"submitted || !form.valid\" (click)=\"onReset()\" title=\"Annulla\"><span>Annulla</span></button>\n\t\t\t<button type=\"submit\" class=\"btn btn--primary\" [disabled]=\"submitted || !form.valid\" [ngClass]=\"{ 'btn--busy': busy }\" title=\"Salva\"><span>Salva</span></button>\n\t\t</div>\n\t</form>\n</ng-container>\n",
+                template: "<ng-container *ngIf=\"page\">\r\n\t<form class=\"form\" name=\"form\" [formGroup]=\"form\" (ngSubmit)=\"form.valid && onSubmit(form.value)\" #form=\"ngForm\" role=\"form\" novalidate autocomplete=\"off\">\r\n\t\t<div class=\"info\">\r\n\t\t\t<span class=\"id\">{{page.id}}</span>\r\n\t\t\t<span class=\"status\" [ngClass]=\"{ active: page.active }\">{{page.active ? 'active' : 'inactive'}}</span>\r\n\t\t\t<span class=\"component\">{{componentName}}</span>\r\n\t\t</div>\r\n\t\t<hr>\r\n\t\t<h2 class=\"h1\" [innerHTML]=\"page.title\"></h2>\r\n\t\t<!--\r\n\t\t\t\t<p [innerHTML]=\"page.description\"></p>\r\n\t\t\t\t-->\r\n\t\t<hr>\r\n\t\t<div *ngFor=\"let option of options\">\r\n\t\t\t<control-outlet class=\"fieldset__field fieldset__field--{{option.schema}}\" [option]=\"option\" [form]=\"form\"></control-outlet>\r\n\t\t</div>\r\n\t\t<!-- <control-editable formControlName=\"email\"></control-editable> -->\r\n\t\t<div class=\"action-bar\">\r\n\t\t\t<button type=\"text\" class=\"btn btn--secondary\" [disabled]=\"submitted || !form.valid\" (click)=\"onReset()\" title=\"Annulla\"><span>Annulla</span></button>\r\n\t\t\t<button type=\"submit\" class=\"btn btn--primary\" [disabled]=\"submitted || !form.valid\" [ngClass]=\"{ 'btn--busy': busy }\" title=\"Salva\"><span>Salva</span></button>\r\n\t\t</div>\r\n\t</form>\r\n</ng-container>\r\n",
                 encapsulation: ViewEncapsulation.Emulated,
                 styles: [":host{font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.5;background:#fafafa;color:#55555a}.h1{color:#55555a;font-size:19px}form{margin:0}label{display:block;width:100%;color:#55555a;font-weight:700;font-size:12px}.id{display:inline-block;padding:4px 6px;background:#0875c2;color:#fff;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status{display:inline-block;padding:4px 6px;background:#fff;color:#000;border-radius:3px;font-size:12px;line-height:1;margin-right:4px}.status.active{background:green;color:#fff}.component{display:inline-block;font-size:14px;font-style:italic}"]
             }] }
@@ -293,7 +293,7 @@ EditorBundleModule.ctorParameters = () => [
  */
 class EditorModuleComponent {
     constructor() {
-        this.version = '0.0.12';
+        this.version = '0.0.13';
     }
     /**
      * @return {?}
@@ -339,7 +339,7 @@ class PanelComponent extends DisposableComponent {
 PanelComponent.decorators = [
     { type: Component, args: [{
                 selector: 'panel-component',
-                template: "<div class=\"panel\" [@openClose]=\"opened ? 'open' : 'closed'\" (clickOutside)=\"opened = false\">\n\t<ng-container *ngIf=\"opened\">\n\t\t<ng-container bundle=\"editor\"></ng-container>\n\t</ng-container>\n</div>\n",
+                template: "<div class=\"panel\" [@openClose]=\"opened ? 'open' : 'closed'\" (clickOutside)=\"opened = false\">\r\n\t<ng-container *ngIf=\"opened\">\r\n\t\t<ng-container bundle=\"editor\"></ng-container>\r\n\t</ng-container>\r\n</div>\r\n",
                 animations: [
                     trigger('openClose', [
                         state('open', style({

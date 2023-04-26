@@ -3,7 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import * as Swiper from 'swiper/dist/js/swiper.js';
 import { __spread, __extends } from 'tslib';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject, EventEmitter, PLATFORM_ID, Output, NgZone, Input, Directive, ElementRef, KeyValueDiffers, ViewEncapsulation, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject, EventEmitter, PLATFORM_ID, Output, NgZone, Input, ViewEncapsulation, ChangeDetectorRef, ViewChild, Directive, ElementRef, KeyValueDiffers } from '@angular/core';
 import { LocalStorageService, OnceService, RouteService, CoreModule, DisposableComponent, Logger } from '@designr/core';
 import { from, of, Observable } from 'rxjs';
 import { concatMap, filter, first, map, switchMap, takeUntil, tap, mergeMap } from 'rxjs/operators';
@@ -56,7 +56,7 @@ var PluginsService = /** @class */ (function () {
  */
 var PluginsModuleComponent = /** @class */ (function () {
     function PluginsModuleComponent() {
-        this.version = '0.0.12';
+        this.version = '0.0.13';
     }
     /**
      * @return {?}
