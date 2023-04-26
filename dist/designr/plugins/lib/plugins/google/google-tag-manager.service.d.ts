@@ -16,6 +16,7 @@ export declare class GoogleTagManagerService {
     private onceService;
     private logger;
     options: GoogleTagManagerConfig;
+    private initialized;
     private dataLayer;
     private dataLayer$;
     constructor(platformId: string, pluginsService: PluginsService, zone: NgZone, onceService: OnceService, logger: Logger);

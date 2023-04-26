@@ -22,6 +22,7 @@ export class GoogleTagManagerService {
 
 	public options: GoogleTagManagerConfig;
 
+	private initialized: boolean = false;
 	private dataLayer: any[];
 	private dataLayer$: Observable<any[]>;
 
@@ -48,7 +49,7 @@ export class GoogleTagManagerService {
 
 	once(): Observable<any[]> {
 		if (isPlatformBrowser(this.platformId)) {
-			if (this.dataLayer) {
+			if (this.dataLayer && this.initialized) {
 				return of(this.dataLayer);
 			} else if (this.dataLayer$) {
 				return this.dataLayer$;
@@ -61,8 +62,9 @@ export class GoogleTagManagerService {
 				// console.log('GoogleTagManagerConfig.once', src, dataLayer);
 				this.dataLayer$ = this.onceService.script(src).pipe(
 					map(x => {
-						// console.log('dataLayer', dataLayer, x);
+						// console.log('GoogleTagManagerConfig.dataLayer', dataLayer, x);
 						this.dataLayer = dataLayer;
+						this.initialized = true;
 						return dataLayer;
 					})
 				);

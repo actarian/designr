@@ -3,10 +3,10 @@ import { NavigationEnd, Router } from '@angular/router';
 import * as Swiper from 'swiper/dist/js/swiper.js';
 import { __spread, __extends } from 'tslib';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { InjectionToken, Inject, Injectable, Component, defineInjectable, inject, NgModule, Optional, SkipSelf, PLATFORM_ID, Input, EventEmitter, Output, NgZone, ViewEncapsulation, ElementRef, ChangeDetectorRef, ViewChild, Directive, KeyValueDiffers } from '@angular/core';
+import { InjectionToken, Inject, Injectable, Component, NgModule, Optional, SkipSelf, defineInjectable, inject, EventEmitter, PLATFORM_ID, Output, NgZone, Input, Directive, ElementRef, KeyValueDiffers, ViewEncapsulation, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { LocalStorageService, OnceService, RouteService, CoreModule, DisposableComponent, Logger } from '@designr/core';
 import { from, of, Observable } from 'rxjs';
-import { concatMap, filter, first, map, takeUntil, mergeMap } from 'rxjs/operators';
+import { concatMap, filter, first, map, switchMap, takeUntil, tap, mergeMap } from 'rxjs/operators';
 
 /**
  * @fileoverview added by tsickle
@@ -444,6 +444,7 @@ var GoogleTagManagerService = /** @class */ (function () {
         this.zone = zone;
         this.onceService = onceService;
         this.logger = logger;
+        this.initialized = false;
         this.init();
     }
     /**
@@ -478,7 +479,7 @@ var GoogleTagManagerService = /** @class */ (function () {
     function () {
         var _this = this;
         if (isPlatformBrowser(this.platformId)) {
-            if (this.dataLayer) {
+            if (this.dataLayer && this.initialized) {
                 return of(this.dataLayer);
             }
             else if (this.dataLayer$) {
@@ -499,8 +500,9 @@ var GoogleTagManagerService = /** @class */ (function () {
                  * @return {?}
                  */
                 function (x) {
-                    // console.log('dataLayer', dataLayer, x);
+                    // console.log('GoogleTagManagerConfig.dataLayer', dataLayer, x);
                     _this.dataLayer = dataLayer_1;
+                    _this.initialized = true;
                     return dataLayer_1;
                 })));
                 return this.dataLayer$;
@@ -584,11 +586,11 @@ var GoogleTagManagerComponent = /** @class */ (function (_super) {
     function () {
         var _this = this;
         if (isPlatformBrowser(this.platformId)) {
-            this.router.events.pipe(takeUntil(this.unsubscribe), filter((/**
+            this.router.events.pipe(filter((/**
              * @param {?} e
              * @return {?}
              */
-            function (e) { return e instanceof NavigationEnd; }))).subscribe((/**
+            function (e) { return e instanceof NavigationEnd; })), switchMap((/**
              * @param {?} e
              * @return {?}
              */
@@ -596,23 +598,24 @@ var GoogleTagManagerComponent = /** @class */ (function (_super) {
                 /** @type {?} */
                 var url = "" + _this.pluginsService.options.origin + e.urlAfterRedirects;
                 // console.log('GoogleTagManagerComponent.NavigationEnd', e.id, e.url, e.urlAfterRedirects, url);
-                if (_this.dataLayer) {
+                if (_this.dataLayer && _this.iframeUrl) {
                     _this.pageView.emit({ dataLayer: _this.dataLayer, url: url });
+                    return of(null);
                 }
                 else {
-                    _this.googleTagManager.once().pipe(takeUntil(_this.unsubscribe)).subscribe((/**
+                    return _this.googleTagManager.once().pipe(tap((/**
                      * @param {?} dataLayer
                      * @return {?}
                      */
                     function (dataLayer) {
-                        // console.log('dataLayer', dataLayer);
+                        // console.log('GoogleTagManagerComponent.dataLayer', dataLayer);
                         _this.id = _this.googleTagManager.options.id;
                         _this.iframeUrl = "https://www.googletagmanager.com/ns.html?id=" + _this.id;
                         _this.dataLayer = dataLayer;
                         _this.pageView.emit({ dataLayer: _this.dataLayer, url: url });
-                    }));
+                    })));
                 }
-            }));
+            })), takeUntil(this.unsubscribe)).subscribe();
         }
     };
     GoogleTagManagerComponent.decorators = [
@@ -2073,7 +2076,7 @@ var SwiperComponent = /** @class */ (function () {
         { type: Component, args: [{
                     selector: 'swiper',
                     exportAs: 'ngxSwiper',
-                    template: "<div #swiper class=\"s-wrapper\" [class.swiper]=\"useSwiperClass\" [class.swiper-container]=\"useSwiperClass\" [swiper]=\"getConfig()\" [index]=\"index\" [disabled]=\"disabled\" [performance]=\"performance\">\n\t<div #swiperSlides class=\"swiper-wrapper\">\n\t\t<ng-content></ng-content>\n\t</div>\n\t<div class=\"swiper-scrollbar\" [hidden]=\"!swiperConfig?.scrollbar || (swiperConfig?.scrollbar !== true && !!swiperConfig?.scrollbar?.el && swiperConfig?.scrollbar?.el !== '.swiper-scrollbar')\"></div>\n\t<div class=\"swiper-button-prev\" [hidden]=\"!swiperConfig?.navigation || (swiperConfig?.navigation !== true && !!swiperConfig?.navigation?.prevEl && swiperConfig?.navigation?.prevEl !== '.swiper-button-prev')\" [attr.disabled]=\"isAtFirst ||\u00A0null\"></div>\n\t<div class=\"swiper-button-next\" [hidden]=\"!swiperConfig?.navigation || (swiperConfig?.navigation !== true && !!swiperConfig?.navigation?.nextEl && swiperConfig?.navigation?.nextEl !== '.swiper-button-next')\" [attr.disabled]=\"isAtLast || null\"></div>\n\t<div class=\"swiper-pagination\" [hidden]=\"!swiperConfig?.pagination || (swiperConfig?.pagination !== true && !!swiperConfig?.pagination?.el && swiperConfig?.pagination?.el !== '.swiper-pagination')\" (click)=\"onPaginationClick($event.target.getAttribute('index'))\" (keyup.enter)=\"onPaginationClick($event.target.getAttribute('index'))\"></div>\n</div>\n",
+                    template: "<div #swiper class=\"s-wrapper\" [class.swiper]=\"useSwiperClass\" [class.swiper-container]=\"useSwiperClass\" [swiper]=\"getConfig()\" [index]=\"index\" [disabled]=\"disabled\" [performance]=\"performance\">\r\n\t<div #swiperSlides class=\"swiper-wrapper\">\r\n\t\t<ng-content></ng-content>\r\n\t</div>\r\n\t<div class=\"swiper-scrollbar\" [hidden]=\"!swiperConfig?.scrollbar || (swiperConfig?.scrollbar !== true && !!swiperConfig?.scrollbar?.el && swiperConfig?.scrollbar?.el !== '.swiper-scrollbar')\"></div>\r\n\t<div class=\"swiper-button-prev\" [hidden]=\"!swiperConfig?.navigation || (swiperConfig?.navigation !== true && !!swiperConfig?.navigation?.prevEl && swiperConfig?.navigation?.prevEl !== '.swiper-button-prev')\" [attr.disabled]=\"isAtFirst ||\u00A0null\"></div>\r\n\t<div class=\"swiper-button-next\" [hidden]=\"!swiperConfig?.navigation || (swiperConfig?.navigation !== true && !!swiperConfig?.navigation?.nextEl && swiperConfig?.navigation?.nextEl !== '.swiper-button-next')\" [attr.disabled]=\"isAtLast || null\"></div>\r\n\t<div class=\"swiper-pagination\" [hidden]=\"!swiperConfig?.pagination || (swiperConfig?.pagination !== true && !!swiperConfig?.pagination?.el && swiperConfig?.pagination?.el !== '.swiper-pagination')\" (click)=\"onPaginationClick($event.target.getAttribute('index'))\" (keyup.enter)=\"onPaginationClick($event.target.getAttribute('index'))\"></div>\r\n</div>\r\n",
                     // styleUrls: ['~swiper/dist/css/swiper.min.css', 'swiper.component.scss'],
                     encapsulation: ViewEncapsulation.None
                 }] }
@@ -2321,7 +2324,7 @@ var TrustPilotWidgetComponent = /** @class */ (function (_super) {
     TrustPilotWidgetComponent.decorators = [
         { type: Component, args: [{
                     selector: 'plugins-trustpilot-widget-component',
-                    template: "<ng-container>\n\t<ng-container [ngSwitch]=\"options.templateId\">\n\t\t<ng-container *ngSwitchCase=\"'544a426205dc0a09088833c6'\">\n\t\t\t<!-- PRODUCT REVIEWS -->\n\t\t\t<div class=\"trustpilot-comments\">\n\t\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" [attr.data-sku]=\"sku\" style=\"margin: 30px 0; max-width: 750px;\">\n\t\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</ng-container>\n\t\t<ng-container *ngSwitchCase=\"'530d0eaf748a510e2093cf9b'\">\n\t\t\t<!-- EVALUATE -->\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" [attr.data-group]=\"options.group\" style=\"margin: 30px 0; max-width: 750px;\">\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t</div>\n\t\t</ng-container>\n\t\t<ng-container *ngSwitchCase=\"'53aa8807dec7e10d38f59f32'\">\n\t\t\t<!-- MINI -->\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" style=\"margin: 15px auto; max-width: 750px;\">\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t</div>\n\t\t</ng-container>\n\t\t<ng-container *ngSwitchCase=\"'5613c9cde69ddc09340c6beb'\">\n\t\t\t<!-- STARTER -->\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" style=\"margin: 15px auto; max-width: 750px;\">\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t</div>\n\t\t</ng-container>\n\t\t<ng-container *ngSwitchCase=\"'53aa8912dec7e10d38f59f36'\">\n\t\t\t<!-- CAROUSEL -->\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" [attr.data-stars]=\"options.stars\" style=\"margin: 15px auto;\">\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\n\t\t\t</div>\n\t\t</ng-container>\n\t</ng-container>\n</ng-container>\n",
+                    template: "<ng-container>\r\n\t<ng-container [ngSwitch]=\"options.templateId\">\r\n\t\t<ng-container *ngSwitchCase=\"'544a426205dc0a09088833c6'\">\r\n\t\t\t<!-- PRODUCT REVIEWS -->\r\n\t\t\t<div class=\"trustpilot-comments\">\r\n\t\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" [attr.data-sku]=\"sku\" style=\"margin: 30px 0; max-width: 750px;\">\r\n\t\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t</ng-container>\r\n\t\t<ng-container *ngSwitchCase=\"'530d0eaf748a510e2093cf9b'\">\r\n\t\t\t<!-- EVALUATE -->\r\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" [attr.data-group]=\"options.group\" style=\"margin: 30px 0; max-width: 750px;\">\r\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\r\n\t\t\t</div>\r\n\t\t</ng-container>\r\n\t\t<ng-container *ngSwitchCase=\"'53aa8807dec7e10d38f59f32'\">\r\n\t\t\t<!-- MINI -->\r\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" style=\"margin: 15px auto; max-width: 750px;\">\r\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\r\n\t\t\t</div>\r\n\t\t</ng-container>\r\n\t\t<ng-container *ngSwitchCase=\"'5613c9cde69ddc09340c6beb'\">\r\n\t\t\t<!-- STARTER -->\r\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" style=\"margin: 15px auto; max-width: 750px;\">\r\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\r\n\t\t\t</div>\r\n\t\t</ng-container>\r\n\t\t<ng-container *ngSwitchCase=\"'53aa8912dec7e10d38f59f36'\">\r\n\t\t\t<!-- CAROUSEL -->\r\n\t\t\t<div class=\"trustpilot-widget\" [attr.data-template-id]=\"options.templateId\" [attr.data-businessunit-id]=\"options.businessunitId\" [attr.data-locale]=\"options.locale\" [attr.data-style-height]=\"options.styleHeight\" [attr.data-style-width]=\"options.styleWidth\" [attr.data-theme]=\"options.theme\" [attr.data-stars]=\"options.stars\" style=\"margin: 15px auto;\">\r\n\t\t\t\t<a href=\"https://it.trustpilot.com/review/{{options.businessunitName}}\" target=\"_blank\">Trustpilot</a>\r\n\t\t\t</div>\r\n\t\t</ng-container>\r\n\t</ng-container>\r\n</ng-container>\r\n",
                     encapsulation: ViewEncapsulation.Emulated,
                     styles: [":host{width:100%}.trustpilot-widget{margin:15px auto!important}@media print{.trustpilot-comments{display:none!important}}"]
                 }] }
